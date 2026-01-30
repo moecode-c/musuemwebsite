@@ -1,0 +1,32 @@
+/* Accessibility page styles */
+
+.access-grid {
+	display: grid;
+	grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+	gap: 20px;
+}
+
+.info-card {
+	background: var(--surface);
+	border: 1px solid var(--border);
+	border-radius: 14px;
+	padding: 20px;
+	box-shadow: 0 12px 24px rgba(0, 0, 0, 0.2);
+}
+
+.info-card .icon {
+	color: var(--accent);
+	font-size: 1.6rem;
+	margin-bottom: 10px;
+}
+
+.section-alt {
+	background: var(--surface-alt);
+}
+
+.contact-line {
+	display: flex;
+	align-items: center;
+	gap: 10px;
+	color: var(--text-muted);
+}

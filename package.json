@@ -6,7 +6,7 @@
   "scripts": {
     "start": "node app.js",
     "dev": "nodemon app.js",
-    "seed": "node utils/seed.js"
+    "seed": "node seeders/seedAll.js"
   },
   "engines": {
     "node": ">=18"

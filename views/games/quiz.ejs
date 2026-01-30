@@ -1,0 +1,57 @@
+<%- include('../partials/header') %>
+<%- include('../partials/navbar') %>
+
+<section class="page-hero">
+  <div class="container">
+    <h1>Egyptian History Quiz</h1>
+    <p>Answer 15 questions to explore the people, places, and ideas that shaped Ancient Egypt.</p>
+  </div>
+</section>
+
+<section class="section">
+  <div class="container">
+    <div class="quiz-card" id="quiz-card">
+      <div class="quiz-header">
+        <h2 class="quiz-title">Learn Through Play</h2>
+        <p class="quiz-subtitle">Each answer includes a short explanation to help you learn.</p>
+      </div>
+
+      <div class="quiz-meta" id="quiz-meta">
+        <span class="quiz-progress" id="quiz-progress">Question 1 of 15</span>
+        <span class="quiz-score" id="quiz-score">Score: 0</span>
+      </div>
+
+      <div class="quiz-body" id="quiz-body">
+        <p class="quiz-intro">
+          Start the quiz when you're ready. Try to answer based on what you know—then read the
+          explanation to learn more about Egyptian history.
+        </p>
+        <button class="btn quiz-start" id="quiz-start" type="button">Start Quiz</button>
+      </div>
+
+      <div class="quiz-footer" id="quiz-footer">
+        <button class="btn quiz-next" id="quiz-next" type="button" disabled>Next</button>
+      </div>
+    </div>
+  </div>
+  <template id="quiz-question-template">
+    <div class="quiz-question">
+      <span class="quiz-tag" id="quiz-tag"></span>
+      <h3 class="quiz-question-text" id="quiz-question-text"></h3>
+      <div class="quiz-options" id="quiz-options"></div>
+      <div class="quiz-feedback" id="quiz-feedback"></div>
+    </div>
+  </template>
+
+  <template id="quiz-result-template">
+    <div class="quiz-result">
+      <h3>Great job!</h3>
+      <p class="quiz-result-score" id="quiz-result-score"></p>
+      <p class="quiz-result-message" id="quiz-result-message"></p>
+      <div class="quiz-summary" id="quiz-summary"></div>
+      <button class="btn" id="quiz-restart" type="button">Play Again</button>
+    </div>
+  </template>
+</section>
+
+<%- include('../partials/footer') %>

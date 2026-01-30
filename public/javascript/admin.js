@@ -43,23 +43,6 @@ document.addEventListener("DOMContentLoaded", () => {
     });
   }
 
-  const collectionForm = document.getElementById("admin-collection-form");
-  const collectionList = document.getElementById("admin-collection-list");
-  if (collectionForm) {
-    adminFetchList("/api/collections", collectionList, "title");
-    collectionForm.addEventListener("submit", async (event) => {
-      event.preventDefault();
-      const formData = new FormData(collectionForm);
-      const response = await fetch("/api/collections", { method: "POST", body: formData });
-      const messageEl = document.getElementById("admin-collection-message");
-      messageEl.textContent = response.ok ? "Collection created" : "Error creating collection";
-      if (response.ok) {
-        collectionForm.reset();
-        adminFetchList("/api/collections", collectionList, "title");
-      }
-    });
-  }
-
   const productForm = document.getElementById("admin-product-form");
   const productList = document.getElementById("admin-product-list");
   if (productForm) {

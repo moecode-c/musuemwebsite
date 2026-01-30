@@ -1,0 +1,30 @@
+/* Testimonials page styles */
+
+.testimonials-summary {
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+	gap: 16px;
+	margin-bottom: 20px;
+	flex-wrap: wrap;
+}
+
+.rating-badge {
+	background: var(--surface);
+	border: 1px solid var(--border);
+	border-radius: 14px;
+	padding: 14px 18px;
+	text-align: center;
+	min-width: 140px;
+}
+
+.rating-score {
+	font-size: 2rem;
+	font-weight: 700;
+	color: var(--accent);
+	display: block;
+}
+
+.rating-text {
+	color: var(--text-muted);
+}

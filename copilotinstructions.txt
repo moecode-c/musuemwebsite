@@ -1,0 +1,151 @@
+YOU ARE WORKING ON A SINGLE CONTINUOUS PROJECT.
+DO NOT CHANGE STACK, ARCHITECTURE, OR CONVENTIONS.
+
+====================
+PROJECT CONTEXT
+====================
+
+Project Name:
+Egyptian Museum Web Application
+
+Purpose:
+Academic + production-ready museum website following strict evaluation criteria.
+
+====================
+TECH STACK (FIXED)
+====================
+
+Frontend:
+- EJS (server-side rendering)
+- Vanilla CSS (external files only)
+- Vanilla JavaScript (external files only)
+- NO React, Vue, Angular, Tailwind, Bootstrap
+
+Backend:
+- Node.js
+- Express.js
+- MongoDB with Mongoose
+
+====================
+ARCHITECTURE (MANDATORY)
+====================
+
+- STRICT MVC pattern
+- Controllers handle logic only
+- Models handle database schemas only
+- Routes define endpoints only
+- Views contain NO business logic
+- Middleware used for auth, validation, errors
+
+====================
+FOLDER STRUCTURE (DO NOT CHANGE)
+====================
+
+/config
+/controllers
+/middleware
+/models
+/routes
+/utils
+/public
+  /assets
+  /css
+  /javascript
+/views
+  /partials
+    header.ejs
+    navbar.ejs
+    footer.ejs
+  home.ejs
+  about.ejs
+  accessibility.ejs
+  newsletter.ejs
+  location.ejs
+  exhibits.ejs
+  exhibit-details.ejs
+  collections.ejs
+  virtual-tour.ejs
+  games.ejs
+  shop.ejs
+  cart.ejs
+  checkout.ejs
+  register.ejs
+  login.ejs
+  testimonials.ejs
+  plan-trip.ejs
+  404.ejs
+  /admin
+    dashboard.ejs
+    exhibits.ejs
+    collections.ejs
+    products.ejs
+    map.ejs
+    tickets.ejs
+    users.ejs
+    settings.ejs
+
+====================
+CORE FEATURES (ALWAYS ASSUME)
+====================
+
+- Authentication with bcrypt
+- Sessions with MongoDB store
+- Role-based access (admin/user)
+- File uploads with multer
+- 3D models using <model-viewer>
+- Admin dashboard controls EVERYTHING
+- Map with admin-controlled pin points
+- Client-side validation on ALL forms
+- Backend validation on ALL routes
+- Central error handling
+- Fetch/AJAX for dynamic actions
+- Pagination for large lists
+- Localization (EN / AR)
+- Responsive design
+- External API integration
+- HTTPS-ready deployment
+
+====================
+UI / UX RULES
+====================
+
+- Smooth animations
+- Page transitions
+- Accessible navigation
+- Clean academic UI
+- Consistent styling
+- No inline styles or scripts
+
+====================
+GRADING AWARENESS
+====================
+
+Every feature must align with:
+- MVC & routing
+- Security & privacy
+- Sessions
+- File uploads
+- Error handling
+- Validation (frontend + backend)
+- CRUD completeness
+- AJAX usage
+- Innovation
+- Folder structure correctness
+
+====================
+RESPONSE RULES
+====================
+
+When responding:
+- DO NOT re-explain the stack
+- DO NOT suggest other frameworks
+- DO NOT simplify features
+- DO NOT remove security
+- Assume prior code exists
+- Only generate what is requested
+- Follow the existing structure exactly
+- Use best practices
+- Write clean, readable code
+
+YOU ARE NOT STARTING A NEW PROJECT.
+YOU ARE CONTINUING THE SAME ONE.

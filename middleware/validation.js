@@ -25,10 +25,6 @@ const exhibitValidation = [
   body("description").trim().isLength({ min: 10 }).withMessage("Description required")
 ];
 
-const collectionValidation = [
-  body("title").trim().isLength({ min: 2 }).withMessage("Title required"),
-  body("summary").trim().isLength({ min: 10 }).withMessage("Summary required")
-];
 
 const productValidation = [
   body("name").trim().isLength({ min: 2 }).withMessage("Name required"),
@@ -60,7 +56,6 @@ module.exports = {
   userValidation,
   loginValidation,
   exhibitValidation,
-  collectionValidation,
   productValidation,
   mapPinValidation,
   ticketValidation,

@@ -1,0 +1,43 @@
+/* Location page styles */
+
+.location-grid {
+	display: grid;
+	grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+	gap: 24px;
+	align-items: start;
+}
+
+.info-stack {
+	display: grid;
+	gap: 16px;
+}
+
+.info-card {
+	background: var(--surface);
+	border: 1px solid var(--border);
+	border-radius: 14px;
+	padding: 20px;
+	box-shadow: 0 12px 24px rgba(0, 0, 0, 0.2);
+}
+
+.contact-line {
+	display: flex;
+	align-items: center;
+	gap: 10px;
+	color: var(--text-muted);
+}
+
+.map-wrapper {
+	border: 1px solid var(--border);
+	box-shadow: 0 16px 30px rgba(0, 0, 0, 0.25);
+}
+
+.map-tooltip {
+	margin-top: 12px;
+	background: var(--surface);
+	border: 1px solid var(--border);
+	border-radius: 10px;
+	padding: 10px 12px;
+	color: var(--text-muted);
+	min-height: 42px;
+}

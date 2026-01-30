@@ -1,5 +1,4 @@
 const Exhibit = require("../models/Exhibit");
-const Collection = require("../models/Collection");
 const Product = require("../models/Product");
 const MapPin = require("../models/MapPin");
 const Ticket = require("../models/Ticket");
@@ -8,9 +7,8 @@ const Testimonial = require("../models/Testimonial");
 const { asyncHandler } = require("../utils/asyncHandler");
 
 const dashboard = asyncHandler(async (req, res) => {
-  const [exhibitCount, collectionCount, productCount, userCount, ticketCount, testimonialCount] = await Promise.all([
+  const [exhibitCount, productCount, userCount, ticketCount, testimonialCount] = await Promise.all([
     Exhibit.countDocuments(),
-    Collection.countDocuments(),
     Product.countDocuments(),
     User.countDocuments(),
     Ticket.countDocuments(),
@@ -21,7 +19,6 @@ const dashboard = asyncHandler(async (req, res) => {
     pageTitle: "Admin Dashboard",
     stats: {
       exhibitCount,
-      collectionCount,
       productCount,
       userCount,
       ticketCount,
@@ -31,7 +28,6 @@ const dashboard = asyncHandler(async (req, res) => {
 });
 
 const adminExhibits = (req, res) => res.render("admin/exhibits", { pageTitle: "Manage Exhibits" });
-const adminCollections = (req, res) => res.render("admin/collections", { pageTitle: "Manage Collections" });
 const adminProducts = (req, res) => res.render("admin/products", { pageTitle: "Manage Products" });
 const adminMap = asyncHandler(async (req, res) => {
   const pins = await MapPin.find();
@@ -51,7 +47,6 @@ const adminSettings = (req, res) => res.render("admin/settings", { pageTitle: "S
 module.exports = {
   dashboard,
   adminExhibits,
-  adminCollections,
   adminProducts,
   adminMap,
   adminTickets,

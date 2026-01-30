@@ -1,16 +1,46 @@
 <%- include('partials/header') %>
 <%- include('partials/navbar') %>
 
-<section class="hero">
+<section class="hero hero--video">
+  <video
+    class="hero-video"
+    autoplay
+    muted
+    loop
+    playsinline
+    preload="auto"
+    disablepictureinpicture
+    controlslist="nodownload noplaybackrate noremoteplayback"
+    poster="/assets/hero.svg"
+    aria-hidden="true"
+    tabindex="-1"
+  >
+    <source src="/assets/herovid.mp4" type="video/mp4" />
+  </video>
+  <div class="hero-overlay"></div>
   <div class="container hero-content">
-    <div>
+    <div class="hero-copy">
+      <p class="hero-kicker">The Afterlife Egyptian Museum</p>
       <h1>Discover Egypt's Timeless Legacy</h1>
-      <p>Explore royal treasures, immersive virtual tours, and curated collections.</p>
-      <a class="btn" href="/exhibits">Explore Exhibits</a>
+      <p>Explore royal treasures, immersive virtual tours, and curated exhibits.</p>
+      <div class="hero-actions">
+        <a class="btn" href="/exhibits">Explore Exhibits</a>
+        <a class="btn ghost" href="/virtual-tour">Start Virtual Tour</a>
+      </div>
     </div>
-    <div class="hero-card">
-      <h3>Weather in Cairo</h3>
-      <%- weatherHtml %>
+  </div>
+</section>
+
+<section class="section weather-section">
+  <div class="container">
+    <div class="weather-panel">
+      <div>
+        <h3>Weather in Cairo</h3>
+        <p class="weather-subtitle">Plan your visit with live conditions.</p>
+      </div>
+      <div class="weather-data">
+        <%- weatherHtml %>
+      </div>
     </div>
   </div>
 </section>
@@ -20,15 +50,6 @@
     <h2>Featured Exhibits</h2>
     <div class="grid">
       <%- exhibitsHtml %>
-    </div>
-  </div>
-</section>
-
-<section class="section alt">
-  <div class="container">
-    <h2>Collections</h2>
-    <div class="grid">
-      <%- collectionsHtml %>
     </div>
   </div>
 </section>

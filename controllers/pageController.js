@@ -1,5 +1,4 @@
 const Exhibit = require("../models/Exhibit");
-const Collection = require("../models/Collection");
 const Product = require("../models/Product");
 const Testimonial = require("../models/Testimonial");
 const Ticket = require("../models/Ticket");
@@ -18,15 +17,6 @@ const buildCards = (items, type) => {
             <h3>${item.title}</h3>
             <p>${item.description.substring(0, 120)}...</p>
             <a class="btn" href="/exhibits/${item._id}">View Details</a>
-          </article>
-        `;
-      }
-      if (type === "collection") {
-        return `
-          <article class="card">
-            <img src="${item.imageUrl}" alt="${item.title}">
-            <h3>${item.title}</h3>
-            <p>${item.summary.substring(0, 120)}...</p>
           </article>
         `;
       }
@@ -54,9 +44,8 @@ const buildCards = (items, type) => {
 };
 
 const home = asyncHandler(async (req, res) => {
-  const [exhibits, collections, products, testimonials] = await Promise.all([
+  const [exhibits, products, testimonials] = await Promise.all([
     Exhibit.find().limit(3),
-    Collection.find().limit(3),
     Product.find().limit(3),
     Testimonial.find().limit(3)
   ]);
@@ -69,15 +58,14 @@ const home = asyncHandler(async (req, res) => {
     pageTitle: "Home",
     weatherHtml,
     exhibitsHtml: buildCards(exhibits, "exhibit"),
-    collectionsHtml: buildCards(collections, "collection"),
     productsHtml: buildCards(products, "product"),
     testimonialsHtml: buildCards(testimonials, "testimonial")
   });
 });
 
-const about = (req, res) => res.render("about", { pageTitle: "About" });
-const accessibility = (req, res) => res.render("accessibility", { pageTitle: "Accessibility" });
-const newsletter = (req, res) => res.render("newsletter", { pageTitle: "Newsletter" });
+const about = (req, res) => res.render("about/about", { pageTitle: "About" });
+const accessibility = (req, res) => res.render("about/accessibility", { pageTitle: "Accessibility" });
+const newsletter = (req, res) => res.render("about/newsletter", { pageTitle: "Newsletter" });
 
 const location = asyncHandler(async (req, res) => {
   const pins = await MapPin.find();
@@ -88,7 +76,7 @@ const location = asyncHandler(async (req, res) => {
     `
     )
     .join("");
-  res.render("location", { pageTitle: "Location", pinsHtml });
+  res.render("about/location", { pageTitle: "Location", pinsHtml });
 });
 
 const exhibits = asyncHandler(async (req, res) => {
@@ -99,7 +87,7 @@ const exhibits = asyncHandler(async (req, res) => {
   const items = await Exhibit.find()
     .skip((page - 1) * limit)
     .limit(limit);
-  res.render("exhibits", {
+  res.render("exhibits/index", {
     pageTitle: "Exhibits",
     exhibitsHtml: buildCards(items, "exhibit"),
     paginationHtml: buildPagination(page, totalPages, "/exhibits")
@@ -111,19 +99,17 @@ const exhibitDetails = asyncHandler(async (req, res) => {
   if (!exhibit) {
     return res.status(404).render("404", { pageTitle: "Not Found", message: "Exhibit not found" });
   }
-  res.render("exhibit-details", { pageTitle: exhibit.title, exhibit });
+  res.render("exhibits/details", { pageTitle: exhibit.title, exhibit });
 });
 
-const collections = asyncHandler(async (req, res) => {
-  const items = await Collection.find();
-  res.render("collections", {
-    pageTitle: "Collections",
-    collectionsHtml: buildCards(items, "collection")
-  });
-});
-
-const virtualTour = (req, res) => res.render("virtual-tour", { pageTitle: "Virtual Tour" });
-const games = (req, res) => res.render("games", { pageTitle: "Games" });
+const virtualTour = (req, res) => res.render("virtual-tour/index", { pageTitle: "Virtual Tour" });
+const virtualTourIslamic = (req, res) => res.render("virtual-tour/islamic", { pageTitle: "Islamic Virtual Tour" });
+const virtualTourPharaoh = (req, res) => res.render("virtual-tour/pharaoh", { pageTitle: "Pharaohs Virtual Tour" });
+const virtualTourChristian = (req, res) => res.render("virtual-tour/christian", { pageTitle: "Christian Virtual Tour" });
+const games = (req, res) => res.render("games/index", { pageTitle: "Games" });
+const gameQuiz = (req, res) => res.render("games/quiz", { pageTitle: "Quiz Game" });
+const gameExplorer = (req, res) => res.render("games/explorer", { pageTitle: "Explorer Game" });
+const gamePyramid = (req, res) => res.render("games/pyramid", { pageTitle: "Pyramid Builder" });
 
 const shop = asyncHandler(async (req, res) => {
   const page = parseInt(req.query.page || "1", 10);
@@ -133,7 +119,7 @@ const shop = asyncHandler(async (req, res) => {
   const items = await Product.find()
     .skip((page - 1) * limit)
     .limit(limit);
-  res.render("shop", {
+  res.render("shop/index", {
     pageTitle: "Shop",
     productsHtml: buildCards(items, "product"),
     paginationHtml: buildPagination(page, totalPages, "/shop")
@@ -153,7 +139,7 @@ const cart = (req, res) => {
     `
     )
     .join("");
-  res.render("cart", { pageTitle: "Cart", cartItemsHtml: itemsHtml, total: cartState.total.toFixed(2) });
+  res.render("shop/cart", { pageTitle: "Cart", cartItemsHtml: itemsHtml, total: cartState.total.toFixed(2) });
 };
 
 const checkout = asyncHandler(async (req, res) => {
@@ -168,12 +154,12 @@ const checkout = asyncHandler(async (req, res) => {
     `
     )
     .join("");
-  res.render("checkout", { pageTitle: "Checkout", ticketsHtml });
+  res.render("shop/checkout", { pageTitle: "Checkout", ticketsHtml });
 });
 
 const testimonials = asyncHandler(async (req, res) => {
   const items = await Testimonial.find().limit(10);
-  res.render("testimonials", {
+  res.render("testimonials/index", {
     pageTitle: "Testimonials",
     testimonialsHtml: buildCards(items, "testimonial")
   });
@@ -184,7 +170,7 @@ const planTrip = asyncHandler(async (req, res) => {
   const weatherHtml = weather
     ? `<div class="weather-card">Current temperature: ${weather.temperature_2m}°C | Wind: ${weather.wind_speed_10m} km/h</div>`
     : "<div class=\"weather-card\">Weather data unavailable</div>";
-  res.render("plan-trip", { pageTitle: "Plan Your Trip", weatherHtml });
+  res.render("plan-trip/index", { pageTitle: "Plan Your Trip", weatherHtml });
 });
 
 module.exports = {
@@ -195,9 +181,14 @@ module.exports = {
   location,
   exhibits,
   exhibitDetails,
-  collections,
   virtualTour,
+  virtualTourIslamic,
+  virtualTourPharaoh,
+  virtualTourChristian,
   games,
+  gameQuiz,
+  gameExplorer,
+  gamePyramid,
   shop,
   cart,
   checkout,

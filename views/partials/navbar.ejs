@@ -1,23 +1,81 @@
 <header class="site-header">
-  <div class="container nav-container">
-    <a class="logo" href="/">🪔 <%= t.siteTitle %></a>
-    <nav class="nav-links">
-      <a href="/" class="nav-link"><%= t.nav.home %></a>
-      <a href="/about" class="nav-link"><%= t.nav.about %></a>
-      <a href="/exhibits" class="nav-link"><%= t.nav.exhibits %></a>
-      <a href="/collections" class="nav-link"><%= t.nav.collections %></a>
-      <a href="/virtual-tour" class="nav-link"><%= t.nav.virtualTour %></a>
-      <a href="/games" class="nav-link"><%= t.nav.games %></a>
-      <a href="/shop" class="nav-link"><%= t.nav.shop %></a>
-      <a href="/testimonials" class="nav-link"><%= t.nav.testimonials %></a>
-      <a href="/plan-trip" class="nav-link"><%= t.nav.planTrip %></a>
-      <a href="/cart" class="nav-link">Cart</a>
-      <%- authLinksHtml %>
-      <div class="lang-switch">
-        <a href="/lang/en" class="nav-link">EN</a>
-        <span>|</span>
-        <a href="/lang/ar" class="nav-link">AR</a>
+  <div class="nav-primary">
+    <div class="nav-top">
+      <div class="container nav-top-inner">
+        <div class="nav-title"><%= t.siteTitle %></div>
+        <div class="nav-top-actions">
+          <button class="nav-toggle" id="nav-toggle" type="button" aria-label="Toggle menu" aria-expanded="false">
+            <i class="fas fa-bars"></i>
+          </button>
+          <div class="nav-top-links">
+            <%- authSectionHtml %>
+            <div class="lang-switch">
+              <a href="/lang/en" class="nav-link">EN</a>
+              <span>|</span>
+              <a href="/lang/ar" class="nav-link">AR</a>
+            </div>
+            <button class="nav-link theme-toggle" id="theme-toggle" type="button"><i class="nav-icon fas fa-moon"></i>Theme</button>
+          </div>
+        </div>
       </div>
-    </nav>
+    </div>
+    <div class="nav-bottom">
+      <div class="container nav-bottom-inner">
+        <nav class="nav-links" id="nav-links">
+          <a href="/" class="nav-link"><i class="nav-icon fas fa-home"></i><%= t.nav.home %></a>
+
+        <div class="nav-item">
+          <button class="nav-link nav-trigger" type="button"><i class="nav-icon fas fa-info-circle"></i><%= t.nav.about %></button>
+          <div class="dropdown">
+            <a href="/about" class="dropdown-link"><i class="dropdown-icon fas fa-circle-info"></i>About Us</a>
+            <a href="/about#mission" class="dropdown-link"><i class="dropdown-icon fas fa-bullseye"></i>Mission and Goal</a>
+            <a href="/accessibility" class="dropdown-link"><i class="dropdown-icon fas fa-universal-access"></i>Accessibility</a>
+            <a href="/newsletter" class="dropdown-link"><i class="dropdown-icon fas fa-newspaper"></i>Newsletter</a>
+            <a href="/location" class="dropdown-link"><i class="dropdown-icon fas fa-map-marker-alt"></i>Location</a>
+            <a href="/testimonials" class="dropdown-link"><i class="dropdown-icon fas fa-comments"></i>Testimonials</a>
+          </div>
+        </div>
+
+        <div class="nav-item">
+          <button class="nav-link nav-trigger" type="button"><i class="nav-icon fas fa-palette"></i><%= t.nav.exhibits %></button>
+          <div class="dropdown">
+            <a href="/exhibits?category=pharaoh" class="dropdown-link"><i class="dropdown-icon fas fa-crown"></i>Pharaoh's Collection</a>
+            <a href="/exhibits?category=islamic" class="dropdown-link"><i class="dropdown-icon fas fa-mosque"></i>Islamic Collection</a>
+            <a href="/exhibits?category=modern" class="dropdown-link"><i class="dropdown-icon fas fa-palette"></i>Modern Collection</a>
+          </div>
+        </div>
+
+        <div class="nav-item">
+          <button class="nav-link nav-trigger" type="button"><i class="nav-icon fas fa-vr-cardboard"></i><%= t.nav.virtualTour %></button>
+          <div class="dropdown">
+            <a href="/virtual-tour/pharaoh" class="dropdown-link"><i class="dropdown-icon fas fa-crown"></i>Pharaohs Tour</a>
+            <a href="/virtual-tour/islamic" class="dropdown-link"><i class="dropdown-icon fas fa-star-and-crescent"></i>Islamic Tour</a>
+            <a href="/virtual-tour/christian" class="dropdown-link"><i class="dropdown-icon fas fa-book-bible"></i>Christian Tour</a>
+          </div>
+        </div>
+
+        <div class="nav-item">
+          <button class="nav-link nav-trigger" type="button"><i class="nav-icon fas fa-gamepad"></i><%= t.nav.games %></button>
+          <div class="dropdown">
+            <a href="/games/quiz" class="dropdown-link"><i class="dropdown-icon fas fa-circle-question"></i>Quiz Game</a>
+            <a href="/games/explorer" class="dropdown-link"><i class="dropdown-icon fas fa-compass"></i>Explorer Game</a>
+            <a href="/games/pyramid" class="dropdown-link"><i class="dropdown-icon fas fa-mountain"></i>Pyramid Builder</a>
+          </div>
+        </div>
+
+        <div class="nav-item">
+          <button class="nav-link nav-trigger" type="button"><i class="nav-icon fas fa-shopping-bag"></i><%= t.nav.shop %></button>
+          <div class="dropdown">
+            <a href="/shop" class="dropdown-link"><i class="dropdown-icon fas fa-store"></i>Shop</a>
+            <a href="/shop?type=books" class="dropdown-link"><i class="dropdown-icon fas fa-book"></i>Books & Materials</a>
+            <a href="/shop?type=souvenirs" class="dropdown-link"><i class="dropdown-icon fas fa-gift"></i>Souvenirs</a>
+            <a href="/cart" class="dropdown-link"><i class="dropdown-icon fas fa-cart-shopping"></i>Cart</a>
+          </div>
+        </div>
+
+          <a href="/plan-trip" class="nav-link"><i class="nav-icon fas fa-calendar-alt"></i><%= t.nav.planTrip %></a>
+        </nav>
+      </div>
+    </div>
   </div>
 </header>

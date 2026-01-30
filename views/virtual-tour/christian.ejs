@@ -1,0 +1,55 @@
+<%- include('../partials/header') %>
+<%- include('../partials/navbar') %>
+
+<section class="tour-hero" id="tourinfo">
+  <div class="container">
+    <h1 class="tour-title">Christian Virtual Tour</h1>
+    <p class="tour-subtitle">Explore historic churches, sacred art, and Christian heritage.</p>
+  </div>
+</section>
+
+<section class="tour-intro">
+  <div class="container">
+    <h2>Welcome</h2>
+    <p>
+      Step into the Christian galleries and discover devotional artifacts, manuscripts, and
+      architectural motifs that shaped Christian history. Navigate the panorama below to explore
+      each space in detail.
+    </p>
+  </div>
+</section>
+
+<section class="tour-map">
+  <div class="container">
+    <div class="map-frame">
+      <iframe
+        title="Christian Virtual Tour"
+        src="https://www.google.com/maps/embed?pb=!4v1756514091656!6m8!1m7!1sKxGiVsq4lyvQfLGofekgrQ!2m2!1d45.45452731239332!2d9.181193583672036!3f169.97287295006342!4f0.3149009128870546!5f0.7820865974627469"
+        allowfullscreen
+        loading="lazy"
+        referrerpolicy="no-referrer-when-downgrade"></iframe>
+      <div class="map-ornament ornament-1"></div>
+      <div class="map-ornament ornament-2"></div>
+      <div class="map-ornament ornament-3"></div>
+      <div class="map-ornament ornament-4"></div>
+    </div>
+    <div class="tour-controls">
+      <button class="btn tour-btn" id="tour-audio-btn"><i class="fas fa-volume-up"></i>Audio Guide</button>
+      <a class="btn tour-btn" href="/assets/brochure.pdf" download>
+        <i class="fas fa-file-arrow-down"></i>Download Brochure
+      </a>
+      <a class="btn tour-btn" href="#tourinfo"><i class="fas fa-info-circle"></i>Tour Info</a>
+      <button class="btn tour-btn" id="tour-fullscreen-btn"><i class="fas fa-expand"></i>Fullscreen</button>
+    </div>
+  </div>
+</section>
+
+<section class="tour-info">
+  <div class="container">
+    <h3>Tour Notes</h3>
+    <p>Use the guide to learn about Christian history, art, and cultural influence.</p>
+    <audio id="tour-audio" src="/assets/audio/islamic-tour.mp3"></audio>
+  </div>
+</section>
+
+<%- include('../partials/footer') %>

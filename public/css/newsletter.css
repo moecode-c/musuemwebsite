@@ -1,0 +1,17 @@
+/* Newsletter page styles */
+
+.newsletter-note {
+	margin-top: 20px;
+}
+
+.info-card {
+	background: var(--surface);
+	border: 1px solid var(--border);
+	border-radius: 14px;
+	padding: 20px;
+	box-shadow: 0 12px 24px rgba(0, 0, 0, 0.2);
+}
+
+.section .list {
+	margin-top: 12px;
+}

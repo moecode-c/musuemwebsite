@@ -1,0 +1,20 @@
+<%- include('../partials/header') %>
+<%- include('../partials/navbar') %>
+
+<section class="page-hero">
+  <div class="container">
+    <h1>Shop</h1>
+    <p>Bring home curated souvenirs and replicas.</p>
+  </div>
+</section>
+
+<section class="section">
+  <div class="container">
+    <div class="grid">
+      <%- productsHtml %>
+    </div>
+    <%- paginationHtml %>
+  </div>
+</section>
+
+<%- include('../partials/footer') %>
