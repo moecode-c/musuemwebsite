@@ -1,0 +1,23 @@
+<header class="site-header">
+  <div class="container nav-container">
+    <a class="logo" href="/">🪔 <%= t.siteTitle %></a>
+    <nav class="nav-links">
+      <a href="/" class="nav-link"><%= t.nav.home %></a>
+      <a href="/about" class="nav-link"><%= t.nav.about %></a>
+      <a href="/exhibits" class="nav-link"><%= t.nav.exhibits %></a>
+      <a href="/collections" class="nav-link"><%= t.nav.collections %></a>
+      <a href="/virtual-tour" class="nav-link"><%= t.nav.virtualTour %></a>
+      <a href="/games" class="nav-link"><%= t.nav.games %></a>
+      <a href="/shop" class="nav-link"><%= t.nav.shop %></a>
+      <a href="/testimonials" class="nav-link"><%= t.nav.testimonials %></a>
+      <a href="/plan-trip" class="nav-link"><%= t.nav.planTrip %></a>
+      <a href="/cart" class="nav-link">Cart</a>
+      <%- authLinksHtml %>
+      <div class="lang-switch">
+        <a href="/lang/en" class="nav-link">EN</a>
+        <span>|</span>
+        <a href="/lang/ar" class="nav-link">AR</a>
+      </div>
+    </nav>
+  </div>
+</header>

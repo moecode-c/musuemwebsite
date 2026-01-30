@@ -1,0 +1,34 @@
+<%- include('../partials/header') %>
+<%- include('../partials/navbar') %>
+
+<section class="page-hero">
+  <div class="container">
+    <h1>Manage Products</h1>
+    <p>Control shop items and inventory.</p>
+  </div>
+</section>
+
+<section class="section">
+  <div class="container split">
+    <form class="form" id="admin-product-form" enctype="multipart/form-data">
+      <label>Name</label>
+      <input type="text" name="name" required />
+      <label>Description</label>
+      <textarea name="description" required></textarea>
+      <label>Price</label>
+      <input type="number" name="price" min="0" step="0.01" required />
+      <label>Stock</label>
+      <input type="number" name="stock" min="0" required />
+      <label>Image</label>
+      <input type="file" name="image" accept="image/*" required />
+      <button class="btn" type="submit">Create Product</button>
+      <p class="form-message" id="admin-product-message"></p>
+    </form>
+    <div>
+      <h3>Product List</h3>
+      <div id="admin-product-list" class="admin-list"></div>
+    </div>
+  </div>
+</section>
+
+<%- include('../partials/footer') %>

@@ -1,0 +1,22 @@
+<%- include('partials/header') %>
+<%- include('partials/navbar') %>
+
+<section class="page-hero">
+  <div class="container">
+    <h1>Newsletter</h1>
+    <p>Subscribe for exhibitions, events, and exclusive stories.</p>
+  </div>
+</section>
+
+<section class="section">
+  <div class="container">
+    <form class="form" id="newsletter-form">
+      <label>Email</label>
+      <input type="email" name="email" required />
+      <button class="btn" type="submit">Subscribe</button>
+      <p class="form-message" id="newsletter-message"></p>
+    </form>
+  </div>
+</section>
+
+<%- include('partials/footer') %>

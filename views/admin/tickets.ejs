@@ -1,0 +1,30 @@
+<%- include('../partials/header') %>
+<%- include('../partials/navbar') %>
+
+<section class="page-hero">
+  <div class="container">
+    <h1>Manage Tickets</h1>
+    <p>Update ticket pricing and types.</p>
+  </div>
+</section>
+
+<section class="section">
+  <div class="container split">
+    <form class="form" id="admin-ticket-form">
+      <label>Type</label>
+      <input type="text" name="type" required />
+      <label>Price</label>
+      <input type="number" name="price" min="0" step="0.01" required />
+      <label>Description</label>
+      <textarea name="description"></textarea>
+      <button class="btn" type="submit">Create Ticket</button>
+      <p class="form-message" id="admin-ticket-message"></p>
+    </form>
+    <div>
+      <h3>Ticket List</h3>
+      <div id="admin-ticket-list" class="admin-list"></div>
+    </div>
+  </div>
+</section>
+
+<%- include('../partials/footer') %>

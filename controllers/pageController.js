@@ -1,0 +1,206 @@
+const Exhibit = require("../models/Exhibit");
+const Collection = require("../models/Collection");
+const Product = require("../models/Product");
+const Testimonial = require("../models/Testimonial");
+const Ticket = require("../models/Ticket");
+const MapPin = require("../models/MapPin");
+const { asyncHandler } = require("../utils/asyncHandler");
+const { getWeather } = require("../utils/apiClient");
+const { buildPagination } = require("../utils/pagination");
+
+const buildCards = (items, type) => {
+  return items
+    .map((item) => {
+      if (type === "exhibit") {
+        return `
+          <article class="card">
+            <img src="${item.imageUrl}" alt="${item.title}">
+            <h3>${item.title}</h3>
+            <p>${item.description.substring(0, 120)}...</p>
+            <a class="btn" href="/exhibits/${item._id}">View Details</a>
+          </article>
+        `;
+      }
+      if (type === "collection") {
+        return `
+          <article class="card">
+            <img src="${item.imageUrl}" alt="${item.title}">
+            <h3>${item.title}</h3>
+            <p>${item.summary.substring(0, 120)}...</p>
+          </article>
+        `;
+      }
+      if (type === "product") {
+        return `
+          <article class="card">
+            <img src="${item.imageUrl}" alt="${item.name}">
+            <h3>${item.name}</h3>
+            <p>EGP ${item.price.toFixed(2)}</p>
+            <button class="btn add-to-cart" data-id="${item._id}">Add to Cart</button>
+          </article>
+        `;
+      }
+      if (type === "testimonial") {
+        return `
+          <article class="card">
+            <h3>${item.name}</h3>
+            <p>${item.message}</p>
+          </article>
+        `;
+      }
+      return "";
+    })
+    .join("");
+};
+
+const home = asyncHandler(async (req, res) => {
+  const [exhibits, collections, products, testimonials] = await Promise.all([
+    Exhibit.find().limit(3),
+    Collection.find().limit(3),
+    Product.find().limit(3),
+    Testimonial.find().limit(3)
+  ]);
+  const weather = await getWeather().catch(() => null);
+  const weatherHtml = weather
+    ? `<div class="weather-card">Current temperature: ${weather.temperature_2m}°C | Wind: ${weather.wind_speed_10m} km/h</div>`
+    : "<div class=\"weather-card\">Weather data unavailable</div>";
+
+  res.render("home", {
+    pageTitle: "Home",
+    weatherHtml,
+    exhibitsHtml: buildCards(exhibits, "exhibit"),
+    collectionsHtml: buildCards(collections, "collection"),
+    productsHtml: buildCards(products, "product"),
+    testimonialsHtml: buildCards(testimonials, "testimonial")
+  });
+});
+
+const about = (req, res) => res.render("about", { pageTitle: "About" });
+const accessibility = (req, res) => res.render("accessibility", { pageTitle: "Accessibility" });
+const newsletter = (req, res) => res.render("newsletter", { pageTitle: "Newsletter" });
+
+const location = asyncHandler(async (req, res) => {
+  const pins = await MapPin.find();
+  const pinsHtml = pins
+    .map(
+      (pin) => `
+      <div class="map-pin" data-x="${pin.x}" data-y="${pin.y}" data-label="${pin.label}" data-description="${pin.description}"></div>
+    `
+    )
+    .join("");
+  res.render("location", { pageTitle: "Location", pinsHtml });
+});
+
+const exhibits = asyncHandler(async (req, res) => {
+  const page = parseInt(req.query.page || "1", 10);
+  const limit = 6;
+  const total = await Exhibit.countDocuments();
+  const totalPages = Math.ceil(total / limit) || 1;
+  const items = await Exhibit.find()
+    .skip((page - 1) * limit)
+    .limit(limit);
+  res.render("exhibits", {
+    pageTitle: "Exhibits",
+    exhibitsHtml: buildCards(items, "exhibit"),
+    paginationHtml: buildPagination(page, totalPages, "/exhibits")
+  });
+});
+
+const exhibitDetails = asyncHandler(async (req, res) => {
+  const exhibit = await Exhibit.findById(req.params.id);
+  if (!exhibit) {
+    return res.status(404).render("404", { pageTitle: "Not Found", message: "Exhibit not found" });
+  }
+  res.render("exhibit-details", { pageTitle: exhibit.title, exhibit });
+});
+
+const collections = asyncHandler(async (req, res) => {
+  const items = await Collection.find();
+  res.render("collections", {
+    pageTitle: "Collections",
+    collectionsHtml: buildCards(items, "collection")
+  });
+});
+
+const virtualTour = (req, res) => res.render("virtual-tour", { pageTitle: "Virtual Tour" });
+const games = (req, res) => res.render("games", { pageTitle: "Games" });
+
+const shop = asyncHandler(async (req, res) => {
+  const page = parseInt(req.query.page || "1", 10);
+  const limit = 6;
+  const total = await Product.countDocuments();
+  const totalPages = Math.ceil(total / limit) || 1;
+  const items = await Product.find()
+    .skip((page - 1) * limit)
+    .limit(limit);
+  res.render("shop", {
+    pageTitle: "Shop",
+    productsHtml: buildCards(items, "product"),
+    paginationHtml: buildPagination(page, totalPages, "/shop")
+  });
+});
+
+const cart = (req, res) => {
+  const cartState = req.session.cart || { items: [], total: 0 };
+  const itemsHtml = cartState.items
+    .map(
+      (item) => `
+      <div class="cart-item">
+        <span>${item.name}</span>
+        <span>EGP ${item.price.toFixed(2)}</span>
+        <span>Qty: ${item.quantity}</span>
+      </div>
+    `
+    )
+    .join("");
+  res.render("cart", { pageTitle: "Cart", cartItemsHtml: itemsHtml, total: cartState.total.toFixed(2) });
+};
+
+const checkout = asyncHandler(async (req, res) => {
+  const tickets = await Ticket.find();
+  const ticketsHtml = tickets
+    .map(
+      (ticket) => `
+      <div class="ticket-row">
+        <span>${ticket.type}</span>
+        <span>EGP ${ticket.price.toFixed(2)}</span>
+      </div>
+    `
+    )
+    .join("");
+  res.render("checkout", { pageTitle: "Checkout", ticketsHtml });
+});
+
+const testimonials = asyncHandler(async (req, res) => {
+  const items = await Testimonial.find().limit(10);
+  res.render("testimonials", {
+    pageTitle: "Testimonials",
+    testimonialsHtml: buildCards(items, "testimonial")
+  });
+});
+
+const planTrip = asyncHandler(async (req, res) => {
+  const weather = await getWeather().catch(() => null);
+  const weatherHtml = weather
+    ? `<div class="weather-card">Current temperature: ${weather.temperature_2m}°C | Wind: ${weather.wind_speed_10m} km/h</div>`
+    : "<div class=\"weather-card\">Weather data unavailable</div>";
+  res.render("plan-trip", { pageTitle: "Plan Your Trip", weatherHtml });
+});
+
+module.exports = {
+  home,
+  about,
+  accessibility,
+  newsletter,
+  location,
+  exhibits,
+  exhibitDetails,
+  collections,
+  virtualTour,
+  games,
+  shop,
+  cart,
+  checkout,
+  testimonials,
+  planTrip
+};

@@ -1,0 +1,29 @@
+<%- include('partials/header') %>
+<%- include('partials/navbar') %>
+
+<section class="page-hero">
+  <div class="container">
+    <h1><%= exhibit.title %></h1>
+    <p><%= exhibit.category %> | <%= exhibit.era %></p>
+  </div>
+</section>
+
+<section class="section">
+  <div class="container split">
+    <div>
+      <img src="<%= exhibit.imageUrl %>" alt="<%= exhibit.title %>" class="detail-image" />
+      <p><%= exhibit.description %></p>
+    </div>
+    <div>
+      <model-viewer
+        src="<%= exhibit.modelUrl %>"
+        alt="3D model of <%= exhibit.title %>"
+        auto-rotate
+        camera-controls
+        class="model-viewer">
+      </model-viewer>
+    </div>
+  </div>
+</section>
+
+<%- include('partials/footer') %>

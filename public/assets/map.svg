@@ -1,0 +1,10 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="800" viewBox="0 0 1200 800">
+  <rect width="1200" height="800" fill="#efe6d1" />
+  <rect x="120" y="120" width="960" height="560" fill="#f7f2e6" stroke="#c9b38a" stroke-width="8" />
+  <path d="M150 250 L1050 250" stroke="#c9b38a" stroke-width="6" />
+  <path d="M150 420 L1050 420" stroke="#c9b38a" stroke-width="6" />
+  <path d="M150 600 L1050 600" stroke="#c9b38a" stroke-width="6" />
+  <text x="200" y="200" font-size="28" fill="#8b6b3b">Pharaoh Gallery</text>
+  <text x="200" y="370" font-size="28" fill="#8b6b3b">Islamic Art</text>
+  <text x="200" y="550" font-size="28" fill="#8b6b3b">Modern Egypt</text>
+</svg>

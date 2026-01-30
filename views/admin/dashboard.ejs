@@ -1,0 +1,22 @@
+<%- include('../partials/header') %>
+<%- include('../partials/navbar') %>
+
+<section class="page-hero">
+  <div class="container">
+    <h1>Admin Dashboard</h1>
+    <p>Manage museum content and operations.</p>
+  </div>
+</section>
+
+<section class="section">
+  <div class="container grid">
+    <div class="stat-card">Exhibits: <strong><%= stats.exhibitCount %></strong></div>
+    <div class="stat-card">Collections: <strong><%= stats.collectionCount %></strong></div>
+    <div class="stat-card">Products: <strong><%= stats.productCount %></strong></div>
+    <div class="stat-card">Users: <strong><%= stats.userCount %></strong></div>
+    <div class="stat-card">Tickets: <strong><%= stats.ticketCount %></strong></div>
+    <div class="stat-card">Testimonials: <strong><%= stats.testimonialCount %></strong></div>
+  </div>
+</section>
+
+<%- include('../partials/footer') %>

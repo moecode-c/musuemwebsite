@@ -1,0 +1,27 @@
+<%- include('../partials/header') %>
+<%- include('../partials/navbar') %>
+
+<section class="page-hero">
+  <div class="container">
+    <h1>Settings</h1>
+    <p>Configure site preferences and localization defaults.</p>
+  </div>
+</section>
+
+<section class="section">
+  <div class="container">
+    <form class="form" id="admin-settings-form">
+      <label>Default Language</label>
+      <select name="defaultLanguage">
+        <option value="en">English</option>
+        <option value="ar">Arabic</option>
+      </select>
+      <label>Contact Email</label>
+      <input type="email" name="contactEmail" />
+      <button class="btn" type="submit">Save Settings</button>
+      <p class="form-message" id="admin-settings-message"></p>
+    </form>
+  </div>
+</section>
+
+<%- include('../partials/footer') %>

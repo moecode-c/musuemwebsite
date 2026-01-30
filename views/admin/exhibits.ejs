@@ -1,0 +1,36 @@
+<%- include('../partials/header') %>
+<%- include('../partials/navbar') %>
+
+<section class="page-hero">
+  <div class="container">
+    <h1>Manage Exhibits</h1>
+    <p>Add, edit, and remove museum exhibits.</p>
+  </div>
+</section>
+
+<section class="section">
+  <div class="container split">
+    <form class="form" id="admin-exhibit-form" enctype="multipart/form-data">
+      <label>Title</label>
+      <input type="text" name="title" required />
+      <label>Category</label>
+      <input type="text" name="category" required />
+      <label>Description</label>
+      <textarea name="description" required></textarea>
+      <label>Era</label>
+      <input type="text" name="era" />
+      <label>Image</label>
+      <input type="file" name="image" accept="image/*" required />
+      <label>3D Model (.glb/.gltf)</label>
+      <input type="file" name="model" accept=".glb,.gltf" required />
+      <button class="btn" type="submit">Create Exhibit</button>
+      <p class="form-message" id="admin-exhibit-message"></p>
+    </form>
+    <div>
+      <h3>Exhibit List</h3>
+      <div id="admin-exhibit-list" class="admin-list"></div>
+    </div>
+  </div>
+</section>
+
+<%- include('../partials/footer') %>

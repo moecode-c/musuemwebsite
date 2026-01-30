@@ -1,0 +1,37 @@
+<%- include('../partials/header') %>
+<%- include('../partials/navbar') %>
+
+<section class="page-hero">
+  <div class="container">
+    <h1>Manage Map Pins</h1>
+    <p>Place and edit pins on the museum map.</p>
+  </div>
+</section>
+
+<section class="section">
+  <div class="container split">
+    <div>
+      <div class="map-wrapper admin-map" id="admin-map">
+        <img src="/assets/map.svg" alt="Museum map" class="map-image" />
+        <div class="map-layer">
+          <%- pinsHtml %>
+        </div>
+      </div>
+      <p class="hint">Click on the map to add a pin.</p>
+    </div>
+    <form class="form" id="admin-map-form">
+      <label>Label</label>
+      <input type="text" name="label" required />
+      <label>Description</label>
+      <textarea name="description" required></textarea>
+      <label>X (%)</label>
+      <input type="number" name="x" min="0" max="100" step="0.1" required />
+      <label>Y (%)</label>
+      <input type="number" name="y" min="0" max="100" step="0.1" required />
+      <button class="btn" type="submit">Create Pin</button>
+      <p class="form-message" id="admin-map-message"></p>
+    </form>
+  </div>
+</section>
+
+<%- include('../partials/footer') %>

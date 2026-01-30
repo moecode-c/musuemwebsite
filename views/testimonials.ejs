@@ -1,0 +1,31 @@
+<%- include('partials/header') %>
+<%- include('partials/navbar') %>
+
+<section class="page-hero">
+  <div class="container">
+    <h1>Testimonials</h1>
+    <p>Share your museum experience.</p>
+  </div>
+</section>
+
+<section class="section">
+  <div class="container split">
+    <div>
+      <div class="grid">
+        <%- testimonialsHtml %>
+      </div>
+    </div>
+    <form class="form" id="testimonial-form">
+      <label>Name</label>
+      <input type="text" name="name" required />
+      <label>Message</label>
+      <textarea name="message" required></textarea>
+      <label>Rating (1-5)</label>
+      <input type="number" name="rating" min="1" max="5" value="5" required />
+      <button class="btn" type="submit">Submit</button>
+      <p class="form-message" id="testimonial-message"></p>
+    </form>
+  </div>
+</section>
+
+<%- include('partials/footer') %>

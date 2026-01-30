@@ -1,0 +1,54 @@
+<%- include('partials/header') %>
+<%- include('partials/navbar') %>
+
+<section class="hero">
+  <div class="container hero-content">
+    <div>
+      <h1>Discover Egypt's Timeless Legacy</h1>
+      <p>Explore royal treasures, immersive virtual tours, and curated collections.</p>
+      <a class="btn" href="/exhibits">Explore Exhibits</a>
+    </div>
+    <div class="hero-card">
+      <h3>Weather in Cairo</h3>
+      <%- weatherHtml %>
+    </div>
+  </div>
+</section>
+
+<section class="section">
+  <div class="container">
+    <h2>Featured Exhibits</h2>
+    <div class="grid">
+      <%- exhibitsHtml %>
+    </div>
+  </div>
+</section>
+
+<section class="section alt">
+  <div class="container">
+    <h2>Collections</h2>
+    <div class="grid">
+      <%- collectionsHtml %>
+    </div>
+  </div>
+</section>
+
+<section class="section">
+  <div class="container">
+    <h2>Shop Highlights</h2>
+    <div class="grid">
+      <%- productsHtml %>
+    </div>
+  </div>
+</section>
+
+<section class="section alt">
+  <div class="container">
+    <h2>Visitor Testimonials</h2>
+    <div class="grid">
+      <%- testimonialsHtml %>
+    </div>
+  </div>
+</section>
+
+<%- include('partials/footer') %>
