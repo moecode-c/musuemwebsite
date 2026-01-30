@@ -161,18 +161,22 @@ const renderQuestion = () => {
   if (tagEl) tagEl.textContent = question.tag;
   if (questionEl) questionEl.textContent = question.question;
 
-  question.options.forEach((option, index) => {
-    const button = document.createElement("button");
-    button.className = "quiz-option";
-    button.type = "button";
-    button.textContent = option;
-    button.addEventListener("click", () => handleAnswer(index, button, optionsEl, feedbackEl));
-    optionsEl.appendChild(button);
-  });
+  if (optionsEl) {
+    question.options.forEach((option, index) => {
+      const button = document.createElement("button");
+      button.className = "quiz-option";
+      button.type = "button";
+      button.textContent = option;
+      button.addEventListener("click", () => handleAnswer(index, button, optionsEl, feedbackEl));
+      optionsEl.appendChild(button);
+    });
+  }
 
   if (feedbackEl) {
     feedbackEl.textContent = "Select an answer to reveal the explanation.";
   }
+
+  quizBody.appendChild(fragment);
 
   updateMeta();
   if (nextButton) {

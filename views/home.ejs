@@ -1,22 +1,7 @@
 <%- include('partials/header') %>
 <%- include('partials/navbar') %>
 
-<section class="hero hero--video">
-  <video
-    class="hero-video"
-    autoplay
-    muted
-    loop
-    playsinline
-    preload="auto"
-    disablepictureinpicture
-    controlslist="nodownload noplaybackrate noremoteplayback"
-    poster="/assets/hero.svg"
-    aria-hidden="true"
-    tabindex="-1"
-  >
-    <source src="/assets/herovid.mp4" type="video/mp4" />
-  </video>
+<section class="hero hero--image">
   <div class="hero-overlay"></div>
   <div class="container hero-content">
     <div class="hero-copy">
@@ -27,6 +12,21 @@
         <a class="btn" href="/exhibits">Explore Exhibits</a>
         <a class="btn ghost" href="/virtual-tour">Start Virtual Tour</a>
       </div>
+    </div>
+    <div class="hero-media">
+      <model-viewer
+        class="hero-model"
+        src="/assets/3dmodels/tutenkahmonhead.glb"
+        alt="Tutankhamun head sculpture"
+        camera-controls
+        auto-rotate
+        rotation-per-second="18deg"
+        shadow-intensity="0.8"
+        exposure="1.1"
+        environment-image="neutral"
+        disable-zoom
+        interaction-prompt="none"
+      ></model-viewer>
     </div>
   </div>
 </section>

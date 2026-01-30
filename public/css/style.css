@@ -68,21 +68,22 @@ a {
   z-index: 100;
   box-shadow: none;
   transition: background 0.3s ease, box-shadow 0.3s ease;
-  backdrop-filter: blur(6px);
+  backdrop-filter: none;
 }
 
 .site-header.scrolled {
   background: radial-gradient(circle at top, #2a1b45, #120e1f 65%);
-  box-shadow: 0 12px 30px rgba(0, 0, 0, 0.4);
+  box-shadow: none;
 }
 
 .theme-light .site-header.scrolled {
   background: linear-gradient(120deg, #fff5e4, #f1e3c9);
-  box-shadow: 0 12px 30px rgba(120, 90, 40, 0.25);
+  box-shadow: none;
 }
 
 .nav-primary {
   transition: opacity 0.3s ease, transform 0.3s ease;
+  font-family: "Cinzel Decorative", "Cinzel", serif;
 }
 
 
@@ -112,8 +113,8 @@ a {
 
 .nav-title {
   letter-spacing: 6px;
-  font-weight: 600;
-  font-size: 14px;
+  font-weight: 700;
+  font-size: 16px;
   text-transform: uppercase;
   color: var(--accent);
 }
@@ -140,21 +141,10 @@ a {
   border-radius: 999px;
   border: 1px solid var(--nav-border);
   background: var(--nav-bg);
-  backdrop-filter: blur(10px);
+  backdrop-filter: none;
 }
 
-.nav-toggle {
-  display: none;
-  align-items: center;
-  justify-content: center;
-  width: 42px;
-  height: 42px;
-  border-radius: 12px;
-  border: 1px solid var(--nav-border);
-  background: var(--nav-bg);
-  color: var(--accent);
-  cursor: pointer;
-}
+
 
 .nav-item {
   position: relative;
@@ -178,7 +168,7 @@ a {
   display: none;
   flex-direction: column;
   gap: 10px;
-  box-shadow: 0 12px 30px rgba(0, 0, 0, 0.4);
+  box-shadow: none;
   z-index: 200;
 }
 
@@ -192,25 +182,20 @@ a {
     justify-content: flex-end;
   }
 
-  .nav-toggle {
-    display: inline-flex;
-  }
-
   .nav-links {
-    position: absolute;
-    top: calc(100% + 6px);
-    left: 5%;
-    right: 5%;
+    position: fixed;
+    top: 0;
+    left: 0;
+    height: 100vh;
+    width: min(260px, 85vw);
     flex-direction: column;
     align-items: stretch;
-    border-radius: 18px;
-    padding: 18px;
-    display: none;
-    z-index: 300;
-  }
-
-  .nav-links.is-open {
+    border-radius: 0;
+    padding: 90px 18px 24px;
     display: flex;
+    z-index: 300;
+    box-shadow: none;
+    overflow-y: auto;
   }
 
   .nav-item {
@@ -260,8 +245,9 @@ a {
 
 .nav-link {
   color: var(--text);
-  font-size: 13px;
-  letter-spacing: 1px;
+  font-size: 14px;
+  font-weight: 600;
+  letter-spacing: 1.4px;
   text-transform: uppercase;
   padding: 6px 12px;
   border-radius: 999px;
@@ -269,6 +255,8 @@ a {
   align-items: center;
   gap: 6px;
   transition: color 0.3s ease, background 0.3s ease;
+  text-shadow: none;
+  -webkit-text-stroke: 0;
 }
 
 .nav-link:hover {
@@ -326,7 +314,7 @@ a {
   padding: 20px;
   border-radius: 12px;
   border: 1px solid var(--border);
-  backdrop-filter: blur(6px);
+  backdrop-filter: none;
 }
 
 .page-hero {

@@ -56,6 +56,7 @@ const home = asyncHandler(async (req, res) => {
 
   res.render("home", {
     pageTitle: "Home",
+    pageCss: "home",
     weatherHtml,
     exhibitsHtml: buildCards(exhibits, "exhibit"),
     productsHtml: buildCards(products, "product"),

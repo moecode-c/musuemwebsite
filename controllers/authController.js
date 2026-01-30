@@ -3,7 +3,7 @@ const User = require("../models/User");
 const { asyncHandler } = require("../utils/asyncHandler");
 
 const showRegister = (req, res) => {
-  res.render("auth/register", { pageTitle: "Register" });
+  res.render("auth/register", { pageTitle: "Register", pageCss: "register" });
 };
 
 const register = asyncHandler(async (req, res) => {
@@ -19,7 +19,7 @@ const register = asyncHandler(async (req, res) => {
 });
 
 const showLogin = (req, res) => {
-  res.render("auth/login", { pageTitle: "Login" });
+  res.render("auth/login", { pageTitle: "Login", pageCss: "login" });
 };
 
 const login = asyncHandler(async (req, res) => {

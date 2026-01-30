@@ -1,23 +1,59 @@
 <%- include('../partials/header') %>
 <%- include('../partials/navbar') %>
 
-<section class="page-hero">
-  <div class="container">
-    <h1>Login</h1>
-    <p>Access your museum account.</p>
-  </div>
-</section>
+<section class="auth-section">
+  <div class="container auth-layout">
+    <div class="auth-panel">
+      <p class="auth-eyebrow">Member access</p>
+      <h1>Welcome back to the museum</h1>
+      <p class="auth-subtitle">Sign in to manage tickets, saved exhibits, and your account preferences.</p>
+      <div class="auth-highlights">
+        <div>
+          <i class="fa-solid fa-ticket"></i>
+          <span>Fast ticket checkout</span>
+        </div>
+        <div>
+          <i class="fa-solid fa-landmark"></i>
+          <span>Personalized exhibit picks</span>
+        </div>
+        <div>
+          <i class="fa-solid fa-bell"></i>
+          <span>Event alerts</span>
+        </div>
+      </div>
+    </div>
 
-<section class="section">
-  <div class="container">
-    <form class="form" id="login-form">
-      <label>Email</label>
-      <input type="email" name="email" required />
-      <label>Password</label>
-      <input type="password" name="password" required />
-      <button class="btn" type="submit">Login</button>
-      <p class="form-message" id="login-message"></p>
-    </form>
+    <div class="auth-card">
+      <div class="auth-card-header">
+        <span class="auth-badge">Secure login</span>
+        <h2>Sign in</h2>
+        <p>Use your email and password to continue.</p>
+      </div>
+
+      <form class="auth-form" id="login-form">
+        <div class="input-group">
+          <label for="login-email">Email</label>
+          <div class="input-field">
+            <i class="fa-regular fa-envelope"></i>
+            <input id="login-email" type="email" name="email" placeholder="you@example.com" required />
+          </div>
+        </div>
+        <div class="input-group">
+          <label for="login-password">Password</label>
+          <div class="input-field">
+            <i class="fa-solid fa-lock"></i>
+            <input id="login-password" type="password" name="password" placeholder="Enter your password" required />
+          </div>
+        </div>
+        <button class="btn auth-submit" type="submit">Login</button>
+        <p class="form-message" id="login-message"></p>
+      </form>
+
+      <div class="auth-footer">
+        <span>New here?</span>
+        <a href="/auth/register">Create an account</a>
+      </div>
+    </div>
   </div>
 </section>
 
