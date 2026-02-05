@@ -38,7 +38,7 @@ const adminMap = asyncHandler(async (req, res) => {
   const pinsHtml = pins
     .map(
       (pin) => `
-      <div class="map-pin" data-x="${pin.x}" data-y="${pin.y}" data-label="${pin.label}" data-description="${pin.description}"></div>
+      <div class="map-pin" data-id="${pin._id}" data-x="${pin.x}" data-y="${pin.y}" data-label="${pin.label}" data-description="${pin.description}"></div>
     `
     )
     .join("");

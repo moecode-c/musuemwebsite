@@ -4,7 +4,7 @@ const renderAdminList = (container, items, labelField, onDelete, onEdit) => {
     .map(
       (item) => `
       <div class="admin-item">
-        <span>${typeof labelField === "function" ? labelField(item) : item[labelField]}</span>
+        <div class="admin-item-content">${typeof labelField === "function" ? labelField(item) : item[labelField]}</div>
         <div class="admin-actions">
           <button class="btn btn-secondary" data-action="edit" data-id="${item._id}">Edit</button>
           <button class="btn" data-action="delete" data-id="${item._id}">Delete</button>
@@ -69,15 +69,51 @@ const initEditableForm = (form, submitLabel) => {
 document.addEventListener("DOMContentLoaded", () => {
   const exhibitForm = document.getElementById("admin-exhibit-form");
   const exhibitList = document.getElementById("admin-exhibit-list");
+  const exhibitMap = document.getElementById("admin-exhibit-map");
+  const exhibitPin = document.getElementById("admin-exhibit-pin");
+  const setExhibitPin = (x, y) => {
+    if (!exhibitPin) return;
+    if (x === "" || y === "" || x === null || y === null || x === undefined || y === undefined) {
+      exhibitPin.style.display = "none";
+      return;
+    }
+    exhibitPin.style.left = `${Number(x)}%`;
+    exhibitPin.style.top = `${Number(y)}%`;
+    exhibitPin.style.display = "block";
+  };
+
+  if (exhibitMap && exhibitForm) {
+    exhibitMap.addEventListener("click", (event) => {
+      const rect = exhibitMap.getBoundingClientRect();
+      const x = ((event.clientX - rect.left) / rect.width) * 100;
+      const y = ((event.clientY - rect.top) / rect.height) * 100;
+      exhibitForm.querySelector("input[name='x']").value = x;
+      exhibitForm.querySelector("input[name='y']").value = y;
+      setExhibitPin(x, y);
+    });
+
+    exhibitForm.querySelectorAll("input[name='x'], input[name='y']").forEach((input) => {
+      input.addEventListener("input", () => {
+        setExhibitPin(exhibitForm.x.value, exhibitForm.y.value);
+      });
+    });
+  }
   if (exhibitForm) {
     const { setEditing } = initEditableForm(exhibitForm, "Update Exhibit");
+    const exhibitCancel = exhibitForm.querySelector(".admin-cancel");
+    if (exhibitCancel) {
+      exhibitCancel.addEventListener("click", () => setExhibitPin("", ""));
+    }
     adminFetchList("/api/exhibits", exhibitList, "title", (item) => {
       exhibitForm.title.value = item.title || "";
       exhibitForm.category.value = item.category || "";
       exhibitForm.description.value = item.description || "";
       exhibitForm.era.value = item.era || "";
+      exhibitForm.x.value = item.x ?? "";
+      exhibitForm.y.value = item.y ?? "";
       exhibitForm.dataset.editId = item._id;
       setEditing(true, "Update Exhibit");
+      setExhibitPin(item.x, item.y);
     });
     exhibitForm.addEventListener("submit", async (event) => {
       event.preventDefault();
@@ -108,8 +144,11 @@ document.addEventListener("DOMContentLoaded", () => {
           exhibitForm.category.value = item.category || "";
           exhibitForm.description.value = item.description || "";
           exhibitForm.era.value = item.era || "";
+          exhibitForm.x.value = item.x ?? "";
+          exhibitForm.y.value = item.y ?? "";
           exhibitForm.dataset.editId = item._id;
           setEditing(true, "Update Exhibit");
+          setExhibitPin(item.x, item.y);
         });
       }
     });
@@ -165,8 +204,15 @@ document.addEventListener("DOMContentLoaded", () => {
   const ticketList = document.getElementById("admin-ticket-list");
   if (ticketForm) {
     const { setEditing } = initEditableForm(ticketForm, "Update Ticket");
-    const ticketLabel = (item) =>
-      `${item.group ? item.group.toUpperCase() : ""} - ${item.audience || ""} (EGP ${Number(item.price || 0).toFixed(2)})`;
+    const ticketLabel = (item) => {
+      const updatedAt = item.updatedAt ? new Date(item.updatedAt).toLocaleDateString() : "";
+      return `
+        <div><strong>${item.group ? item.group.toUpperCase() : ""} - ${item.audience || ""}</strong></div>
+        <div class="admin-item-meta">Price: EGP ${Number(item.price || 0).toFixed(2)}</div>
+        ${item.description ? `<div class="admin-item-meta">${item.description}</div>` : ""}
+        ${updatedAt ? `<div class=\"admin-item-meta\">Updated: ${updatedAt}</div>` : ""}
+      `;
+    };
     adminFetchList("/api/tickets", ticketList, ticketLabel, (item) => {
       ticketForm.group.value = item.group || "egyptian";
       ticketForm.audience.value = item.audience || "adult";

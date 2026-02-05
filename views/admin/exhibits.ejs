@@ -18,6 +18,17 @@
       <textarea name="description" required></textarea>
       <label>Era</label>
       <input type="text" name="era" />
+      <label>X (%)</label>
+      <input type="number" name="x" min="0" max="100" step="any" />
+      <label>Y (%)</label>
+      <input type="number" name="y" min="0" max="100" step="any" />
+      <div class="map-wrapper admin-exhibit-map" id="admin-exhibit-map">
+        <img src="/assets/map/map.png" alt="Museum map" class="map-image" />
+        <div class="map-layer">
+          <div class="map-pin map-pin-highlight" id="admin-exhibit-pin" style="display: none;"></div>
+        </div>
+      </div>
+      <p class="admin-map-note">Click the map to set X/Y coordinates.</p>
       <label>Image</label>
       <input type="file" name="image" accept="image/*" required />
       <label>3D Model (.glb/.gltf)</label>

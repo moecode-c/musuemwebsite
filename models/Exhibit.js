@@ -7,7 +7,9 @@ const exhibitSchema = new mongoose.Schema(
     description: { type: String, required: true, trim: true },
     imageUrl: { type: String, required: true },
     modelUrl: { type: String, required: true },
-    era: { type: String, default: "Ancient Egypt" }
+    era: { type: String, default: "Ancient Egypt" },
+    x: { type: Number, default: null },
+    y: { type: Number, default: null }
   },
   { timestamps: true }
 );

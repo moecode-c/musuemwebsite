@@ -3,24 +3,44 @@
 
 <section class="page-hero">
   <div class="container">
-    <h1>Location</h1>
+    <h1>Map</h1>
     <p>Visit us in central Cairo and explore every gallery with interactive map pins.</p>
   </div>
 </section>
 
 <section class="section">
   <div class="container">
-    <div class="location-grid">
-      <div>
-        <div class="map-wrapper">
-          <img src="/assets/map.svg" alt="Museum map" class="map-image" />
-          <div class="map-layer">
-            <%- pinsHtml %>
+    <div class="location-layout">
+      <div class="location-top">
+        <div>
+          <div class="map-wrapper">
+            <img src="/assets/map/map.png" alt="Museum map" class="map-image" />
+            <div class="map-layer">
+              <%- pinsHtml %>
+            </div>
           </div>
+          <div class="map-tooltip" id="map-tooltip"></div>
         </div>
-        <div class="map-tooltip" id="map-tooltip"></div>
+        <aside class="common-pins">
+          <h3>Most Common Pins</h3>
+          <ul class="common-pin-list">
+            <% if (commonPins && commonPins.length) { %>
+              <% commonPins.forEach((pin) => { %>
+                <li class="common-pin-item" data-x="<%= pin.x %>" data-y="<%= pin.y %>">
+                  <span class="common-pin-icon" aria-hidden="true"></span>
+                  <div class="common-pin-text">
+                    <strong><%= pin.label %></strong>
+                    <span><%= pin.description %></span>
+                  </div>
+                </li>
+              <% }) %>
+            <% } else { %>
+              <li class="common-pin-empty">No common pins yet.</li>
+            <% } %>
+          </ul>
+        </aside>
       </div>
-      <div class="info-stack">
+      <div class="info-stack info-grid">
         <article class="info-card">
           <h3>Address</h3>
           <p>Al Tahrir Square, Downtown Cairo, Egypt</p>

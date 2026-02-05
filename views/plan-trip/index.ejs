@@ -25,6 +25,17 @@
       <input type="text" name="name" required />
       <label>Email</label>
       <input type="email" name="email" required />
+      <label>Ticket Type</label>
+      <select name="ticketId" required>
+        <option value="" disabled selected>Select a ticket</option>
+        <% if (tickets && tickets.length) { %>
+          <% tickets.forEach((ticket) => { %>
+            <option value="<%= ticket._id %>">
+              <%= (ticket.group || "").toUpperCase() %> - <%= ticket.audience || "" %> (EGP <%= Number(ticket.price || 0).toFixed(2) %>)
+            </option>
+          <% }) %>
+        <% } %>
+      </select>
       <label>Visit Date</label>
       <input type="date" name="date" required />
       <button class="btn" type="submit">Request Plan</button>

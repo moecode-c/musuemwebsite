@@ -69,7 +69,10 @@ const accessibility = (req, res) => res.render("about/accessibility", { pageTitl
 const newsletter = (req, res) => res.render("about/newsletter", { pageTitle: "Newsletter" });
 
 const location = asyncHandler(async (req, res) => {
-  const pins = await MapPin.find();
+  const [pins, commonPins] = await Promise.all([
+    MapPin.find(),
+    MapPin.find({ isCommon: true })
+  ]);
   const pinsHtml = pins
     .map(
       (pin) => `
@@ -77,7 +80,7 @@ const location = asyncHandler(async (req, res) => {
     `
     )
     .join("");
-  res.render("about/location", { pageTitle: "Location", pinsHtml });
+  res.render("about/location", { pageTitle: "Map", pageCss: "location", pinsHtml, commonPins });
 });
 
 const categoryConfig = {
@@ -145,7 +148,7 @@ const virtualTourChristian = (req, res) => res.render("virtual-tour/christian", 
 const games = (req, res) => res.render("games/index", { pageTitle: "Games" });
 const gameQuiz = (req, res) => res.render("games/quiz", { pageTitle: "Quiz Game" });
 const gameExplorer = (req, res) => res.render("games/explorer", { pageTitle: "Explorer Game" });
-const gamePyramid = (req, res) => res.render("games/pyramid", { pageTitle: "Pyramid Builder" });
+const gamePyramid = (req, res) => res.render("games/pyramid", { pageTitle: "Pyramid Builder", pageCss: "pyramid-builder" });
 
 const shop = asyncHandler(async (req, res) => {
   const page = parseInt(req.query.page || "1", 10);
@@ -212,7 +215,15 @@ const planTrip = asyncHandler(async (req, res) => {
   const weatherHtml = weather
     ? `<div class="weather-card">Current temperature: ${weather.temperature_2m}°C | Wind: ${weather.wind_speed_10m} km/h</div>`
     : "<div class=\"weather-card\">Weather data unavailable</div>";
-  res.render("plan-trip/index", { pageTitle: "Plan Your Trip", weatherHtml });
+  const tickets = await Ticket.find();
+  const groupOrder = ["egyptian", "arab", "foreigner"];
+  const audienceOrder = ["adult", "student", "child", "senior"];
+  tickets.sort(
+    (a, b) =>
+      groupOrder.indexOf(a.group) - groupOrder.indexOf(b.group) ||
+      audienceOrder.indexOf(a.audience) - audienceOrder.indexOf(b.audience)
+  );
+  res.render("plan-trip/index", { pageTitle: "Plan Your Trip", weatherHtml, tickets });
 });
 
 module.exports = {

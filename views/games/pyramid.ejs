@@ -4,16 +4,142 @@
 <section class="page-hero">
   <div class="container">
     <h1>Pyramid Builder</h1>
-    <p>Construction game coming soon.</p>
+    <p>Build your own monument block by block in a compact sandbox.</p>
   </div>
 </section>
 
 <section class="section">
   <div class="container">
-    <div class="card">
-      <p>Add your pyramid builder game content here.</p>
+    <div class="game-panel">
+      <div class="game-info">
+        <h2>Learn by building</h2>
+        <p>
+          Pyramid Builder helps children explore Egyptian history through hands-on play. By stacking
+          blocks, they learn about ancient architecture, planning, and the shapes used in real
+          pyramids.
+        </p>
+        <div class="game-tips">
+          <h3>How to play</h3>
+          <ul>
+            <li>Click <strong>Start</strong> then click the game to lock the pointer.</li>
+            <li>Move with <strong>WASD</strong>, fly with <strong>Space</strong> and <strong>Shift</strong>.</li>
+            <li><strong>Left-click</strong> places a block, <strong>Right-click</strong> removes one.</li>
+            <li>Select materials from the hotbar.</li>
+          </ul>
+        </div>
+      </div>
+      <div class="game-frame" id="pyramid-frame" aria-label="Pyramid Builder Game">
+        <button class="icon-btn" type="button" id="pyramid-fullscreen" aria-label="Toggle full screen">
+          <i class="fas fa-expand"></i>
+        </button>
+        <div id="startScreen">
+          <div>
+            <div class="start-title">Pyramid Builder</div>
+            <h3 class="start-subtitle">
+              Pyramid Builder is an exciting game where you construct ancient pyramids using
+              various materials and strategies.
+            </h3>
+          </div>
+          <button id="startButton" class="btn" type="button">Start</button>
+        </div>
+        <div id="instructions">Click to play. WASD to move. 🖱️ Left-click: Place | 🖱️ Right-click: Remove</div>
+        <div id="crosshair"></div>
+        <div id="hotbar" aria-label="Materials"></div>
+      </div>
     </div>
   </div>
 </section>
+
+<script type="importmap">
+  {
+    "imports": {
+      "three": "https://unpkg.com/three@0.152.2/build/three.module.js",
+      "three/examples/jsm/controls/PointerLockControls.js": "https://unpkg.com/three@0.152.2/examples/jsm/controls/PointerLockControls.js",
+      "three/examples/jsm/utils/BufferGeometryUtils.js": "https://unpkg.com/three@0.152.2/examples/jsm/utils/BufferGeometryUtils.js"
+    }
+  }
+</script>
+<script>
+  (function () {
+    const frame = document.getElementById("pyramid-frame");
+    if (!frame) return;
+    const originalAppend = document.body.appendChild.bind(document.body);
+    document.body.appendChild = (node) => {
+      if (node && node.tagName === "CANVAS") {
+        frame.appendChild(node);
+        node.style.width = "100%";
+        node.style.height = "100%";
+        node.style.display = "block";
+        return node;
+      }
+      return originalAppend(node);
+    };
+  })();
+</script>
+<script type="module" src="/javascript/pyramid-builder.js"></script>
+<script>
+  (function () {
+    const frame = document.getElementById("pyramid-frame");
+    if (!frame) return;
+    const moveCanvas = () => {
+      const canvas = document.body.querySelector("canvas");
+      if (canvas && canvas.parentElement !== frame) {
+        frame.appendChild(canvas);
+        canvas.style.width = "100%";
+        canvas.style.height = "100%";
+        canvas.style.display = "block";
+      }
+    };
+    const observer = new MutationObserver(moveCanvas);
+    observer.observe(document.body, { childList: true });
+    window.addEventListener("load", moveCanvas);
+
+    const fullscreenBtn = document.getElementById("pyramid-fullscreen");
+    const menuBtn = document.getElementById("pyramid-back");
+    const startScreen = document.getElementById("startScreen");
+    if (menuBtn && startScreen) {
+      menuBtn.addEventListener("click", () => {
+        startScreen.classList.remove("fade-out");
+        startScreen.style.display = "flex";
+        if (document.pointerLockElement) {
+          document.exitPointerLock();
+        }
+      });
+    }
+    const toggleFullscreen = async () => {
+      try {
+        if (!document.fullscreenElement) {
+          await frame.requestFullscreen();
+          const icon = fullscreenBtn.querySelector("i");
+          if (icon) {
+            icon.classList.remove("fa-expand");
+            icon.classList.add("fa-compress");
+          }
+        } else {
+          await document.exitFullscreen();
+          const icon = fullscreenBtn.querySelector("i");
+          if (icon) {
+            icon.classList.remove("fa-compress");
+            icon.classList.add("fa-expand");
+          }
+        }
+      } catch (error) {
+        console.error(error);
+      }
+    };
+    if (fullscreenBtn) {
+      fullscreenBtn.addEventListener("click", toggleFullscreen);
+      document.addEventListener("fullscreenchange", () => {
+        if (!document.fullscreenElement) {
+          const icon = fullscreenBtn.querySelector("i");
+          if (icon) {
+            icon.classList.remove("fa-compress");
+            icon.classList.add("fa-expand");
+          }
+        }
+      });
+    }
+  })();
+</script>
 
 <%- include('../partials/footer') %>

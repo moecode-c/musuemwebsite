@@ -1,15 +1,29 @@
 /* Location page styles */
 
-.location-grid {
+.location-layout {
 	display: grid;
-	grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+	gap: 24px;
+}
+
+.location-top {
+	display: grid;
+	grid-template-columns: minmax(0, 2fr) minmax(0, 1fr);
 	gap: 24px;
 	align-items: start;
+}
+
+.location-top .map-wrapper {
+	max-width: 520px;
+	margin: 0 auto;
 }
 
 .info-stack {
 	display: grid;
 	gap: 16px;
+}
+
+.info-grid {
+	grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
 }
 
 .info-card {
@@ -33,11 +47,86 @@
 }
 
 .map-tooltip {
-	margin-top: 12px;
+	margin-top: 6px;
 	background: var(--surface);
 	border: 1px solid var(--border);
 	border-radius: 10px;
 	padding: 10px 12px;
 	color: var(--text-muted);
 	min-height: 42px;
+}
+
+.common-pins {
+	background: var(--surface);
+	border: 1px solid var(--border);
+	border-radius: 14px;
+	padding: 20px;
+	box-shadow: 0 12px 24px rgba(0, 0, 0, 0.2);
+	display: grid;
+	gap: 16px;
+}
+
+.common-pin-list {
+	list-style: none;
+	margin: 0;
+	padding: 0;
+	display: grid;
+	gap: 12px;
+}
+
+
+.common-pin-item,
+.common-pin-empty {
+	background: var(--surface-alt);
+	border: 1px solid var(--border);
+	border-radius: 12px;
+	padding: 12px 14px;
+	display: grid;
+	gap: 6px;
+	color: var(--text);
+}
+
+.common-pin-item {
+	cursor: pointer;
+	grid-template-columns: auto 1fr;
+	align-items: start;
+	column-gap: 10px;
+}
+
+.common-pin-item:hover {
+	border-color: var(--accent-strong);
+	box-shadow: 0 8px 18px rgba(0, 0, 0, 0.15);
+}
+
+.common-pin-icon {
+	width: 12px;
+	height: 12px;
+	border-radius: 50%;
+	background: #d19b2a;
+	border: 2px solid #fff;
+	box-shadow: 0 0 0 4px rgba(209, 155, 42, 0.25);
+	margin-top: 4px;
+}
+
+.common-pin-text {
+	display: grid;
+	gap: 6px;
+}
+
+.common-pin-item span {
+	color: var(--text-muted);
+}
+
+.map-pin-highlight {
+	width: 22px;
+	height: 22px;
+	background: #ff4d4f;
+	box-shadow: 0 0 0 10px rgba(255, 77, 79, 0.25);
+	border-color: #fff;
+}
+
+@media (max-width: 900px) {
+	.location-top {
+		grid-template-columns: 1fr;
+	}
 }

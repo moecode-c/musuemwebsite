@@ -1,0 +1,234 @@
+:root {
+  --game-surface: rgba(20, 18, 14, 0.92);
+  --game-accent: #d4a14a;
+  --game-border: rgba(212, 161, 74, 0.35);
+}
+
+.game-panel {
+  display: grid;
+  grid-template-columns: minmax(260px, 380px) minmax(360px, 680px);
+  align-items: start;
+  gap: 24px;
+}
+
+.game-info {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 16px;
+  padding: 24px;
+  box-shadow: 0 12px 30px rgba(0, 0, 0, 0.2);
+}
+
+.game-info ul {
+  margin: 12px 0 0;
+  padding-left: 18px;
+  color: var(--text-muted);
+  display: grid;
+  gap: 8px;
+}
+
+.game-info p {
+  color: var(--text-muted);
+  margin: 12px 0 0;
+  line-height: 1.6;
+}
+
+.game-tips {
+  margin-top: 18px;
+}
+
+.game-tips h3 {
+  margin-bottom: 8px;
+}
+
+.game-frame {
+  position: relative;
+  width: 100%;
+  max-width: 680px;
+  aspect-ratio: 1 / 1;
+  margin: 0 auto;
+  border-radius: 18px;
+  overflow: hidden;
+  border: 1px solid var(--game-border);
+  background: #101010;
+  box-shadow: 0 20px 45px rgba(0, 0, 0, 0.35);
+}
+
+.game-frame canvas {
+  width: 100%;
+  height: 100%;
+  display: block;
+}
+
+
+.icon-btn {
+  position: absolute;
+  right: 12px;
+  bottom: 12px;
+  z-index: 4;
+  width: 40px;
+  height: 40px;
+  border-radius: 12px;
+  border: 1px solid rgba(255, 255, 255, 0.18);
+  background: rgba(0, 0, 0, 0.45);
+  color: #fff;
+  display: grid;
+  place-items: center;
+  cursor: pointer;
+  transition: transform 0.15s ease, border 0.15s ease;
+}
+
+.icon-btn:hover {
+  transform: translateY(-2px);
+  border-color: rgba(255, 255, 255, 0.5);
+}
+
+.page-pyramid-builder #startScreen {
+  position: absolute;
+  inset: 0;
+  z-index: 3;
+  background: radial-gradient(ellipse at center, #222 60%, #111 100%);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  padding: 28px;
+  gap: 24px;
+  color: #fff;
+  transition: opacity 0.5s ease;
+}
+
+.page-pyramid-builder #startScreen.fade-out {
+  opacity: 0;
+  pointer-events: none;
+}
+
+.page-pyramid-builder .start-title {
+  font-family: "Cinzel", serif;
+  font-size: 3rem;
+  color: #ffe066;
+  text-shadow: 0 4px 24px #000, 0 1px 0 #fff;
+  letter-spacing: 2px;
+  margin-bottom: 16px;
+}
+
+.page-pyramid-builder .start-subtitle {
+  color: #f5f2ea;
+  font-family: "Inter", sans-serif;
+  font-size: 1rem;
+  max-width: 520px;
+  margin: 0 auto;
+}
+
+.page-pyramid-builder #startButton {
+  padding: 0.9rem 3rem;
+  font-size: 1.2rem;
+}
+
+.page-pyramid-builder #instructions {
+  position: absolute;
+  top: 12px;
+  left: 12px;
+  background: rgba(0, 0, 0, 0.6);
+  color: #fff;
+  padding: 10px 12px;
+  border-radius: 8px;
+  z-index: 2;
+  pointer-events: none;
+  font-size: 0.85rem;
+}
+
+.page-pyramid-builder #crosshair {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 32px;
+  height: 32px;
+  margin-left: -16px;
+  margin-top: -16px;
+  z-index: 2;
+  pointer-events: none;
+}
+
+.page-pyramid-builder #crosshair:after,
+.page-pyramid-builder #crosshair:before {
+  content: '';
+  display: block;
+  position: absolute;
+  background: #fff;
+  opacity: 0.7;
+}
+
+.page-pyramid-builder #crosshair:after {
+  left: 15px;
+  top: 0;
+  width: 2px;
+  height: 32px;
+}
+
+.page-pyramid-builder #crosshair:before {
+  top: 15px;
+  left: 0;
+  width: 32px;
+  height: 2px;
+}
+
+.page-pyramid-builder #hotbar {
+  position: absolute;
+  left: 16px;
+  bottom: 16px;
+  display: flex;
+  gap: 8px;
+  z-index: 2;
+  background: rgba(0, 0, 0, 0.25);
+  padding: 8px 10px;
+  border-radius: 8px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+}
+
+.hotbar-slot {
+  width: 34px;
+  height: 34px;
+  border-radius: 8px;
+  border: 2px solid rgba(255, 255, 255, 0.2);
+  display: grid;
+  place-items: center;
+  position: relative;
+}
+
+.hotbar-slot.selected {
+  border-color: #fff;
+  box-shadow: 0 0 10px rgba(255, 255, 255, 0.4);
+}
+
+.hotbar-chip,
+.hotbar-block {
+  width: 22px;
+  height: 22px;
+  border-radius: 6px;
+  border: 1.5px solid rgba(0, 0, 0, 0.4);
+  display: block;
+}
+
+.hotbar-label {
+  position: absolute;
+  bottom: -18px;
+  left: 50%;
+  transform: translateX(-50%);
+  font-size: 0.7rem;
+  color: #fff;
+  opacity: 0.7;
+}
+
+@media (max-width: 768px) {
+  .game-frame {
+    max-width: 100%;
+  }
+  .game-info {
+    padding: 18px;
+  }
+  .game-panel {
+    grid-template-columns: 1fr;
+  }
+}

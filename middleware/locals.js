@@ -42,7 +42,7 @@ const attachLocals = (req, res, next) => {
       <div class="nav-item">
         <button class="nav-link nav-trigger" type="button"><i class="nav-icon fas fa-user"></i>Account</button>
         <div class="dropdown">
-          <a href="/admin/dashboard" class="dropdown-link"><i class="dropdown-icon fas fa-gauge"></i>Dashboard</a>
+          ${req.session.user.role === "admin" ? '<a href="/admin/dashboard" class="dropdown-link"><i class="dropdown-icon fas fa-gauge"></i>Dashboard</a>' : ""}
           <form class="inline-form" action="/auth/logout" method="post">
             <button class="dropdown-link dropdown-button" type="submit"><i class="dropdown-icon fas fa-right-from-bracket"></i>Logout</button>
           </form>

@@ -229,10 +229,62 @@
 	max-width: 520px;
 }
 
+.admin-map {
+	max-width: 560px;
+}
+
+.admin-map-note {
+	font-size: 13px;
+	color: #6e5b3a;
+	margin: 8px 0 0;
+}
+
+.admin-exhibit-map {
+	max-width: 520px;
+	margin: 8px 0 0;
+}
+
+.admin-map-lists {
+	margin-top: 18px;
+	display: grid;
+	gap: 16px;
+}
+
+.checkbox-row {
+	display: flex;
+	align-items: center;
+	gap: 10px;
+	font-weight: 600;
+}
+
+.admin-item-content {
+	display: grid;
+	gap: 6px;
+}
+
+.admin-item-meta {
+	font-size: 12px;
+	color: #6e5b3a;
+}
+
+.admin-badge {
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+	padding: 2px 8px;
+	border-radius: 999px;
+	font-size: 11px;
+	font-weight: 700;
+	background: #f1dfc3;
+	color: #8a6113;
+	width: fit-content;
+}
+
 .admin-list .admin-item {
 	background: #fffaf3;
 	color: #2b2236;
 	border: 1px solid #e6d6bd;
+	align-items: flex-start;
 }
 
 .admin-table {

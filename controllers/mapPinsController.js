@@ -7,14 +7,18 @@ const list = asyncHandler(async (req, res) => {
 });
 
 const create = asyncHandler(async (req, res) => {
-  const { label, x, y, description } = req.body;
-  const pin = await MapPin.create({ label, x, y, description });
+  const { label, x, y, description, isCommon } = req.body;
+  const pin = await MapPin.create({ label, x, y, description, isCommon });
   res.status(201).json(pin);
 });
 
 const update = asyncHandler(async (req, res) => {
-  const { label, x, y, description } = req.body;
-  const pin = await MapPin.findByIdAndUpdate(req.params.id, { label, x, y, description }, { new: true });
+  const { label, x, y, description, isCommon } = req.body;
+  const pin = await MapPin.findByIdAndUpdate(
+    req.params.id,
+    { label, x, y, description, isCommon },
+    { new: true }
+  );
   res.json(pin);
 });
 

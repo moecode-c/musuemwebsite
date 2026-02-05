@@ -5,7 +5,8 @@ const mapPinSchema = new mongoose.Schema(
     label: { type: String, required: true, trim: true },
     x: { type: Number, required: true },
     y: { type: Number, required: true },
-    description: { type: String, default: "" }
+    description: { type: String, default: "" },
+    isCommon: { type: Boolean, default: false }
   },
   { timestamps: true }
 );

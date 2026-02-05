@@ -34,7 +34,8 @@ const productValidation = [
 const mapPinValidation = [
   body("label").trim().isLength({ min: 2 }).withMessage("Label required"),
   body("x").isFloat({ min: 0, max: 100 }).withMessage("X coordinate 0-100"),
-  body("y").isFloat({ min: 0, max: 100 }).withMessage("Y coordinate 0-100")
+  body("y").isFloat({ min: 0, max: 100 }).withMessage("Y coordinate 0-100"),
+  body("isCommon").optional().isBoolean().toBoolean()
 ];
 
 const ticketValidation = [
