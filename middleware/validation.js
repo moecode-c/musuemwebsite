@@ -38,8 +38,22 @@ const mapPinValidation = [
 ];
 
 const ticketValidation = [
-  body("type").trim().isLength({ min: 2 }).withMessage("Type required"),
+  body("group").isIn(["egyptian", "arab", "foreigner"]).withMessage("Group required"),
+  body("audience").isIn(["adult", "student", "child", "senior"]).withMessage("Audience required"),
   body("price").isFloat({ min: 0 }).withMessage("Price required")
+];
+
+const ticketRequestValidation = [
+  body("name").trim().isLength({ min: 2 }).withMessage("Name required"),
+  body("age").isInt({ min: 1 }).withMessage("Valid age required"),
+  body("email").isEmail().withMessage("Valid email required"),
+  body("nationality").trim().isLength({ min: 2 }).withMessage("Nationality required"),
+  body("phone").trim().isLength({ min: 6 }).withMessage("Phone required"),
+  body("category").isIn(["egyptian", "arab", "foreigner"]).withMessage("Category required"),
+  body("audience").isIn(["adult", "student", "child", "senior"]).withMessage("Audience required"),
+  body("quantity").optional().isInt({ min: 1 }).withMessage("Quantity must be 1+"),
+  body("date").trim().notEmpty().withMessage("Date required"),
+  body("timeSlot").trim().notEmpty().withMessage("Time slot required")
 ];
 
 const testimonialValidation = [
@@ -59,6 +73,7 @@ module.exports = {
   productValidation,
   mapPinValidation,
   ticketValidation,
+  ticketRequestValidation,
   testimonialValidation,
   newsletterValidation
 };

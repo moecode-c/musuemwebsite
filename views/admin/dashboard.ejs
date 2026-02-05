@@ -1,21 +1,113 @@
-<%- include('../partials/header') %>
-<%- include('../partials/navbar') %>
+<%- include('../partials/adminLayoutStart') %>
 
-<section class="page-hero">
-  <div class="container">
-    <h1>Admin Dashboard</h1>
+<%
+  const maxStat = Math.max(
+    stats.exhibitCount,
+    stats.productCount,
+    stats.userCount,
+    stats.ticketCount,
+    stats.testimonialCount,
+    stats.ticketRequestCount
+  ) || 1;
+%>
+
+<section class="admin-page-header">
+  <div>
+    <h1>Overview</h1>
     <p>Manage museum content and operations.</p>
   </div>
 </section>
 
-<section class="section">
-  <div class="container grid">
-    <div class="stat-card">Exhibits: <strong><%= stats.exhibitCount %></strong></div>
-    <div class="stat-card">Products: <strong><%= stats.productCount %></strong></div>
-    <div class="stat-card">Users: <strong><%= stats.userCount %></strong></div>
-    <div class="stat-card">Tickets: <strong><%= stats.ticketCount %></strong></div>
-    <div class="stat-card">Testimonials: <strong><%= stats.testimonialCount %></strong></div>
+<section class="admin-section">
+  <div class="admin-grid admin-stats">
+    <div class="admin-stat">Exhibits <strong><%= stats.exhibitCount %></strong></div>
+    <div class="admin-stat">Products <strong><%= stats.productCount %></strong></div>
+    <div class="admin-stat">Users <strong><%= stats.userCount %></strong></div>
+    <div class="admin-stat">Tickets <strong><%= stats.ticketCount %></strong></div>
+    <div class="admin-stat">Testimonials <strong><%= stats.testimonialCount %></strong></div>
+    <div class="admin-stat">Ticket Requests <strong><%= stats.ticketRequestCount %></strong></div>
   </div>
 </section>
 
-<%- include('../partials/footer') %>
+<section class="admin-section">
+  <div class="admin-section-title">
+    <h2>Statistics</h2>
+  </div>
+  <div class="admin-chart">
+    <div class="admin-chart-row">
+      <span>Exhibits</span>
+      <div class="admin-chart-bar"><span style="width: <%= (stats.exhibitCount / maxStat) * 100 %>%"></span></div>
+      <strong><%= stats.exhibitCount %></strong>
+    </div>
+    <div class="admin-chart-row">
+      <span>Products</span>
+      <div class="admin-chart-bar"><span style="width: <%= (stats.productCount / maxStat) * 100 %>%"></span></div>
+      <strong><%= stats.productCount %></strong>
+    </div>
+    <div class="admin-chart-row">
+      <span>Users</span>
+      <div class="admin-chart-bar"><span style="width: <%= (stats.userCount / maxStat) * 100 %>%"></span></div>
+      <strong><%= stats.userCount %></strong>
+    </div>
+    <div class="admin-chart-row">
+      <span>Tickets</span>
+      <div class="admin-chart-bar"><span style="width: <%= (stats.ticketCount / maxStat) * 100 %>%"></span></div>
+      <strong><%= stats.ticketCount %></strong>
+    </div>
+    <div class="admin-chart-row">
+      <span>Testimonials</span>
+      <div class="admin-chart-bar"><span style="width: <%= (stats.testimonialCount / maxStat) * 100 %>%"></span></div>
+      <strong><%= stats.testimonialCount %></strong>
+    </div>
+    <div class="admin-chart-row">
+      <span>Ticket Requests</span>
+      <div class="admin-chart-bar"><span style="width: <%= (stats.ticketRequestCount / maxStat) * 100 %>%"></span></div>
+      <strong><%= stats.ticketRequestCount %></strong>
+    </div>
+  </div>
+</section>
+
+<section class="admin-section">
+  <div class="admin-section-title">
+    <h2>Quick edits</h2>
+  </div>
+  <div class="admin-grid">
+    <div class="admin-card">
+      <h3>Exhibits</h3>
+      <p>Create, update, and organize exhibits.</p>
+      <a class="btn" href="/admin/exhibits">Manage Exhibits</a>
+    </div>
+    <div class="admin-card">
+      <h3>Products</h3>
+      <p>Edit shop products, pricing, and inventory.</p>
+      <a class="btn" href="/admin/products">Manage Products</a>
+    </div>
+    <div class="admin-card">
+      <h3>Map Pins</h3>
+      <p>Update museum map pins and descriptions.</p>
+      <a class="btn" href="/admin/map">Manage Map</a>
+    </div>
+    <div class="admin-card">
+      <h3>Tickets</h3>
+      <p>Adjust ticket types and availability.</p>
+      <a class="btn" href="/admin/tickets">Manage Tickets</a>
+    </div>
+    <div class="admin-card">
+      <h3>Ticket Overview</h3>
+      <p>View all ticket requests and top countries.</p>
+      <a class="btn" href="/admin/ticket-requests">View Requests</a>
+    </div>
+    <div class="admin-card">
+      <h3>Users</h3>
+      <p>Review and manage user accounts.</p>
+      <a class="btn" href="/admin/users">Manage Users</a>
+    </div>
+    <div class="admin-card">
+      <h3>Settings</h3>
+      <p>Configure site-wide preferences.</p>
+      <a class="btn" href="/admin/settings">Open Settings</a>
+    </div>
+  </div>
+</section>
+
+<%- include('../partials/adminLayoutEnd') %>

@@ -1,15 +1,14 @@
-<%- include('../partials/header') %>
-<%- include('../partials/navbar') %>
+<%- include('../partials/adminLayoutStart') %>
 
-<section class="page-hero">
-  <div class="container">
+<section class="admin-page-header">
+  <div>
     <h1>Manage Map Pins</h1>
     <p>Place and edit pins on the museum map.</p>
   </div>
 </section>
 
-<section class="section">
-  <div class="container split">
+<section class="admin-section">
+  <div class="admin-split">
     <div>
       <div class="map-wrapper admin-map" id="admin-map">
         <img src="/assets/map.svg" alt="Museum map" class="map-image" />
@@ -34,4 +33,4 @@
   </div>
 </section>
 
-<%- include('../partials/footer') %>
+<%- include('../partials/adminLayoutEnd') %>

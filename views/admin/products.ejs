@@ -1,15 +1,14 @@
-<%- include('../partials/header') %>
-<%- include('../partials/navbar') %>
+<%- include('../partials/adminLayoutStart') %>
 
-<section class="page-hero">
-  <div class="container">
+<section class="admin-page-header">
+  <div>
     <h1>Manage Products</h1>
     <p>Control shop items and inventory.</p>
   </div>
 </section>
 
-<section class="section">
-  <div class="container split">
+<section class="admin-section">
+  <div class="admin-split">
     <form class="form" id="admin-product-form" enctype="multipart/form-data">
       <label>Name</label>
       <input type="text" name="name" required />
@@ -21,7 +20,8 @@
       <input type="number" name="stock" min="0" required />
       <label>Image</label>
       <input type="file" name="image" accept="image/*" required />
-      <button class="btn" type="submit">Create Product</button>
+      <button class="btn admin-submit" type="submit">Create Product</button>
+      <button class="btn btn-secondary admin-cancel" type="button">Cancel</button>
       <p class="form-message" id="admin-product-message"></p>
     </form>
     <div>
@@ -31,4 +31,4 @@
   </div>
 </section>
 
-<%- include('../partials/footer') %>
+<%- include('../partials/adminLayoutEnd') %>

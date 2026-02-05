@@ -62,8 +62,13 @@ const seed = async () => {
   ]);
 
   await Ticket.insertMany([
-    { type: "Adult", price: 200, description: "Standard adult ticket" },
-    { type: "Student", price: 100, description: "Valid student ID required" }
+    { group: "egyptian", audience: "adult", price: 50, description: "Egyptian adult ticket" },
+    { group: "egyptian", audience: "student", price: 25, description: "Egyptian student ticket" },
+    { group: "egyptian", audience: "child", price: 15, description: "Egyptian child ticket" },
+    { group: "arab", audience: "adult", price: 100, description: "Arab adult ticket" },
+    { group: "arab", audience: "student", price: 60, description: "Arab student ticket" },
+    { group: "foreigner", audience: "adult", price: 300, description: "Foreigner adult ticket" },
+    { group: "foreigner", audience: "student", price: 200, description: "Foreigner student ticket" }
   ]);
 
   await Testimonial.insertMany([

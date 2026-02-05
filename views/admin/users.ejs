@@ -1,15 +1,14 @@
-<%- include('../partials/header') %>
-<%- include('../partials/navbar') %>
+<%- include('../partials/adminLayoutStart') %>
 
-<section class="page-hero">
-  <div class="container">
+<section class="admin-page-header">
+  <div>
     <h1>Manage Users</h1>
     <p>Create admin accounts and manage roles.</p>
   </div>
 </section>
 
-<section class="section">
-  <div class="container split">
+<section class="admin-section">
+  <div class="admin-split">
     <form class="form" id="admin-user-form">
       <label>Name</label>
       <input type="text" name="name" required />
@@ -22,7 +21,8 @@
         <option value="user">User</option>
         <option value="admin">Admin</option>
       </select>
-      <button class="btn" type="submit">Create User</button>
+      <button class="btn admin-submit" type="submit">Create User</button>
+      <button class="btn btn-secondary admin-cancel" type="button">Cancel</button>
       <p class="form-message" id="admin-user-message"></p>
     </form>
     <div>
@@ -32,4 +32,4 @@
   </div>
 </section>
 
-<%- include('../partials/footer') %>
+<%- include('../partials/adminLayoutEnd') %>

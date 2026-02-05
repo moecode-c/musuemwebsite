@@ -1,15 +1,14 @@
-<%- include('../partials/header') %>
-<%- include('../partials/navbar') %>
+<%- include('../partials/adminLayoutStart') %>
 
-<section class="page-hero">
-  <div class="container">
+<section class="admin-page-header">
+  <div>
     <h1>Manage Exhibits</h1>
     <p>Add, edit, and remove museum exhibits.</p>
   </div>
 </section>
 
-<section class="section">
-  <div class="container split">
+<section class="admin-section">
+  <div class="admin-split">
     <form class="form" id="admin-exhibit-form" enctype="multipart/form-data">
       <label>Title</label>
       <input type="text" name="title" required />
@@ -23,7 +22,8 @@
       <input type="file" name="image" accept="image/*" required />
       <label>3D Model (.glb/.gltf)</label>
       <input type="file" name="model" accept=".glb,.gltf" required />
-      <button class="btn" type="submit">Create Exhibit</button>
+      <button class="btn admin-submit" type="submit">Create Exhibit</button>
+      <button class="btn btn-secondary admin-cancel" type="button">Cancel</button>
       <p class="form-message" id="admin-exhibit-message"></p>
     </form>
     <div>
@@ -33,4 +33,4 @@
   </div>
 </section>
 
-<%- include('../partials/footer') %>
+<%- include('../partials/adminLayoutEnd') %>

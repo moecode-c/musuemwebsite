@@ -1,0 +1,64 @@
+<%- include('../partials/adminLayoutStart') %>
+
+<section class="admin-page-header">
+  <div>
+    <h1>Ticket Overview</h1>
+    <p>Review ticket requests and visitor statistics.</p>
+  </div>
+</section>
+
+<section class="admin-section">
+  <div class="admin-section-title">
+    <h2>Top Countries</h2>
+  </div>
+  <div class="admin-chart">
+    <% if (countries.length === 0) { %>
+      <p>No ticket requests yet.</p>
+    <% } %>
+    <% const maxCountry = Math.max(...countries.map((item) => item.count), 1); %>
+    <% countries.forEach((item) => { %>
+      <div class="admin-chart-row">
+        <span><%= item.country %></span>
+        <div class="admin-chart-bar"><span style="width: <%= (item.count / maxCountry) * 100 %>%"></span></div>
+        <strong><%= item.count %></strong>
+      </div>
+    <% }) %>
+  </div>
+</section>
+
+<section class="admin-section">
+  <div class="admin-section-title">
+    <h2>All Ticket Requests</h2>
+  </div>
+  <div class="admin-table">
+    <div class="admin-table-row admin-table-head">
+      <span>Name</span>
+      <span>Nationality</span>
+      <span>Category</span>
+      <span>Audience</span>
+      <span>Qty</span>
+      <span>Date</span>
+      <span>Time Slot</span>
+      <span>Contact</span>
+    </div>
+    <% if (requests.length === 0) { %>
+      <div class="admin-table-row">
+        <span>No requests yet.</span>
+      </div>
+    <% } %>
+    <% requests.forEach((request) => { %>
+      <div class="admin-table-row">
+        <span><%= request.name %></span>
+        <span><%= request.nationality %></span>
+        <span><%= request.category %></span>
+        <span><%= request.audience %></span>
+        <span><%= request.quantity %></span>
+        <span><%= request.date %></span>
+        <span><%= request.timeSlot %></span>
+        <span><%= request.email %> | <%= request.phone %></span>
+      </div>
+    <% }) %>
+  </div>
+</section>
+
+<%- include('../partials/adminLayoutEnd') %>

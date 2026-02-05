@@ -19,12 +19,12 @@ const seedExhibits = async () => {
       era: "Islamic Era"
     },
     {
-      title: "Modern Egypt Gallery",
-      category: "Modern",
-      description: "Contemporary art reflecting Egypt's evolving identity.",
+      title: "Christian Egypt Gallery",
+      category: "Christian",
+      description: "Icons, textiles, and devotional art from Egypt's Christian heritage.",
       imageUrl: "/assets/hero.svg",
       modelUrl: "https://modelviewer.dev/shared-assets/models/Chair.glb",
-      era: "Modern Era"
+      era: "Christian Era"
     }
   ]);
 };

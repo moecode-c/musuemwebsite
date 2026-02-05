@@ -7,14 +7,18 @@ const list = asyncHandler(async (req, res) => {
 });
 
 const create = asyncHandler(async (req, res) => {
-  const { type, price, description } = req.body;
-  const ticket = await Ticket.create({ type, price, description });
+  const { group, audience, price, description } = req.body;
+  const ticket = await Ticket.create({ group, audience, price, description });
   res.status(201).json(ticket);
 });
 
 const update = asyncHandler(async (req, res) => {
-  const { type, price, description } = req.body;
-  const ticket = await Ticket.findByIdAndUpdate(req.params.id, { type, price, description }, { new: true });
+  const { group, audience, price, description } = req.body;
+  const ticket = await Ticket.findByIdAndUpdate(
+    req.params.id,
+    { group, audience, price, description },
+    { new: true }
+  );
   res.json(ticket);
 });
 

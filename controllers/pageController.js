@@ -80,20 +80,55 @@ const location = asyncHandler(async (req, res) => {
   res.render("about/location", { pageTitle: "Location", pinsHtml });
 });
 
-const exhibits = asyncHandler(async (req, res) => {
+const categoryConfig = {
+  pharaoh: {
+    label: "Pharaoh's",
+    categoryValue: "Pharaoh",
+    subtitle: "Explore royal artifacts, sacred relics, and treasures of the dynasties."
+  },
+  islamic: {
+    label: "Islamic",
+    categoryValue: "Islamic",
+    subtitle: "Discover artistic traditions, manuscripts, and architectural masterpieces."
+  },
+  christian: {
+    label: "Christian",
+    categoryValue: "Christian",
+    subtitle: "Experience icons, textiles, and heritage from Egypt's Christian era."
+  }
+};
+
+const renderExhibitsPage = asyncHandler(async (req, res, categoryKey, basePath) => {
   const page = parseInt(req.query.page || "1", 10);
   const limit = 6;
-  const total = await Exhibit.countDocuments();
+  const config = categoryKey ? categoryConfig[categoryKey] : null;
+  const filter = config ? { category: new RegExp(`^${config.categoryValue}$`, "i") } : {};
+  const total = await Exhibit.countDocuments(filter);
   const totalPages = Math.ceil(total / limit) || 1;
-  const items = await Exhibit.find()
+  const items = await Exhibit.find(filter)
     .skip((page - 1) * limit)
     .limit(limit);
+
   res.render("exhibits/index", {
-    pageTitle: "Exhibits",
+    pageTitle: config ? `${config.label} Collection` : "Exhibits",
+    heroTitle: config ? `${config.label} Collection` : "Exhibits",
+    heroSubtitle: config ? config.subtitle : "Discover Pharaoh, Islamic, and Christian galleries.",
     exhibitsHtml: buildCards(items, "exhibit"),
-    paginationHtml: buildPagination(page, totalPages, "/exhibits")
+    paginationHtml: buildPagination(page, totalPages, basePath)
   });
 });
+
+const exhibits = asyncHandler(async (req, res) => {
+  const categoryKey = (req.query.category || "").toLowerCase();
+  if (categoryKey && categoryConfig[categoryKey]) {
+    return renderExhibitsPage(req, res, categoryKey, `/exhibits/${categoryKey}`);
+  }
+  return renderExhibitsPage(req, res, null, "/exhibits");
+});
+
+const exhibitsPharaoh = (req, res) => renderExhibitsPage(req, res, "pharaoh", "/exhibits/pharaoh");
+const exhibitsIslamic = (req, res) => renderExhibitsPage(req, res, "islamic", "/exhibits/islamic");
+const exhibitsChristian = (req, res) => renderExhibitsPage(req, res, "christian", "/exhibits/christian");
 
 const exhibitDetails = asyncHandler(async (req, res) => {
   const exhibit = await Exhibit.findById(req.params.id);
@@ -145,17 +180,23 @@ const cart = (req, res) => {
 
 const checkout = asyncHandler(async (req, res) => {
   const tickets = await Ticket.find();
-  const ticketsHtml = tickets
-    .map(
-      (ticket) => `
-      <div class="ticket-row">
-        <span>${ticket.type}</span>
-        <span>EGP ${ticket.price.toFixed(2)}</span>
-      </div>
-    `
-    )
-    .join("");
-  res.render("shop/checkout", { pageTitle: "Checkout", ticketsHtml });
+  const groupedTickets = tickets.reduce((acc, ticket) => {
+    const key = ticket.group || "egyptian";
+    if (!acc[key]) acc[key] = [];
+    acc[key].push(ticket);
+    return acc;
+  }, {});
+  const audienceOrder = ["adult", "student", "child", "senior"];
+  Object.keys(groupedTickets).forEach((groupKey) => {
+    groupedTickets[groupKey].sort(
+      (a, b) => audienceOrder.indexOf(a.audience) - audienceOrder.indexOf(b.audience)
+    );
+  });
+  res.render("shop/checkout", {
+    pageTitle: "Request Ticket",
+    pageCss: "checkout",
+    groupedTickets
+  });
 });
 
 const testimonials = asyncHandler(async (req, res) => {
@@ -181,6 +222,9 @@ module.exports = {
   newsletter,
   location,
   exhibits,
+  exhibitsPharaoh,
+  exhibitsIslamic,
+  exhibitsChristian,
   exhibitDetails,
   virtualTour,
   virtualTourIslamic,

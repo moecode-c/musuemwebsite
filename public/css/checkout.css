@@ -1,1 +1,150 @@
 /* Checkout page styles */
+.ticket-request {
+	display: flex;
+	flex-direction: column;
+	gap: 24px;
+}
+
+.ticket-steps {
+	display: flex;
+	justify-content: center;
+	gap: 10px;
+}
+
+.ticket-steps .step {
+	width: 28px;
+	height: 28px;
+	border-radius: 50%;
+	border: 2px solid #e0b569;
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+	font-weight: 600;
+	color: #b5791c;
+}
+
+.ticket-steps .step.active {
+	background: #e2871b;
+	color: #fff;
+	border-color: #e2871b;
+}
+
+.ticket-section-title {
+	text-align: center;
+}
+
+.ticket-calendar {
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	gap: 8px;
+}
+
+.ticket-calendar input[type="date"] {
+	padding: 10px 14px;
+	border-radius: 10px;
+	border: 1px solid #e6d6bd;
+	background: #fffaf3;
+}
+
+.ticket-hint {
+	color: #d36b00;
+	font-size: 13px;
+}
+
+.ticket-slots {
+	display: flex;
+	flex-wrap: wrap;
+	justify-content: center;
+	gap: 12px;
+}
+
+.ticket-slot {
+	border: 1px solid #e28a24;
+	border-radius: 10px;
+	padding: 8px 14px;
+	cursor: pointer;
+	font-weight: 600;
+	color: #744b0d;
+	background: #fff;
+}
+
+.ticket-slot input {
+	display: none;
+}
+
+.ticket-slot input:checked + span {
+	color: #fff;
+}
+
+.ticket-slot input:checked + span,
+.ticket-slot input:checked ~ span {
+	background: none;
+}
+
+.ticket-slot input:checked + span::before {
+	content: "";
+}
+
+.ticket-slot:has(input:checked) {
+	background: #e28a24;
+	color: #fff;
+}
+
+.ticket-groups {
+	display: flex;
+	flex-direction: column;
+	gap: 12px;
+}
+
+.ticket-group {
+	border: 1px solid #e6d6bd;
+	border-radius: 10px;
+	background: #fffaf3;
+}
+
+.ticket-group summary {
+	padding: 12px 16px;
+	cursor: pointer;
+	font-weight: 600;
+}
+
+.ticket-group-body {
+	display: grid;
+	grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+	gap: 12px;
+	padding: 12px 16px 16px;
+}
+
+.ticket-option {
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+	gap: 12px;
+	padding: 10px 12px;
+	border-radius: 10px;
+	border: 1px solid #e6d6bd;
+	background: #fff;
+	cursor: pointer;
+	font-weight: 600;
+}
+
+.ticket-option input {
+	display: none;
+}
+
+.ticket-option:has(input:checked) {
+	background: #f1d2a3;
+	border-color: #e28a24;
+}
+
+.ticket-form {
+	max-width: 520px;
+	margin: 0 auto;
+}
+
+@media (max-width: 768px) {
+	.ticket-group-body {
+		grid-template-columns: 1fr;
+	}
+}

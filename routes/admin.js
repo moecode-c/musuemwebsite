@@ -9,6 +9,7 @@ router.get("/exhibits", requireAdmin, adminController.adminExhibits);
 router.get("/products", requireAdmin, adminController.adminProducts);
 router.get("/map", requireAdmin, adminController.adminMap);
 router.get("/tickets", requireAdmin, adminController.adminTickets);
+router.get("/ticket-requests", requireAdmin, adminController.adminTicketRequests);
 router.get("/users", requireAdmin, adminController.adminUsers);
 router.get("/settings", requireAdmin, adminController.adminSettings);
 

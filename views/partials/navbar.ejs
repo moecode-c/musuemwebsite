@@ -4,6 +4,10 @@
       <div class="container nav-top-inner">
         <div class="nav-title"><%= t.siteTitle %></div>
         <div class="nav-top-actions">
+          <button class="nav-toggle" id="nav-toggle" type="button" aria-expanded="false" aria-controls="nav-links" aria-label="Open menu">
+            <i class="nav-icon fas fa-bars"></i>
+            <span class="nav-toggle-text">Menu</span>
+          </button>
           <div class="nav-top-links">
             <%- authSectionHtml %>
             <div class="lang-switch">
@@ -36,9 +40,9 @@
         <div class="nav-item">
           <button class="nav-link nav-trigger" type="button"><i class="nav-icon fas fa-palette"></i><%= t.nav.exhibits %></button>
           <div class="dropdown">
-            <a href="/exhibits?category=pharaoh" class="dropdown-link"><i class="dropdown-icon fas fa-crown"></i>Pharaoh's Collection</a>
-            <a href="/exhibits?category=islamic" class="dropdown-link"><i class="dropdown-icon fas fa-mosque"></i>Islamic Collection</a>
-            <a href="/exhibits?category=modern" class="dropdown-link"><i class="dropdown-icon fas fa-palette"></i>Modern Collection</a>
+            <a href="/exhibits/pharaoh" class="dropdown-link"><i class="dropdown-icon fas fa-crown"></i>Pharaoh's Collection</a>
+            <a href="/exhibits/islamic" class="dropdown-link"><i class="dropdown-icon fas fa-mosque"></i>Islamic Collection</a>
+            <a href="/exhibits/christian" class="dropdown-link"><i class="dropdown-icon fas fa-church"></i>Christian Collection</a>
           </div>
         </div>
 
@@ -72,6 +76,7 @@
 
           <a href="/plan-trip" class="nav-link"><i class="nav-icon fas fa-calendar-alt"></i><%= t.nav.planTrip %></a>
         </nav>
+        <div class="nav-backdrop" id="nav-backdrop" aria-hidden="true"></div>
       </div>
     </div>
   </div>

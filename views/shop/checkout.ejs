@@ -3,27 +3,86 @@
 
 <section class="page-hero">
   <div class="container">
-    <h1>Checkout</h1>
-    <p>Select tickets and confirm your visit.</p>
+    <h1>Request Your Ticket</h1>
+    <p>Choose a date, time slot, and ticket category.</p>
   </div>
 </section>
 
 <section class="section">
-  <div class="container split">
-    <div>
-      <h2>Available Tickets</h2>
-      <div class="ticket-list">
-        <%- ticketsHtml %>
-      </div>
+  <div class="container ticket-request">
+    <div class="ticket-steps">
+      <span class="step active">1</span>
+      <span class="step">2</span>
+      <span class="step">3</span>
+      <span class="step">4</span>
     </div>
-    <form class="form" id="checkout-form">
-      <label>Name</label>
+    <h2 class="ticket-section-title">Select Date</h2>
+    <div class="ticket-calendar">
+      <input type="date" id="ticket-date" name="date" form="ticket-request-form" required />
+      <p class="ticket-hint">Unavailable dates have reached capacity.</p>
+    </div>
+
+    <h2 class="ticket-section-title">Select Entry Time Slot</h2>
+    <div class="ticket-slots" role="group" aria-label="Time slots">
+      <label class="ticket-slot">
+        <input type="radio" name="timeSlot" value="08:30 - 11:00" form="ticket-request-form" required />
+        <span>08:30 - 11:00</span>
+      </label>
+      <label class="ticket-slot">
+        <input type="radio" name="timeSlot" value="11:00 - 13:00" form="ticket-request-form" />
+        <span>11:00 - 13:00</span>
+      </label>
+      <label class="ticket-slot">
+        <input type="radio" name="timeSlot" value="13:00 - 15:00" form="ticket-request-form" />
+        <span>13:00 - 15:00</span>
+      </label>
+    </div>
+
+    <h2 class="ticket-section-title">Select Tickets</h2>
+    <div class="ticket-groups">
+      <% const groupLabels = { egyptian: "Egyptians", arab: "Arabs or Other Nationalities", foreigner: "Expatriates" }; %>
+      <% const audienceLabels = { adult: "Adult", student: "Student", child: "Child", senior: "Senior" }; %>
+      <% Object.keys(groupLabels).forEach((groupKey) => { %>
+        <details class="ticket-group">
+          <summary><%= groupLabels[groupKey] %></summary>
+          <div class="ticket-group-body">
+            <% (groupedTickets[groupKey] || []).forEach((ticket) => { %>
+              <label class="ticket-option">
+                <input
+                  type="radio"
+                  name="ticketOption"
+                  value="<%= ticket.group %>:<%= ticket.audience %>"
+                  data-group="<%= ticket.group %>"
+                  data-audience="<%= ticket.audience %>"
+                  form="ticket-request-form"
+                  required
+                />
+                <span><%= audienceLabels[ticket.audience] || ticket.audience %></span>
+                <strong>EGP <%= ticket.price.toFixed(2) %></strong>
+              </label>
+            <% }) %>
+          </div>
+        </details>
+      <% }) %>
+    </div>
+
+    <form class="form ticket-form" id="ticket-request-form">
+      <input type="hidden" name="category" id="ticket-category" required />
+      <input type="hidden" name="audience" id="ticket-audience" required />
+      <label>Full Name</label>
       <input type="text" name="name" required />
+      <label>Age</label>
+      <input type="number" name="age" min="1" required />
       <label>Email</label>
       <input type="email" name="email" required />
-      <label>Visit Date</label>
-      <input type="date" name="date" required />
-      <button class="btn" type="submit">Confirm Booking</button>
+      <label>Nationality</label>
+      <input type="text" name="nationality" required />
+      <label>Phone Number</label>
+      <input type="text" name="phone" required />
+      <label>Tickets Quantity</label>
+      <input type="number" name="quantity" min="1" value="1" required />
+      <button class="btn" type="submit">Submit Ticket Request</button>
+      <p class="form-message" id="ticket-request-message"></p>
     </form>
   </div>
 </section>
