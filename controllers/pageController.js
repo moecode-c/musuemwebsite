@@ -32,9 +32,14 @@ const buildCards = (items, type) => {
       }
       if (type === "testimonial") {
         return `
-          <article class="card">
-            <h3>${item.name}</h3>
-            <p>${item.message}</p>
+          <article class="card testimonial-card">
+            <div class="card-quote">
+              <i class="fas fa-quote-left nav-icon"></i>
+              <p>${item.message}</p>
+            </div>
+            <div class="card-footer">
+              <span class="nav-title testimonial-name">${item.name}</span>
+            </div>
           </article>
         `;
       }
@@ -65,8 +70,10 @@ const home = asyncHandler(async (req, res) => {
 });
 
 const about = (req, res) => res.render("about/about", { pageTitle: "About" });
-const accessibility = (req, res) => res.render("about/accessibility", { pageTitle: "Accessibility" });
-const newsletter = (req, res) => res.render("about/newsletter", { pageTitle: "Newsletter" });
+const mission = (req, res) => res.render("about/mission", { pageTitle: "Mission & Goal", pageCss: "mission" });
+const accessibility = (req, res) =>
+  res.render("about/accessibility", { pageTitle: "Accessibility", pageCss: "accessibility" });
+const newsletter = (req, res) => res.render("about/newsletter", { pageTitle: "Newsletter", pageCss: "newsletter" });
 
 const location = asyncHandler(async (req, res) => {
   const [pins, commonPins] = await Promise.all([
@@ -206,6 +213,7 @@ const testimonials = asyncHandler(async (req, res) => {
   const items = await Testimonial.find().limit(10);
   res.render("testimonials/index", {
     pageTitle: "Testimonials",
+    pageCss: "testimonials",
     testimonialsHtml: buildCards(items, "testimonial")
   });
 });
@@ -229,6 +237,7 @@ const planTrip = asyncHandler(async (req, res) => {
 module.exports = {
   home,
   about,
+  mission,
   accessibility,
   newsletter,
   location,

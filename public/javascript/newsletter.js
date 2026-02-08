@@ -5,7 +5,11 @@ document.addEventListener("DOMContentLoaded", () => {
   form.addEventListener("submit", async (event) => {
     event.preventDefault();
     const formData = new FormData(form);
-    const payload = { email: formData.get("email") };
+    const payload = {
+      name: formData.get("name"),
+      phone: formData.get("phone"),
+      email: formData.get("email")
+    };
     const response = await fetch("/newsletter/subscribe", {
       method: "POST",
       headers: { "Content-Type": "application/json" },

@@ -15,15 +15,15 @@ document.addEventListener("DOMContentLoaded", () => {
   };
 
   if (savedTheme === "light") {
-    document.body.classList.add("theme-light");
+    document.documentElement.classList.add("theme-light");
   }
 
-  applyToggleMarkup(document.body.classList.contains("theme-light"));
+  applyToggleMarkup(document.documentElement.classList.contains("theme-light"));
 
   toggles.forEach((toggle) => {
     toggle.addEventListener("click", () => {
-      document.body.classList.toggle("theme-light");
-      const isLight = document.body.classList.contains("theme-light");
+      document.documentElement.classList.toggle("theme-light");
+      const isLight = document.documentElement.classList.contains("theme-light");
       localStorage.setItem("museum-theme", isLight ? "light" : "dark");
       applyToggleMarkup(isLight);
     });

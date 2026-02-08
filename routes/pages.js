@@ -5,6 +5,7 @@ const router = express.Router();
 
 router.get("/", pageController.home);
 router.get("/about", pageController.about);
+router.get("/mission", pageController.mission);
 router.get("/accessibility", pageController.accessibility);
 router.get("/newsletter", pageController.newsletter);
 router.get("/location", pageController.location);
