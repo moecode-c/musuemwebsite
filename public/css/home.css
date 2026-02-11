@@ -113,6 +113,106 @@
 	padding-top: 30px;
 }
 
+.home-video {
+	position: relative;
+	overflow: hidden;
+	background: radial-gradient(circle at top left, rgba(255, 228, 180, 0.18), transparent 55%),
+		linear-gradient(120deg, rgba(21, 15, 31, 0.9), rgba(11, 8, 18, 0.95));
+	border-top: 1px solid rgba(255, 255, 255, 0.08);
+	border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+.home-video::before {
+	content: "";
+	position: absolute;
+	inset: 0;
+	background: repeating-linear-gradient(
+		-45deg,
+		rgba(255, 255, 255, 0.04),
+		rgba(255, 255, 255, 0.04) 1px,
+		transparent 1px,
+		transparent 9px
+	);
+	opacity: 0.35;
+	pointer-events: none;
+}
+
+.home-video-grid {
+	position: relative;
+	z-index: 1;
+	display: grid;
+	grid-template-columns: minmax(0, 1.05fr) minmax(0, 1.2fr);
+	gap: 32px;
+	align-items: center;
+}
+
+.home-video-copy {
+	max-width: 520px;
+}
+
+.home-video-kicker {
+	text-transform: uppercase;
+	letter-spacing: 3px;
+	font-size: 0.85rem;
+	color: #f3c97b;
+	margin-bottom: 10px;
+	font-weight: 600;
+}
+
+.home-video h2 {
+	font-size: clamp(2rem, 3vw, 2.6rem);
+	color: #fff;
+	margin-bottom: 12px;
+}
+
+.home-video p {
+	color: rgba(255, 255, 255, 0.82);
+	font-size: 1.05rem;
+}
+
+.home-video-actions {
+	margin-top: 20px;
+	display: flex;
+	align-items: center;
+	gap: 16px;
+	flex-wrap: wrap;
+}
+
+.home-video-note {
+	font-size: 0.9rem;
+	color: rgba(255, 255, 255, 0.65);
+}
+
+.home-video-frame {
+	position: relative;
+	border-radius: 20px;
+	padding: 14px;
+	background: rgba(19, 13, 27, 0.7);
+	border: 1px solid rgba(255, 255, 255, 0.12);
+	box-shadow: 0 30px 60px rgba(0, 0, 0, 0.35);
+	overflow: hidden;
+}
+
+.home-video-media {
+	width: 100%;
+	height: clamp(260px, 40vw, 440px);
+	object-fit: cover;
+	border-radius: 16px;
+	display: block;
+}
+
+.home-video-glow {
+	position: absolute;
+	width: 280px;
+	height: 280px;
+	border-radius: 50%;
+	background: radial-gradient(circle, rgba(240, 180, 90, 0.35), transparent 65%);
+	bottom: -120px;
+	right: -80px;
+	filter: blur(4px);
+	pointer-events: none;
+}
+
 .weather-panel {
 	display: flex;
 	align-items: center;
@@ -174,5 +274,13 @@
 
 	.weather-panel {
 		align-items: flex-start;
+	}
+
+	.home-video-grid {
+		grid-template-columns: 1fr;
+	}
+
+	.home-video-copy {
+		max-width: 100%;
 	}
 }

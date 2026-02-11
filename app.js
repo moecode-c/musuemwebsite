@@ -9,6 +9,10 @@ const cookieParser = require("cookie-parser");
 const methodOverride = require("method-override");
 const dotenv = require("dotenv");
 
+dotenv.config();
+
+require("./config/cloudinary");
+
 const { connectDB } = require("./config/db");
 const { attachLocals } = require("./middleware/locals");
 const { notFoundHandler, errorHandler } = require("./middleware/error");
@@ -25,8 +29,6 @@ const userRoutes = require("./routes/users");
 const cartRoutes = require("./routes/cart");
 const newsletterRoutes = require("./routes/newsletter");
 const adminRoutes = require("./routes/admin");
-
-dotenv.config();
 
 const app = express();
 
