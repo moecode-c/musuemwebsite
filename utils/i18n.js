@@ -8,6 +8,21 @@ const translations = {
       subtitle:
         "Explore royal treasures, immersive virtual tours, and curated exhibits"
     },
+    home: {
+  spotlightKicker: "Museum Spotlight",
+  spotlightTitle: "Step Into the Grand Halls",
+  spotlightText:
+    "Watch a cinematic glimpse of the galleries, artifacts, and the golden atmosphere that makes every visit unforgettable.",
+  enterVirtualTour: "Enter Virtual Tour",
+  autoPlaysNote: "Auto plays, muted by default.",
+
+  weatherTitle: "Weather in Cairo",
+  weatherSubtitle: "Plan your visit with live conditions.",
+
+  featuredExhibits: "Featured Exhibits",
+  shopHighlights: "Shop Highlights",
+  visitorTestimonials: "Visitor Testimonials"
+},
 
     nav: {
       home: "Home",
@@ -29,7 +44,14 @@ const translations = {
       submit: "Submit",
       startVirtualTour: "Start Virtual Tour",
       exploreExhibits: "Explore Exhibits"
-    }
+    },
+    footer: {
+  connect: "Connect",
+  explore: "Explore",
+  visit: "Visit",
+  rights: "Egyptian Museum. All rights reserved"
+}
+
   },
 
   ar: {
@@ -41,6 +63,22 @@ const translations = {
       subtitle:
         "استكشف الكنوز الملكية، وجولات افتراضية تفاعلية، ومعارض مختارة"
     },
+    home: {
+  spotlightKicker: "لمحة عن المتحف",
+  spotlightTitle: "ادخل القاعات الكبرى",
+  spotlightText:
+    "شاهد لمحة سينمائية عن القاعات والقطع الأثرية والأجواء الذهبية التي تجعل كل زيارة لا تُنسى.",
+  enterVirtualTour: "ادخل الجولة الافتراضية",
+  autoPlaysNote: "يعمل تلقائيًا، بدون صوت افتراضيًا.",
+
+  weatherTitle: "الطقس في القاهرة",
+  weatherSubtitle: "خطّط زيارتك مع تحديثات الطقس المباشرة.",
+
+  featuredExhibits: "أبرز المعارض",
+  shopHighlights: "مقتطفات من المتجر",
+  visitorTestimonials: "آراء الزوار"
+},
+
 
     nav: {
       home: "الرئيسية",
@@ -62,7 +100,14 @@ const translations = {
       submit: "إرسال",
       startVirtualTour: "ابدأ الجولة الافتراضية",
       exploreExhibits: "استكشف المعارض"
-    }
+    },
+    footer: {
+  connect: "تواصل",
+  explore: "استكشف",
+  visit: "زيارة",
+  rights: "المتحف المصري. جميع الحقوق محفوظة"
+}
+
   }
 };
 
