@@ -3,16 +3,19 @@
 
 <section class="hero hero--image">
   <div class="hero-overlay"></div>
+
   <div class="container hero-content">
     <div class="hero-copy">
-      <p class="hero-kicker">The Afterlife Egyptian Museum</p>
-      <h1>Discover Egypt's Timeless Legacy</h1>
-      <p>Explore royal treasures, immersive virtual tours, and curated exhibits.</p>
+      <p class="hero-kicker"><%= t.hero.museumName %></p>
+      <h1><%= t.hero.title %></h1>
+      <p><%= t.hero.subtitle %></p>
+
       <div class="hero-actions">
-        <a class="btn" href="/exhibits">Explore Exhibits</a>
-        <a class="btn ghost" href="/virtual-tour">Start Virtual Tour</a>
+        <a class="btn" href="/exhibits"><%= t.buttons.exploreExhibits %></a>
+        <a class="btn ghost" href="/virtual-tour"><%= t.buttons.startVirtualTour %></a>
       </div>
     </div>
+
     <div class="hero-media">
       <model-viewer
         class="hero-model"
