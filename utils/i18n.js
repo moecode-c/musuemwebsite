@@ -65,6 +65,29 @@ footer: {
   accessibility: "Accessibility",
   newsletter: "Newsletter"
 },
+planTrip: {
+  title: "Plan Your Trip",
+  subtitle: "Prepare your itinerary with tickets, timing, and travel tips.",
+
+  weatherTitle: "Weather Update",
+
+  tips: {
+    title: "Travel Tips",
+    tip1: "Arrive early for guided tours.",
+    tip2: "Book tickets online to skip the queue.",
+    tip3: "Comfortable walking shoes recommended."
+  },
+
+  form: {
+    fullName: "Full Name",
+    email: "Email",
+    ticketType: "Ticket Type",
+    selectTicket: "Select a ticket",
+    visitDate: "Visit Date",
+    submit: "Request Plan"
+  }
+},
+
 
   },
 
@@ -135,10 +158,48 @@ footer: {
   accessibility: "إمكانية الوصول",
   newsletter: "النشرة البريدية"
 },
+planTrip: {
+  title: "خطّط لزيارتك",
+  subtitle: "جهّز برنامج زيارتك بالتذاكر والمواعيد ونصائح السفر.",
+
+  weatherTitle: "تحديث الطقس",
+
+  tips: {
+    title: "نصائح السفر",
+    tip1: "احضر مبكرًا للجولات الإرشادية.",
+    tip2: "احجز التذاكر عبر الإنترنت لتجنب الزحام.",
+    tip3: "يُنصح بارتداء أحذية مريحة للمشي."
+  },
+
+  form: {
+    fullName: "الاسم بالكامل",
+    email: "البريد الإلكتروني",
+    ticketType: "نوع التذكرة",
+    selectTicket: "اختر تذكرة",
+    visitDate: "تاريخ الزيارة",
+    submit: "إرسال الطلب"
+  }
+},
 
   }
 };
 
 const getTranslations = (lang) => translations[lang] || translations.en;
 
-module.exports = { getTranslations };
+const makeT = (lang) => {
+  const dict = getTranslations(lang);
+  return (key) => {
+    const parts = String(key).split(".");
+    let cur = dict;
+    for (const p of parts) {
+      if (cur && Object.prototype.hasOwnProperty.call(cur, p)) {
+        cur = cur[p];
+      } else {
+        return key; // show key if missing
+      }
+    }
+    return typeof cur === "string" ? cur : key;
+  };
+};
+
+module.exports = { getTranslations, makeT };

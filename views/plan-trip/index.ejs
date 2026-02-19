@@ -3,42 +3,49 @@
 
 <section class="page-hero">
   <div class="container">
-    <h1>Plan Your Trip</h1>
-    <p>Prepare your itinerary with tickets, timing, and travel tips.</p>
+    <h1><%= t.planTrip.title %></h1>
+    <p><%= t.planTrip.subtitle %></p>
   </div>
 </section>
 
 <section class="section">
   <div class="container split">
     <div>
-      <h2>Weather Update</h2>
+      <h2><%= t.planTrip.weatherTitle %></h2>
       <%- weatherHtml %>
-      <h2>Travel Tips</h2>
+
+      <h2><%= t.planTrip.tips.title %></h2>
       <ul class="list">
-        <li>Arrive early for guided tours.</li>
-        <li>Book tickets online to skip the queue.</li>
-        <li>Comfortable walking shoes recommended.</li>
+        <li><%= t.planTrip.tips.tip1 %></li>
+        <li><%= t.planTrip.tips.tip2 %></li>
+        <li><%= t.planTrip.tips.tip3 %></li>
       </ul>
     </div>
+
     <form class="form" id="trip-form">
-      <label>Full Name</label>
+      <label><%= t.planTrip.form.fullName %></label>
       <input type="text" name="name" required />
-      <label>Email</label>
+
+      <label><%= t.planTrip.form.email %></label>
       <input type="email" name="email" required />
-      <label>Ticket Type</label>
+
+      <label><%= t.planTrip.form.ticketType %></label>
       <select name="ticketId" required>
-        <option value="" disabled selected>Select a ticket</option>
+        <option value="" disabled selected><%= t.planTrip.form.selectTicket %></option>
         <% if (tickets && tickets.length) { %>
           <% tickets.forEach((ticket) => { %>
             <option value="<%= ticket._id %>">
-              <%= (ticket.group || "").toUpperCase() %> - <%= ticket.audience || "" %> (EGP <%= Number(ticket.price || 0).toFixed(2) %>)
+              <%= (ticket.group || "").toUpperCase() %> - <%= ticket.audience || "" %>
+              (EGP <%= Number(ticket.price || 0).toFixed(2) %>)
             </option>
           <% }) %>
         <% } %>
       </select>
-      <label>Visit Date</label>
+
+      <label><%= t.planTrip.form.visitDate %></label>
       <input type="date" name="date" required />
-      <button class="btn" type="submit">Request Plan</button>
+
+      <button class="btn" type="submit"><%= t.planTrip.form.submit %></button>
     </form>
   </div>
 </section>
