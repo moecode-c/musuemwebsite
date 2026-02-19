@@ -6,6 +6,9 @@ const MapPin = require("../models/MapPin");
 const { asyncHandler } = require("../utils/asyncHandler");
 const { getWeather } = require("../utils/apiClient");
 const { buildPagination } = require("../utils/pagination");
+const toArabicNumber = (value) =>
+  String(value).replace(/\d/g, (d) => "٠١٢٣٤٥٦٧٨٩"[d]);
+
 
 const buildCards = (items, type) => {
   return items
@@ -50,9 +53,15 @@ const home = asyncHandler(async (req, res) => {
     Testimonial.find().limit(3)
   ]);
   const weather = await getWeather().catch(() => null);
-  const weatherHtml = weather
-    ? `<div class="weather-card">Current temperature: ${weather.temperature_2m}°C | Wind: ${weather.wind_speed_10m} km/h</div>`
-    : "<div class=\"weather-card\">Weather data unavailable</div>";
+const isAr = req.session.language === "ar";
+
+const weatherHtml = weather
+  ? `<div class="weather-card">${
+      isAr
+        ? `درجة الحرارة الحالية: ${toArabicNumber(weather.temperature_2m)}°C | سرعة الرياح: ${toArabicNumber(weather.wind_speed_10m)} كم/س`
+        : `Current temperature: ${weather.temperature_2m}°C | Wind: ${weather.wind_speed_10m} km/h`
+    }</div>`
+  : `<div class="weather-card">${isAr ? "بيانات الطقس غير متاحة" : "Weather data unavailable"}</div>`;
 
   res.render("home", {
     pageTitle: "Home",
@@ -212,9 +221,15 @@ const testimonials = asyncHandler(async (req, res) => {
 
 const planTrip = asyncHandler(async (req, res) => {
   const weather = await getWeather().catch(() => null);
-  const weatherHtml = weather
-    ? `<div class="weather-card">Current temperature: ${weather.temperature_2m}°C | Wind: ${weather.wind_speed_10m} km/h</div>`
-    : "<div class=\"weather-card\">Weather data unavailable</div>";
+const isAr = req.session.language === "ar";
+
+const weatherHtml = weather
+  ? `<div class="weather-card">${
+      isAr
+        ? `درجة الحرارة الحالية: ${toArabicNumber(weather.temperature_2m)}°C | سرعة الرياح: ${toArabicNumber(weather.wind_speed_10m)} كم/س`
+        : `Current temperature: ${weather.temperature_2m}°C | Wind: ${weather.wind_speed_10m} km/h`
+    }</div>`
+  : `<div class="weather-card">${isAr ? "بيانات الطقس غير متاحة" : "Weather data unavailable"}</div>`;
   const tickets = await Ticket.find();
   const groupOrder = ["egyptian", "arab", "foreigner"];
   const audienceOrder = ["adult", "student", "child", "senior"];

@@ -45,12 +45,26 @@ const translations = {
       startVirtualTour: "Start Virtual Tour",
       exploreExhibits: "Explore Exhibits"
     },
-    footer: {
-  connect: "Connect",
-  explore: "Explore",
+footer: {
+  description: "Timeless history, immersive culture, and world-class experiences.",
   visit: "Visit",
-  rights: "Egyptian Museum. All rights reserved"
-}
+  location: "Downtown Cairo, Egypt",
+  hours: "Open daily 9:00 - 19:00",
+  guidedTours: "Guided tours every hour",
+  explore: "Explore",
+  featuredExhibits: "Featured Exhibits",
+  virtualTours: "Virtual Tours",
+  museumShop: "Museum Shop",
+  planTrip: "Plan Your Trip",
+  connect: "Connect",
+  email: "Email",
+  phone: "Phone",
+  support: "Support",
+  copyright: "© 2026 Egyptian Museum. All rights reserved.",
+  about: "About",
+  accessibility: "Accessibility",
+  newsletter: "Newsletter"
+},
 
   },
 
@@ -101,12 +115,26 @@ const translations = {
       startVirtualTour: "ابدأ الجولة الافتراضية",
       exploreExhibits: "استكشف المعارض"
     },
-    footer: {
-  connect: "تواصل",
-  explore: "استكشف",
+footer: {
+  description: "تاريخ خالد، ثقافة غامرة، وتجارب عالمية المستوى.",
   visit: "زيارة",
-  rights: "المتحف المصري. جميع الحقوق محفوظة"
-}
+  location: "وسط القاهرة، مصر",
+  hours: "مفتوح يوميًا من 9:00 إلى 19:00",
+  guidedTours: "جولات إرشادية كل ساعة",
+  explore: "استكشف",
+  featuredExhibits: "أبرز المعارض",
+  virtualTours: "الجولات الافتراضية",
+  museumShop: "متجر المتحف",
+  planTrip: "خطط زيارتك",
+  connect: "تواصل",
+  email: "البريد الإلكتروني",
+  phone: "الهاتف",
+  support: "الدعم",
+  copyright: "© 2026 المتحف المصري. جميع الحقوق محفوظة.",
+  about: "عن المتحف",
+  accessibility: "إمكانية الوصول",
+  newsletter: "النشرة البريدية"
+},
 
   }
 };

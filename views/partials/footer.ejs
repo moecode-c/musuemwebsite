@@ -2,7 +2,7 @@
   <div class="container footer-grid">
     <div class="footer-card">
       <h3><%= t.siteTitle %></h3>
-      <p>Timeless history, immersive culture, and world-class experiences.</p>
+      <p><%= t.footer.description %></p>
       <div class="footer-social">
         <a href="#" aria-label="Instagram"><i class="fab fa-instagram"></i></a>
         <a href="#" aria-label="Facebook"><i class="fab fa-facebook"></i></a>
@@ -11,37 +11,43 @@
       </div>
     </div>
     <div class="footer-card">
-      <h4>Visit</h4>
+    <h4><%= t.footer.visit %></h4>
       <ul class="footer-links">
-        <li>Downtown Cairo, Egypt</li>
-        <li>Open daily 9:00 - 19:00</li>
-        <li>Guided tours every hour</li>
+   <li><%= t.footer.location %></li>
+   <li><%= t.footer.hours %></li>
+   <li><%= t.footer.guidedTours %></li>
       </ul>
     </div>
     <div class="footer-card">
-      <h4>Explore</h4>
+    <h4><%= t.footer.explore %></h4>
       <ul class="footer-links">
-        <li><a href="/exhibits">Featured Exhibits</a></li>
-        <li><a href="/virtual-tour">Virtual Tours</a></li>
-        <li><a href="/shop">Museum Shop</a></li>
-        <li><a href="/plan-trip">Plan Your Trip</a></li>
+    <li><a href="/exhibits"><%= t.footer.featuredExhibits %></a></li>
+    <li><a href="/virtual-tour"><%= t.footer.virtualTours %></a></li>
+    <li><a href="/shop"><%= t.footer.museumShop %></a></li>
+    <li><a href="/plan-trip"><%= t.footer.planTrip %></a></li>
       </ul>
     </div>
     <div class="footer-card">
-      <h4>Connect</h4>
+    <h4><%= t.footer.connect %></h4>
       <ul class="footer-links">
-        <li>Email: info@egyptianmuseum.edu</li>
-        <li>Phone: +20 2 2579 6584</li>
-        <li>Support: help@egyptianmuseum.edu</li>
+<li>
+  <%= t.footer.email %>:
+  <span dir="ltr">info@egyptianmuseum.edu</span>
+</li>
+
+  <%= t.footer.phone %>:
+  <span dir="ltr">+20 2 2579 6584</span>
+</li>
+<li><%= t.footer.support %>: help@egyptianmuseum.edu</li>
       </ul>
     </div>
   </div>
   <div class="footer-bottom">
-    <span>© 2026 Egyptian Museum. All rights reserved.</span>
+<span><%= t.footer.copyright %></span>
     <div class="footer-bottom-links">
-      <a href="/about">About</a>
-      <a href="/accessibility">Accessibility</a>
-      <a href="/newsletter">Newsletter</a>
+<a href="/about"><%= t.footer.about %></a>
+<a href="/accessibility"><%= t.footer.accessibility %></a>
+<a href="/newsletter"><%= t.footer.newsletter %></a>
     </div>
   </div>
 </footer>
