@@ -101,25 +101,241 @@ const categoryConfig = {
   }
 };
 
-const renderExhibitsPage = asyncHandler(async (req, res, categoryKey, basePath) => {
+const artifactEraInsights = {
+  "early dynastic": "State unification and royal symbolism emerged in this phase, shaping the earliest formal dynastic traditions.",
+  "old kingdom": "Known for pyramid-building and centralized court workshops, this era refined monumentality and royal funerary arts.",
+  "middle kingdom": "A period of reunification and administrative reform with strong growth in literary, temple, and elite craft traditions.",
+  "new kingdom": "Egypt's imperial age; expanded diplomacy and warfare fueled major temple projects and luxury workshop production.",
+  ptolemaic: "Greek and Egyptian traditions coexisted, producing bilingual administration and hybrid artistic and religious expressions.",
+  "early islamic": "Early Islamic Egypt saw growth in manuscript culture, religious institutions, and urban craft production in Fustat.",
+  fatimid: "Fatimid Cairo became a major center for calligraphy, carved wood, and ceremonial arts tied to court patronage.",
+  ayyubid: "Ayyubid rule strengthened citadel and religious complexes, with metalwork and epigraphy prominent in elite objects.",
+  mamluk: "Mamluk patronage made Cairo a global hub of scholarship and craftsmanship, especially in glass and inlaid metalwork.",
+  ottoman: "Ottoman-era Egypt remained integrated in Mediterranean exchange networks, visible in ceramics and decorative arts.",
+  "late antique": "Late Antique workshops sustained textile and monastic production, preserving religious and regional visual identities.",
+  "byzantine-coptic": "Coptic communities adapted Byzantine liturgical and visual forms in devotional objects and church furnishings.",
+  "medieval coptic": "Medieval Coptic art preserved icon, fresco, and manuscript traditions through active church and monastic centers.",
+  "christian era": "Christian Egyptian heritage reflects long continuity in liturgical art, manuscript production, and monastic life.",
+  "islamic era": "Islamic-era material culture in Egypt highlights calligraphy, geometry, and highly specialized craft guild traditions."
+};
+
+const artifactCategoryFallback = {
+  pharaoh: "Pharaonic collections emphasize kingship, ritual practice, and funerary beliefs across multiple dynasties.",
+  islamic: "Islamic collections document urban religious life, manuscript traditions, and refined decorative craftsmanship.",
+  christian: "Christian collections preserve Coptic devotional, liturgical, and monastic traditions across centuries."
+};
+
+const artifactEraExtraDetails = {
+  "early dynastic": {
+    significance: "Royal imagery and ceremonial palettes from this period helped establish visual language for kingship in later dynasties.",
+    legacy: "Administrative standardization and early hieroglyphic usage laid the foundations of pharaonic state culture."
+  },
+  "old kingdom": {
+    significance: "Monumental stone architecture and elite statuary defined the court-centered aesthetics of the Pyramid Age.",
+    legacy: "Workshop conventions in proportion, materials, and funerary symbolism influenced Egyptian art for centuries."
+  },
+  "middle kingdom": {
+    significance: "Cultural revival and political reunification supported temple patronage and refinement of funerary equipment.",
+    legacy: "Texts and material culture from this era became reference models for later royal and elite traditions."
+  },
+  "new kingdom": {
+    significance: "Imperial expansion linked Egypt to wider trade networks, increasing diversity in materials and artistic motifs.",
+    legacy: "Temple relief programs and elite burial assemblages from this era remain central to understanding state ideology."
+  },
+  ptolemaic: {
+    significance: "Multilingual inscriptions and decrees, including those in multiple scripts, document interactions between Greek and Egyptian administration.",
+    legacy: "Ptolemaic evidence was critical for modern epigraphy and historical reconstruction of late pharaonic religious institutions."
+  },
+  "early islamic": {
+    significance: "Early Islamic Egypt shaped new religious, civic, and manuscript practices centered around Fustat and related urban hubs.",
+    legacy: "Calligraphic and architectural traditions formed in this phase informed later Fatimid and Mamluk developments."
+  },
+  fatimid: {
+    significance: "Fatimid patronage stimulated high-quality craftsmanship in carved wood, manuscript arts, and ceremonial objects.",
+    legacy: "Urban and artistic institutions founded in Fatimid Cairo had long-term influence on later Islamic visual culture in Egypt."
+  },
+  ayyubid: {
+    significance: "Ayyubid military-religious patronage supported architectural and decorative programs across major political centers.",
+    legacy: "Metalwork and epigraphic styles from this era bridge earlier Fatimid and later Mamluk artistic traditions."
+  },
+  mamluk: {
+    significance: "Mamluk-era Cairo became a major intellectual and commercial center, reflected in sophisticated glass, metal, and manuscript arts.",
+    legacy: "Institutional endowments and workshop systems contributed to durable artistic continuity across late medieval Egypt."
+  },
+  ottoman: {
+    significance: "Ottoman-period works show adaptation of imperial styles to local Egyptian tastes and existing craft practices.",
+    legacy: "Ceramic and decorative motifs from this era document Egypt's role in wider Mediterranean artistic exchange."
+  },
+  "late antique": {
+    significance: "Late Antique material reflects transitions in religious life, especially monastic growth and changing devotional practices.",
+    legacy: "Textiles, manuscripts, and sacred objects preserve evidence of local communities during a transformative historical phase."
+  },
+  "byzantine-coptic": {
+    significance: "Objects from this period illustrate adaptation of Byzantine forms within distinct Coptic theological and liturgical contexts.",
+    legacy: "Church metalwork and icon-related production helped define long-standing Coptic visual traditions."
+  },
+  "medieval coptic": {
+    significance: "Monasteries and churches served as key centers for manuscript production, icon painting, and devotional arts.",
+    legacy: "These artistic traditions preserved language, ritual memory, and communal identity across changing political periods."
+  },
+  "christian era": {
+    significance: "Christian-period artifacts document the continuity of Coptic worship, education, and artistic production.",
+    legacy: "Their preservation offers rare insight into liturgical life, script traditions, and regional workshop networks."
+  },
+  "islamic era": {
+    significance: "Islamic-era collections in Egypt reveal deep integration of calligraphy, geometry, and religious patronage.",
+    legacy: "These works help trace the evolution of urban institutions and artisan knowledge across multiple dynasties."
+  }
+};
+
+const artifactCategoryExtraFallback = {
+  pharaoh: {
+    significance: "Pharaonic objects preserve key evidence for royal ideology, funerary theology, and temple-centered ritual systems.",
+    legacy: "Their inscriptions and iconography remain primary sources for reconstructing ancient Egyptian governance and belief."
+  },
+  islamic: {
+    significance: "Islamic collections reflect major developments in scholarly, civic, and devotional life across medieval and early modern Egypt.",
+    legacy: "Material evidence from these works documents continuity in craftsmanship, epigraphy, and institutional patronage."
+  },
+  christian: {
+    significance: "Christian collections preserve Coptic liturgical and monastic traditions expressed through manuscripts, icons, and ritual objects.",
+    legacy: "They provide long-duration evidence of local worship practices and artistic continuity in Egypt."
+  }
+};
+
+const resolveArtifactEraInfo = (item) => {
+  const eraKey = String(item?.era || "").trim().toLowerCase();
+  const categoryKey = String(item?.category || "").trim().toLowerCase();
+  return (
+    artifactEraInsights[eraKey] ||
+    artifactCategoryFallback[categoryKey] ||
+    "This artifact represents an important phase in Egypt's evolving historical and artistic legacy."
+  );
+};
+
+const resolveArtifactEraExtras = (item) => {
+  const eraKey = String(item?.era || "").trim().toLowerCase();
+  const categoryKey = String(item?.category || "").trim().toLowerCase();
+  return (
+    artifactEraExtraDetails[eraKey] ||
+    artifactCategoryExtraFallback[categoryKey] || {
+      significance: "This object is part of an important historical context within Egypt's long cultural timeline.",
+      legacy: "Ongoing scholarship continues to refine how this artifact is interpreted in relation to its era."
+    }
+  );
+};
+
+const buildExhibitDetailsHref = (id, returnTo) => {
+  if (!id) return "/exhibits";
+  const safeReturnTo = typeof returnTo === "string" && returnTo.startsWith("/") ? returnTo : "/exhibits";
+  return `/exhibits/${id}?returnTo=${encodeURIComponent(safeReturnTo)}`;
+};
+
+const buildArtifactCardModel = (item, exhibitsBasePath, returnTo) => ({
+  _id: item._id,
+  title: item.title,
+  imageUrl: item.imageUrl,
+  description: item.description || "",
+  eraInfo: resolveArtifactEraInfo(item),
+  era: item.era,
+  period: item.period,
+  location: item.location,
+  museumLabel: "Egyptian Museum",
+  ctaLabel: "View 3D Model Artifact",
+  ctaHref: item._id ? buildExhibitDetailsHref(item._id, returnTo) : exhibitsBasePath || "/exhibits"
+});
+
+const buildTimelineCardModel = (item, returnTo) => ({
+  _id: item._id,
+  title: item.title,
+  imageUrl: item.imageUrl,
+  description: item.description || "",
+  era: item.era,
+  period: item.period,
+  location: item.location,
+  ctaLabel: item._id ? "View 3D Model Artifact" : null,
+  ctaHref: item._id ? buildExhibitDetailsHref(item._id, returnTo) : null
+});
+
+const TARGET_ARTIFACT_CARDS = 8;
+const TARGET_TIMELINE_ITEMS = 8;
+
+const expandToTargetCount = (items, target) => {
+  if (!Array.isArray(items) || items.length === 0 || items.length >= target) return items;
+
+  const expanded = [...items];
+  let pointer = 0;
+
+  while (expanded.length < target) {
+    const source = items[pointer % items.length];
+    expanded.push(source);
+    pointer += 1;
+  }
+
+  return expanded;
+};
+
+const renderExhibitsPage = async (req, res, categoryKey, basePath) => {
   const page = parseInt(req.query.page || "1", 10);
-  const limit = 6;
+  const limit = 8;
   const config = categoryKey ? categoryConfig[categoryKey] : null;
   const filter = config ? { category: new RegExp(`^${config.categoryValue}$`, "i") } : {};
   const total = await Exhibit.countDocuments(filter);
   const totalPages = Math.ceil(total / limit) || 1;
   const items = await Exhibit.find(filter)
+    .sort({ createdAt: -1 })
     .skip((page - 1) * limit)
     .limit(limit);
 
+  let cardSourceItems = [...items];
+
+  if (cardSourceItems.length < TARGET_ARTIFACT_CARDS) {
+    const existingIds = cardSourceItems.map((item) => item._id);
+    const cardFillFilter = {
+      ...filter,
+      _id: { $nin: existingIds }
+    };
+    const fillItems = await Exhibit.find(cardFillFilter)
+      .sort({ createdAt: -1 })
+      .limit(TARGET_ARTIFACT_CARDS - cardSourceItems.length);
+    cardSourceItems = [...cardSourceItems, ...fillItems];
+  }
+
+  cardSourceItems = expandToTargetCount(cardSourceItems, TARGET_ARTIFACT_CARDS);
+
+  let timelineSourceItems = [...items];
+
+  if (timelineSourceItems.length < TARGET_TIMELINE_ITEMS) {
+    const existingIds = timelineSourceItems.map((item) => item._id);
+    const timelineFillFilter = {
+      ...filter,
+      _id: { $nin: existingIds }
+    };
+    const fillTimelineItems = await Exhibit.find(timelineFillFilter)
+      .sort({ createdAt: -1 })
+      .limit(TARGET_TIMELINE_ITEMS - timelineSourceItems.length);
+    timelineSourceItems = [...timelineSourceItems, ...fillTimelineItems];
+  }
+
+  timelineSourceItems = expandToTargetCount(timelineSourceItems, TARGET_TIMELINE_ITEMS);
+
+  const returnTo = req.originalUrl || basePath || "/exhibits";
+  const artifactItems = cardSourceItems.map((item) => buildArtifactCardModel(item, basePath, returnTo));
+  const timelineItems = timelineSourceItems.map((item) => buildTimelineCardModel(item, returnTo));
+
   res.render("exhibits/index", {
     pageTitle: config ? `${config.label} Collection` : "Exhibits",
+    pageCss: "exhibits",
     heroTitle: config ? `${config.label} Collection` : "Exhibits",
     heroSubtitle: config ? config.subtitle : "Discover Pharaoh, Islamic, and Christian galleries.",
-    exhibitsHtml: buildCards(items, "exhibit"),
+    exhibits: items,
+    timelineItems,
+    artifactItems,
+    collectionKey: categoryKey || "all",
+    exhibitsBasePath: basePath,
     paginationHtml: buildPagination(page, totalPages, basePath)
   });
-});
+};
 
 const exhibits = asyncHandler(async (req, res) => {
   const categoryKey = (req.query.category || "").toLowerCase();
@@ -129,16 +345,22 @@ const exhibits = asyncHandler(async (req, res) => {
   return renderExhibitsPage(req, res, null, "/exhibits");
 });
 
-const exhibitsPharaoh = (req, res) => renderExhibitsPage(req, res, "pharaoh", "/exhibits/pharaoh");
-const exhibitsIslamic = (req, res) => renderExhibitsPage(req, res, "islamic", "/exhibits/islamic");
-const exhibitsChristian = (req, res) => renderExhibitsPage(req, res, "christian", "/exhibits/christian");
+const exhibitsPharaoh = asyncHandler(async (req, res) => renderExhibitsPage(req, res, "pharaoh", "/exhibits/pharaoh"));
+const exhibitsIslamic = asyncHandler(async (req, res) => renderExhibitsPage(req, res, "islamic", "/exhibits/islamic"));
+const exhibitsChristian = asyncHandler(async (req, res) => renderExhibitsPage(req, res, "christian", "/exhibits/christian"));
 
 const exhibitDetails = asyncHandler(async (req, res) => {
   const exhibit = await Exhibit.findById(req.params.id);
   if (!exhibit) {
     return res.status(404).render("404", { pageTitle: "Not Found", message: "Exhibit not found" });
   }
-  res.render("exhibits/details", { pageTitle: exhibit.title, exhibit });
+  const requestedReturnTo = typeof req.query.returnTo === "string" ? req.query.returnTo : "";
+  const backHref = requestedReturnTo.startsWith("/") && !requestedReturnTo.startsWith("//")
+    ? requestedReturnTo
+    : "/exhibits";
+  const eraInfo = resolveArtifactEraInfo(exhibit);
+  const eraExtras = resolveArtifactEraExtras(exhibit);
+  res.render("exhibits/details", { pageTitle: exhibit.title, pageCss: "exhibits", exhibit, backHref, eraInfo, eraExtras });
 });
 
 const virtualTour = (req, res) => res.render("virtual-tour/index", { pageTitle: "Virtual Tour" });

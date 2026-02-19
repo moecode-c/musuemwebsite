@@ -8,6 +8,8 @@ const exhibitSchema = new mongoose.Schema(
     imageUrl: { type: String, required: true },
     modelUrl: { type: String, required: true },
     era: { type: String, default: "Ancient Egypt" },
+    period: { type: String, default: "" },
+    location: { type: String, default: "" },
     x: { type: Number, default: null },
     y: { type: Number, default: null }
   },

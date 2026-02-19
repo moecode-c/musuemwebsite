@@ -14,7 +14,7 @@ const list = asyncHandler(async (req, res) => {
 });
 
 const create = asyncHandler(async (req, res) => {
-  const { title, category, description, era } = req.body;
+  const { title, category, description, era, period, location } = req.body;
   let imageUrl = req.body.imageUrl || "";
   const modelUrl = req.body.modelUrl || "";
 
@@ -32,12 +32,12 @@ const create = asyncHandler(async (req, res) => {
 
   const x = parseCoordinate(req.body.x);
   const y = parseCoordinate(req.body.y);
-  const exhibit = await Exhibit.create({ title, category, description, era, imageUrl, modelUrl, x, y });
+  const exhibit = await Exhibit.create({ title, category, description, era, period, location, imageUrl, modelUrl, x, y });
   res.status(201).json(exhibit);
 });
 
 const createWithFiles = asyncHandler(async (req, res) => {
-  const { title, category, description, era } = req.body;
+  const { title, category, description, era, period, location } = req.body;
   const imageFile = req.files?.image?.[0];
   const modelFile = req.files?.model?.[0];
   const imageUpload = imageFile
@@ -56,15 +56,15 @@ const createWithFiles = asyncHandler(async (req, res) => {
 
   const x = parseCoordinate(req.body.x);
   const y = parseCoordinate(req.body.y);
-  const exhibit = await Exhibit.create({ title, category, description, era, imageUrl, modelUrl, x, y });
+  const exhibit = await Exhibit.create({ title, category, description, era, period, location, imageUrl, modelUrl, x, y });
   res.status(201).json(exhibit);
 });
 
 const update = asyncHandler(async (req, res) => {
-  const { title, category, description, era } = req.body;
+  const { title, category, description, era, period, location } = req.body;
   const imageFile = req.files?.image?.[0];
   const modelFile = req.files?.model?.[0];
-  const updates = { title, category, description, era };
+  const updates = { title, category, description, era, period, location };
   const x = parseCoordinate(req.body.x);
   const y = parseCoordinate(req.body.y);
   if (x !== undefined) updates.x = x;

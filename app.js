@@ -32,8 +32,6 @@ const adminRoutes = require("./routes/admin");
 
 const app = express();
 
-connectDB();
-
 app.set("view engine", "ejs");
 app.set("views", path.join(__dirname, "views"));
 
@@ -81,7 +79,32 @@ app.use("/admin", adminRoutes);
 app.use(notFoundHandler);
 app.use(errorHandler);
 
-const PORT = process.env.PORT || 3000;
-app.listen(PORT, () => {
-  console.log(`Server running on http://localhost:${PORT}`);
-});
+const startPort = Number(process.env.PORT) || 3000;
+
+const startServer = (port) => {
+  const server = app.listen(port, () => {
+    console.log(`Server running on http://localhost:${port}`);
+  });
+
+  server.on("error", (error) => {
+    if (error.code === "EADDRINUSE") {
+      const nextPort = port + 1;
+      console.warn(`Port ${port} is in use. Trying ${nextPort}...`);
+      startServer(nextPort);
+      return;
+    }
+
+    throw error;
+  });
+};
+
+const bootstrap = async () => {
+  try {
+    await connectDB();
+    startServer(startPort);
+  } catch (error) {
+    process.exit(1);
+  }
+};
+
+bootstrap();
