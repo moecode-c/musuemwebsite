@@ -4,28 +4,58 @@
 <section class="page-hero">
   <div class="container">
     <h1><%= exhibit.title %></h1>
-    <p><%= exhibit.category %> | <%= exhibit.era %></p>
+    <p><%= exhibit.category %> | <%= exhibit.era || "Ancient Egypt" %></p>
   </div>
 </section>
 
-<section class="section">
-  <div class="container split">
-    <div>
-      <img src="<%= exhibit.imageUrl %>" alt="<%= exhibit.title %>" class="detail-image" />
-      <p><%= exhibit.description %></p>
-      <% if (exhibit.x !== null && exhibit.x !== undefined && exhibit.y !== null && exhibit.y !== undefined) { %>
-        <a class="btn" href="/location?x=<%= exhibit.x %>&y=<%= exhibit.y %>&label=<%= encodeURIComponent(exhibit.title) %>&description=<%= encodeURIComponent(exhibit.category) %>">View on Map</a>
-      <% } %>
-    </div>
-    <div>
-      <model-viewer
-        src="<%= exhibit.modelUrl %>"
-        alt="3D model of <%= exhibit.title %>"
-        auto-rotate
-        camera-controls
-        class="model-viewer">
-      </model-viewer>
-    </div>
+<section class="section exhibit-detail-section">
+  <div class="container">
+    <article class="exhibit-detail-shell">
+      <div class="exhibit-detail-content" aria-label="Artifact information">
+        <h2><%= exhibit.title %></h2>
+        <p class="exhibit-detail-description"><%= exhibit.description || "No description available for this artifact yet." %></p>
+        <% if (eraInfo) { %>
+        <p class="exhibit-detail-era-info"><strong>Era Insight:</strong> <%= eraInfo %></p>
+        <% } %>
+        <% if (eraExtras && (eraExtras.significance || eraExtras.legacy)) { %>
+        <div class="exhibit-detail-era-extra">
+          <% if (eraExtras.significance) { %>
+          <p><strong>Historical Significance:</strong> <%= eraExtras.significance %></p>
+          <% } %>
+          <% if (eraExtras.legacy) { %>
+          <p><strong>Legacy:</strong> <%= eraExtras.legacy %></p>
+          <% } %>
+        </div>
+        <% } %>
+
+        <ul class="exhibit-detail-meta" aria-label="Artifact details">
+          <% if (exhibit.category) { %><li><strong>Type:</strong> <span><%= exhibit.category %></span></li><% } %>
+          <% if (exhibit.period || exhibit.era) { %><li><strong>Period:</strong> <span><%= exhibit.period || exhibit.era %></span></li><% } %>
+          <% if (exhibit.location) { %><li><strong>Origin:</strong> <span><%= exhibit.location %></span></li><% } %>
+        </ul>
+
+        <div class="exhibit-detail-actions">
+          <a class="btn artifact-btn" href="<%= backHref || '/exhibits' %>">Back to Exhibits</a>
+          <% if (exhibit.x !== null && exhibit.x !== undefined && exhibit.y !== null && exhibit.y !== undefined) { %>
+          <a class="btn artifact-btn" href="/location?x=<%= exhibit.x %>&y=<%= exhibit.y %>&label=<%= encodeURIComponent(exhibit.title) %>&description=<%= encodeURIComponent(exhibit.category) %>">View on Map</a>
+          <% } %>
+        </div>
+      </div>
+
+      <div class="exhibit-detail-model-wrap" aria-label="Artifact 3D model viewer">
+          <% if (exhibit.modelUrl) { %>
+          <model-viewer
+            src="<%= exhibit.modelUrl %>"
+            alt="3D model of <%= exhibit.title %>"
+            auto-rotate
+            camera-controls
+            class="model-viewer">
+          </model-viewer>
+          <% } else { %>
+          <p class="timeline-empty">3D model is not available for this artifact yet.</p>
+          <% } %>
+      </div>
+    </article>
   </div>
 </section>
 

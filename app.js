@@ -1,5 +1,6 @@
 const path = require("path");
 const express = require("express");
+const mongoose = require("mongoose");
 const session = require("express-session");
 const MongoStore = require("connect-mongo");
 const helmet = require("helmet");
@@ -13,7 +14,7 @@ dotenv.config();
 
 require("./config/cloudinary");
 
-const { connectDB } = require("./config/db");
+const { configureDns, connectDB, getMongoUri } = require("./config/db");
 const { attachLocals } = require("./middleware/locals");
 const { notFoundHandler, errorHandler } = require("./middleware/error");
 
@@ -31,8 +32,9 @@ const newsletterRoutes = require("./routes/newsletter");
 const adminRoutes = require("./routes/admin");
 
 const app = express();
-
-connectDB();
+configureDns();
+const mongoUri = getMongoUri();
+const dbConnectPromise = connectDB();
 
 app.set("view engine", "ejs");
 app.set("views", path.join(__dirname, "views"));
@@ -52,7 +54,7 @@ app.use(
     resave: false,
     saveUninitialized: false,
     store: MongoStore.create({
-      mongoUrl: process.env.MONGODB_URI || "mongodb://127.0.0.1:27017/egyptian_museum",
+      clientPromise: dbConnectPromise.then(() => mongoose.connection.getClient()),
       ttl: 60 * 60 * 24 * 7
     }),
     cookie: {
@@ -81,7 +83,32 @@ app.use("/admin", adminRoutes);
 app.use(notFoundHandler);
 app.use(errorHandler);
 
-const PORT = process.env.PORT || 3000;
-app.listen(PORT, () => {
-  console.log(`Server running on http://localhost:${PORT}`);
-});
+const startPort = Number(process.env.PORT) || 3000;
+
+const startServer = (port) => {
+  const server = app.listen(port, () => {
+    console.log(`Server running on http://localhost:${port}`);
+  });
+
+  server.on("error", (error) => {
+    if (error.code === "EADDRINUSE") {
+      const nextPort = port + 1;
+      console.warn(`Port ${port} is in use. Trying ${nextPort}...`);
+      startServer(nextPort);
+      return;
+    }
+
+    throw error;
+  });
+};
+
+const bootstrap = async () => {
+  try {
+    await dbConnectPromise;
+    startServer(startPort);
+  } catch (error) {
+    process.exit(1);
+  }
+};
+
+bootstrap();

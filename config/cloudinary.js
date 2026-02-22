@@ -7,16 +7,26 @@ const requiredEnv = [
 ];
 
 const missing = requiredEnv.filter((key) => !process.env[key]);
-if (missing.length > 0) {
+const isProduction = process.env.NODE_ENV === "production";
+
+if (missing.length > 0 && isProduction) {
   throw new Error(`Missing Cloudinary environment variables: ${missing.join(", ")}`);
 }
 
-cloudinary.config({
-  cloud_name: process.env.CLOUDINARY_CLOUD_NAME,
-  api_key: process.env.CLOUDINARY_API_KEY,
-  api_secret: process.env.CLOUDINARY_API_SECRET
-});
+const cloudinaryConfigured = missing.length === 0;
 
-console.log("Cloudinary connected");
+if (cloudinaryConfigured) {
+  cloudinary.config({
+    cloud_name: process.env.CLOUDINARY_CLOUD_NAME,
+    api_key: process.env.CLOUDINARY_API_KEY,
+    api_secret: process.env.CLOUDINARY_API_SECRET
+  });
 
-module.exports = { cloudinary };
+  console.log("Cloudinary connected");
+} else {
+  console.warn(
+    `Cloudinary is not configured. Missing: ${missing.join(", ")}. Upload features are disabled.`
+  );
+}
+
+module.exports = { cloudinary, cloudinaryConfigured };
