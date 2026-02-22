@@ -3,16 +3,19 @@
 
 <section class="hero hero--image">
   <div class="hero-overlay"></div>
+
   <div class="container hero-content">
     <div class="hero-copy">
-      <p class="hero-kicker">The Afterlife Egyptian Museum</p>
-      <h1>Discover Egypt's Timeless Legacy</h1>
-      <p>Explore royal treasures, immersive virtual tours, and curated exhibits.</p>
+      <p class="hero-kicker"><%= t.hero.museumName %></p>
+      <h1><%= t.hero.title %></h1>
+      <p><%= t.hero.subtitle %></p>
+
       <div class="hero-actions">
-        <a class="btn" href="/exhibits">Explore Exhibits</a>
-        <a class="btn ghost" href="/virtual-tour">Start Virtual Tour</a>
+        <a class="btn" href="/exhibits"><%= t.buttons.exploreExhibits %></a>
+        <a class="btn ghost" href="/virtual-tour"><%= t.buttons.startVirtualTour %></a>
       </div>
     </div>
+
     <div class="hero-media">
       <model-viewer
         class="hero-model"
@@ -30,17 +33,17 @@
     </div>
   </div>
 </section>
-
 <section class="section home-video">
   <div class="container home-video-grid">
     <div class="home-video-copy">
-      <p class="home-video-kicker">Museum Spotlight</p>
-      <h2>Step Into the Grand Halls</h2>
-      <p>Watch a cinematic glimpse of the galleries, artifacts, and the golden atmosphere that makes every visit unforgettable.</p>
-      <div class="home-video-actions">
-        <a class="btn" href="/virtual-tour">Enter Virtual Tour</a>
-        <span class="home-video-note">Auto plays, muted by default.</span>
-      </div>
+<p class="home-video-kicker"><%= t.home.spotlightKicker %></p>
+<h2><%= t.home.spotlightTitle %></h2>
+<p><%= t.home.spotlightText %></p>
+
+<div class="home-video-actions">
+  <a class="btn" href="/virtual-tour"><%= t.home.enterVirtualTour %></a>
+  <span class="home-video-note"><%= t.home.autoPlaysNote %></span>
+</div>
     </div>
     <div class="home-video-frame">
       <video
@@ -63,8 +66,8 @@
   <div class="container">
     <div class="weather-panel">
       <div>
-        <h3>Weather in Cairo</h3>
-        <p class="weather-subtitle">Plan your visit with live conditions.</p>
+<h3><%= t.home.weatherTitle %></h3>
+<p class="weather-subtitle"><%= t.home.weatherSubtitle %></p>
       </div>
       <div class="weather-data">
         <%- weatherHtml %>
@@ -75,7 +78,7 @@
 
 <section class="section">
   <div class="container">
-    <h2>Featured Exhibits</h2>
+<h2><%= t.home.featuredExhibits %></h2>
     <div class="grid">
       <%- exhibitsHtml %>
     </div>
@@ -84,7 +87,7 @@
 
 <section class="section">
   <div class="container">
-    <h2>Shop Highlights</h2>
+<h2><%= t.home.shopHighlights %></h2>
     <div class="grid">
       <%- productsHtml %>
     </div>
@@ -93,7 +96,7 @@
 
 <section class="section alt">
   <div class="container">
-    <h2>Visitor Testimonials</h2>
+<h2><%= t.home.visitorTestimonials %></h2>
     <div class="grid">
       <%- testimonialsHtml %>
     </div>

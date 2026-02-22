@@ -10,6 +10,7 @@ const cookieParser = require("cookie-parser");
 const methodOverride = require("method-override");
 const dotenv = require("dotenv");
 
+
 dotenv.config();
 
 require("./config/cloudinary");
@@ -64,6 +65,7 @@ app.use(
     }
   })
 );
+
 
 app.use(attachLocals);
 

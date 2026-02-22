@@ -32,8 +32,12 @@ const resolvePageCss = (path) => {
 
 const attachLocals = (req, res, next) => {
   const language = req.session.language || "en";
+  
   res.locals.language = language;
-  res.locals.t = getTranslations(language);
+res.locals.t = getTranslations(language);
+res.locals.dir = language === "ar" ? "rtl" : "ltr";
+
+  
   res.locals.user = req.session.user || null;
   res.locals.cart = req.session.cart || { items: [], total: 0 };
   res.locals.pageCss = resolvePageCss(req.path);
