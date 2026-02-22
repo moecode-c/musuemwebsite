@@ -7,6 +7,7 @@ const resolvePageCss = (path) => {
   const map = {
     "/": "home",
     "/about": "about",
+    "/mission": "mission",
     "/accessibility": "accessibility",
     "/newsletter": "newsletter",
     "/location": "location",

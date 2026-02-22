@@ -1,58 +1,244 @@
 <%- include('../partials/header') %>
 <%- include('../partials/navbar') %>
 
-<section class="page-hero">
-  <div class="container">
-    <h1>Accessibility</h1>
-    <p>Inclusive design, assistive services, and respectful care for every visitor.</p>
-  </div>
-</section>
-
-<section class="section">
-  <div class="container">
-    <div class="access-grid">
-      <article class="info-card">
-        <i class="fas fa-wheelchair icon"></i>
-        <h3>Mobility Access</h3>
-        <p>Step-free entrances, elevators, and wide gallery routes across all floors.</p>
-      </article>
-      <article class="info-card">
-        <i class="fas fa-ear-listen icon"></i>
-        <h3>Audio & Captions</h3>
-        <p>Audio guides, captions on videos, and induction loops in lecture halls.</p>
-      </article>
-      <article class="info-card">
-        <i class="fas fa-hands-asl-interpreting icon"></i>
-        <h3>Interpretation</h3>
-        <p>Advance requests for sign language interpretation and guided tours.</p>
-      </article>
-      <article class="info-card">
-        <i class="fas fa-person-shelter icon"></i>
-        <h3>Sensory-Friendly</h3>
-        <p>Quiet zones, reduced-light exhibits, and sensory-friendly visiting hours.</p>
-      </article>
+<main class="accessibility-page">
+  <section class="accessibility-hero">
+    <div class="container">
+      <div class="access-hero-inner">
+        <div class="access-hero-label">
+          <span class="access-hero-kicker">ACCESSIBILITY</span>
+          <span class="access-hero-divider">|</span>
+          <span class="access-hero-kicker">VISITOR CARE</span>
+        </div>
+        <h1 class="access-hero-title">ACCESS FOR ALL</h1>
+        <div class="access-hero-subline">
+          <p>INCLUSIVE DESIGN, GUIDED SUPPORT, AND RESPECTFUL CARE ACROSS EVERY GALLERY.</p>
+        </div>
+      </div>
     </div>
-  </div>
-</section>
+  </section>
 
-<section class="section section-alt">
-  <div class="container split">
-    <div>
-      <h2>Visitor Support</h2>
-      <ul class="list">
-        <li>Complimentary wheelchairs available at the main entrance.</li>
-        <li>Assistance dogs and service animals are welcome.</li>
-        <li>Priority seating for talks, screenings, and workshops.</li>
-        <li>Large-print and high-contrast gallery guides.</li>
-      </ul>
-    </div>
-    <div class="info-card">
-      <h3>Need help planning?</h3>
-      <p>Contact our accessibility desk for customized routes and advance accommodations.</p>
-      <p class="contact-line"><i class="fas fa-envelope"></i> access@musuem.org</p>
-      <p class="contact-line"><i class="fas fa-phone"></i> +20 2 2345 6789</p>
-    </div>
-  </div>
-</section>
+  <section class="section">
+    <div class="container access-page">
+      <div class="access-intro">
+        <p>
+          The Egyptian Museum is a sanctuary for history, and we believe history belongs to everyone. We are
+          dedicated to removing barriers, physical, sensory, or cognitive, so every visitor feels empowered.
+        </p>
+      </div>
 
-<%- include('../partials/footer') %>
+    <section class="section access-arrival">
+      <h2>Getting Here and Arrival</h2>
+      <div class="arrival-steps">
+        <div class="step-pill">Step-free ramps</div>
+        <div class="step-pill">Accessible parking</div>
+        <div class="step-pill">Lifts at entrance</div>
+        <div class="step-pill">Tactile paving</div>
+      </div>
+    </section>
+
+    <section class="hub-section" aria-label="Museum accessibility hub">
+      <h2>Museum Accessibility Hub</h2>
+
+      <div class="hub-row hub-mobility">
+        <button class="hub-toggle" type="button" aria-expanded="false">
+          <span class="hub-label">
+            <span class="hub-icon" aria-hidden="true"><i class="fas fa-wheelchair"></i></span>
+            <span class="hub-title">
+              <span class="hub-heading">Mobility Access</span>
+              <span class="hub-subtitle">Wheelchairs, elevators, and pathways</span>
+            </span>
+          </span>
+          <span class="arrow-btn" aria-hidden="true">></span>
+        </button>
+        <div class="hub-content" hidden>
+          <ul>
+            <li>Wide, step-free pathways throughout all galleries.</li>
+            <li>Manual wheelchairs available free of charge at the main cloakroom.</li>
+            <li>Large-capacity elevators serving all floors.</li>
+            <li>Dedicated accessible restrooms on every level.</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="hub-row hub-sensory">
+        <button class="hub-toggle" type="button" aria-expanded="false">
+          <span class="hub-label">
+            <span class="hub-icon" aria-hidden="true"><i class="fas fa-ear-listen"></i></span>
+            <span class="hub-title">
+              <span class="hub-heading">Sensory Support</span>
+              <span class="hub-subtitle">Hearing, audio, and visual aids</span>
+            </span>
+          </span>
+          <span class="arrow-btn" aria-hidden="true">></span>
+        </button>
+        <div class="hub-content" hidden>
+          <ul>
+            <li>Assistive listening devices available for guided tours.</li>
+            <li>Captioned displays with adjustable audio levels.</li>
+            <li>Quiet-friendly gallery routes on request.</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="hub-row hub-visual">
+        <button class="hub-toggle" type="button" aria-expanded="false">
+          <span class="hub-label">
+            <span class="hub-icon" aria-hidden="true"><i class="fas fa-eye"></i></span>
+            <span class="hub-title">
+              <span class="hub-heading">Visual Accessibility</span>
+              <span class="hub-subtitle">Braille, high-contrast, and touch</span>
+            </span>
+          </span>
+          <span class="arrow-btn" aria-hidden="true">></span>
+        </button>
+        <div class="hub-content" hidden>
+          <ul>
+            <li>Tactile maps available at the information desk.</li>
+            <li>Braille guidebooks and high-contrast labels.</li>
+            <li>Touch tours bookable 48 hours in advance.</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="hub-row hub-cognitive">
+        <button class="hub-toggle" type="button" aria-expanded="false">
+          <span class="hub-label">
+            <span class="hub-icon" aria-hidden="true"><i class="fas fa-brain"></i></span>
+            <span class="hub-title">
+              <span class="hub-heading">Cognitive and Sensory Comfort</span>
+              <span class="hub-subtitle">Quiet spaces and easy guides</span>
+            </span>
+          </span>
+          <span class="arrow-btn" aria-hidden="true">></span>
+        </button>
+        <div class="hub-content" hidden>
+          <ul>
+            <li>Sensory maps highlight quiet zones and low-stim areas.</li>
+            <li>Easy-to-read visual schedules available on site.</li>
+            <li>Predictable route planning for calmer visits.</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <div class="split access-support">
+      <div class="card">
+        <h3>Staff Assistance</h3>
+        <p>
+          Our team is trained in disability awareness. Look for staff wearing the Accessibility Badge for
+          specialized help with navigation or communication.
+        </p>
+      </div>
+      <div class="card">
+        <h3>Tours and Programs</h3>
+        <p>
+          Inclusive learning for all. We host sensory-friendly mornings and sign-language interpreted
+          lectures every first Sunday of the month.
+        </p>
+      </div>
+    </div>
+
+    <section class="stat-card access-planning">
+      <h3>Planning Your Visit</h3>
+      <p>To ensure equipment availability, we recommend booking wheelchairs or listening devices online.</p>
+      <button class="btn" type="button" id="book-assistance-btn" aria-expanded="false" aria-controls="assistance-panel">
+        Book Assistance
+      </button>
+    </section>
+
+    <section class="assistance-panel" id="assistance-panel" hidden>
+      <div class="assistance-grid">
+        <form class="form assistance-form" id="assistance-form">
+          <h3>Assistance Request</h3>
+          <label for="assist-name">Full name</label>
+          <input type="text" id="assist-name" name="name" placeholder="Your name" required />
+
+          <label for="assist-email">Email</label>
+          <input type="email" id="assist-email" name="email" placeholder="you@example.com" required />
+
+          <label for="assist-phone">Phone</label>
+          <input type="tel" id="assist-phone" name="phone" placeholder="+20 2 0000 0000" required />
+
+          <label for="assist-date">Visit date</label>
+          <input type="date" id="assist-date" name="date" required />
+
+          <label for="assist-type">Assistance needed</label>
+          <select id="assist-type" name="type" required>
+            <option value="">Select an option</option>
+            <option value="wheelchair">Wheelchair support</option>
+            <option value="listening">Assistive listening</option>
+            <option value="visual">Visual assistance</option>
+            <option value="sensory">Sensory-friendly visit</option>
+            <option value="other">Other accommodations</option>
+          </select>
+
+          <label for="assist-notes">Notes</label>
+          <textarea id="assist-notes" name="notes" rows="4" placeholder="Tell us how we can help"></textarea>
+
+          <button class="btn" type="submit">Send Request</button>
+        </form>
+
+        <aside class="assistance-contact">
+          <h3>Need help now?</h3>
+          <p>Our accessibility desk responds within 1 business day.</p>
+          <div class="contact-item">
+            <i class="fas fa-envelope"></i>
+            <span>access@musuem.org</span>
+          </div>
+          <div class="contact-item">
+            <i class="fas fa-phone"></i>
+            <span>+20 2 2345 6789</span>
+          </div>
+          <div class="contact-item">
+            <i class="fas fa-location-dot"></i>
+            <span>Main entrance, info desk</span>
+          </div>
+        </aside>
+      </div>
+    </section>
+    </div>
+  </section>
+
+  <script>
+  const hubRows = document.querySelectorAll(".hub-row");
+  const assistanceButton = document.getElementById("book-assistance-btn");
+  const assistancePanel = document.getElementById("assistance-panel");
+
+  hubRows.forEach((row) => {
+    const toggle = row.querySelector(".hub-toggle");
+    const content = row.querySelector(".hub-content");
+
+    toggle.addEventListener("click", () => {
+      const isOpen = toggle.getAttribute("aria-expanded") === "true";
+
+      hubRows.forEach((otherRow) => {
+        const otherToggle = otherRow.querySelector(".hub-toggle");
+        const otherContent = otherRow.querySelector(".hub-content");
+
+        otherToggle.setAttribute("aria-expanded", "false");
+        otherRow.classList.remove("active");
+        otherContent.hidden = true;
+      });
+
+      toggle.setAttribute("aria-expanded", String(!isOpen));
+      row.classList.toggle("active", !isOpen);
+      content.hidden = isOpen;
+    });
+  });
+
+  if (assistanceButton && assistancePanel) {
+    assistanceButton.addEventListener("click", () => {
+      const isOpen = assistanceButton.getAttribute("aria-expanded") === "true";
+      assistanceButton.setAttribute("aria-expanded", String(!isOpen));
+      assistancePanel.hidden = isOpen;
+
+      if (!isOpen) {
+        assistancePanel.scrollIntoView({ behavior: "smooth", block: "start" });
+      }
+    });
+  }
+  </script>
+
+  <%- include('../partials/footer') %>
+</main>

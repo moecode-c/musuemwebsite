@@ -1,42 +1,128 @@
 <%- include('../partials/header') %>
 <%- include('../partials/navbar') %>
 
-<section class="page-hero">
-  <div class="container">
-    <h1>Testimonials</h1>
-    <p>Real stories from visitors who explored the heart of Egypt.</p>
-  </div>
-</section>
-
-<section class="section">
-  <div class="container split">
-    <div>
-      <div class="testimonials-summary">
-        <div>
-          <h2>Visitor Highlights</h2>
-          <p>Every review helps us create more meaningful experiences for future visitors.</p>
+<main class="testimonials-page">
+  <section class="page-hero testimonials-hero">
+    <div class="container">
+      <h1 class="hero-title">What Our Visitors Say</h1>
+      <p class="hero-subtitle">
+        Discover why thousands of guests trust us to create their perfect Egyptian journey.
+      </p>
+      <div class="stats-row">
+        <div class="stat-card">
+          <h3>4.9/5</h3>
+          <p>Average rating</p>
         </div>
-        <div class="rating-badge">
-          <span class="rating-score">4.9</span>
-          <span class="rating-text">Average rating</span>
+        <div class="stat-card">
+          <h3>2,500+</h3>
+          <p>Happy visitors</p>
         </div>
-      </div>
-      <div class="grid">
-        <%- testimonialsHtml %>
+        <div class="stat-card">
+          <h3>15+</h3>
+          <p>Years of discovery</p>
+        </div>
       </div>
     </div>
-    <form class="form" id="testimonial-form">
-      <h3>Share your experience</h3>
-      <label>Name</label>
-      <input type="text" name="name" required />
-      <label>Message</label>
-      <textarea name="message" required></textarea>
-      <label>Rating (1-5)</label>
-      <input type="number" name="rating" min="1" max="5" value="5" required />
-      <button class="btn" type="submit">Submit</button>
-      <p class="form-message" id="testimonial-message"></p>
-    </form>
-  </div>
-</section>
+  </section>
+
+  <section class="section">
+    <div class="container">
+      <h2 class="section-title">Featured Stories</h2>
+      <div class="split featured-stories">
+        <article class="card featured-card">
+          <div class="featured-header">
+            <img src="/assets/images/pillarsbg.png" alt="Sarah Johnson" class="featured-avatar" />
+            <div>
+              <h4>Sarah Johnson</h4>
+              <p class="featured-meta">Travel blogger, USA</p>
+              <div class="featured-stars">★★★★★</div>
+            </div>
+          </div>
+          <p class="featured-quote">
+            "An absolutely breathtaking experience. Our guide was incredibly knowledgeable about Egyptian history.
+            The sunrise at the pyramids was magical, and every detail was perfectly planned."
+          </p>
+          <div class="featured-footnote">Pyramids & Nile Cruise • December 2025</div>
+        </article>
+
+        <article class="card featured-card">
+          <div class="featured-header">
+            <img src="/assets/images/pyramidsbg.png" alt="Michael Chen" class="featured-avatar" />
+            <div>
+              <h4>Michael Chen</h4>
+              <p class="featured-meta">Photographer, Singapore</p>
+              <div class="featured-stars">★★★★★</div>
+            </div>
+          </div>
+          <p class="featured-quote">
+            "As a photographer, I needed flexibility and access to unique locations. The team went above and beyond
+            and we visited hidden gems most tourists never see. This was my best trip to Egypt."
+          </p>
+          <div class="featured-footnote">Custom Photo Tour • November 2025</div>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <section class="section alt">
+    <div class="container">
+      <h2 class="section-title">Trusted & Certified</h2>
+      <div class="trust-grid">
+        <div class="trust-card">
+          <h3>TripAdvisor</h3>
+          <div class="featured-stars">★★★★★</div>
+          <p>Certificate of Excellence</p>
+        </div>
+        <div class="trust-card">
+          <h3>Google Reviews</h3>
+          <div class="featured-stars">★★★★★</div>
+          <p>4.9 out of 5 stars</p>
+        </div>
+        <div class="trust-card">
+          <h3>Licensed</h3>
+          <p>Egyptian Ministry of Tourism</p>
+        </div>
+        <div class="trust-card">
+          <h3>Award Winner</h3>
+          <p>Best Tour Operator 2025</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="container">
+      <div class="hero-card cta-card">
+        <h2>Ready to create your own story?</h2>
+        <p>Join thousands of satisfied guests and experience the magic of Egypt.</p>
+        <div class="cta-actions">
+          <a href="/exhibits" class="btn">Explore Exhibits</a>
+          <a href="/contact" class="btn btn-outline">Contact Us</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section chronicle-section">
+    <div class="container">
+      <div class="split chronicle-split">
+        <div class="cta-text">
+          <h2 class="font-cinzel">Join the Chronicle</h2>
+          <p>Share your story from the land of the Nile. From temple shadows to golden galleries, let your words shine like hieroglyphs on stone.</p>
+        </div>
+        <div class="form-wrapper">
+          <form class="form" id="testimonial-form" action="/api/testimonials" method="POST">
+            <h3 class="nav-title form-title">Submit Feedback</h3>
+            <input type="text" name="name" placeholder="Your Name" required />
+            <textarea name="message" rows="4" placeholder="Your experience..." required></textarea>
+            <input type="number" name="rating" min="1" max="5" value="5" required class="rating-input" />
+            <button type="submit" class="btn">Post Testimonial</button>
+            <p class="form-message" id="testimonial-message"></p>
+          </form>
+        </div>
+      </div>
+    </div>
+  </section>
+</main>
 
 <%- include('../partials/footer') %>

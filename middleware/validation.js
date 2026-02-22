@@ -63,6 +63,8 @@ const testimonialValidation = [
 ];
 
 const newsletterValidation = [
+  body("name").trim().isLength({ min: 2 }).withMessage("Name required"),
+  body("phone").trim().isLength({ min: 6 }).withMessage("Phone required"),
   body("email").isEmail().withMessage("Valid email required")
 ];
 
