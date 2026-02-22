@@ -260,21 +260,6 @@ const buildTimelineCardModel = (item, returnTo) => ({
 const TARGET_ARTIFACT_CARDS = 8;
 const TARGET_TIMELINE_ITEMS = 8;
 
-const expandToTargetCount = (items, target) => {
-  if (!Array.isArray(items) || items.length === 0 || items.length >= target) return items;
-
-  const expanded = [...items];
-  let pointer = 0;
-
-  while (expanded.length < target) {
-    const source = items[pointer % items.length];
-    expanded.push(source);
-    pointer += 1;
-  }
-
-  return expanded;
-};
-
 const renderExhibitsPage = async (req, res, categoryKey, basePath) => {
   const page = parseInt(req.query.page || "1", 10);
   const limit = 8;
@@ -301,8 +286,6 @@ const renderExhibitsPage = async (req, res, categoryKey, basePath) => {
     cardSourceItems = [...cardSourceItems, ...fillItems];
   }
 
-  cardSourceItems = expandToTargetCount(cardSourceItems, TARGET_ARTIFACT_CARDS);
-
   let timelineSourceItems = [...items];
 
   if (timelineSourceItems.length < TARGET_TIMELINE_ITEMS) {
@@ -316,8 +299,6 @@ const renderExhibitsPage = async (req, res, categoryKey, basePath) => {
       .limit(TARGET_TIMELINE_ITEMS - timelineSourceItems.length);
     timelineSourceItems = [...timelineSourceItems, ...fillTimelineItems];
   }
-
-  timelineSourceItems = expandToTargetCount(timelineSourceItems, TARGET_TIMELINE_ITEMS);
 
   const returnTo = req.originalUrl || basePath || "/exhibits";
   const artifactItems = cardSourceItems.map((item) => buildArtifactCardModel(item, basePath, returnTo));
