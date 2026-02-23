@@ -7,6 +7,23 @@ const list = asyncHandler(async (req, res) => {
   res.json(users);
 });
 
+const listAssignable = asyncHandler(async (req, res) => {
+  const users = await User.find({
+    role: {
+      $in: [
+        "museum_manager",
+        "curator",
+        "front_desk",
+        "security_officer",
+        "maintenance_technician",
+        "janitor",
+        "educator_guide"
+      ]
+    }
+  }).select("name email role");
+  res.json(users);
+});
+
 const create = asyncHandler(async (req, res) => {
   const { name, email, password, role } = req.body;
   const hash = await bcrypt.hash(password, 10);
@@ -29,4 +46,4 @@ const remove = asyncHandler(async (req, res) => {
   res.json({ message: "Deleted" });
 });
 
-module.exports = { list, create, update, remove };
+module.exports = { list, listAssignable, create, update, remove };

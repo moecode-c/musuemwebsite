@@ -1,0 +1,55 @@
+<%- include('../partials/employeeLayoutStart') %>
+
+<section id="manager-zones-page">
+  <header class="admin-page-header">
+    <div>
+      <h1><i class="fas fa-map-location-dot"></i> Manager Zone Management</h1>
+      <p>Create cleaning zones from the map and assign janitors in a dedicated page.</p>
+    </div>
+  </header>
+
+  <div class="admin-split">
+    <article class="card admin-panel">
+      <h3><i class="fas fa-draw-polygon"></i> Create Cleaning Zone</h3>
+      <p>Choose draw mode: rectangle (drag on map) or polygon (click points).</p>
+      <label>Draw Mode</label>
+      <select id="manager-zone-draw-mode">
+        <option value="rectangle" selected>Rectangle</option>
+        <option value="polygon">Polygon</option>
+      </select>
+      <div class="map-wrapper admin-map" id="manager-zone-map">
+        <img src="/assets/map/map.png" alt="Museum map" class="map-image" />
+        <div class="map-layer" id="manager-zone-hit-area"></div>
+      </div>
+
+      <form class="form" id="manager-zone-form">
+        <input type="hidden" name="editingZoneId" id="manager-zone-editing-id" />
+        <label>Zone Name</label>
+        <input type="text" name="zoneName" required />
+        <label>Floor</label>
+        <input type="text" name="floor" value="Ground" required />
+        <label>Zone Color</label>
+        <input type="color" name="color" value="#b7842a" />
+        <label>Description</label>
+        <textarea name="description"></textarea>
+        <input type="hidden" name="polygon" />
+        <div class="admin-actions">
+          <button class="btn" type="submit" id="manager-zone-submit">Create Zone</button>
+          <button class="btn btn-secondary admin-cancel" type="button" id="manager-zone-cancel-edit">Cancel Edit</button>
+          <button class="btn btn-secondary" type="button" id="manager-zone-clear-points">Clear Points</button>
+        </div>
+        <p class="form-message" id="manager-zone-message"></p>
+      </form>
+
+      <label>Assign Janitor</label>
+      <select id="zone-assign-user"></select>
+    </article>
+
+    <article class="card">
+      <h3><i class="fas fa-layer-group"></i> Zone List</h3>
+      <div id="manager-zone-list" class="admin-list"></div>
+    </article>
+  </div>
+</section>
+
+<%- include('../partials/employeeLayoutEnd') %>

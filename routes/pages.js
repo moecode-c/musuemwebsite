@@ -1,5 +1,7 @@
 const express = require("express");
 const pageController = require("../controllers/pageController");
+const { requireAuth } = require("../middleware/auth");
+const { requireAnyRole, requirePermission, ROLES } = require("../middleware/roles");
 
 const router = express.Router();
 
@@ -27,6 +29,19 @@ router.get("/cart", pageController.cart);
 router.get("/checkout", pageController.checkout);
 router.get("/testimonials", pageController.testimonials);
 router.get("/plan-trip", pageController.planTrip);
+router.get("/employee/dashboard", requireAuth, requirePermission("dashboard:role"), pageController.employeeDashboard);
+router.get(
+  "/employee/manager/tasks",
+  requireAuth,
+  requireAnyRole([ROLES.MUSEUM_MANAGER]),
+  pageController.managerTasksDashboard
+);
+router.get(
+  "/employee/manager/zones",
+  requireAuth,
+  requireAnyRole([ROLES.MUSEUM_MANAGER]),
+  pageController.managerZonesDashboard
+);
 
 router.get("/login", (req, res) => res.redirect("/auth/login"));
 router.get("/register", (req, res) => res.redirect("/auth/register"));

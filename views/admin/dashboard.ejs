@@ -7,7 +7,9 @@
     stats.userCount,
     stats.ticketCount,
     stats.testimonialCount,
-    stats.ticketRequestCount
+    stats.ticketRequestCount,
+    stats.taskCount,
+    stats.cleaningZoneCount
   ) || 1;
 %>
 
@@ -26,6 +28,8 @@
     <div class="admin-stat">Tickets <strong><%= stats.ticketCount %></strong></div>
     <div class="admin-stat">Testimonials <strong><%= stats.testimonialCount %></strong></div>
     <div class="admin-stat">Ticket Requests <strong><%= stats.ticketRequestCount %></strong></div>
+    <div class="admin-stat">Tasks <strong><%= stats.taskCount %></strong></div>
+    <div class="admin-stat">Cleaning Zones <strong><%= stats.cleaningZoneCount %></strong></div>
   </div>
 </section>
 
@@ -64,6 +68,16 @@
       <div class="admin-chart-bar"><span style="width: <%= (stats.ticketRequestCount / maxStat) * 100 %>%"></span></div>
       <strong><%= stats.ticketRequestCount %></strong>
     </div>
+    <div class="admin-chart-row">
+      <span>Tasks</span>
+      <div class="admin-chart-bar"><span style="width: <%= (stats.taskCount / maxStat) * 100 %>%"></span></div>
+      <strong><%= stats.taskCount %></strong>
+    </div>
+    <div class="admin-chart-row">
+      <span>Cleaning Zones</span>
+      <div class="admin-chart-bar"><span style="width: <%= (stats.cleaningZoneCount / maxStat) * 100 %>%"></span></div>
+      <strong><%= stats.cleaningZoneCount %></strong>
+    </div>
   </div>
 </section>
 
@@ -84,7 +98,7 @@
     </div>
     <div class="admin-card">
       <h3>Map Pins</h3>
-      <p>Update museum map pins and descriptions.</p>
+      <p>Update museum map pins and cleaning zones.</p>
       <a class="btn" href="/admin/map">Manage Map</a>
     </div>
     <div class="admin-card">

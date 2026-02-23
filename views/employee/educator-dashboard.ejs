@@ -1,0 +1,13 @@
+<%- include('../partials/employeeLayoutStart') %>
+
+<section>
+  <h1><i class="fas fa-chalkboard-teacher"></i> Educator Dashboard</h1>
+    <p>Welcome, <%= employeeName %>. Manage tour, workshop, and session support tasks.</p>
+    <article class="card">
+      <h3><i class="fas fa-book-open-reader"></i> Session Tasks</h3>
+      <p>Review assigned preparation, delivery, and follow-up tasks for educational sessions.</p>
+      <div class="admin-list" data-employee-task-list></div>
+    </article>
+</section>
+
+<%- include('../partials/employeeLayoutEnd') %>

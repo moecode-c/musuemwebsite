@@ -282,12 +282,29 @@ document.addEventListener("DOMContentLoaded", () => {
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(payload)
       });
+      let responseBody = null;
+      try {
+        responseBody = await response.json();
+      } catch (error) {
+        responseBody = null;
+      }
+
+      const extractErrorMessage = (body) => {
+        if (!body) return "Error saving user";
+        if (Array.isArray(body.errors) && body.errors.length) {
+          return body.errors[0].msg || "Error saving user";
+        }
+        if (body.message) return body.message;
+        if (body.error) return body.error;
+        return "Error saving user";
+      };
+
       const messageEl = document.getElementById("admin-user-message");
       messageEl.textContent = response.ok
         ? editId
           ? "User updated"
           : "User created"
-        : "Error saving user";
+        : extractErrorMessage(responseBody);
       if (response.ok) {
         if (editId) {
           setEditing(false);

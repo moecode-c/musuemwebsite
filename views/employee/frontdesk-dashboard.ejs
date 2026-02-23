@@ -1,0 +1,13 @@
+<%- include('../partials/employeeLayoutStart') %>
+
+<section>
+  <h1><i class="fas fa-concierge-bell"></i> Front Desk Dashboard</h1>
+    <p>Welcome, <%= employeeName %>. Manage queue, visitor support tasks, and front desk requests.</p>
+    <article class="card">
+      <h3><i class="fas fa-users"></i> Visitor Support Tasks</h3>
+      <p>Review open front-desk assignments and priorities.</p>
+      <div class="admin-list" data-employee-task-list></div>
+    </article>
+</section>
+
+<%- include('../partials/employeeLayoutEnd') %>

@@ -1,0 +1,56 @@
+<%- include('../partials/employeeLayoutStart') %>
+
+<section id="manager-tasks-page">
+  <header class="admin-page-header">
+    <div>
+      <h1><i class="fas fa-list-check"></i> Manager Task Management</h1>
+      <p>Create and monitor employee tasks in one focused workspace.</p>
+    </div>
+  </header>
+
+  <div class="admin-split">
+    <article class="card admin-panel">
+      <h3><i class="fas fa-user-plus"></i> Assign Employee Task</h3>
+      <form class="form" id="manager-task-form">
+        <label>Title</label>
+        <input type="text" name="title" required />
+        <label>Description</label>
+        <textarea name="description"></textarea>
+        <label>Priority</label>
+        <select name="priority">
+          <option value="low">Low</option>
+          <option value="medium" selected>Medium</option>
+          <option value="high">High</option>
+          <option value="urgent">Urgent</option>
+        </select>
+        <label>Assign To</label>
+        <select id="task-assigned-to" name="assignedTo" required></select>
+        <label>Role Target</label>
+        <select name="roleTarget">
+          <option value="museum_manager">Museum Manager</option>
+          <option value="curator">Curator</option>
+          <option value="front_desk">Front Desk</option>
+          <option value="security_officer">Security Officer</option>
+          <option value="maintenance_technician">Maintenance Technician</option>
+          <option value="janitor">Janitor</option>
+          <option value="educator_guide">Educator Guide</option>
+        </select>
+        <label>Zone (Optional)</label>
+        <select id="task-zone-id" name="zoneId"></select>
+        <label>Due Date</label>
+        <input type="datetime-local" name="dueAt" />
+        <label>Checklist (one item per line)</label>
+        <textarea name="checklist"></textarea>
+        <button class="btn" type="submit">Assign Task</button>
+        <p class="form-message" id="manager-task-message"></p>
+      </form>
+    </article>
+
+    <article class="card">
+      <h3><i class="fas fa-clipboard-list"></i> Task List</h3>
+      <div id="manager-task-list" class="admin-list"></div>
+    </article>
+  </div>
+</section>
+
+<%- include('../partials/employeeLayoutEnd') %>

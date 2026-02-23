@@ -3,7 +3,7 @@
 <section class="admin-page-header">
   <div>
     <h1>Manage Map Pins</h1>
-    <p>Place and edit pins on the museum map.</p>
+    <p>Place and edit pins on the museum map, then draw cleaning zones for staff tasks.</p>
   </div>
 </section>
 
@@ -36,11 +36,34 @@
         <button class="btn btn-secondary admin-cancel" type="button">Cancel</button>
         <p class="form-message" id="admin-map-message"></p>
       </form>
+
+      <form class="form" id="admin-zone-form">
+        <h3>Cleaning Zones</h3>
+        <p class="admin-map-note">Click map points to build a polygon zone.</p>
+        <label>Zone Name</label>
+        <input type="text" name="zoneName" required />
+        <label>Floor</label>
+        <input type="text" name="floor" value="Ground" required />
+        <label>Description</label>
+        <textarea name="description"></textarea>
+        <input type="hidden" name="polygon" />
+        <div class="admin-actions">
+          <button class="btn" type="submit">Create Zone</button>
+          <button class="btn btn-secondary" type="button" id="admin-zone-clear-points">Clear Points</button>
+        </div>
+        <p class="form-message" id="admin-zone-message"></p>
+      </form>
+
+      <label>Assign Janitor</label>
+      <select id="admin-zone-assign-user"></select>
+
       <div class="admin-map-lists">
         <h3>Most Common Pins</h3>
         <div id="admin-common-map-list" class="admin-list"></div>
         <h3>All Pins</h3>
         <div id="admin-map-list" class="admin-list"></div>
+        <h3>Cleaning Zones</h3>
+        <div id="admin-zone-list" class="admin-list"></div>
       </div>
     </div>
   </div>

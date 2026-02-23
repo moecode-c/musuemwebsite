@@ -6,8 +6,32 @@ const MapPin = require("../models/MapPin");
 const { asyncHandler } = require("../utils/asyncHandler");
 const { getWeather } = require("../utils/apiClient");
 const { buildPagination } = require("../utils/pagination");
+const { ROLES } = require("../middleware/roles");
 const toArabicNumber = (value) =>
   String(value).replace(/\d/g, (d) => "٠١٢٣٤٥٦٧٨٩"[d]);
+
+const employeeDashboardViewByRole = {
+  [ROLES.MUSEUM_MANAGER]: "employee/manager-dashboard",
+  [ROLES.CURATOR]: "employee/curator-dashboard",
+  [ROLES.FRONT_DESK]: "employee/frontdesk-dashboard",
+  [ROLES.SECURITY_OFFICER]: "employee/security-dashboard",
+  [ROLES.MAINTENANCE_TECHNICIAN]: "employee/technician-dashboard",
+  [ROLES.JANITOR]: "employee/janitor-dashboard",
+  [ROLES.EDUCATOR_GUIDE]: "employee/educator-dashboard"
+};
+
+const panelLabelByRole = {
+  [ROLES.MUSEUM_MANAGER]: "Museum Manager Panel",
+  [ROLES.CURATOR]: "Curator Panel",
+  [ROLES.FRONT_DESK]: "Front Desk Panel",
+  [ROLES.SECURITY_OFFICER]: "Security Officer Panel",
+  [ROLES.MAINTENANCE_TECHNICIAN]: "Maintenance Technician Panel",
+  [ROLES.JANITOR]: "Janitor Panel",
+  [ROLES.EDUCATOR_GUIDE]: "Educator Guide Panel",
+  [ROLES.ADMIN]: "Admin Panel"
+};
+
+const getPanelLabelByRole = (role) => panelLabelByRole[role] || "Employee Panel";
 
 
 const buildCards = (items, type) => {
@@ -452,6 +476,49 @@ const weatherHtml = weather
   res.render("plan-trip/index", { pageTitle: "Plan Your Trip", weatherHtml, tickets });
 });
 
+const employeeDashboard = (req, res) => {
+  const user = req.session.user;
+  const role = user?.role;
+  const viewName = employeeDashboardViewByRole[role];
+
+  if (!viewName) {
+    return res.status(403).render("404", { pageTitle: "Forbidden", message: "Access denied." });
+  }
+
+  return res.render(viewName, {
+    pageTitle: "Employee Dashboard",
+    pageCss: "admin",
+    dashboardRole: role,
+    employeeNavKey: "dashboard",
+    employeeName: user?.name || "Employee",
+    panelLabel: getPanelLabelByRole(role)
+  });
+};
+
+const managerTasksDashboard = (req, res) => {
+  const user = req.session.user;
+  return res.render("employee/manager-tasks", {
+    pageTitle: "Manager Tasks",
+    pageCss: "admin",
+    dashboardRole: user?.role,
+    employeeNavKey: "tasks",
+    employeeName: user?.name || "Employee",
+    panelLabel: getPanelLabelByRole(user?.role)
+  });
+};
+
+const managerZonesDashboard = (req, res) => {
+  const user = req.session.user;
+  return res.render("employee/manager-zones", {
+    pageTitle: "Manager Zones",
+    pageCss: "admin",
+    dashboardRole: user?.role,
+    employeeNavKey: "zones",
+    employeeName: user?.name || "Employee",
+    panelLabel: getPanelLabelByRole(user?.role)
+  });
+};
+
 module.exports = {
   home,
   about,
@@ -476,5 +543,8 @@ module.exports = {
   cart,
   checkout,
   testimonials,
-  planTrip
+  planTrip,
+  employeeDashboard,
+  managerTasksDashboard,
+  managerZonesDashboard
 };

@@ -1,4 +1,5 @@
 const { getTranslations } = require("../utils/i18n");
+const { isAdminRole, isEmployeeRole, getDashboardPathByRole } = require("./roles");
 
 const resolvePageCss = (path) => {
   if (path.startsWith("/admin")) {
@@ -40,14 +41,19 @@ res.locals.dir = language === "ar" ? "rtl" : "ltr";
 
   
   res.locals.user = req.session.user || null;
+  res.locals.isAdminRole = isAdminRole;
+  res.locals.isEmployeeRole = isEmployeeRole;
+  res.locals.getDashboardPathByRole = getDashboardPathByRole;
   res.locals.cart = req.session.cart || { items: [], total: 0 };
   res.locals.pageCss = resolvePageCss(req.path);
+  const dashboardPath = req.session.user ? getDashboardPathByRole(req.session.user.role) : "/";
+  const showDashboardLink = req.session.user && (isAdminRole(req.session.user.role) || isEmployeeRole(req.session.user.role));
   res.locals.authSectionHtml = req.session.user
     ? `
       <div class="nav-item">
         <button class="nav-link nav-trigger" type="button"><i class="nav-icon fas fa-user"></i>Account</button>
         <div class="dropdown">
-          ${req.session.user.role === "admin" ? '<a href="/admin/dashboard" class="dropdown-link"><i class="dropdown-icon fas fa-gauge"></i>Dashboard</a>' : ""}
+          ${showDashboardLink ? `<a href="${dashboardPath}" class="dropdown-link"><i class="dropdown-icon fas fa-gauge"></i>Dashboard</a>` : ""}
           <form class="inline-form" action="/auth/logout" method="post">
             <button class="dropdown-link dropdown-button" type="submit"><i class="dropdown-icon fas fa-right-from-bracket"></i>Logout</button>
           </form>

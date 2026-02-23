@@ -1,3 +1,5 @@
+const { getDashboardPathByRole } = require("./roles");
+
 const requireAuth = (req, res, next) => {
   if (!req.session.user) {
     return res.redirect("/login");
@@ -7,7 +9,7 @@ const requireAuth = (req, res, next) => {
 
 const requireGuest = (req, res, next) => {
   if (req.session.user) {
-    return res.redirect("/");
+    return res.redirect(getDashboardPathByRole(req.session.user.role));
   }
   return next();
 };

@@ -1,0 +1,13 @@
+<%- include('../partials/employeeLayoutStart') %>
+
+<section>
+  <h1><i class="fas fa-landmark"></i> Curator Dashboard</h1>
+    <p>Welcome, <%= employeeName %>. View and update your exhibit preparation and collection tasks.</p>
+    <article class="card">
+      <h3><i class="fas fa-clipboard-list"></i> My Assigned Tasks</h3>
+      <p>Check your current exhibit and artifact handling tasks.</p>
+      <div class="admin-list" data-employee-task-list></div>
+    </article>
+</section>
+
+<%- include('../partials/employeeLayoutEnd') %>
