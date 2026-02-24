@@ -9,7 +9,6 @@ const cookieParser = require("cookie-parser");
 const methodOverride = require("method-override");
 const dotenv = require("dotenv");
 
-
 dotenv.config();
 
 require("./config/cloudinary");
@@ -18,6 +17,9 @@ const { connectDB } = require("./config/db");
 const { attachLocals } = require("./middleware/locals");
 const { notFoundHandler, errorHandler } = require("./middleware/error");
 
+const { makeT } = require("./utils/i18n");
+
+// routes
 const pageRoutes = require("./routes/pages");
 const authRoutes = require("./routes/auth");
 const exhibitRoutes = require("./routes/exhibits");
@@ -38,6 +40,7 @@ connectDB();
 app.set("view engine", "ejs");
 app.set("views", path.join(__dirname, "views"));
 
+// basic middleware
 app.use(helmet({ contentSecurityPolicy: false }));
 app.use(compression());
 app.use(morgan("dev"));
@@ -47,13 +50,16 @@ app.use(cookieParser());
 app.use(methodOverride("_method"));
 app.use(express.static(path.join(__dirname, "public")));
 
+// session
 app.use(
   session({
     secret: process.env.SESSION_SECRET || "change_this_secret",
     resave: false,
     saveUninitialized: false,
     store: MongoStore.create({
-      mongoUrl: process.env.MONGODB_URI || "mongodb://127.0.0.1:27017/egyptian_museum",
+      mongoUrl:
+        process.env.MONGODB_URI ||
+        "mongodb://127.0.0.1:27017/egyptian_museum",
       ttl: 60 * 60 * 24 * 7
     }),
     cookie: {
@@ -64,9 +70,38 @@ app.use(
   })
 );
 
+/**
+ * 🌍 LANGUAGE SWITCH
+ */
+app.get("/lang/:lang", (req, res) => {
+  const lang = req.params.lang === "ar" ? "ar" : "en";
 
+  res.cookie("lang", lang, {
+    maxAge: 1000 * 60 * 60 * 24 * 365,
+    httpOnly: true,
+    sameSite: "lax"
+  });
+
+  res.redirect("back");
+});
+
+/**
+ * 🌐 i18n MUST BE BEFORE attachLocals + routes
+ */
+app.use((req, res, next) => {
+  const language = req.cookies.lang || "en";
+
+  res.locals.language = language;
+  res.locals.dir = language === "ar" ? "rtl" : "ltr";
+  res.locals.t = makeT(language);
+
+  next();
+});
+
+// NOW attach other locals
 app.use(attachLocals);
 
+// routes
 app.use("/", pageRoutes);
 app.use("/auth", authRoutes);
 app.use("/api/exhibits", exhibitRoutes);
@@ -80,10 +115,11 @@ app.use("/cart", cartRoutes);
 app.use("/newsletter", newsletterRoutes);
 app.use("/admin", adminRoutes);
 
+// errors
 app.use(notFoundHandler);
 app.use(errorHandler);
 
 const PORT = process.env.PORT || 3000;
 app.listen(PORT, () => {
-  console.log(`Server running on http://localhost:${PORT}`);
+  console.log(`✅ Server running at http://localhost:${PORT}`);
 });

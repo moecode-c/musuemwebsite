@@ -73,7 +73,10 @@ const weatherHtml = weather
   });
 });
 
-const about = (req, res) => res.render("about/about", { pageTitle: "About" });
+const about = (req, res) => {
+  console.log("t.about =", res.locals.t?.about);
+  res.render("about/about", { pageTitle: "About", t: res.locals.t });
+};
 const accessibility = (req, res) => res.render("about/accessibility", { pageTitle: "Accessibility" });
 const newsletter = (req, res) => res.render("about/newsletter", { pageTitle: "Newsletter" });
 

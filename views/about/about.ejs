@@ -3,28 +3,24 @@
 
 <section class="page-hero">
   <div class="container">
-    <h1>About the Museum</h1>
-    <p>Honoring Egypt's heritage through immersive storytelling, research, and innovation.</p>
+    <h1><%= t.about.title %></h1>
+    <p><%= t.about.subtitle %></p>
   </div>
 </section>
 
 <section class="section" id="mission">
   <div class="container split">
     <div>
-      <h2>Mission and Goal</h2>
-      <p>
-        Our mission is to preserve, interpret, and share Egypt's cultural legacy. We aim to inspire
-        curiosity, deepen historical understanding, and connect visitors with the people, beliefs,
-        and achievements that shaped civilization.
-      </p>
+      <h2><%= t.about.missionTitle %></h2>
+      <p><%= t.about.missionText %></p>
     </div>
     <div class="info-card">
-      <h3>What We Deliver</h3>
-      <ul class="list">
-        <li>Scholarly exhibitions grounded in ongoing research.</li>
-        <li>Interactive learning for families, schools, and travelers.</li>
-        <li>Inclusive access through multilingual and sensory resources.</li>
-        <li>Digital preservation for future generations.</li>
+      <h2><%= t.about.deliverTitle %></h2>
+      <ul>
+        <li><%= t.about.deliver[0] %></li>
+        <li><%= t.about.deliver[1] %></li>
+        <li><%= t.about.deliver[2] %></li>
+        <li><%= t.about.deliver[3] %></li>
       </ul>
     </div>
   </div>
@@ -32,27 +28,30 @@
 
 <section class="section section-alt">
   <div class="container">
-    <h2>Our Story</h2>
+    <h2><%= t.about.storyTitle %></h2>
+
     <div class="timeline">
       <div class="timeline-item">
         <span class="timeline-year">1902</span>
         <div>
-          <h3>Foundation</h3>
-          <p>Established to safeguard Egypt's archaeological heritage and public education.</p>
+          <h3><%= t.about.story.foundationTitle %></h3>
+          <p><%= t.about.story.foundationText %></p>
         </div>
       </div>
+
       <div class="timeline-item">
         <span class="timeline-year">1956</span>
         <div>
-          <h3>National Expansion</h3>
-          <p>Expanded galleries to include daily life, faith, and artistic traditions.</p>
+          <h3><%= t.about.story.expansionTitle %></h3>
+          <p><%= t.about.story.expansionText %></p>
         </div>
       </div>
+
       <div class="timeline-item">
         <span class="timeline-year">2025</span>
         <div>
-          <h3>Digital Renaissance</h3>
-          <p>Launched virtual tours, multilingual audio guides, and open research access.</p>
+          <h3><%= t.about.story.digitalTitle %></h3>
+          <p><%= t.about.story.digitalText %></p>
         </div>
       </div>
     </div>
@@ -61,27 +60,31 @@
 
 <section class="section">
   <div class="container">
-    <h2>Values That Guide Us</h2>
+    <h2><%= t.about.valuesTitle %></h2>
+
     <div class="card-grid">
       <article class="info-card">
         <i class="fas fa-feather icon"></i>
-        <h3>Preservation</h3>
-        <p>Protecting artifacts with conservation science and ethical stewardship.</p>
+        <h3><%= t.about.values.preservationTitle %></h3>
+        <p><%= t.about.values.preservationText %></p>
       </article>
+
       <article class="info-card">
         <i class="fas fa-graduation-cap icon"></i>
-        <h3>Education</h3>
-        <p>Inviting learners of all ages to engage with history through stories and design.</p>
+        <h3><%= t.about.values.educationTitle %></h3>
+        <p><%= t.about.values.educationText %></p>
       </article>
+
       <article class="info-card">
         <i class="fas fa-people-group icon"></i>
-        <h3>Community</h3>
-        <p>Partnering with local artisans, researchers, and cultural institutions.</p>
+        <h3><%= t.about.values.communityTitle %></h3>
+        <p><%= t.about.values.communityText %></p>
       </article>
+
       <article class="info-card">
         <i class="fas fa-sparkles icon"></i>
-        <h3>Innovation</h3>
-        <p>Blending heritage with modern technology to unlock deeper understanding.</p>
+        <h3><%= t.about.values.innovationTitle %></h3>
+        <p><%= t.about.values.innovationText %></p>
       </article>
     </div>
   </div>
@@ -90,29 +93,26 @@
 <section class="section section-alt">
   <div class="container split">
     <div>
-      <h2>Visitor Experience</h2>
-      <p>
-        From guided tours to quiet reflection spaces, we design every gallery to be inspiring,
-        accessible, and welcoming.
-      </p>
+      <h2><%= t.about.visitor.title %></h2>
+      <p><%= t.about.visitor.text %></p>
       <ul class="list">
-        <li>Daily curator talks and rotating spotlight artifacts.</li>
-        <li>Hands-on learning labs for students and educators.</li>
-        <li>Climate-controlled vaults for rare manuscripts.</li>
+        <li><%= t.about.visitor.list[0] %></li>
+        <li><%= t.about.visitor.list[1] %></li>
+        <li><%= t.about.visitor.list[2] %></li>
       </ul>
     </div>
     <div class="stats">
       <div class="stat">
         <span class="stat-number">3,200+</span>
-        <span class="stat-label">Artifacts on display</span>
+        <span class="stat-label"><%= t.about.visitor.stats.artifacts %></span>
       </div>
       <div class="stat">
         <span class="stat-number">45</span>
-        <span class="stat-label">Interactive stations</span>
+        <span class="stat-label"><%= t.about.visitor.stats.stations %></span>
       </div>
       <div class="stat">
         <span class="stat-number">12</span>
-        <span class="stat-label">Languages supported</span>
+        <span class="stat-label"><%= t.about.visitor.stats.languages %></span>
       </div>
     </div>
   </div>
@@ -120,9 +120,9 @@
 
 <section class="section">
   <div class="container cta">
-    <h2>Plan your visit</h2>
-    <p>Explore exhibitions, reserve tickets, and create your personalized itinerary.</p>
-    <a class="btn" href="/plan-trip">Start Planning</a>
+    <h2><%= t.about.cta.title %></h2>
+    <p><%= t.about.cta.text %></p>
+    <a class="btn" href="/plan-trip"><%= t.about.cta.button %></a>
   </div>
 </section>
 

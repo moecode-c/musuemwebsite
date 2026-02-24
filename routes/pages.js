@@ -30,10 +30,5 @@ router.get("/plan-trip", pageController.planTrip);
 router.get("/login", (req, res) => res.redirect("/auth/login"));
 router.get("/register", (req, res) => res.redirect("/auth/register"));
 
-router.get("/lang/:lang", (req, res) => {
-  const lang = req.params.lang === "ar" ? "ar" : "en";
-  req.session.language = lang;
-  res.redirect("back");
-});
 
 module.exports = router;
