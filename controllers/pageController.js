@@ -93,28 +93,29 @@ const location = asyncHandler(async (req, res) => {
   res.render("about/location", { pageTitle: "Map", pageCss: "location", t: res.locals.t, pinsHtml, commonPins });
 });
 
-const categoryConfig = {
+const categoryConfig = (t) => ({
   pharaoh: {
-    label: "Pharaoh's",
+    label: t?.exhibits?.pharaohTitle || "Pharaoh's Collection",
     categoryValue: "Pharaoh",
-    subtitle: "Explore royal artifacts, sacred relics, and treasures of the dynasties."
+    subtitle: t?.exhibits?.pharaohSubtitle || "Explore royal artifacts, sacred relics, and treasures of the dynasties."
   },
   islamic: {
-    label: "Islamic",
+    label: t?.exhibits?.islamicTitle || "Islamic Collection",
     categoryValue: "Islamic",
-    subtitle: "Discover artistic traditions, manuscripts, and architectural masterpieces."
+    subtitle: t?.exhibits?.islamicSubtitle || "Discover artistic traditions, manuscripts, and architectural masterpieces."
   },
   christian: {
-    label: "Christian",
+    label: t?.exhibits?.christianTitle || "Christian Collection",
     categoryValue: "Christian",
-    subtitle: "Experience icons, textiles, and heritage from Egypt's Christian era."
+    subtitle: t?.exhibits?.christianSubtitle || "Experience icons, textiles, and heritage from Egypt's Christian era."
   }
-};
+});
 
 const renderExhibitsPage = asyncHandler(async (req, res, categoryKey, basePath) => {
+  const t = res.locals.t;
   const page = parseInt(req.query.page || "1", 10);
   const limit = 6;
-  const config = categoryKey ? categoryConfig[categoryKey] : null;
+  const config = categoryKey ? categoryConfig(t)[categoryKey] : null;
   const filter = config ? { category: new RegExp(`^${config.categoryValue}$`, "i") } : {};
   const total = await Exhibit.countDocuments(filter);
   const totalPages = Math.ceil(total / limit) || 1;
@@ -123,10 +124,10 @@ const renderExhibitsPage = asyncHandler(async (req, res, categoryKey, basePath) 
     .limit(limit);
 
   res.render("exhibits/index", {
-    pageTitle: config ? `${config.label} Collection` : "Exhibits",
-    heroTitle: config ? `${config.label} Collection` : "Exhibits",
-    heroSubtitle: config ? config.subtitle : "Discover Pharaoh, Islamic, and Christian galleries.",
-    t: res.locals.t,
+    pageTitle: config ? config.label : (t?.exhibits?.allTitle || "Exhibits"),
+    heroTitle: config ? config.label : (t?.exhibits?.allTitle || "Exhibits"),
+    heroSubtitle: config ? config.subtitle : (t?.exhibits?.allSubtitle || "Discover Pharaoh, Islamic, and Christian galleries."),
+    t,
     exhibitsHtml: buildCards(items, "exhibit"),
     paginationHtml: buildPagination(page, totalPages, basePath)
   });
@@ -134,7 +135,7 @@ const renderExhibitsPage = asyncHandler(async (req, res, categoryKey, basePath) 
 
 const exhibits = asyncHandler(async (req, res) => {
   const categoryKey = (req.query.category || "").toLowerCase();
-  if (categoryKey && categoryConfig[categoryKey]) {
+  if (categoryKey && categoryConfig(res.locals.t)[categoryKey]) {
     return renderExhibitsPage(req, res, categoryKey, `/exhibits/${categoryKey}`);
   }
   return renderExhibitsPage(req, res, null, "/exhibits");

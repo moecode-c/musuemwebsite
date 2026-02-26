@@ -2,6 +2,16 @@
 
 const translations = {
   en: {
+    exhibits: {
+  allTitle: "Exhibits",
+  allSubtitle: "Discover Pharaoh, Islamic, and Christian galleries.",
+  pharaohTitle: "Pharaoh's Collection",
+  pharaohSubtitle: "Explore royal artifacts, sacred relics, and treasures of the dynasties.",
+  islamicTitle: "Islamic Collection",
+  islamicSubtitle: "Discover artistic traditions, manuscripts, and architectural masterpieces.",
+  christianTitle: "Christian Collection",
+  christianSubtitle: "Experience icons, textiles, and heritage from Egypt's Christian era."
+},
     testimonials: {
   title: "Testimonials",
   subtitle: "Real stories from visitors who explored the heart of Egypt.",
@@ -305,6 +315,16 @@ const translations = {
   },
 
   ar: {
+    exhibits: {
+  allTitle: "المعارض",
+  allSubtitle: "اكتشف قاعات الفراعنة والإسلامية والقبطية.",
+  pharaohTitle: "مجموعة الفراعنة",
+  pharaohSubtitle: "استكشف القطع الأثرية الملكية والمقدسات وكنوز الأسرات.",
+  islamicTitle: "المجموعة الإسلامية",
+  islamicSubtitle: "اكتشف التقاليد الفنية والمخطوطات والروائع المعمارية.",
+  christianTitle: "المجموعة القبطية",
+  christianSubtitle: "استكشف الأيقونات والمنسوجات والتراث من العصر القبطي."
+},
     testimonials: {
   title: "آراء الزوار",
   subtitle: "قصص حقيقية من زوار استكشفوا قلب مصر.",
