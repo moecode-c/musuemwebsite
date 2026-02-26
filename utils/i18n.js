@@ -311,6 +311,29 @@ const translations = {
         visitDate: "Visit Date",
         submit: "Request Plan"
       }
+    },
+
+    virtualTour: {
+      heroTitle: "Virtual Museum Experience",
+      heroSubtitle: "Embark on an immersive journey through our collections from anywhere in the world. Explore ancient artifacts and historical treasures in stunning detail.",
+      pharaohTitle: "Pharaohs Virtual Tour",
+      pharaohIntro: "Welcome to the Pharaohs Virtual Tour at The Afterlife Museum! This interactive page allows you to explore the wonders of Ancient Egypt from anywhere in the world. Discover the grandeur of the pharaohs, view immersive 360° panoramas of our museum galleries, and learn about the artifacts and stories that shaped Egyptian civilization. Use the virtual gallery below to navigate through the museum and experience history like never before.",
+      islamicTitle: "Islamic Virtual Tour",
+      islamicIntro: "Welcome to the Islamic Virtual Tour at The Afterlife Museum! Explore the rich artistic traditions, manuscripts, and architectural masterpieces of the Islamic world from the comfort of your home.",
+      christianTitle: "Christian Virtual Tour",
+      christianIntro: "Welcome to the Christian Virtual Tour at The Afterlife Museum! Discover the icons, textiles, and heritage from Egypt's rich Christian era through our immersive 360° gallery.",
+      audioGuide: "Audio Guide",
+      downloadBrochure: "Download Brochure",
+      tourInfo: "Tour Info",
+      fullscreen: "Fullscreen",
+      tourNotesTitle: "Tour Notes",
+      tourNotesText: "Our virtual tour uses cutting-edge technology to provide you with a seamless museum experience. Navigate through our exhibits, zoom in on artifacts, and learn about their history with our interactive information points. For the best experience, use headphones for spatial audio.",
+      islamicHeroSubtitle: "Explore Islamic art, architecture, and historical treasures through a guided virtual experience.",
+      islamicWelcome: "Welcome",
+      islamicTourNotesText: "For the best experience, use headphones and explore each panorama point to reveal hidden details about artifacts, architectural motifs, and historical narratives.",
+      christianHeroSubtitle: "Explore historic churches, sacred art, and Christian heritage.",
+      christianWelcome: "Welcome",
+      christianTourNotesText: "Use the guide to learn about Christian history, art, and cultural influence."
     }
   },
 
@@ -623,6 +646,29 @@ const translations = {
         visitDate: "تاريخ الزيارة",
         submit: "إرسال الطلب"
       }
+    },
+
+    virtualTour: {
+      heroTitle: "تجربة المتحف الافتراضية",
+      heroSubtitle: "انطلق في رحلة غامرة عبر مجموعاتنا من أي مكان في العالم. استكشف القطع الأثرية القديمة والكنوز التاريخية بتفاصيل مذهلة.",
+      pharaohTitle: "جولة الفراعنة الافتراضية",
+      pharaohIntro: "مرحبًا بك في جولة الفراعنة الافتراضية في متحف الحياة الأخرى! تتيح لك هذه الصفحة التفاعلية استكشاف عجائب مصر القديمة من أي مكان في العالم. اكتشف عظمة الفراعنة، وشاهد بانوراما 360° الغامرة لقاعات متحفنا، وتعرّف على القطع الأثرية والقصص التي شكّلت الحضارة المصرية. استخدم المعرض الافتراضي أدناه للتنقل عبر المتحف وعِش التاريخ كما لم تفعل من قبل.",
+      islamicTitle: "الجولة الافتراضية الإسلامية",
+      islamicIntro: "مرحبًا بك في الجولة الافتراضية الإسلامية في متحف الحياة الأخرى! استكشف التقاليد الفنية الغنية والمخطوطات والروائع المعمارية للعالم الإسلامي من منزلك.",
+      christianTitle: "الجولة الافتراضية القبطية",
+      christianIntro: "مرحبًا بك في الجولة الافتراضية القبطية في متحف الحياة الأخرى! اكتشف الأيقونات والمنسوجات والتراث من العصر القبطي الغني في مصر من خلال معرضنا الافتراضي بزاوية 360°.",
+      audioGuide: "الدليل الصوتي",
+      downloadBrochure: "تنزيل الكتيب",
+      tourInfo: "معلومات الجولة",
+      fullscreen: "ملء الشاشة",
+      tourNotesTitle: "ملاحظات الجولة",
+      tourNotesText: "تستخدم جولتنا الافتراضية تقنية متطورة لتوفير تجربة متحفية سلسة. تنقّل عبر معارضنا، وقرّب القطع الأثرية، وتعرّف على تاريخها من خلال نقاط المعلومات التفاعلية. للحصول على أفضل تجربة، استخدم سماعات الرأس للصوت المحيطي.",
+      islamicHeroSubtitle: "استكشف فن العمارة الإسلامية والكنوز التاريخية من خلال تجربة افتراضية إرشادية.",
+      islamicWelcome: "مرحبًا",
+      islamicTourNotesText: "للحصول على أفضل تجربة، استخدم سماعات الرأس واستكشف كل نقطة بانورامية للكشف عن تفاصيل مخفية حول القطع الأثرية والزخارف المعمارية والروايات التاريخية.",
+      christianHeroSubtitle: "استكشف الكنائس التاريخية والفن المقدس والتراث المسيحي.",
+      christianWelcome: "مرحبًا",
+      christianTourNotesText: "استخدم الدليل للتعرف على التاريخ المسيحي والفن والتأثير الثقافي."
     }
   }
 };
