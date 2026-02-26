@@ -53,19 +53,20 @@ const home = asyncHandler(async (req, res) => {
     Testimonial.find().limit(3)
   ]);
   const weather = await getWeather().catch(() => null);
-const isAr = req.session.language === "ar";
+  const isAr = req.cookies.lang === "ar";
 
-const weatherHtml = weather
-  ? `<div class="weather-card">${
-      isAr
-        ? `درجة الحرارة الحالية: ${toArabicNumber(weather.temperature_2m)}°C | سرعة الرياح: ${toArabicNumber(weather.wind_speed_10m)} كم/س`
-        : `Current temperature: ${weather.temperature_2m}°C | Wind: ${weather.wind_speed_10m} km/h`
-    }</div>`
-  : `<div class="weather-card">${isAr ? "بيانات الطقس غير متاحة" : "Weather data unavailable"}</div>`;
+  const weatherHtml = weather
+    ? `<div class="weather-card">${
+        isAr
+          ? `درجة الحرارة الحالية: ${toArabicNumber(weather.temperature_2m)}°C | سرعة الرياح: ${toArabicNumber(weather.wind_speed_10m)} كم/س`
+          : `Current temperature: ${weather.temperature_2m}°C | Wind: ${weather.wind_speed_10m} km/h`
+      }</div>`
+    : `<div class="weather-card">${isAr ? "بيانات الطقس غير متاحة" : "Weather data unavailable"}</div>`;
 
   res.render("home", {
     pageTitle: "Home",
     pageCss: "home",
+    t: res.locals.t,
     weatherHtml,
     exhibitsHtml: buildCards(exhibits, "exhibit"),
     productsHtml: buildCards(products, "product"),
@@ -73,12 +74,9 @@ const weatherHtml = weather
   });
 });
 
-const about = (req, res) => {
-  console.log("t.about =", res.locals.t?.about);
-  res.render("about/about", { pageTitle: "About", t: res.locals.t });
-};
-const accessibility = (req, res) => res.render("about/accessibility", { pageTitle: "Accessibility" });
-const newsletter = (req, res) => res.render("about/newsletter", { pageTitle: "Newsletter" });
+const about = (req, res) => res.render("about/about", { pageTitle: "About", t: res.locals.t });
+const accessibility = (req, res) => res.render("about/accessibility", { pageTitle: "Accessibility", t: res.locals.t });
+const newsletter = (req, res) => res.render("about/newsletter", { pageTitle: "Newsletter", t: res.locals.t });
 
 const location = asyncHandler(async (req, res) => {
   const [pins, commonPins] = await Promise.all([
@@ -92,7 +90,7 @@ const location = asyncHandler(async (req, res) => {
     `
     )
     .join("");
-  res.render("about/location", { pageTitle: "Map", pageCss: "location", pinsHtml, commonPins });
+  res.render("about/location", { pageTitle: "Map", pageCss: "location", t: res.locals.t, pinsHtml, commonPins });
 });
 
 const categoryConfig = {
@@ -128,6 +126,7 @@ const renderExhibitsPage = asyncHandler(async (req, res, categoryKey, basePath) 
     pageTitle: config ? `${config.label} Collection` : "Exhibits",
     heroTitle: config ? `${config.label} Collection` : "Exhibits",
     heroSubtitle: config ? config.subtitle : "Discover Pharaoh, Islamic, and Christian galleries.",
+    t: res.locals.t,
     exhibitsHtml: buildCards(items, "exhibit"),
     paginationHtml: buildPagination(page, totalPages, basePath)
   });
@@ -148,19 +147,19 @@ const exhibitsChristian = (req, res) => renderExhibitsPage(req, res, "christian"
 const exhibitDetails = asyncHandler(async (req, res) => {
   const exhibit = await Exhibit.findById(req.params.id);
   if (!exhibit) {
-    return res.status(404).render("404", { pageTitle: "Not Found", message: "Exhibit not found" });
+    return res.status(404).render("404", { pageTitle: "Not Found", t: res.locals.t, message: "Exhibit not found" });
   }
-  res.render("exhibits/details", { pageTitle: exhibit.title, exhibit });
+  res.render("exhibits/details", { pageTitle: exhibit.title, t: res.locals.t, exhibit });
 });
 
-const virtualTour = (req, res) => res.render("virtual-tour/index", { pageTitle: "Virtual Tour" });
-const virtualTourIslamic = (req, res) => res.render("virtual-tour/islamic", { pageTitle: "Islamic Virtual Tour" });
-const virtualTourPharaoh = (req, res) => res.render("virtual-tour/pharaoh", { pageTitle: "Pharaohs Virtual Tour" });
-const virtualTourChristian = (req, res) => res.render("virtual-tour/christian", { pageTitle: "Christian Virtual Tour" });
-const games = (req, res) => res.render("games/index", { pageTitle: "Games" });
-const gameQuiz = (req, res) => res.render("games/quiz", { pageTitle: "Quiz Game" });
-const gameExplorer = (req, res) => res.render("games/explorer", { pageTitle: "Explorer Game" });
-const gamePyramid = (req, res) => res.render("games/pyramid", { pageTitle: "Pyramid Builder", pageCss: "pyramid-builder" });
+const virtualTour = (req, res) => res.render("virtual-tour/index", { pageTitle: "Virtual Tour", t: res.locals.t });
+const virtualTourIslamic = (req, res) => res.render("virtual-tour/islamic", { pageTitle: "Islamic Virtual Tour", t: res.locals.t });
+const virtualTourPharaoh = (req, res) => res.render("virtual-tour/pharaoh", { pageTitle: "Pharaohs Virtual Tour", t: res.locals.t });
+const virtualTourChristian = (req, res) => res.render("virtual-tour/christian", { pageTitle: "Christian Virtual Tour", t: res.locals.t });
+const games = (req, res) => res.render("games/index", { pageTitle: "Games", t: res.locals.t });
+const gameQuiz = (req, res) => res.render("games/quiz", { pageTitle: "Quiz Game", t: res.locals.t });
+const gameExplorer = (req, res) => res.render("games/explorer", { pageTitle: "Explorer Game", t: res.locals.t });
+const gamePyramid = (req, res) => res.render("games/pyramid", { pageTitle: "Pyramid Builder", pageCss: "pyramid-builder", t: res.locals.t });
 
 const shop = asyncHandler(async (req, res) => {
   const page = parseInt(req.query.page || "1", 10);
@@ -172,6 +171,7 @@ const shop = asyncHandler(async (req, res) => {
     .limit(limit);
   res.render("shop/index", {
     pageTitle: "Shop",
+    t: res.locals.t,
     productsHtml: buildCards(items, "product"),
     paginationHtml: buildPagination(page, totalPages, "/shop")
   });
@@ -190,7 +190,7 @@ const cart = (req, res) => {
     `
     )
     .join("");
-  res.render("shop/cart", { pageTitle: "Cart", cartItemsHtml: itemsHtml, total: cartState.total.toFixed(2) });
+  res.render("shop/cart", { pageTitle: "Cart", t: res.locals.t, cartItemsHtml: itemsHtml, total: cartState.total.toFixed(2) });
 };
 
 const checkout = asyncHandler(async (req, res) => {
@@ -210,6 +210,7 @@ const checkout = asyncHandler(async (req, res) => {
   res.render("shop/checkout", {
     pageTitle: "Request Ticket",
     pageCss: "checkout",
+    t: res.locals.t,
     groupedTickets
   });
 });
@@ -218,21 +219,23 @@ const testimonials = asyncHandler(async (req, res) => {
   const items = await Testimonial.find().limit(10);
   res.render("testimonials/index", {
     pageTitle: "Testimonials",
+    t: res.locals.t,
     testimonialsHtml: buildCards(items, "testimonial")
   });
 });
 
 const planTrip = asyncHandler(async (req, res) => {
   const weather = await getWeather().catch(() => null);
-const isAr = req.session.language === "ar";
+  const isAr = req.cookies.lang === "ar";
 
-const weatherHtml = weather
-  ? `<div class="weather-card">${
-      isAr
-        ? `درجة الحرارة الحالية: ${toArabicNumber(weather.temperature_2m)}°C | سرعة الرياح: ${toArabicNumber(weather.wind_speed_10m)} كم/س`
-        : `Current temperature: ${weather.temperature_2m}°C | Wind: ${weather.wind_speed_10m} km/h`
-    }</div>`
-  : `<div class="weather-card">${isAr ? "بيانات الطقس غير متاحة" : "Weather data unavailable"}</div>`;
+  const weatherHtml = weather
+    ? `<div class="weather-card">${
+        isAr
+          ? `درجة الحرارة الحالية: ${toArabicNumber(weather.temperature_2m)}°C | سرعة الرياح: ${toArabicNumber(weather.wind_speed_10m)} كم/س`
+          : `Current temperature: ${weather.temperature_2m}°C | Wind: ${weather.wind_speed_10m} km/h`
+      }</div>`
+    : `<div class="weather-card">${isAr ? "بيانات الطقس غير متاحة" : "Weather data unavailable"}</div>`;
+
   const tickets = await Ticket.find();
   const groupOrder = ["egyptian", "arab", "foreigner"];
   const audienceOrder = ["adult", "student", "child", "senior"];
@@ -241,7 +244,7 @@ const weatherHtml = weather
       groupOrder.indexOf(a.group) - groupOrder.indexOf(b.group) ||
       audienceOrder.indexOf(a.audience) - audienceOrder.indexOf(b.audience)
   );
-  res.render("plan-trip/index", { pageTitle: "Plan Your Trip", weatherHtml, tickets });
+  res.render("plan-trip/index", { pageTitle: "Plan Your Trip", t: res.locals.t, weatherHtml, tickets });
 });
 
 module.exports = {

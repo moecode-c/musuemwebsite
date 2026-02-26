@@ -3,8 +3,8 @@
 
 <section class="page-hero">
   <div class="container">
-    <h1>Newsletter</h1>
-    <p>Get exhibition previews, curator stories, and event invitations straight to your inbox.</p>
+    <h1><%= t.newsletter.title %></h1>
+    <p><%= t.newsletter.subtitle %></p>
   </div>
 </section>
 
@@ -12,31 +12,31 @@
   <div class="container">
     <div class="split">
       <div>
-        <h2>What you'll receive</h2>
+        <h2><%= t.newsletter.receiveTitle %></h2>
         <ul class="list">
-          <li>Monthly highlights from the Pharaohs, Islamic, and Christian galleries.</li>
-          <li>Behind-the-scenes conservation updates and artifact spotlights.</li>
-          <li>Early access to workshops, tours, and special programs.</li>
-          <li>Members-only discounts in the museum shop.</li>
+          <li><%= t.newsletter.receiveList[0] %></li>
+          <li><%= t.newsletter.receiveList[1] %></li>
+          <li><%= t.newsletter.receiveList[2] %></li>
+          <li><%= t.newsletter.receiveList[3] %></li>
         </ul>
         <div class="info-card newsletter-note">
-          <h3>Frequency</h3>
-          <p>We send 1-2 emails per month. No spam. Unsubscribe anytime.</p>
+          <h3><%= t.newsletter.frequencyTitle %></h3>
+          <p><%= t.newsletter.frequencyText %></p>
         </div>
       </div>
       <form class="form" id="newsletter-form">
-        <label>Full Name (optional)</label>
-        <input type="text" name="name" placeholder="Your name" />
-        <label>Email</label>
-        <input type="email" name="email" placeholder="you@example.com" required />
-        <label>Interests</label>
+        <label><%= t.newsletter.fullName %></label>
+        <input type="text" name="name" placeholder="<%= t.newsletter.namePlaceholder %>" />
+        <label><%= t.newsletter.email %></label>
+        <input type="email" name="email" placeholder="<%= t.newsletter.emailPlaceholder %>" required />
+        <label><%= t.newsletter.interests %></label>
         <select name="interest">
-          <option value="all">All updates</option>
-          <option value="exhibitions">Exhibitions</option>
-          <option value="events">Events & Workshops</option>
-          <option value="research">Research & Conservation</option>
+          <option value="all"><%= t.newsletter.allUpdates %></option>
+          <option value="exhibitions"><%= t.newsletter.exhibitions %></option>
+          <option value="events"><%= t.newsletter.events %></option>
+          <option value="research"><%= t.newsletter.research %></option>
         </select>
-        <button class="btn" type="submit">Subscribe</button>
+        <button class="btn" type="submit"><%= t.newsletter.subscribe %></button>
         <p class="form-message" id="newsletter-message"></p>
       </form>
     </div>

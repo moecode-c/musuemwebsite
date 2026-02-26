@@ -3,8 +3,8 @@
 
 <section class="page-hero">
   <div class="container">
-    <h1>Accessibility</h1>
-    <p>Inclusive design, assistive services, and respectful care for every visitor.</p>
+    <h1><%= t.accessibility.title %></h1>
+    <p><%= t.accessibility.subtitle %></p>
   </div>
 </section>
 
@@ -13,23 +13,23 @@
     <div class="access-grid">
       <article class="info-card">
         <i class="fas fa-wheelchair icon"></i>
-        <h3>Mobility Access</h3>
-        <p>Step-free entrances, elevators, and wide gallery routes across all floors.</p>
+        <h3><%= t.accessibility.mobilityTitle %></h3>
+        <p><%= t.accessibility.mobilityText %></p>
       </article>
       <article class="info-card">
         <i class="fas fa-ear-listen icon"></i>
-        <h3>Audio & Captions</h3>
-        <p>Audio guides, captions on videos, and induction loops in lecture halls.</p>
+        <h3><%= t.accessibility.audioTitle %></h3>
+        <p><%= t.accessibility.audioText %></p>
       </article>
       <article class="info-card">
         <i class="fas fa-hands-asl-interpreting icon"></i>
-        <h3>Interpretation</h3>
-        <p>Advance requests for sign language interpretation and guided tours.</p>
+        <h3><%= t.accessibility.interpretationTitle %></h3>
+        <p><%= t.accessibility.interpretationText %></p>
       </article>
       <article class="info-card">
         <i class="fas fa-person-shelter icon"></i>
-        <h3>Sensory-Friendly</h3>
-        <p>Quiet zones, reduced-light exhibits, and sensory-friendly visiting hours.</p>
+        <h3><%= t.accessibility.sensoryTitle %></h3>
+        <p><%= t.accessibility.sensoryText %></p>
       </article>
     </div>
   </div>
@@ -38,19 +38,19 @@
 <section class="section section-alt">
   <div class="container split">
     <div>
-      <h2>Visitor Support</h2>
+      <h2><%= t.accessibility.supportTitle %></h2>
       <ul class="list">
-        <li>Complimentary wheelchairs available at the main entrance.</li>
-        <li>Assistance dogs and service animals are welcome.</li>
-        <li>Priority seating for talks, screenings, and workshops.</li>
-        <li>Large-print and high-contrast gallery guides.</li>
+        <li><%= t.accessibility.supportList[0] %></li>
+        <li><%= t.accessibility.supportList[1] %></li>
+        <li><%= t.accessibility.supportList[2] %></li>
+        <li><%= t.accessibility.supportList[3] %></li>
       </ul>
     </div>
     <div class="info-card">
-      <h3>Need help planning?</h3>
-      <p>Contact our accessibility desk for customized routes and advance accommodations.</p>
-      <p class="contact-line"><i class="fas fa-envelope"></i> access@musuem.org</p>
-      <p class="contact-line"><i class="fas fa-phone"></i> +20 2 2345 6789</p>
+      <h3><%= t.accessibility.helpTitle %></h3>
+      <p><%= t.accessibility.helpText %></p>
+      <p class="contact-line"><i class="fas fa-envelope"></i> <%= t.accessibility.email %></p>
+      <p class="contact-line"><i class="fas fa-phone"></i> <%= t.accessibility.phone %></p>
     </div>
   </div>
 </section>

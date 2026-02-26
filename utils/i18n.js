@@ -2,6 +2,52 @@
 
 const translations = {
   en: {
+    newsletter: {
+  title: "Newsletter",
+  subtitle: "Get exhibition previews, curator stories, and event invitations straight to your inbox.",
+  receiveTitle: "What you'll receive",
+  receiveList: [
+    "Monthly highlights from the Pharaohs, Islamic, and Christian galleries.",
+    "Behind-the-scenes conservation updates and artifact spotlights.",
+    "Early access to workshops, tours, and special programs.",
+    "Members-only discounts in the museum shop."
+  ],
+  frequencyTitle: "Frequency",
+  frequencyText: "We send 1-2 emails per month. No spam. Unsubscribe anytime.",
+  fullName: "Full Name (optional)",
+  namePlaceholder: "Your name",
+  email: "Email",
+  emailPlaceholder: "you@example.com",
+  interests: "Interests",
+  allUpdates: "All updates",
+  exhibitions: "Exhibitions",
+  events: "Events & Workshops",
+  research: "Research & Conservation",
+  subscribe: "Subscribe"
+},
+    accessibility: {
+  title: "Accessibility",
+  subtitle: "Inclusive design, assistive services, and respectful care for every visitor.",
+  mobilityTitle: "Mobility Access",
+  mobilityText: "Step-free entrances, elevators, and wide gallery routes across all floors.",
+  audioTitle: "Audio & Captions",
+  audioText: "Audio guides, captions on videos, and induction loops in lecture halls.",
+  interpretationTitle: "Interpretation",
+  interpretationText: "Advance requests for sign language interpretation and guided tours.",
+  sensoryTitle: "Sensory-Friendly",
+  sensoryText: "Quiet zones, reduced-light exhibits, and sensory-friendly visiting hours.",
+  supportTitle: "Visitor Support",
+  supportList: [
+    "Complimentary wheelchairs available at the main entrance.",
+    "Assistance dogs and service animals are welcome.",
+    "Priority seating for talks, screenings, and workshops.",
+    "Large-print and high-contrast gallery guides."
+  ],
+  helpTitle: "Need help planning?",
+  helpText: "Contact our accessibility desk for customized routes and advance accommodations.",
+  email: "access@musuem.org",
+  phone: "+20 2 2345 6789"
+},
     siteTitle: "Egyptian Museum",
 
     shop: {
@@ -225,6 +271,52 @@ const translations = {
   },
 
   ar: {
+    newsletter: {
+  title: "النشرة البريدية",
+  subtitle: "احصل على معاينات المعارض وقصص القيّمين ودعوات الفعاليات مباشرة في صندوق بريدك.",
+  receiveTitle: "ما الذي ستتلقاه",
+  receiveList: [
+    "أبرز ما يميز قاعات الفراعنة والإسلامية والقبطية شهريًا.",
+    "تحديثات الترميم من وراء الكواليس وأضواء على القطع الأثرية.",
+    "وصول مبكر إلى ورش العمل والجولات والبرامج الخاصة.",
+    "خصومات حصرية للأعضاء في متجر المتحف."
+  ],
+  frequencyTitle: "التكرار",
+  frequencyText: "نرسل 1-2 رسائل بريدية شهريًا. لا رسائل مزعجة. إلغاء الاشتراك في أي وقت.",
+  fullName: "الاسم الكامل (اختياري)",
+  namePlaceholder: "اسمك",
+  email: "البريد الإلكتروني",
+  emailPlaceholder: "you@example.com",
+  interests: "الاهتمامات",
+  allUpdates: "جميع التحديثات",
+  exhibitions: "المعارض",
+  events: "الفعاليات وورش العمل",
+  research: "البحث والترميم",
+  subscribe: "اشترك"
+},
+    accessibility: {
+  title: "إمكانية الوصول",
+  subtitle: "تصميم شامل، وخدمات مساعدة، ورعاية محترمة لكل زائر.",
+  mobilityTitle: "الوصول للأشخاص ذوي الإعاقة الحركية",
+  mobilityText: "مداخل خالية من الدرجات، ومصاعد، ومسارات واسعة في جميع الطوابق.",
+  audioTitle: "الصوت والتعليقات",
+  audioText: "أدلة صوتية، وتعليقات على مقاطع الفيديو، وحلقات توصيل في قاعات المحاضرات.",
+  interpretationTitle: "الترجمة الفورية",
+  interpretationText: "طلبات مسبقة لترجمة لغة الإشارة والجولات الإرشادية.",
+  sensoryTitle: "مناسب للحساسية الحسية",
+  sensoryText: "مناطق هادئة، ومعارض بإضاءة خافتة، وساعات زيارة مناسبة حسيًا.",
+  supportTitle: "دعم الزوار",
+  supportList: [
+    "كراسي متحركة مجانية متاحة عند المدخل الرئيسي.",
+    "كلاب المساعدة وحيوانات الخدمة مرحب بها.",
+    "أولوية الجلوس في المحادثات والعروض وورش العمل.",
+    "أدلة المعارض بالطباعة الكبيرة والتباين العالي."
+  ],
+  helpTitle: "هل تحتاج مساعدة في التخطيط؟",
+  helpText: "تواصل مع مكتب إمكانية الوصول لدينا للحصول على مسارات مخصصة وترتيبات مسبقة.",
+  email: "access@musuem.org",
+  phone: "+20 2 2345 6789"
+},
     siteTitle: "المتحف المصري",
 
     shop: {
