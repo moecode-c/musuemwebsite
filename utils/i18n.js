@@ -130,7 +130,6 @@ const translations = {
       newsletter: "Newsletter"
     },
 
-    // ✅ TOP-LEVEL about key
     about: {
       title: "About the Museum",
       subtitle:
@@ -353,7 +352,6 @@ const translations = {
       newsletter: "النشرة البريدية"
     },
 
-    // ✅ TOP-LEVEL about key
     about: {
       title: "عن المتحف",
       subtitle:
@@ -449,9 +447,6 @@ const translations = {
   }
 };
 
-// --------------------------------------------------
-// Helpers
-// --------------------------------------------------
 
 const getTranslations = (lang) => translations[lang] || translations.en;
 

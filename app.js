@@ -19,7 +19,6 @@ const { notFoundHandler, errorHandler } = require("./middleware/error");
 
 const { makeT } = require("./utils/i18n");
 
-// routes
 const pageRoutes = require("./routes/pages");
 const authRoutes = require("./routes/auth");
 const exhibitRoutes = require("./routes/exhibits");
@@ -40,7 +39,6 @@ connectDB();
 app.set("view engine", "ejs");
 app.set("views", path.join(__dirname, "views"));
 
-// basic middleware
 app.use(helmet({ contentSecurityPolicy: false }));
 app.use(compression());
 app.use(morgan("dev"));
@@ -50,7 +48,6 @@ app.use(cookieParser());
 app.use(methodOverride("_method"));
 app.use(express.static(path.join(__dirname, "public")));
 
-// session
 app.use(
   session({
     secret: process.env.SESSION_SECRET || "change_this_secret",
@@ -70,9 +67,6 @@ app.use(
   })
 );
 
-/**
- * 🌍 LANGUAGE SWITCH
- */
 app.get("/lang/:lang", (req, res) => {
   const lang = req.params.lang === "ar" ? "ar" : "en";
 
@@ -85,9 +79,6 @@ app.get("/lang/:lang", (req, res) => {
   res.redirect("back");
 });
 
-/**
- * 🌐 i18n MUST BE BEFORE attachLocals + routes
- */
 app.use((req, res, next) => {
   const language = req.cookies.lang || "en";
 
@@ -98,10 +89,8 @@ app.use((req, res, next) => {
   next();
 });
 
-// NOW attach other locals
 app.use(attachLocals);
 
-// routes
 app.use("/", pageRoutes);
 app.use("/auth", authRoutes);
 app.use("/api/exhibits", exhibitRoutes);
@@ -115,11 +104,10 @@ app.use("/cart", cartRoutes);
 app.use("/newsletter", newsletterRoutes);
 app.use("/admin", adminRoutes);
 
-// errors
 app.use(notFoundHandler);
 app.use(errorHandler);
 
 const PORT = process.env.PORT || 3000;
 app.listen(PORT, () => {
-  console.log(`✅ Server running at http://localhost:${PORT}`);
+  console.log(` Server running at http://localhost:${PORT}`);
 });
