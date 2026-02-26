@@ -3,8 +3,8 @@
 
 <section class="page-hero">
   <div class="container">
-    <h1>Testimonials</h1>
-    <p>Real stories from visitors who explored the heart of Egypt.</p>
+    <h1><%= t.testimonials.title %></h1>
+    <p><%= t.testimonials.subtitle %></p>
   </div>
 </section>
 
@@ -13,12 +13,12 @@
     <div>
       <div class="testimonials-summary">
         <div>
-          <h2>Visitor Highlights</h2>
-          <p>Every review helps us create more meaningful experiences for future visitors.</p>
+          <h2><%= t.testimonials.highlightsTitle %></h2>
+          <p><%= t.testimonials.highlightsText %></p>
         </div>
         <div class="rating-badge">
           <span class="rating-score">4.9</span>
-          <span class="rating-text">Average rating</span>
+          <span class="rating-text"><%= t.testimonials.averageRating %></span>
         </div>
       </div>
       <div class="grid">
@@ -26,14 +26,14 @@
       </div>
     </div>
     <form class="form" id="testimonial-form">
-      <h3>Share your experience</h3>
-      <label>Name</label>
+      <h3><%= t.testimonials.formTitle %></h3>
+      <label><%= t.testimonials.name %></label>
       <input type="text" name="name" required />
-      <label>Message</label>
+      <label><%= t.testimonials.message %></label>
       <textarea name="message" required></textarea>
-      <label>Rating (1-5)</label>
+      <label><%= t.testimonials.rating %></label>
       <input type="number" name="rating" min="1" max="5" value="5" required />
-      <button class="btn" type="submit">Submit</button>
+      <button class="btn" type="submit"><%= t.testimonials.submit %></button>
       <p class="form-message" id="testimonial-message"></p>
     </form>
   </div>

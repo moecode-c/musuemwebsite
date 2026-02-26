@@ -2,6 +2,40 @@
 
 const translations = {
   en: {
+    testimonials: {
+  title: "Testimonials",
+  subtitle: "Real stories from visitors who explored the heart of Egypt.",
+  highlightsTitle: "Visitor Highlights",
+  highlightsText: "Every review helps us create more meaningful experiences for future visitors.",
+  averageRating: "Average rating",
+  formTitle: "Share your experience",
+  name: "Name",
+  message: "Message",
+  rating: "Rating (1-5)",
+  submit: "Submit"
+},
+    location: {
+  title: "Map",
+  subtitle: "Visit us in central Cairo and explore every gallery with interactive map pins.",
+  commonPins: "Most Common Pins",
+  noPins: "No common pins yet.",
+  addressTitle: "Address",
+  addressText: "Al Tahrir Square, Downtown Cairo, Egypt",
+  phone: "+20 2 2579 6584",
+  email: "visit@musuem.org",
+  hoursTitle: "Hours",
+  hours: [
+    "Sunday–Thursday: 9:00 AM – 5:00 PM",
+    "Friday: 10:00 AM – 4:00 PM",
+    "Saturday: 11:00 AM – 3:00 PM"
+  ],
+  gettingHereTitle: "Getting Here",
+  gettingHere: [
+    "Metro: Sadat Station (5-minute walk)",
+    "Bus: Routes 174, 356, 400",
+    "Parking: Underground lot on Abdel Khalek Tharwat St."
+  ]
+},
     newsletter: {
   title: "Newsletter",
   subtitle: "Get exhibition previews, curator stories, and event invitations straight to your inbox.",
@@ -271,6 +305,40 @@ const translations = {
   },
 
   ar: {
+    testimonials: {
+  title: "آراء الزوار",
+  subtitle: "قصص حقيقية من زوار استكشفوا قلب مصر.",
+  highlightsTitle: "أبرز آراء الزوار",
+  highlightsText: "كل تقييم يساعدنا على خلق تجارب أكثر معنى للزوار القادمين.",
+  averageRating: "متوسط التقييم",
+  formTitle: "شارك تجربتك",
+  name: "الاسم",
+  message: "الرسالة",
+  rating: "التقييم (1-5)",
+  submit: "إرسال"
+},
+    location: {
+  title: "الخريطة",
+  subtitle: "زورونا في وسط القاهرة واستكشف كل قاعة من خلال دبابيس الخريطة التفاعلية.",
+  commonPins: "أبرز الدبابيس",
+  noPins: "لا توجد دبابيس شائعة بعد.",
+  addressTitle: "العنوان",
+  addressText: "ميدان التحرير، وسط القاهرة، مصر",
+  phone: "+20 2 2579 6584",
+  email: "visit@musuem.org",
+  hoursTitle: "ساعات العمل",
+  hours: [
+    "الأحد–الخميس: 9:00 صباحًا – 5:00 مساءً",
+    "الجمعة: 10:00 صباحًا – 4:00 مساءً",
+    "السبت: 11:00 صباحًا – 3:00 مساءً"
+  ],
+  gettingHereTitle: "كيفية الوصول",
+  gettingHere: [
+    "مترو: محطة السادات (5 دقائق سيرًا)",
+    "حافلة: خطوط 174، 356، 400",
+    "مواقف السيارات: موقف تحت الأرض في شارع عبد الخالق ثروت"
+  ]
+},
     newsletter: {
   title: "النشرة البريدية",
   subtitle: "احصل على معاينات المعارض وقصص القيّمين ودعوات الفعاليات مباشرة في صندوق بريدك.",
