@@ -121,10 +121,32 @@ const nextButton = document.getElementById("quiz-next");
 const questionTemplate = document.getElementById("quiz-question-template");
 const resultTemplate = document.getElementById("quiz-result-template");
 
+// Read all labels from data attributes (set by EJS/i18n)
+const L = {
+  question:      quizCard?.dataset.labelQuestion      || "Question",
+  of:            quizCard?.dataset.labelOf             || "of",
+  score:         quizCard?.dataset.labelScore          || "Score",
+  start:         quizCard?.dataset.labelStart          || "Start Quiz",
+  next:          quizCard?.dataset.labelNext           || "Next",
+  finish:        quizCard?.dataset.labelFinish         || "Finish",
+  intro:         quizCard?.dataset.labelIntro          || "Start the quiz when you're ready. Try to answer based on what you know—then read the explanation to learn more about Egyptian history.",
+  selectAnswer:  quizCard?.dataset.labelSelect         || "Select an answer to reveal the explanation.",
+  correct:       quizCard?.dataset.labelCorrect        || "✅ Correct!",
+  incorrect:     quizCard?.dataset.labelIncorrect      || "❌ Not quite.",
+  resultTitle:   quizCard?.dataset.labelResultTitle    || "Great job!",
+  scored:        quizCard?.dataset.labelScored         || "You scored",
+  outOf:         quizCard?.dataset.labelOutOf          || "out of",
+  msgExcellent:  quizCard?.dataset.labelMsgExcellent   || "Excellent! You have a strong foundation in Egyptian history.",
+  msgGreat:      quizCard?.dataset.labelMsgGreat       || "Great effort! Review the notes below to deepen your knowledge.",
+  msgNice:       quizCard?.dataset.labelMsgNice        || "Nice start! Read the explanations below and try again.",
+  correctAnswer: quizCard?.dataset.labelCorrectAnswer  || "Correct answer:",
+  restart:       quizCard?.dataset.labelRestart        || "Play Again",
+};
+
 const updateMeta = () => {
   if (!quizProgress || !quizScore) return;
-  quizProgress.textContent = `Question ${Math.min(state.currentIndex + 1, quizData.length)} of ${quizData.length}`;
-  quizScore.textContent = `Score: ${state.score}`;
+  quizProgress.textContent = `${L.question} ${Math.min(state.currentIndex + 1, quizData.length)} ${L.of} ${quizData.length}`;
+  quizScore.textContent = `${L.score}: ${state.score}`;
 };
 
 const resetQuiz = () => {
@@ -133,16 +155,13 @@ const resetQuiz = () => {
   state.answers = [];
   if (quizBody) {
     quizBody.innerHTML = `
-      <p class="quiz-intro">
-        Start the quiz when you're ready. Try to answer based on what you know—then read the
-        explanation to learn more about Egyptian history.
-      </p>
-      <button class="btn quiz-start" id="quiz-start" type="button">Start Quiz</button>
+      <p class="quiz-intro">${L.intro}</p>
+      <button class="btn quiz-start" id="quiz-start" type="button">${L.start}</button>
     `;
   }
   if (nextButton) {
     nextButton.disabled = true;
-    nextButton.textContent = "Next";
+    nextButton.textContent = L.next;
   }
   attachStartHandler();
   updateMeta();
@@ -173,7 +192,7 @@ const renderQuestion = () => {
   }
 
   if (feedbackEl) {
-    feedbackEl.textContent = "Select an answer to reveal the explanation.";
+    feedbackEl.textContent = L.selectAnswer;
   }
 
   quizBody.appendChild(fragment);
@@ -181,7 +200,7 @@ const renderQuestion = () => {
   updateMeta();
   if (nextButton) {
     nextButton.disabled = true;
-    nextButton.textContent = state.currentIndex === quizData.length - 1 ? "Finish" : "Next";
+    nextButton.textContent = state.currentIndex === quizData.length - 1 ? L.finish : L.next;
   }
 };
 
@@ -211,7 +230,7 @@ const handleAnswer = (selectedIndex, selectedButton, optionsEl, feedbackEl) => {
   });
 
   if (feedbackEl) {
-    feedbackEl.innerHTML = `${isCorrect ? "✅ Correct!" : "❌ Not quite."} ${question.explanation}`;
+    feedbackEl.innerHTML = `${isCorrect ? L.correct : L.incorrect} ${question.explanation}`;
   }
 
   updateMeta();
@@ -224,22 +243,25 @@ const renderResults = () => {
   if (!quizBody || !resultTemplate) return;
   quizBody.innerHTML = "";
   const fragment = resultTemplate.content.cloneNode(true);
+  const titleEl = fragment.querySelector("#quiz-result-title");
   const scoreEl = fragment.querySelector("#quiz-result-score");
   const messageEl = fragment.querySelector("#quiz-result-message");
   const summaryEl = fragment.querySelector("#quiz-summary");
   const restartButton = fragment.querySelector("#quiz-restart");
 
+  if (titleEl) titleEl.textContent = L.resultTitle;
+
   if (scoreEl) {
-    scoreEl.textContent = `You scored ${state.score} out of ${quizData.length}.`;
+    scoreEl.textContent = `${L.scored} ${state.score} ${L.outOf} ${quizData.length}.`;
   }
 
   if (messageEl) {
     if (state.score >= 12) {
-      messageEl.textContent = "Excellent! You have a strong foundation in Egyptian history.";
+      messageEl.textContent = L.msgExcellent;
     } else if (state.score >= 8) {
-      messageEl.textContent = "Great effort! Review the notes below to deepen your knowledge.";
+      messageEl.textContent = L.msgGreat;
     } else {
-      messageEl.textContent = "Nice start! Read the explanations below and try again.";
+      messageEl.textContent = L.msgNice;
     }
   }
 
@@ -249,7 +271,7 @@ const renderResults = () => {
       item.className = "quiz-summary-item";
       item.innerHTML = `
         <strong>Q${index + 1}:</strong> ${answer.question}<br />
-        <span>Correct answer: ${answer.correct}</span><br />
+        <span>${L.correctAnswer} ${answer.correct}</span><br />
         <em>${answer.explanation}</em>
       `;
       summaryEl.appendChild(item);
@@ -257,6 +279,7 @@ const renderResults = () => {
   }
 
   if (restartButton) {
+    restartButton.textContent = L.restart;
     restartButton.addEventListener("click", resetQuiz);
   }
 
