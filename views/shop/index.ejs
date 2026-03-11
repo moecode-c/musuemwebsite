@@ -1,20 +1,182 @@
 <%- include('../partials/header') %>
 <%- include('../partials/navbar') %>
 
-<section class="page-hero">
-  <div class="container">
-    <h1>Shop</h1>
-    <p>Bring home curated souvenirs and replicas.</p>
-  </div>
-</section>
-
-<section class="section">
-  <div class="container">
-    <div class="grid">
-      <%- productsHtml %>
+<main class="shop-page">
+  <section class="page-hero shop-hero">
+    <div class="container hero-shell">
+      <div class="hero-copy">
+        <p class="eyebrow">Museum Shop</p>
+        <h1>Curated relics, crafted keepsakes.</h1>
+        <p>Bring home design-forward replicas, artisan-made decor, and exclusive souvenirs inspired by the galleries.</p>
+        <div class="hero-cta">
+          <a class="shop-btn" href="#shop-grid">Browse collection</a>
+          <a class="shop-btn ghost" href="/plan-trip">Plan a museum visit</a>
+        </div>
+        <div class="hero-tags">
+          <span class="pill">Gallery-approved quality</span>
+          <span class="pill">Limited artisan runs</span>
+          <span class="pill">Ships in 48h</span>
+        </div>
+      </div>
     </div>
-    <%- paginationHtml %>
-  </div>
-</section>
+  </section>
+
+  <section class="shop-highlights">
+    <div class="container highlight-grid">
+      <article class="highlight-card">
+        <div class="highlight-badge">01</div>
+        <h3>Story-led pieces</h3>
+        <p>Every item includes curatorial notes so the stories travel with you.</p>
+      </article>
+      <article class="highlight-card">
+        <div class="highlight-badge">02</div>
+        <h3>Crafted responsibly</h3>
+        <p>We partner with local makers and sustainable workshops for each run.</p>
+      </article>
+      <article class="highlight-card">
+        <div class="highlight-badge">03</div>
+        <h3>Ready to gift</h3>
+        <p>Premium packaging and optional handwritten notes at checkout.</p>
+      </article>
+    </div>
+  </section>
+
+  <section class="section shop-rows">
+    <div class="container">
+      <header class="section-heading">
+        <p class="eyebrow">Featured picks</p>
+        <div>
+          <h2>Curated spotlight</h2>
+          <p class="muted">Top selections highlighted for the week.</p>
+        </div>
+      </header>
+      <div class="row-cards" data-featured-row></div>
+    </div>
+  </section>
+
+  <section class="section shop-grid" id="shop-grid">
+    <div class="container">
+      <header class="section-heading">
+        <p class="eyebrow">New arrivals</p>
+        <div>
+          <h2>Curated for the month</h2>
+          <p class="muted">Handpicked drops you will only find through the museum shop.</p>
+        </div>
+      </header>
+      <div class="cutoff-banner" aria-live="polite">
+        <i class="fa fa-clock"></i>
+        <span data-cutoff-timer>Order within 05:00 for dispatch today</span>
+      </div>
+        <div class="shop-controls">
+          <div class="control search">
+            <label for="shop-search">Search</label>
+            <div class="input-shell">
+              <i class="fa fa-search"></i>
+              <input id="shop-search" type="search" placeholder="Search artifacts, decor, books" aria-label="Search products" />
+            </div>
+          </div>
+          <div class="control select">
+            <label for="shop-sort">Sort</label>
+            <select id="shop-sort" aria-label="Sort products">
+              <option value="featured">Featured</option>
+              <option value="price-asc">Price: Low to High</option>
+              <option value="price-desc">Price: High to Low</option>
+              <option value="newest">Newest</option>
+              <option value="stock">Availability</option>
+            </select>
+          </div>
+          <div class="control range">
+            <label for="price-max">Price cap</label>
+            <div class="range-shell">
+              <input type="range" id="price-max" min="0" max="2000" value="2000" step="50" aria-label="Maximum price" />
+              <span class="range-value" id="price-max-value">Up to EGP 2000</span>
+            </div>
+          </div>
+          <div class="control toggles">
+            <label>Filters</label>
+            <div class="pill-toggle" data-filter="available">In stock</div>
+            <div class="pill-toggle" data-filter="low">Low stock</div>
+            <div class="pill-toggle" data-filter="new">New</div>
+          </div>
+        </div>
+        <div class="active-filters" data-active-filters></div>
+        <div class="shop-controls secondary">
+          <div class="control delivery">
+            <label for="zip-check">Delivery to</label>
+            <div class="input-shell inline">
+              <i class="fa fa-location-dot"></i>
+              <input id="zip-check" type="text" inputmode="numeric" placeholder="Enter ZIP" aria-label="Enter ZIP for ETA" maxlength="6" />
+              <button class="shop-btn ghost" type="button" id="zip-check-btn">Check ETA</button>
+            </div>
+            <p class="muted small" id="zip-result" aria-live="polite">Enter ZIP to see delivery window.</p>
+          </div>
+          <div class="control delivery-note">
+            <label>Preorders</label>
+            <p class="muted small">Items marked preorder ship on their stated date. We hold your spot automatically.</p>
+          </div>
+        </div>
+      <div class="grid" data-shop-grid>
+        <%- productsHtml %>
+      </div>
+      <div class="empty-state" data-empty-state>
+        <div class="empty-card">
+          <h3>No items found</h3>
+          <p data-empty-copy>Adjust filters or search terms to see more of the collection.</p>
+          <button class="shop-btn ghost" type="button" id="reset-filters">Reset filters</button>
+        </div>
+      </div>
+      <div class="pagination-shell">
+        <%- paginationHtml %>
+      </div>
+    </div>
+  </section>
+
+  <section class="section shop-rows" aria-live="polite">
+    <div class="container">
+      <header class="section-heading">
+        <p class="eyebrow">Recently viewed</p>
+        <div>
+          <h2>Pick up where you left</h2>
+          <p class="muted">Quick access to items you opened recently.</p>
+        </div>
+      </header>
+      <div class="row-cards" data-recent-row>
+        <div class="muted">Browse an item to see it appear here.</div>
+      </div>
+    </div>
+  </section>
+
+    <div class="toast" id="cart-toast" role="status" aria-live="polite"></div>
+
+    <div class="modal" id="quickview-modal" aria-hidden="true">
+      <div class="modal-backdrop" data-modal-close></div>
+      <div class="modal-dialog" role="dialog" aria-modal="true" aria-labelledby="quickview-title">
+        <button class="modal-close" type="button" data-modal-close aria-label="Close"></button>
+        <div class="modal-media">
+          <img id="quickview-image" alt="Product image">
+          <span class="status-badge" id="quickview-badge"></span>
+        </div>
+        <div class="modal-body">
+          <p class="eyebrow" id="quickview-price"></p>
+          <h3 id="quickview-title"></h3>
+          <p class="meta" id="quickview-stock"></p>
+          <div class="size-grid" id="quickview-sizes" aria-live="polite"></div>
+          <p id="quickview-desc"></p>
+          <p class="meta" id="quickview-eta"></p>
+          <p class="muted small" id="quickview-cutoff">Ships in 48h · Free returns in 14 days · Secure checkout</p>
+          <div class="modal-actions">
+            <button class="btn add-to-cart" id="quickview-add" type="button">Add to Cart</button>
+            <button class="shop-btn ghost" type="button" data-modal-close>Close</button>
+          </div>
+          <div class="payment-icons" aria-label="Payment methods">
+            <span class="pill">Visa</span>
+            <span class="pill">Mastercard</span>
+            <span class="pill">Amex</span>
+            <span class="pill">PayPal</span>
+          </div>
+        </div>
+      </div>
+    </div>
+</main>
 
 <%- include('../partials/footer') %>

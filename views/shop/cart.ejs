@@ -8,13 +8,28 @@
   </div>
 </section>
 
-<section class="section">
-  <div class="container">
-    <div id="cart-items">
-      <%- cartItemsHtml %>
+<section class="section cart-section">
+  <div class="container cart-shell">
+    <div class="cart-panel">
+      <div class="cart-panel__header">
+        <h2>Your Items</h2>
+        <p class="muted">Review and update quantities</p>
+      </div>
+      <div id="cart-items">
+        <%- cartItemsHtml %>
+      </div>
     </div>
-    <div class="cart-total">Total: EGP <span id="cart-total"><%= total %></span></div>
-    <a class="btn" href="/checkout">Proceed to Checkout</a>
+
+    <aside class="cart-panel cart-summary">
+      <h2>Order Summary</h2>
+      <div class="cart-total-line">
+        <span>Total</span>
+        <span class="cart-total-amount">EGP <span id="cart-total"><%= total %></span></span>
+      </div>
+      <p class="muted small">Shipping and delivery choices are selected at checkout.</p>
+      <a class="btn btn-primary btn-block" href="/cart/checkout">Proceed to Checkout</a>
+      <a class="link subtle" href="/shop">Continue shopping</a>
+    </aside>
   </div>
 </section>
 

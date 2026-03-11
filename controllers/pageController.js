@@ -21,12 +21,64 @@ const buildCards = (items, type) => {
         `;
       }
       if (type === "product") {
+        const createdDate = item.createdAt ? new Date(item.createdAt) : null;
+        const isNew = createdDate ? Date.now() - createdDate.getTime() < 1000 * 60 * 60 * 24 * 30 : false;
+        const isPreorder = item.stock <= 0;
+        const preorderDate = isPreorder ? new Date(Date.now() + 1000 * 60 * 60 * 24 * 10) : null;
+        const stockLabel = isPreorder ? "Preorder" : item.stock < 5 ? "Low stock" : "In stock";
+        const stockClass = isPreorder ? "is-preorder" : item.stock < 5 ? "is-low" : "is-available";
+        const baseDescription = item.description || "";
+        const preview = baseDescription.substring(0, 110);
+        const safeName = item.name.replace(/"/g, "&quot;");
+        const safePreview = preview.toLowerCase().replace(/"/g, "&quot;");
+        const safeFullDesc = baseDescription.replace(/"/g, "&quot;");
+
+        // Split stock across sizes for per-size visibility
+        const sizeLabels = ["S", "M", "L", "XL"];
+        const totalStock = Math.max(0, item.stock || 0);
+        const sizeBreakdown = sizeLabels.map((label, idx) => {
+          const weight = [0.2, 0.35, 0.3, 0.15][idx];
+          return {
+            size: label,
+            qty: isPreorder ? 0 : Math.max(0, Math.round(totalStock * weight))
+          };
+        });
+        const allocated = sizeBreakdown.reduce((sum, s) => sum + s.qty, 0);
+        if (!isPreorder && allocated < totalStock) {
+          sizeBreakdown[1].qty += totalStock - allocated; // top up M to match total
+        }
+        const sizeLine = sizeBreakdown
+          .filter((s) => s.qty > 0)
+          .map((s) => `${s.size}:${s.qty}${s.qty < 3 ? " low" : ""}`)
+          .slice(0, 3)
+          .join(" · ");
+        const sizeJson = JSON.stringify(sizeBreakdown).replace(/"/g, "&quot;");
+
         return `
-          <article class="card">
-            <img src="${item.imageUrl}" alt="${item.name}">
-            <h3>${item.name}</h3>
-            <p>EGP ${item.price.toFixed(2)}</p>
-            <button class="btn add-to-cart" data-id="${item._id}">Add to Cart</button>
+          <article class="card product-card" data-id="${item._id}" data-name="${safeName.toLowerCase()}" data-description="${safePreview}" data-description-full="${safeFullDesc}" data-price="${item.price}" data-stock="${item.stock}" data-created="${createdDate ? createdDate.toISOString() : ""}" data-image="${item.imageUrl}" data-sizes="${sizeJson}" data-preorder="${preorderDate ? preorderDate.toISOString() : ""}">
+            <div class="card-media">
+              <span class="status-badge ${stockClass}">${stockLabel}</span>
+              ${isNew ? "<span class=\"status-badge is-new\">New</span>" : ""}
+              ${preorderDate ? `<span class="status-badge is-preorder-date">Ships ${preorderDate.toLocaleDateString("en-US", { month: "short", day: "numeric" })}</span>` : ""}
+              <img src="${item.imageUrl}" alt="${item.name}" loading="lazy">
+            </div>
+            <div class="card-body">
+              <div class="card-top">
+                <p class="eyebrow">EGP ${item.price.toFixed(2)}</p>
+                <p class="meta">${item.stock > 0 ? `${item.stock} in stock` : "Preorder opens"}</p>
+              </div>
+              <h3>${item.name}</h3>
+              <p class="card-desc">${preview}${baseDescription.length > preview.length ? "..." : ""}</p>
+              <p class="meta small">${sizeLine || "Sizes reserved for preorder"}</p>
+              <div class="card-actions">
+                <div class="price-block">
+                  <span class="price">EGP ${item.price.toFixed(2)}</span>
+                  <span class="meta small">${preorderDate ? `Preorder · ships ${preorderDate.toLocaleDateString("en-US", { month: "short", day: "numeric" })}` : "Ships in 48h · Free returns 14d"}</span>
+                </div>
+                <button class="btn ghost quick-view" type="button" data-id="${item._id}">Quick view</button>
+                <button class="btn add-to-cart" data-id="${item._id}" data-name="${item.name}" ${item.stock <= 0 ? "disabled" : ""}>${item.stock <= 0 ? "Preorder" : "Add to Cart"}</button>
+              </div>
+            </div>
           </article>
         `;
       }
@@ -160,6 +212,7 @@ const shop = asyncHandler(async (req, res) => {
     .limit(limit);
   res.render("shop/index", {
     pageTitle: "Shop",
+    pageCss: "shop",
     productsHtml: buildCards(items, "product"),
     paginationHtml: buildPagination(page, totalPages, "/shop")
   });

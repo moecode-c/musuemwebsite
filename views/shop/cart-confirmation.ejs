@@ -1,0 +1,77 @@
+<%- include('../partials/header') %>
+<%- include('../partials/navbar') %>
+
+<main class="checkout-page">
+  <section class="page-hero">
+    <div class="container">
+      <h1>Order Confirmed</h1>
+      <p>Thank you! Your payment preference and delivery plan have been saved.</p>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="container checkout-shell">
+      <div class="checkout-summary">
+        <div class="checkout-meta">
+          <span class="step-pill">Completed</span>
+          <span class="muted">Order #<%= order.id %></span>
+        </div>
+        <h2>Your Items</h2>
+        <% if (order.items && order.items.length) { %>
+          <ul class="summary-list">
+            <% order.items.forEach((item) => { %>
+              <li>
+                <div>
+                  <strong><%= item.name %></strong>
+                  <p class="muted">EGP <%= item.price.toFixed(2) %> × <%= item.quantity %></p>
+                </div>
+                <div class="price">EGP <%= (item.price * item.quantity).toFixed(2) %></div>
+              </li>
+            <% }) %>
+          </ul>
+          <div class="summary-total">Total paid: EGP <%= order.total.toFixed(2) %></div>
+        <% } else { %>
+          <p class="muted">No items found.</p>
+        <% } %>
+      </div>
+      <div class="checkout-form">
+        <h2>Delivery Plan</h2>
+        <div class="summary-list">
+          <div class="summary-list__row">
+            <strong>Payment Method</strong>
+            <span class="muted"><%= order.paymentMethod %></span>
+          </div>
+          <div class="summary-list__row">
+            <strong>Delivery Option</strong>
+            <span class="muted"><%= order.deliveryOption %></span>
+          </div>
+          <% if (order.deliveryDate || order.deliveryWindow) { %>
+            <div class="summary-list__row">
+              <strong>Preferred Slot</strong>
+              <span class="muted"><%= order.deliveryDate || '—' %> <%= order.deliveryWindow || '' %></span>
+            </div>
+          <% } %>
+          <% if (order.pickupSpot) { %>
+            <div class="summary-list__row">
+              <strong>Pickup Point</strong>
+              <span class="muted"><%= order.pickupSpot %></span>
+            </div>
+          <% } %>
+          <% if (order.notes) { %>
+            <div class="summary-list__row">
+              <strong>Notes</strong>
+              <span class="muted"><%= order.notes %></span>
+            </div>
+          <% } %>
+          <div class="summary-list__row">
+            <strong>Created</strong>
+            <span class="muted"><%= order.createdAt.toLocaleString ? order.createdAt.toLocaleString() : order.createdAt %></span>
+          </div>
+        </div>
+        <a class="btn" href="/shop">Continue shopping</a>
+      </div>
+    </div>
+  </section>
+</main>
+
+<%- include('../partials/footer') %>
