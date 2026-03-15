@@ -1,4 +1,4 @@
-const quizData = [
+const quizDataEn = [
   {
     tag: "Geography",
     question: "Which river was the lifeline of Ancient Egypt?",
@@ -106,6 +106,118 @@ const quizData = [
   }
 ];
 
+const quizDataAr = [
+  {
+    tag: "الجغرافيا",
+    question: "ما النهر الذي كان شريان الحياة لمصر القديمة؟",
+    options: ["نهر النيل", "نهر دجلة", "نهر الفرات", "نهر السند"],
+    answer: 0,
+    explanation: "وفّر النيل المياه والتربة الخصبة والمواصلات، مما جعل الاستيطان والزراعة ممكنَين."
+  },
+  {
+    tag: "الحقب الزمنية",
+    question: "بماذا اشتُهر عصر الدولة القديمة؟",
+    options: ["بناء الأهرامات الكبرى", "اختراع ورق البردي", "تأسيس الإسكندرية", "اختراع الزجاج"],
+    answer: 0,
+    explanation: "بُنيت الأهرامات الكبرى في الجيزة خلال عصر الدولة القديمة كمقابر ملكية."
+  },
+  {
+    tag: "الكتابة",
+    question: "ما اسم نظام الكتابة المصري القديم الذي يستخدم الرموز؟",
+    options: ["الكتابة المسمارية", "الهيروغليفية", "اللاتينية", "الرونية"],
+    answer: 1,
+    explanation: "تجمع الهيروغليفية بين الرموز التصويرية والصوتية المستخدمة على الآثار وورق البردي."
+  },
+  {
+    tag: "المعتقدات",
+    question: "أي مفهوم يصف الحفاظ على النظام والتوازن في المعتقد المصري؟",
+    options: ["الكارما", "ماعت", "النيرفانا", "الفوضى"],
+    answer: 1,
+    explanation: "مثّلت ماعت الحقيقة والعدالة والتوازن الكوني، وكانت محورية في الأخلاق المصرية."
+  },
+  {
+    tag: "الدين",
+    question: "أي إله ارتبط بالعالم السفلي والتحنيط؟",
+    options: ["رع", "أنوبيس", "حورس", "آتون"],
+    answer: 1,
+    explanation: "أنوبيس، المُصوَّر برأس ابن آوى، أشرف على التحنيط وحرس المقابر."
+  },
+  {
+    tag: "الآثار",
+    question: "من أي مادة نُحت أبو الهول العظيم؟",
+    options: ["الحجر الجيري", "الجرانيت", "الحجر الرملي", "البازلت"],
+    answer: 0,
+    explanation: "نُحت أبو الهول الكبير في الجيزة من صخر الحجر الجيري الصلب."
+  },
+  {
+    tag: "الحكام",
+    question: "ما اللقب الذي كان يُستخدم لحكام مصر؟",
+    options: ["إمبراطور", "فرعون", "قنصل", "شاه"],
+    answer: 1,
+    explanation: "كان الفراعنة يُعدّون ملوكاً إلهيين وحراساً لماعت."
+  },
+  {
+    tag: "الحياة اليومية",
+    question: "أي نبات استُخدم لصنع أوراق تشبه الورق في مصر القديمة؟",
+    options: ["البردي", "الخيزران", "حشيشة البحر", "الكتان"],
+    answer: 0,
+    explanation: "كانت سيقان البردي تُضغط في أوراق تُستخدم للكتابة وحفظ السجلات."
+  },
+  {
+    tag: "العمارة",
+    question: "ما الغرض الرئيسي من الأهرامات؟",
+    options: ["معابد", "مقابر ملكية", "مخازن حبوب", "أسواق"],
+    answer: 1,
+    explanation: "كانت الأهرامات تمثل مقابر ضخمة لدعم الفرعون في الحياة الآخرة."
+  },
+  {
+    tag: "التجارة",
+    question: "أي منطقة كانت مشهورة بتزويد مصر القديمة بالذهب؟",
+    options: ["النوبة", "كريت", "فارس", "غالة"],
+    answer: 0,
+    explanation: "كانت النوبة، جنوب مصر، غنية بالذهب وحيوية للتجارة والثروة."
+  },
+  {
+    tag: "العلوم",
+    question: "لماذا أنشأ المصريون تقويماً بناءً على نهر النيل؟",
+    options: ["للتنبؤ بالفيضانات", "للتخطيط للحروب", "لرصد الكسوف", "لقياس الجبال"],
+    answer: 0,
+    explanation: "كان الفيضان السنوي للنيل يوجّه الزراعة، لذا كان التقويم ضرورياً."
+  },
+  {
+    tag: "الثقافة",
+    question: "أي مادة كانت تُستخدم عادةً لتماثيل المسؤولين والكتّاب؟",
+    options: ["الخشب والحجر الجيري", "البلاستيك", "الرخام", "الصلب"],
+    answer: 0,
+    explanation: "كان الخشب والحجر الجيري متاحَين بسهولة واستُخدما في النحت والتصوير."
+  },
+  {
+    tag: "الدولة الوسطى",
+    question: "ما المحور الرئيسي لعصر الدولة الوسطى؟",
+    options: ["توسيع التجارة والأدب", "بناء أهرامات الجيزة", "تأسيس روما", "استعمار اليونان"],
+    answer: 0,
+    explanation: "ركّزت الدولة الوسطى على التجارة والأدب والإصلاحات الإدارية."
+  },
+  {
+    tag: "الدولة الحديثة",
+    question: "أي فرعون اشتُهر بمقبرته شبه السليمة التي اكتُشفت عام 1922؟",
+    options: ["توت عنخ آمون", "خوفو", "زوسر", "سنفرو"],
+    answer: 0,
+    explanation: "اكتشف هوارد كارتر مقبرة توت عنخ آمون وكشفت عن كنوز ثمينة."
+  },
+  {
+    tag: "الإرث",
+    question: "ما إحدى المساهمات الدائمة لمصر القديمة؟",
+    options: ["الهندسة المعمارية المبكرة", "اختراع الكهرباء", "المطبعة", "المحركات البخارية"],
+    answer: 0,
+    explanation: "أثّرت الهندسة والهندسة الرياضية والعمارة الضخمة المصرية على الحضارات اللاحقة."
+  }
+];
+
+// Detect language from cookie
+const lang = document.cookie.split('; ').find(r => r.startsWith('lang_js='))?.split('=')[1] || 'en';
+const quizData = lang === 'ar' ? quizDataAr : quizDataEn;
+
 const state = {
   currentIndex: 0,
   score: 0,
@@ -121,7 +233,6 @@ const nextButton = document.getElementById("quiz-next");
 const questionTemplate = document.getElementById("quiz-question-template");
 const resultTemplate = document.getElementById("quiz-result-template");
 
-// Read all labels from data attributes (set by EJS/i18n)
 const L = {
   question:      quizCard?.dataset.labelQuestion      || "Question",
   of:            quizCard?.dataset.labelOf             || "of",
@@ -129,16 +240,16 @@ const L = {
   start:         quizCard?.dataset.labelStart          || "Start Quiz",
   next:          quizCard?.dataset.labelNext           || "Next",
   finish:        quizCard?.dataset.labelFinish         || "Finish",
-  intro:         quizCard?.dataset.labelIntro          || "Start the quiz when you're ready. Try to answer based on what you know—then read the explanation to learn more about Egyptian history.",
+  intro:         quizCard?.dataset.labelIntro          || "Start the quiz when you're ready.",
   selectAnswer:  quizCard?.dataset.labelSelect         || "Select an answer to reveal the explanation.",
   correct:       quizCard?.dataset.labelCorrect        || "✅ Correct!",
   incorrect:     quizCard?.dataset.labelIncorrect      || "❌ Not quite.",
   resultTitle:   quizCard?.dataset.labelResultTitle    || "Great job!",
   scored:        quizCard?.dataset.labelScored         || "You scored",
   outOf:         quizCard?.dataset.labelOutOf          || "out of",
-  msgExcellent:  quizCard?.dataset.labelMsgExcellent   || "Excellent! You have a strong foundation in Egyptian history.",
-  msgGreat:      quizCard?.dataset.labelMsgGreat       || "Great effort! Review the notes below to deepen your knowledge.",
-  msgNice:       quizCard?.dataset.labelMsgNice        || "Nice start! Read the explanations below and try again.",
+  msgExcellent:  quizCard?.dataset.labelMsgExcellent   || "Excellent!",
+  msgGreat:      quizCard?.dataset.labelMsgGreat       || "Great effort!",
+  msgNice:       quizCard?.dataset.labelMsgNice        || "Nice start!",
   correctAnswer: quizCard?.dataset.labelCorrectAnswer  || "Correct answer:",
   restart:       quizCard?.dataset.labelRestart        || "Play Again",
 };

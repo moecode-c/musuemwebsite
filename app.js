@@ -76,9 +76,14 @@ app.get("/lang/:lang", (req, res) => {
     sameSite: "lax"
   });
 
+  res.cookie("lang_js", lang, {
+    maxAge: 1000 * 60 * 60 * 24 * 365,
+    httpOnly: false,
+    sameSite: "lax"
+  });
+
   res.redirect("back");
 });
-
 app.use((req, res, next) => {
   const language = req.cookies.lang || "en";
 
