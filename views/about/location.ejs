@@ -3,8 +3,8 @@
 
 <section class="page-hero">
   <div class="container">
-    <h1>Map</h1>
-    <p>Visit us in central Cairo and explore every gallery with interactive map pins.</p>
+    <h1><%= t.location.title %></h1>
+    <p><%= t.location.subtitle %></p>
   </div>
 </section>
 
@@ -22,7 +22,7 @@
           <div class="map-tooltip" id="map-tooltip"></div>
         </div>
         <aside class="common-pins">
-          <h3>Most Common Pins</h3>
+          <h3><%= t.location.commonPins %></h3>
           <ul class="common-pin-list">
             <% if (commonPins && commonPins.length) { %>
               <% commonPins.forEach((pin) => { %>
@@ -35,32 +35,32 @@
                 </li>
               <% }) %>
             <% } else { %>
-              <li class="common-pin-empty">No common pins yet.</li>
+              <li class="common-pin-empty"><%= t.location.noPins %></li>
             <% } %>
           </ul>
         </aside>
       </div>
       <div class="info-stack info-grid">
         <article class="info-card">
-          <h3>Address</h3>
-          <p>Al Tahrir Square, Downtown Cairo, Egypt</p>
-          <p class="contact-line"><i class="fas fa-phone"></i> +20 2 2579 6584</p>
-          <p class="contact-line"><i class="fas fa-envelope"></i> visit@musuem.org</p>
+          <h3><%= t.location.addressTitle %></h3>
+          <p><%= t.location.addressText %></p>
+          <p class="contact-line"><i class="fas fa-phone"></i> <%= t.location.phone %></p>
+          <p class="contact-line"><i class="fas fa-envelope"></i> <%= t.location.email %></p>
         </article>
         <article class="info-card">
-          <h3>Hours</h3>
+          <h3><%= t.location.hoursTitle %></h3>
           <ul class="list">
-            <li>Sunday–Thursday: 9:00 AM – 5:00 PM</li>
-            <li>Friday: 10:00 AM – 4:00 PM</li>
-            <li>Saturday: 11:00 AM – 3:00 PM</li>
+            <li><%= t.location.hours[0] %></li>
+            <li><%= t.location.hours[1] %></li>
+            <li><%= t.location.hours[2] %></li>
           </ul>
         </article>
         <article class="info-card">
-          <h3>Getting Here</h3>
+          <h3><%= t.location.gettingHereTitle %></h3>
           <ul class="list">
-            <li>Metro: Sadat Station (5-minute walk)</li>
-            <li>Bus: Routes 174, 356, 400</li>
-            <li>Parking: Underground lot on Abdel Khalek Tharwat St.</li>
+            <li><%= t.location.gettingHere[0] %></li>
+            <li><%= t.location.gettingHere[1] %></li>
+            <li><%= t.location.gettingHere[2] %></li>
           </ul>
         </article>
       </div>

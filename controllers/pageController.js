@@ -82,7 +82,7 @@ const home = asyncHandler(async (req, res) => {
     Testimonial.find().limit(3)
   ]);
   const weather = await getWeather().catch(() => null);
-const isAr = req.session.language === "ar";
+const isAr = req.cookies.lang === "ar";
 
 const weatherHtml = weather
   ? `<div class="weather-card">${
@@ -456,7 +456,7 @@ const testimonials = asyncHandler(async (req, res) => {
 
 const planTrip = asyncHandler(async (req, res) => {
   const weather = await getWeather().catch(() => null);
-const isAr = req.session.language === "ar";
+const isAr = req.cookies.lang === "ar";
 
 const weatherHtml = weather
   ? `<div class="weather-card">${
