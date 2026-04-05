@@ -36,8 +36,9 @@ const attachLocals = (req, res, next) => {
   const language = req.session.language || "en";
   
   res.locals.language = language;
-res.locals.t = getTranslations(language);
-res.locals.dir = language === "ar" ? "rtl" : "ltr";
+  res.locals.t = getTranslations(language);
+  // Keep page direction stable in LTR even when translated content is Arabic.
+  res.locals.dir = "ltr";
 
   
   res.locals.user = req.session.user || null;
