@@ -3,34 +3,52 @@
 
 <section class="page-hero">
   <div class="container">
-    <h1>Egyptian History Quiz</h1>
-    <p>Answer 15 questions to explore the people, places, and ideas that shaped Ancient Egypt.</p>
+    <h1><%= t.quiz.title %></h1>
+    <p><%= t.quiz.subtitle %></p>
   </div>
 </section>
 
 <section class="section">
   <div class="container">
-    <div class="quiz-card" id="quiz-card">
+    <div class="quiz-card" id="quiz-card"
+      data-label-question="<%= t.quiz.question %>"
+      data-label-of="<%= t.quiz.of %>"
+      data-label-score="<%= t.quiz.score %>"
+      data-label-start="<%= t.quiz.start %>"
+      data-label-next="<%= t.quiz.next %>"
+      data-label-finish="<%= t.quiz.finish %>"
+      data-label-intro="<%= t.quiz.intro %>"
+      data-label-select="<%= t.quiz.selectAnswer %>"
+      data-label-correct="<%= t.quiz.correct %>"
+      data-label-incorrect="<%= t.quiz.incorrect %>"
+      data-label-result-title="<%= t.quiz.resultTitle %>"
+      data-label-scored="<%= t.quiz.scored %>"
+      data-label-out-of="<%= t.quiz.outOf %>"
+      data-label-msg-excellent="<%= t.quiz.msgExcellent %>"
+      data-label-msg-great="<%= t.quiz.msgGreat %>"
+      data-label-msg-nice="<%= t.quiz.msgNice %>"
+      data-label-correct-answer="<%= t.quiz.correctAnswer %>"
+      data-label-restart="<%= t.quiz.restart %>"
+      data-label-learn-title="<%= t.quiz.learnTitle %>"
+      data-label-learn-text="<%= t.quiz.learnText %>"
+    >
       <div class="quiz-header">
-        <h2 class="quiz-title">Learn Through Play</h2>
-        <p class="quiz-subtitle">Each answer includes a short explanation to help you learn.</p>
+        <h2 class="quiz-title"><%= t.quiz.learnTitle %></h2>
+        <p class="quiz-subtitle"><%= t.quiz.learnText %></p>
       </div>
 
       <div class="quiz-meta" id="quiz-meta">
-        <span class="quiz-progress" id="quiz-progress">Question 1 of 15</span>
-        <span class="quiz-score" id="quiz-score">Score: 0</span>
+        <span class="quiz-progress" id="quiz-progress"><%= t.quiz.question %> 1 <%= t.quiz.of %> 15</span>
+        <span class="quiz-score" id="quiz-score"><%= t.quiz.score %>: 0</span>
       </div>
 
       <div class="quiz-body" id="quiz-body">
-        <p class="quiz-intro">
-          Start the quiz when you're ready. Try to answer based on what you know—then read the
-          explanation to learn more about Egyptian history.
-        </p>
-        <button class="btn quiz-start" id="quiz-start" type="button">Start Quiz</button>
+        <p class="quiz-intro"><%= t.quiz.intro %></p>
+        <button class="btn quiz-start" id="quiz-start" type="button"><%= t.quiz.start %></button>
       </div>
 
       <div class="quiz-footer" id="quiz-footer">
-        <button class="btn quiz-next" id="quiz-next" type="button" disabled>Next</button>
+        <button class="btn quiz-next" id="quiz-next" type="button" disabled><%= t.quiz.next %></button>
       </div>
     </div>
   </div>
@@ -45,11 +63,11 @@
 
   <template id="quiz-result-template">
     <div class="quiz-result">
-      <h3>Great job!</h3>
+      <h3 id="quiz-result-title"></h3>
       <p class="quiz-result-score" id="quiz-result-score"></p>
       <p class="quiz-result-message" id="quiz-result-message"></p>
       <div class="quiz-summary" id="quiz-summary"></div>
-      <button class="btn" id="quiz-restart" type="button">Play Again</button>
+      <button class="btn" id="quiz-restart" type="button"></button>
     </div>
   </template>
 </section>

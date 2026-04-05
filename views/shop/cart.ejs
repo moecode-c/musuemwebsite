@@ -3,8 +3,8 @@
 
 <section class="page-hero">
   <div class="container">
-    <h1>Your Cart</h1>
-    <p>Review items and update quantities.</p>
+    <h1><%= t.cart.title %></h1>
+    <p><%= t.cart.subtitle %></p>
   </div>
 </section>
 
@@ -13,8 +13,8 @@
     <div id="cart-items">
       <%- cartItemsHtml %>
     </div>
-    <div class="cart-total">Total: EGP <span id="cart-total"><%= total %></span></div>
-    <a class="btn" href="/checkout">Proceed to Checkout</a>
+    <div class="cart-total"><%= t.cart.total %>: EGP <span id="cart-total"><%= total %></span></div>
+    <a class="btn" href="/checkout"><%= t.cart.checkout %></a>
   </div>
 </section>
 

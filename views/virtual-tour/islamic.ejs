@@ -3,21 +3,15 @@
 
 <section class="tour-hero" id="tourinfo">
   <div class="container">
-    <h1 class="tour-title">Islamic Virtual Tour</h1>
-    <p class="tour-subtitle">
-      Explore Islamic art, architecture, and historical treasures through a guided virtual experience.
-    </p>
+    <h1 class="tour-title"><%= t.virtualTour.heroTitle %></h1>
+    <p class="tour-subtitle"><%= t.virtualTour.islamicHeroSubtitle %></p>
   </div>
 </section>
 
 <section class="tour-intro">
   <div class="container">
-    <h2>Welcome</h2>
-    <p>
-      Discover the legacy of Islamic civilization with immersive panoramas, curated artifacts,
-      and interactive highlights. Use the controls to navigate, listen to audio commentary, and
-      download the tour brochure.
-    </p>
+    <h2><%= t.virtualTour.islamicWelcome %></h2>
+    <p><%= t.virtualTour.islamicIntro %></p>
   </div>
 </section>
 
@@ -25,7 +19,7 @@
   <div class="container">
     <div class="map-frame">
       <iframe
-        title="Islamic Virtual Tour"
+        title="<%= t.virtualTour.islamicTitle %>"
         src="https://www.google.com/maps/embed?pb=!4v1756509146609!6m8!1m7!1sIdzjvtjfHTwF6xW5unYS8w!2m2!1d25.29564881538289!2d51.53934068111935!3f279.5574869588035!4f-11.930292460529216!5f0.7820865974627469"
         allowfullscreen
         loading="lazy"
@@ -36,23 +30,20 @@
       <div class="map-ornament ornament-4"></div>
     </div>
     <div class="tour-controls">
-      <button class="btn tour-btn" id="tour-audio-btn"><i class="fas fa-volume-up"></i>Audio Guide</button>
+      <button class="btn tour-btn" id="tour-fullscreen-btn"><i class="fas fa-expand"></i><%= t.virtualTour.fullscreen %></button>
+      <a class="btn tour-btn" href="#tourinfo"><i class="fas fa-info-circle"></i><%= t.virtualTour.tourInfo %></a>
       <a class="btn tour-btn" href="/assets/brochure.pdf" download>
-        <i class="fas fa-file-arrow-down"></i>Download Brochure
+        <i class="fas fa-file-arrow-down"></i><%= t.virtualTour.downloadBrochure %>
       </a>
-      <a class="btn tour-btn" href="#tourinfo"><i class="fas fa-info-circle"></i>Tour Info</a>
-      <button class="btn tour-btn" id="tour-fullscreen-btn"><i class="fas fa-expand"></i>Fullscreen</button>
+      <button class="btn tour-btn" id="tour-audio-btn"><i class="fas fa-volume-up"></i><%= t.virtualTour.audioGuide %></button>
     </div>
   </div>
 </section>
 
 <section class="tour-info">
   <div class="container">
-    <h3>Tour Notes</h3>
-    <p>
-      For the best experience, use headphones and explore each panorama point to reveal hidden
-      details about artifacts, architectural motifs, and historical narratives.
-    </p>
+    <h3><%= t.virtualTour.tourNotesTitle %></h3>
+    <p><%= t.virtualTour.islamicTourNotesText %></p>
     <audio id="tour-audio" src="/assets/audio/islamic-tour.mp3"></audio>
   </div>
 </section>

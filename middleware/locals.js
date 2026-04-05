@@ -33,7 +33,7 @@ const resolvePageCss = (path) => {
 };
 
 const attachLocals = (req, res, next) => {
-  const language = req.session.language || "en";
+const language = req.cookies.lang || "en";
   
   res.locals.language = language;
 res.locals.t = getTranslations(language);
