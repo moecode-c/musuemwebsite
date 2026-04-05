@@ -3,8 +3,8 @@
 
 <section class="page-hero">
   <div class="container">
-    <h1>Pyramid Builder</h1>
-    <p>Build your own monument block by block in a compact sandbox.</p>
+    <h1><%= t.pyramid.title %></h1>
+    <p><%= t.pyramid.subtitle %></p>
   </div>
 </section>
 
@@ -12,19 +12,15 @@
   <div class="container">
     <div class="game-panel">
       <div class="game-info">
-        <h2>Learn by building</h2>
-        <p>
-          Pyramid Builder helps children explore Egyptian history through hands-on play. By stacking
-          blocks, they learn about ancient architecture, planning, and the shapes used in real
-          pyramids.
-        </p>
+        <h2><%= t.pyramid.learnTitle %></h2>
+        <p><%= t.pyramid.learnText %></p>
         <div class="game-tips">
-          <h3>How to play</h3>
+          <h3><%= t.pyramid.howToPlay %></h3>
           <ul>
-            <li>Click <strong>Start</strong> then click the game to lock the pointer.</li>
-            <li>Move with <strong>WASD</strong>, fly with <strong>Space</strong> and <strong>Shift</strong>.</li>
-            <li><strong>Left-click</strong> places a block, <strong>Right-click</strong> removes one.</li>
-            <li>Select materials from the hotbar.</li>
+            <li><%- t.pyramid.tip1 %></li>
+            <li><%- t.pyramid.tip2 %></li>
+            <li><%- t.pyramid.tip3 %></li>
+            <li><%= t.pyramid.tip4 %></li>
           </ul>
         </div>
       </div>
@@ -34,17 +30,14 @@
         </button>
         <div id="startScreen">
           <div>
-            <div class="start-title">Pyramid Builder</div>
-            <h3 class="start-subtitle">
-              Pyramid Builder is an exciting game where you construct ancient pyramids using
-              various materials and strategies.
-            </h3>
+            <div class="start-title"><%= t.pyramid.title %></div>
+            <h3 class="start-subtitle"><%= t.pyramid.startSubtitle %></h3>
           </div>
-          <button id="startButton" class="btn" type="button">Start</button>
+          <button id="startButton" class="btn" type="button"><%= t.pyramid.start %></button>
         </div>
-        <div id="instructions">Click to play. WASD to move. 🖱️ Left-click: Place | 🖱️ Right-click: Remove</div>
+        <div id="instructions"><%= t.pyramid.instructions %></div>
         <div id="crosshair"></div>
-        <div id="hotbar" aria-label="Materials"></div>
+        <div id="hotbar" aria-label="<%= t.pyramid.materials %>"></div>
       </div>
     </div>
   </div>

@@ -68,6 +68,24 @@ app.use(
   })
 );
 
+app.get("/lang/:lang", (req, res) => {
+  const lang = req.params.lang === "ar" ? "ar" : "en";
+
+  res.cookie("lang", lang, {
+    maxAge: 1000 * 60 * 60 * 24 * 365,
+    httpOnly: true,
+    sameSite: "lax"
+  });
+
+  res.cookie("lang_js", lang, {
+    maxAge: 1000 * 60 * 60 * 24 * 365,
+    httpOnly: false,
+    sameSite: "lax"
+  });
+
+  res.redirect("back");
+});
+
 
 app.use(attachLocals);
 
