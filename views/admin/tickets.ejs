@@ -2,37 +2,37 @@
 
 <section class="admin-page-header">
   <div>
-    <h1>Manage Tickets</h1>
-    <p>Update ticket pricing and types.</p>
+    <h1><%= language === 'ar' ? 'إدارة التذاكر' : 'Manage Tickets' %></h1>
+    <p><%= language === 'ar' ? 'تحديث أسعار التذاكر وأنواعها.' : 'Update ticket pricing and types.' %></p>
   </div>
 </section>
 
 <section class="admin-section">
   <div class="admin-split">
     <form class="form" id="admin-ticket-form">
-      <label>Category</label>
+      <label><%= language === 'ar' ? 'الفئة' : 'Category' %></label>
       <select name="group" required>
-        <option value="egyptian">Egyptian</option>
-        <option value="arab">Arab</option>
-        <option value="foreigner">Foreigner</option>
+        <option value="egyptian"><%= language === 'ar' ? 'مصري' : 'Egyptian' %></option>
+        <option value="arab"><%= language === 'ar' ? 'عربي' : 'Arab' %></option>
+        <option value="foreigner"><%= language === 'ar' ? 'أجنبي' : 'Foreigner' %></option>
       </select>
-      <label>Audience</label>
+      <label><%= language === 'ar' ? 'الجمهور' : 'Audience' %></label>
       <select name="audience" required>
-        <option value="adult">Adult</option>
-        <option value="student">Student</option>
-        <option value="child">Child</option>
-        <option value="senior">Senior</option>
+        <option value="adult"><%= language === 'ar' ? 'بالغ' : 'Adult' %></option>
+        <option value="student"><%= language === 'ar' ? 'طالب' : 'Student' %></option>
+        <option value="child"><%= language === 'ar' ? 'طفل' : 'Child' %></option>
+        <option value="senior"><%= language === 'ar' ? 'كبير السن' : 'Senior' %></option>
       </select>
-      <label>Price</label>
+      <label><%= language === 'ar' ? 'السعر' : 'Price' %></label>
       <input type="number" name="price" min="0" step="0.01" required />
-      <label>Description</label>
+      <label><%= language === 'ar' ? 'الوصف' : 'Description' %></label>
       <textarea name="description"></textarea>
-      <button class="btn admin-submit" type="submit">Create Ticket</button>
-      <button class="btn btn-secondary admin-cancel" type="button">Cancel</button>
+      <button class="btn admin-submit" type="submit"><%= language === 'ar' ? 'إنشاء تذكرة' : 'Create Ticket' %></button>
+      <button class="btn btn-secondary admin-cancel" type="button"><%= language === 'ar' ? 'إلغاء' : 'Cancel' %></button>
       <p class="form-message" id="admin-ticket-message"></p>
     </form>
     <div>
-      <h3>Ticket List</h3>
+      <h3><%= language === 'ar' ? 'قائمة التذاكر' : 'Ticket List' %></h3>
       <div id="admin-ticket-list" class="admin-list"></div>
     </div>
   </div>
