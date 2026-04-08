@@ -2,22 +2,22 @@
 
 <section class="admin-page-header">
   <div>
-    <h1>Settings</h1>
-    <p>Configure site preferences and localization defaults.</p>
+    <h1><%= language === 'ar' ? 'الإعدادات' : 'Settings' %></h1>
+    <p><%= language === 'ar' ? 'ضبط تفضيلات الموقع وإعدادات اللغة الافتراضية.' : 'Configure site preferences and localization defaults.' %></p>
   </div>
 </section>
 
 <section class="admin-section">
   <div class="admin-panel">
     <form class="form" id="admin-settings-form">
-      <label>Default Language</label>
+      <label><%= language === 'ar' ? 'اللغة الافتراضية' : 'Default Language' %></label>
       <select name="defaultLanguage">
-        <option value="en">English</option>
-        <option value="ar">Arabic</option>
+        <option value="en"><%= language === 'ar' ? 'الإنجليزية' : 'English' %></option>
+        <option value="ar"><%= language === 'ar' ? 'العربية' : 'Arabic' %></option>
       </select>
-      <label>Contact Email</label>
+      <label><%= language === 'ar' ? 'البريد الإلكتروني للتواصل' : 'Contact Email' %></label>
       <input type="email" name="contactEmail" />
-      <button class="btn" type="submit">Save Settings</button>
+      <button class="btn" type="submit"><%= language === 'ar' ? 'حفظ الإعدادات' : 'Save Settings' %></button>
       <p class="form-message" id="admin-settings-message"></p>
     </form>
   </div>
