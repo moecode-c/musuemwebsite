@@ -2,38 +2,38 @@
 
 <section class="admin-page-header">
   <div>
-    <h1>Manage Users</h1>
-    <p>Create admin accounts and manage roles.</p>
+    <h1><%= language === 'ar' ? 'إدارة المستخدمين' : 'Manage Users' %></h1>
+    <p><%= language === 'ar' ? 'إنشاء حسابات المشرفين وإدارة الأدوار.' : 'Create admin accounts and manage roles.' %></p>
   </div>
 </section>
 
 <section class="admin-section">
   <div class="admin-split">
     <form class="form" id="admin-user-form">
-      <label>Name</label>
+      <label><%= language === 'ar' ? 'الاسم' : 'Name' %></label>
       <input type="text" name="name" required />
-      <label>Email</label>
+      <label><%= language === 'ar' ? 'البريد الإلكتروني' : 'Email' %></label>
       <input type="email" name="email" required />
-      <label>Password</label>
+      <label><%= language === 'ar' ? 'كلمة المرور' : 'Password' %></label>
       <input type="password" name="password" required />
-      <label>Role</label>
+      <label><%= language === 'ar' ? 'الدور' : 'Role' %></label>
       <select name="role">
-        <option value="user">User</option>
-        <option value="admin">Admin</option>
-        <option value="museum_manager">Museum Manager</option>
-        <option value="curator">Curator</option>
-        <option value="front_desk">Front Desk</option>
-        <option value="security_officer">Security Officer</option>
-        <option value="maintenance_technician">Maintenance Technician</option>
-        <option value="janitor">Janitor</option>
-        <option value="educator_guide">Educator Guide</option>
+        <option value="user"><%= language === 'ar' ? 'مستخدم' : 'User' %></option>
+        <option value="admin"><%= language === 'ar' ? 'مشرف' : 'Admin' %></option>
+        <option value="museum_manager"><%= language === 'ar' ? 'مدير المتحف' : 'Museum Manager' %></option>
+        <option value="curator"><%= language === 'ar' ? 'أمين المعرض' : 'Curator' %></option>
+        <option value="front_desk"><%= language === 'ar' ? 'موظف الاستقبال' : 'Front Desk' %></option>
+        <option value="security_officer"><%= language === 'ar' ? 'ضابط الأمن' : 'Security Officer' %></option>
+        <option value="maintenance_technician"><%= language === 'ar' ? 'فني الصيانة' : 'Maintenance Technician' %></option>
+        <option value="janitor"><%= language === 'ar' ? 'عامل نظافة' : 'Janitor' %></option>
+        <option value="educator_guide"><%= language === 'ar' ? 'مرشد تعليمي' : 'Educator Guide' %></option>
       </select>
-      <button class="btn admin-submit" type="submit">Create User</button>
-      <button class="btn btn-secondary admin-cancel" type="button">Cancel</button>
+      <button class="btn admin-submit" type="submit"><%= language === 'ar' ? 'إنشاء مستخدم' : 'Create User' %></button>
+      <button class="btn btn-secondary admin-cancel" type="button"><%= language === 'ar' ? 'إلغاء' : 'Cancel' %></button>
       <p class="form-message" id="admin-user-message"></p>
     </form>
     <div>
-      <h3>User List</h3>
+      <h3><%= language === 'ar' ? 'قائمة المستخدمين' : 'User List' %></h3>
       <div id="admin-user-list" class="admin-list"></div>
     </div>
   </div>
