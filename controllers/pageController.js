@@ -33,7 +33,6 @@ const panelLabelByRole = {
 
 const getPanelLabelByRole = (role) => panelLabelByRole[role] || "Employee Panel";
 
-
 const buildCards = (items, type) => {
   return items
     .map((item) => {
@@ -82,15 +81,15 @@ const home = asyncHandler(async (req, res) => {
     Testimonial.find().limit(3)
   ]);
   const weather = await getWeather().catch(() => null);
-const isAr = req.cookies.lang === "ar";
+  const isAr = req.cookies.lang === "ar";
 
-const weatherHtml = weather
-  ? `<div class="weather-card">${
-      isAr
-        ? `درجة الحرارة الحالية: ${toArabicNumber(weather.temperature_2m)}°C | سرعة الرياح: ${toArabicNumber(weather.wind_speed_10m)} كم/س`
-        : `Current temperature: ${weather.temperature_2m}°C | Wind: ${weather.wind_speed_10m} km/h`
-    }</div>`
-  : `<div class="weather-card">${isAr ? "بيانات الطقس غير متاحة" : "Weather data unavailable"}</div>`;
+  const weatherHtml = weather
+    ? `<div class="weather-card">${
+        isAr
+          ? `درجة الحرارة الحالية: ${toArabicNumber(weather.temperature_2m)}°C | سرعة الرياح: ${toArabicNumber(weather.wind_speed_10m)} كم/س`
+          : `Current temperature: ${weather.temperature_2m}°C | Wind: ${weather.wind_speed_10m} km/h`
+      }</div>`
+    : `<div class="weather-card">${isAr ? "بيانات الطقس غير متاحة" : "Weather data unavailable"}</div>`;
 
   res.render("home", {
     pageTitle: "Home",
@@ -122,24 +121,6 @@ const location = asyncHandler(async (req, res) => {
     .join("");
   res.render("about/location", { pageTitle: "Map", pageCss: "location", pinsHtml, commonPins });
 });
-
-const categoryConfig = {
-  pharaoh: {
-    label: "Pharaoh's",
-    categoryValue: "Pharaoh",
-    subtitle: "Explore royal artifacts, sacred relics, and treasures of the dynasties."
-  },
-  islamic: {
-    label: "Islamic",
-    categoryValue: "Islamic",
-    subtitle: "Discover artistic traditions, manuscripts, and architectural masterpieces."
-  },
-  christian: {
-    label: "Christian",
-    categoryValue: "Christian",
-    subtitle: "Experience icons, textiles, and heritage from Egypt's Christian era."
-  }
-};
 
 const artifactEraInsights = {
   "early dynastic": "State unification and royal symbolism emerged in this phase, shaping the earliest formal dynastic traditions.",
@@ -183,11 +164,11 @@ const artifactEraExtraDetails = {
     legacy: "Temple relief programs and elite burial assemblages from this era remain central to understanding state ideology."
   },
   ptolemaic: {
-    significance: "Multilingual inscriptions and decrees, including those in multiple scripts, document interactions between Greek and Egyptian administration.",
+    significance: "Multilingual inscriptions and decrees document interactions between Greek and Egyptian administration.",
     legacy: "Ptolemaic evidence was critical for modern epigraphy and historical reconstruction of late pharaonic religious institutions."
   },
   "early islamic": {
-    significance: "Early Islamic Egypt shaped new religious, civic, and manuscript practices centered around Fustat and related urban hubs.",
+    significance: "Early Islamic Egypt shaped new religious, civic, and manuscript practices centered around Fustat.",
     legacy: "Calligraphic and architectural traditions formed in this phase informed later Fatimid and Mamluk developments."
   },
   fatimid: {
@@ -300,7 +281,29 @@ const buildTimelineCardModel = (item, returnTo) => ({
 const TARGET_ARTIFACT_CARDS = 8;
 const TARGET_TIMELINE_ITEMS = 8;
 
+const getCategoryTitles = (t, categoryKey) => {
+  if (!categoryKey) {
+    return {
+      heroTitle: t.exhibits.allTitle,
+      heroSubtitle: t.exhibits.allSubtitle
+    };
+  }
+  const map = {
+    pharaoh: { heroTitle: t.exhibits.pharaohTitle, heroSubtitle: t.exhibits.pharaohSubtitle },
+    islamic: { heroTitle: t.exhibits.islamicTitle, heroSubtitle: t.exhibits.islamicSubtitle },
+    christian: { heroTitle: t.exhibits.christianTitle, heroSubtitle: t.exhibits.christianSubtitle }
+  };
+  return map[categoryKey] || { heroTitle: t.exhibits.allTitle, heroSubtitle: t.exhibits.allSubtitle };
+};
+
+const categoryConfig = {
+  pharaoh: { categoryValue: "Pharaoh" },
+  islamic: { categoryValue: "Islamic" },
+  christian: { categoryValue: "Christian" }
+};
+
 const renderExhibitsPage = async (req, res, categoryKey, basePath) => {
+  const t = res.locals.t;
   const page = parseInt(req.query.page || "1", 10);
   const limit = 8;
   const config = categoryKey ? categoryConfig[categoryKey] : null;
@@ -313,28 +316,18 @@ const renderExhibitsPage = async (req, res, categoryKey, basePath) => {
     .limit(limit);
 
   let cardSourceItems = [...items];
-
   if (cardSourceItems.length < TARGET_ARTIFACT_CARDS) {
     const existingIds = cardSourceItems.map((item) => item._id);
-    const cardFillFilter = {
-      ...filter,
-      _id: { $nin: existingIds }
-    };
-    const fillItems = await Exhibit.find(cardFillFilter)
+    const fillItems = await Exhibit.find({ ...filter, _id: { $nin: existingIds } })
       .sort({ createdAt: -1 })
       .limit(TARGET_ARTIFACT_CARDS - cardSourceItems.length);
     cardSourceItems = [...cardSourceItems, ...fillItems];
   }
 
   let timelineSourceItems = [...items];
-
   if (timelineSourceItems.length < TARGET_TIMELINE_ITEMS) {
     const existingIds = timelineSourceItems.map((item) => item._id);
-    const timelineFillFilter = {
-      ...filter,
-      _id: { $nin: existingIds }
-    };
-    const fillTimelineItems = await Exhibit.find(timelineFillFilter)
+    const fillTimelineItems = await Exhibit.find({ ...filter, _id: { $nin: existingIds } })
       .sort({ createdAt: -1 })
       .limit(TARGET_TIMELINE_ITEMS - timelineSourceItems.length);
     timelineSourceItems = [...timelineSourceItems, ...fillTimelineItems];
@@ -343,12 +336,13 @@ const renderExhibitsPage = async (req, res, categoryKey, basePath) => {
   const returnTo = req.originalUrl || basePath || "/exhibits";
   const artifactItems = cardSourceItems.map((item) => buildArtifactCardModel(item, basePath, returnTo));
   const timelineItems = timelineSourceItems.map((item) => buildTimelineCardModel(item, returnTo));
+  const { heroTitle, heroSubtitle } = getCategoryTitles(t, categoryKey);
 
   res.render("exhibits/index", {
-    pageTitle: config ? `${config.label} Collection` : "Exhibits",
+    pageTitle: heroTitle,
     pageCss: "exhibits",
-    heroTitle: config ? `${config.label} Collection` : "Exhibits",
-    heroSubtitle: config ? config.subtitle : "Discover Pharaoh, Islamic, and Christian galleries.",
+    heroTitle,
+    heroSubtitle,
     exhibits: items,
     timelineItems,
     artifactItems,
@@ -456,15 +450,15 @@ const testimonials = asyncHandler(async (req, res) => {
 
 const planTrip = asyncHandler(async (req, res) => {
   const weather = await getWeather().catch(() => null);
-const isAr = req.cookies.lang === "ar";
+  const isAr = req.cookies.lang === "ar";
 
-const weatherHtml = weather
-  ? `<div class="weather-card">${
-      isAr
-        ? `درجة الحرارة الحالية: ${toArabicNumber(weather.temperature_2m)}°C | سرعة الرياح: ${toArabicNumber(weather.wind_speed_10m)} كم/س`
-        : `Current temperature: ${weather.temperature_2m}°C | Wind: ${weather.wind_speed_10m} km/h`
-    }</div>`
-  : `<div class="weather-card">${isAr ? "بيانات الطقس غير متاحة" : "Weather data unavailable"}</div>`;
+  const weatherHtml = weather
+    ? `<div class="weather-card">${
+        isAr
+          ? `درجة الحرارة الحالية: ${toArabicNumber(weather.temperature_2m)}°C | سرعة الرياح: ${toArabicNumber(weather.wind_speed_10m)} كم/س`
+          : `Current temperature: ${weather.temperature_2m}°C | Wind: ${weather.wind_speed_10m} km/h`
+      }</div>`
+    : `<div class="weather-card">${isAr ? "بيانات الطقس غير متاحة" : "Weather data unavailable"}</div>`;
   const tickets = await Ticket.find();
   const groupOrder = ["egyptian", "arab", "foreigner"];
   const audienceOrder = ["adult", "student", "child", "senior"];

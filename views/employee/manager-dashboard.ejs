@@ -2,20 +2,20 @@
 <section id="manager-dashboard">
   <header class="admin-page-header">
     <div>
-      <h1><i class="fas fa-user-tie"></i> <%= t.manager.title %></h1>
-      <p><%= t.manager.welcome %>, <%= employeeName %>. <%= t.manager.subtitle %></p>
+      <h1><i class="fas fa-user-tie"></i> <%= language === 'ar' ? 'لوحة تحكم مدير المتحف' : 'Museum Manager Dashboard' %></h1>
+      <p><%= language === 'ar' ? `مرحباً، ${employeeName}. استخدم الصفحات المنفصلة لإدارة المهام ومناطق التنظيف.` : `Welcome, ${employeeName}. Use separate pages to manage tasks and cleaning zones.` %></p>
     </div>
   </header>
   <div class="admin-grid">
     <article class="admin-card">
-      <h3><i class="fas fa-list-check"></i> <%= t.manager.taskManagement %></h3>
-      <p><%= t.manager.taskDescription %></p>
-      <a class="btn" href="/employee/manager/tasks"><%= t.manager.openTasks %></a>
+      <h3><i class="fas fa-list-check"></i> <%= language === 'ar' ? 'إدارة المهام' : 'Task Management' %></h3>
+      <p><%= language === 'ar' ? 'أنشئ مهام وحدد الأولويات وأضف قوائم تحقق وتتبع حالة مهام الموظفين.' : 'Create assignments, set priority, add checklists, and track all employee task statuses.' %></p>
+      <a class="btn" href="/employee/manager/tasks"><%= language === 'ar' ? 'فتح إدارة المهام' : 'Open Task Management' %></a>
     </article>
     <article class="admin-card">
-      <h3><i class="fas fa-map"></i> <%= t.manager.zoneManagement %></h3>
-      <p><%= t.manager.zoneDescription %></p>
-      <a class="btn" href="/employee/manager/zones"><%= t.manager.openZones %></a>
+      <h3><i class="fas fa-map"></i> <%= language === 'ar' ? 'إدارة المناطق' : 'Zone Management' %></h3>
+      <p><%= language === 'ar' ? 'أنشئ مناطق تنظيف على الخريطة وعيّن عمال النظافة.' : 'Create cleaning zones on the map and assign janitors without mixing this with task forms.' %></p>
+      <a class="btn" href="/employee/manager/zones"><%= language === 'ar' ? 'فتح إدارة المناطق' : 'Open Zone Management' %></a>
     </article>
   </div>
 </section>
