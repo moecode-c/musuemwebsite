@@ -2,16 +2,16 @@
   <img class="artifact-image" src="<%= card.imageUrl %>" alt="<%= card.title %>" loading="lazy" />
   <div class="artifact-body">
     <h3><%= card.title %></h3>
-    <p class="artifact-museum"><i class="fa-solid fa-location-dot" aria-hidden="true"></i> <%= card.museumLabel || "Egyptian Museum" %></p>
+    <p class="artifact-museum"><i class="fa-solid fa-location-dot" aria-hidden="true"></i> <%= card.museumLabel || t.siteTitle %></p>
     <p class="artifact-description"><%= card.description && card.description.length > 150 ? `${card.description.substring(0, 150)}...` : (card.description || "") %></p>
     <% if (card.eraInfo) { %>
-    <p class="artifact-era-info"><strong>Era Insight:</strong> <%= card.eraInfo %></p>
+    <p class="artifact-era-info"><strong><%= t.exhibitDetail.eraInsight %>:</strong> <%= card.eraInfo %></p>
     <% } %>
     <ul class="artifact-meta">
       <% if (card.era) { %><li><%= card.era %></li><% } %>
       <% if (card.period) { %><li><%= card.period %></li><% } %>
       <% if (card.location) { %><li><%= card.location %></li><% } %>
     </ul>
-    <a class="btn artifact-btn" href="<%= card.ctaHref || '/exhibits' %>"><%= card.ctaLabel || "View Details" %></a>
+    <a class="btn artifact-btn" href="<%= card.ctaHref || '/exhibits' %>"><%= card.ctaLabel || t.buttons.learnMore %></a>
   </div>
 </article>

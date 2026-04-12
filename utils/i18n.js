@@ -402,20 +402,20 @@ const translations = {
       message: "Your experience...",
       rating: "Rating (1-5)",
       submit: "Post Testimonial",
-      featured: [
-        {
-          name: "Sarah Johnson",
-          meta: "Travel blogger, USA",
-          quote: "An absolutely breathtaking experience. Our guide was incredibly knowledgeable about Egyptian history. The sunrise at the pyramids was magical, and every detail was perfectly planned.",
-          footnote: "Pyramids & Nile Cruise • December 2025"
-        },
-        {
-          name: "Michael Chen",
-          meta: "Photographer, Singapore",
-          quote: "As a photographer, I needed flexibility and access to unique locations. The team went above and beyond and we visited hidden gems most tourists never see. This was my best trip to Egypt.",
-          footnote: "Custom Photo Tour • November 2025"
-        }
-      ]
+featured: [
+  {
+    name: "Sarah Johnson",
+    meta: "Travel blogger, USA",
+    quote: "An absolutely breathtaking experience. Our guide was incredibly knowledgeable about Egyptian history. The sunrise at the pyramids was magical, and every detail was perfectly planned.",
+    footnote: "Pyramids & Nile Cruise • December 2025"
+  },
+  {
+    name: "Michael Chen",
+    meta: "Photographer, Singapore",
+    quote: "As a photographer, I needed flexibility and access to unique locations. The team went above and beyond and we visited hidden gems most tourists never see. This was my best trip to Egypt.",
+    footnote: "Custom Photo Tour • November 2025"
+  }
+],
     },
 
     exhibits: {
@@ -964,20 +964,20 @@ const translations = {
       message: "تجربتك...",
       rating: "التقييم (1-5)",
       submit: "نشر التقييم",
-      featured: [
-        {
-          name: "سارة جونسون",
-          meta: "مدونة سفر، الولايات المتحدة",
-          quote: "تجربة رائعة ومذهلة. كان مرشدنا على دراية واسعة بالتاريخ المصري. كان شروق الشمس عند الأهرامات ساحرًا، وكل التفاصيل كانت مخططة بشكل مثالي.",
-          footnote: "رحلة الأهرامات ونيل كروز • ديسمبر 2025"
-        },
-        {
-          name: "مايكل تشن",
-          meta: "مصور، سنغافورة",
-          quote: "كمصور، كنت بحاجة إلى مرونة والوصول إلى مواقع فريدة. ذهب الفريق إلى أبعد مما هو متوقع وزرنا جواهر خفية لا يراها معظم السياح. كانت أفضل رحلاتي إلى مصر.",
-          footnote: "جولة تصوير مخصصة • نوفمبر 2025"
-        }
-      ]
+featured: [
+  {
+    name: "Sarah Johnson",
+    meta: "مدوّنة سفر، الولايات المتحدة",
+    quote: "تجربة رائعة حقًا. كان مرشدنا على دراية واسعة بالتاريخ المصري. كان شروق الشمس عند الأهرامات ساحرًا، وكل التفاصيل كانت مخططة بشكل مثالي.",
+    footnote: "جولة الأهرامات ونهر النيل • ديسمبر 2025"
+  },
+  {
+    name: "Michael Chen",
+    meta: "مصوّر، سنغافورة",
+    quote: "بصفتي مصورًا، كنت أحتاج إلى مرونة والوصول إلى مواقع فريدة. بذل الفريق جهدًا استثنائيًا وزرنا أماكن مخفية لا يراها معظم السياح. كانت أفضل رحلة لي إلى مصر.",
+    footnote: "جولة تصوير مخصصة • نوفمبر 2025"
+  }
+],
     },
 
     exhibits: {

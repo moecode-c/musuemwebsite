@@ -4,8 +4,8 @@
 <main class="testimonials-page">
   <section class="page-hero testimonials-hero">
     <div class="container">
-      <h1 class="hero-title"><%= t.testimonials.heroTitle || "What Our Visitors Say" %></h1>
-      <p class="hero-subtitle"><%= t.testimonials.heroSubtitle || "Discover why thousands of guests trust us to create their perfect Egyptian journey." %></p>
+      <h1 class="hero-title"><%= t.testimonials.heroTitle %></h1>
+      <p class="hero-subtitle"><%= t.testimonials.heroSubtitle %></p>
       <div class="stats-row">
         <div class="stat-card">
           <h3>4.9/5</h3>
@@ -13,11 +13,11 @@
         </div>
         <div class="stat-card">
           <h3>2,500+</h3>
-          <p><%= t.testimonials.happyVisitors || "Happy visitors" %></p>
+          <p><%= t.testimonials.happyVisitors %></p>
         </div>
         <div class="stat-card">
           <h3>15+</h3>
-          <p><%= t.testimonials.yearsOfDiscovery || "Years of discovery" %></p>
+          <p><%= t.testimonials.yearsOfDiscovery %></p>
         </div>
       </div>
     </div>
@@ -29,34 +29,28 @@
       <div class="split featured-stories">
         <article class="card featured-card">
           <div class="featured-header">
-            <img src="/assets/images/pillarsbg.png" alt="Sarah Johnson" class="featured-avatar" />
+            <img src="/assets/images/pillarsbg.png" alt="<%= t.testimonials.featured[0].name %>" class="featured-avatar" />
             <div>
-              <h4>Sarah Johnson</h4>
-              <p class="featured-meta">Travel blogger, USA</p>
+              <h4><%= t.testimonials.featured[0].name %></h4>
+              <p class="featured-meta"><%= t.testimonials.featured[0].meta %></p>
               <div class="featured-stars">★★★★★</div>
             </div>
           </div>
-          <p class="featured-quote">
-            "An absolutely breathtaking experience. Our guide was incredibly knowledgeable about Egyptian history.
-            The sunrise at the pyramids was magical, and every detail was perfectly planned."
-          </p>
-          <div class="featured-footnote">Pyramids & Nile Cruise • December 2025</div>
+          <p class="featured-quote">"<%= t.testimonials.featured[0].quote %>"</p>
+          <div class="featured-footnote"><%= t.testimonials.featured[0].footnote %></div>
         </article>
 
         <article class="card featured-card">
           <div class="featured-header">
-            <img src="/assets/images/pyramidsbg.png" alt="Michael Chen" class="featured-avatar" />
+            <img src="/assets/images/pyramidsbg.png" alt="<%= t.testimonials.featured[1].name %>" class="featured-avatar" />
             <div>
-              <h4>Michael Chen</h4>
-              <p class="featured-meta">Photographer, Singapore</p>
+              <h4><%= t.testimonials.featured[1].name %></h4>
+              <p class="featured-meta"><%= t.testimonials.featured[1].meta %></p>
               <div class="featured-stars">★★★★★</div>
             </div>
           </div>
-          <p class="featured-quote">
-            "As a photographer, I needed flexibility and access to unique locations. The team went above and beyond
-            and we visited hidden gems most tourists never see. This was my best trip to Egypt."
-          </p>
-          <div class="featured-footnote">Custom Photo Tour • November 2025</div>
+          <p class="featured-quote">"<%= t.testimonials.featured[1].quote %>"</p>
+          <div class="featured-footnote"><%= t.testimonials.featured[1].footnote %></div>
         </article>
       </div>
     </div>
@@ -64,25 +58,25 @@
 
   <section class="section alt">
     <div class="container">
-      <h2 class="section-title"><%= t.testimonials.trustedTitle || "Trusted & Certified" %></h2>
+      <h2 class="section-title"><%= t.testimonials.trustedTitle %></h2>
       <div class="trust-grid">
         <div class="trust-card">
           <h3>TripAdvisor</h3>
           <div class="featured-stars">★★★★★</div>
-          <p><%= t.testimonials.certExcellence || "Certificate of Excellence" %></p>
+          <p><%= t.testimonials.certExcellence %></p>
         </div>
         <div class="trust-card">
           <h3>Google Reviews</h3>
           <div class="featured-stars">★★★★★</div>
-          <p><%= t.testimonials.googleRating || "4.9 out of 5 stars" %></p>
+          <p><%= t.testimonials.googleRating %></p>
         </div>
         <div class="trust-card">
-          <h3><%= t.testimonials.licensed || "Licensed" %></h3>
-          <p><%= t.testimonials.ministry || "Egyptian Ministry of Tourism" %></p>
+          <h3><%= t.testimonials.licensed %></h3>
+          <p><%= t.testimonials.ministry %></p>
         </div>
         <div class="trust-card">
-          <h3><%= t.testimonials.awardWinner || "Award Winner" %></h3>
-          <p><%= t.testimonials.bestOperator || "Best Tour Operator 2025" %></p>
+          <h3><%= t.testimonials.awardWinner %></h3>
+          <p><%= t.testimonials.bestOperator %></p>
         </div>
       </div>
     </div>
@@ -91,11 +85,11 @@
   <section class="section">
     <div class="container">
       <div class="hero-card cta-card">
-        <h2><%= t.testimonials.ctaTitle || "Ready to create your own story?" %></h2>
-        <p><%= t.testimonials.ctaText || "Join thousands of satisfied guests and experience the magic of Egypt." %></p>
+        <h2><%= t.testimonials.ctaTitle %></h2>
+        <p><%= t.testimonials.ctaText %></p>
         <div class="cta-actions">
           <a href="/exhibits" class="btn"><%= t.buttons.exploreExhibits %></a>
-          <a href="/contact" class="btn btn-outline"><%= t.testimonials.contactUs || "Contact Us" %></a>
+          <a href="/contact" class="btn btn-outline"><%= t.testimonials.contactUs %></a>
         </div>
       </div>
     </div>
@@ -105,8 +99,8 @@
     <div class="container">
       <div class="split chronicle-split">
         <div class="cta-text">
-          <h2 class="font-cinzel"><%= t.testimonials.chronicleTitle || "Join the Chronicle" %></h2>
-          <p><%= t.testimonials.chronicleText || "Share your story from the land of the Nile." %></p>
+          <h2 class="font-cinzel"><%= t.testimonials.chronicleTitle %></h2>
+          <p><%= t.testimonials.chronicleText %></p>
         </div>
         <div class="form-wrapper">
           <form class="form" id="testimonial-form" action="/api/testimonials" method="POST">
