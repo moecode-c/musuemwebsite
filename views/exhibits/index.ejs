@@ -3,25 +3,24 @@
 
 <section class="page-hero">
   <div class="container">
-    <h1><%= heroTitle || "Exhibits" %></h1>
-    <p><%= heroSubtitle || "Discover Pharaoh, Islamic, and Christian galleries." %></p>
+    <h1><%= heroTitle || t.exhibits.allTitle %></h1>
+    <p><%= heroSubtitle || t.exhibits.allSubtitle %></p>
   </div>
 </section>
 
 <section class="section exhibits-timeline-section collection-<%= collectionKey || 'all' %>">
   <div class="container">
     <div class="timeline-heading">
-      <h2><%= heroTitle || "Collection Timeline" %> Timeline</h2>
-      <p>Walk through defining pieces from this collection in a curated visual chronology.</p>
+      <h2><%= heroTitle || t.exhibitCollection.timeline %> <%= t.exhibitCollection.timeline %></h2>
+      <p><%= t.exhibitCollection.timelineSubtitle %></p>
     </div>
-
     <% if ((timelineItems || []).length === 0) { %>
     <div class="timeline-empty">
-      <h3>Timeline coming soon</h3>
-      <p>New artifacts are being curated now. Check back soon for a complete historical journey.</p>
+      <h3><%= t.exhibitCollection.timelineComingSoon %></h3>
+      <p><%= t.exhibitCollection.timelineComingSoonText %></p>
     </div>
     <% } else { %>
-    <div class="timeline" aria-label="Collection timeline">
+    <div class="timeline" aria-label="<%= t.exhibitCollection.timeline %>">
       <% (timelineItems || []).forEach((timeline, index) => { %>
       <%- include('../partials/timelineCard', { timeline, index }) %>
       <% }) %>
@@ -34,11 +33,11 @@
   <div class="container">
     <% if ((artifactItems || []).length === 0) { %>
     <div class="timeline-empty grid-empty">
-      <h3>No exhibits found yet</h3>
-      <p>When exhibits are added, they will appear here with full details and timeline placement.</p>
+      <h3><%= t.exhibitCollection.noExhibits %></h3>
+      <p><%= t.exhibitCollection.noExhibitsText %></p>
     </div>
     <% } else { %>
-    <div class="artifact-showcase-title"><span><%= (heroTitle || "Exhibits").toUpperCase() %> ARTIFACTS</span></div>
+    <div class="artifact-showcase-title"><span><%= (heroTitle || t.exhibits.allTitle).toUpperCase() %> <%= t.exhibitCollection.artifacts %></span></div>
     <div class="artifact-grid">
       <% artifactItems.forEach((card) => { %>
       <%- include('../partials/artifactCard', { card }) %>

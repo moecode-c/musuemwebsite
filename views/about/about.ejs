@@ -3,52 +3,45 @@
 
 <section class="hero about-hero">
   <div class="container hero-content about-hero-content">
-    <p class="about-kicker">Grand Egyptian Museum</p>
+    <p class="about-kicker"><%= t.about.title %></p>
     <h1 class="about-title">
-      The Grand Egyptian<br />
-      <span class="text-accent">Museum</span>
+      <%= language === 'ar' ? 'المتحف المصري' : 'The Grand Egyptian' %><br />
+      <span class="text-accent"><%= language === 'ar' ? 'الكبير' : 'Museum' %></span>
     </h1>
-    <p class="about-lead">
-      Discover 5,000 years of civilization through the world's largest collection of ancient
-      Egyptian artifacts.
-    </p>
+    <p class="about-lead"><%= t.about.subtitle %></p>
     <div class="about-actions">
-      <a href="#exhibits" class="btn">Explore Exhibits</a>
-      <a href="/plan-trip" class="btn btn-secondary">Plan Your Visit</a>
+      <a href="#exhibits" class="btn"><%= t.buttons.exploreExhibits %></a>
+      <a href="/plan-trip" class="btn btn-secondary"><%= t.planTrip.title %></a>
     </div>
   </div>
 </section>
 
 <section class="section alt" id="about">
   <div class="container">
-    <p class="about-kicker">About Us</p>
-    <h2 class="section-title">The Highest Level of Comfort, Convenience and Service</h2>
-    <p class="section-lead">
-      Welcome to the Grand Egyptian Museum, the world's largest archaeological museum dedicated
-      to a single civilization. Housing over 100,000 artifacts, we preserve and celebrate the
-      extraordinary legacy of ancient Egypt.
-    </p>
+    <p class="about-kicker"><%= t.about.title %></p>
+    <h2 class="section-title"><%= language === 'ar' ? 'أعلى مستوى من الراحة والملاءمة والخدمة' : 'The Highest Level of Comfort, Convenience and Service' %></h2>
+    <p class="section-lead"><%= language === 'ar' ? 'مرحباً بك في المتحف المصري الكبير، أكبر متحف أثري في العالم مخصص لحضارة واحدة. يضم أكثر من 100,000 قطعة أثرية.' : 'Welcome to the Grand Egyptian Museum, the world\'s largest archaeological museum dedicated to a single civilization. Housing over 100,000 artifacts.' %></p>
     <div class="about-gallery">
-      <img src="/assets/images/pillarsbg.png" alt="Grand hall with temple columns" />
-      <img src="/assets/images/pyramidsbg.png" alt="Pyramid skyline at sunset" />
+      <img src="/assets/images/pillarsbg.png" alt="<%= language === 'ar' ? 'قاعة كبرى بأعمدة معبد' : 'Grand hall with temple columns' %>" />
+      <img src="/assets/images/pyramidsbg.png" alt="<%= language === 'ar' ? 'أفق الأهرامات عند الغروب' : 'Pyramid skyline at sunset' %>" />
     </div>
-    <h3 class="section-subtitle">Why Choose Us?</h3>
+    <h3 class="section-subtitle"><%= language === 'ar' ? 'لماذا تختارنا؟' : 'Why Choose Us?' %></h3>
     <div class="grid about-features">
       <article class="card">
-        <h4>Professional Team</h4>
-        <p>Expert Egyptologists guide every exhibition with scholarly precision.</p>
+        <h4><%= language === 'ar' ? 'فريق محترف' : 'Professional Team' %></h4>
+        <p><%= language === 'ar' ? 'يُرشد علماء المصريات المتخصصون كل معرض بدقة أكاديمية.' : 'Expert Egyptologists guide every exhibition with scholarly precision.' %></p>
       </article>
       <article class="card">
-        <h4>Guided Tours</h4>
-        <p>Immersive tours available in 12 languages for visitors worldwide.</p>
+        <h4><%= language === 'ar' ? 'جولات إرشادية' : 'Guided Tours' %></h4>
+        <p><%= language === 'ar' ? 'جولات غامرة متاحة بـ 12 لغة للزوار من جميع أنحاء العالم.' : 'Immersive tours available in 12 languages for visitors worldwide.' %></p>
       </article>
       <article class="card">
-        <h4>Open Daily</h4>
-        <p>Visit us seven days a week, from 9 AM to 7 PM, year-round.</p>
+        <h4><%= language === 'ar' ? 'مفتوح يومياً' : 'Open Daily' %></h4>
+        <p><%= language === 'ar' ? 'زرنا سبعة أيام في الأسبوع، من 9 صباحاً حتى 7 مساءً، طوال العام.' : 'Visit us seven days a week, from 9 AM to 7 PM, year-round.' %></p>
       </article>
       <article class="card">
-        <h4>Award Winning</h4>
-        <p>Recognized globally for preservation and cultural excellence.</p>
+        <h4><%= language === 'ar' ? 'حائز على جوائز' : 'Award Winning' %></h4>
+        <p><%= language === 'ar' ? 'معترف به عالمياً للتميز في الحفاظ على التراث الثقافي.' : 'Recognized globally for preservation and cultural excellence.' %></p>
       </article>
     </div>
   </div>
@@ -56,26 +49,26 @@
 
 <section class="section" id="exhibits">
   <div class="container">
-    <p class="about-kicker">Collections</p>
-    <h2 class="section-title">Featured Exhibits</h2>
+    <p class="about-kicker"><%= language === 'ar' ? 'المجموعات' : 'Collections' %></p>
+    <h2 class="section-title"><%= language === 'ar' ? 'المعروضات المميزة' : 'Featured Exhibits' %></h2>
     <div class="grid about-exhibits">
       <article class="card">
-        <img src="/assets/images/20260130_1955_Image Generation_simple_compose_01kg80pd3rfrhvfa20nx9gk66h.png" alt="Royal sarcophagi display" />
-        <h3>Royal Sarcophagi</h3>
-        <p>Explore the magnificent golden coffins of Egypt's most powerful pharaohs.</p>
-        <a class="text-link" href="/exhibits">Learn More →</a>
+        <img src="/assets/images/20260130_1955_Image Generation_simple_compose_01kg80pd3rfrhvfa20nx9gk66h.png" alt="" />
+        <h3><%= language === 'ar' ? 'التوابيت الملكية' : 'Royal Sarcophagi' %></h3>
+        <p><%= language === 'ar' ? 'استكشف التوابيت الذهبية الرائعة لأقوى فراعنة مصر.' : 'Explore the magnificent golden coffins of Egypt\'s most powerful pharaohs.' %></p>
+        <a class="text-link" href="/exhibits"><%= t.buttons.learnMore %> →</a>
       </article>
       <article class="card">
-        <img src="/assets/images/pillarsbg.png" alt="Temple halls reconstructed inside the museum" />
-        <h3>Temple Halls</h3>
-        <p>Walk through reconstructed temple corridors adorned with ancient hieroglyphics.</p>
-        <a class="text-link" href="/exhibits">Learn More →</a>
+        <img src="/assets/images/pillarsbg.png" alt="" />
+        <h3><%= language === 'ar' ? 'قاعات المعبد' : 'Temple Halls' %></h3>
+        <p><%= language === 'ar' ? 'تجول عبر ممرات المعبد المُعاد بناؤها المزينة بالهيروغليفية القديمة.' : 'Walk through reconstructed temple corridors adorned with ancient hieroglyphics.' %></p>
+        <a class="text-link" href="/exhibits"><%= t.buttons.learnMore %> →</a>
       </article>
       <article class="card">
-        <img src="/assets/images/desertmap.png" alt="Golden treasures and artifacts" />
-        <h3>Golden Treasures</h3>
-        <p>Marvel at exquisite jewelry and ceremonial artifacts spanning millennia.</p>
-        <a class="text-link" href="/exhibits">Learn More →</a>
+        <img src="/assets/images/desertmap.png" alt="" />
+        <h3><%= language === 'ar' ? 'الكنوز الذهبية' : 'Golden Treasures' %></h3>
+        <p><%= language === 'ar' ? 'تأمل المجوهرات الرائعة والقطع الأثرية الطقوسية عبر آلاف السنين.' : 'Marvel at exquisite jewelry and ceremonial artifacts spanning millennia.' %></p>
+        <a class="text-link" href="/exhibits"><%= t.buttons.learnMore %> →</a>
       </article>
     </div>
   </div>
@@ -83,49 +76,49 @@
 
 <section class="section alt" id="timeline">
   <div class="container">
-    <p class="about-kicker">Milestones</p>
-    <h2 class="section-title">Our Journey</h2>
+    <p class="about-kicker"><%= language === 'ar' ? 'المحطات البارزة' : 'Milestones' %></p>
+    <h2 class="section-title"><%= language === 'ar' ? 'رحلتنا' : 'Our Journey' %></h2>
     <div class="timeline-list">
       <article class="timeline-entry">
         <span class="timeline-year">2025</span>
         <div>
-          <h3>Grand Opening Expansion</h3>
-          <p>New wing dedicated to underwater archaeological discoveries from Alexandria's harbor.</p>
+          <h3><%= language === 'ar' ? 'توسعة الافتتاح الكبير' : 'Grand Opening Expansion' %></h3>
+          <p><%= language === 'ar' ? 'جناح جديد مخصص للاكتشافات الأثرية تحت الماء من ميناء الإسكندرية.' : 'New wing dedicated to underwater archaeological discoveries from Alexandria\'s harbor.' %></p>
         </div>
       </article>
       <article class="timeline-entry">
         <span class="timeline-year">2024</span>
         <div>
-          <h3>Digital Archive Launch</h3>
-          <p>Complete 3D scanning of the entire collection for global online access.</p>
+          <h3><%= language === 'ar' ? 'إطلاق الأرشيف الرقمي' : 'Digital Archive Launch' %></h3>
+          <p><%= language === 'ar' ? 'المسح الثلاثي الأبعاد الكامل للمجموعة بأكملها للوصول العالمي.' : 'Complete 3D scanning of the entire collection for global online access.' %></p>
         </div>
       </article>
       <article class="timeline-entry">
         <span class="timeline-year">2023</span>
         <div>
-          <h3>International Recognition</h3>
-          <p>UNESCO World Heritage Site designation for museum excellence.</p>
+          <h3><%= language === 'ar' ? 'الاعتراف الدولي' : 'International Recognition' %></h3>
+          <p><%= language === 'ar' ? 'تصنيف اليونسكو كموقع للتراث العالمي لتميز المتحف.' : 'UNESCO World Heritage Site designation for museum excellence.' %></p>
         </div>
       </article>
       <article class="timeline-entry">
         <span class="timeline-year">2022</span>
         <div>
-          <h3>Conservation Lab Opening</h3>
-          <p>State-of-the-art facility for artifact restoration and preservation.</p>
+          <h3><%= language === 'ar' ? 'افتتاح مختبر الترميم' : 'Conservation Lab Opening' %></h3>
+          <p><%= language === 'ar' ? 'منشأة متطورة لترميم الآثار والحفاظ عليها.' : 'State-of-the-art facility for artifact restoration and preservation.' %></p>
         </div>
       </article>
       <article class="timeline-entry">
         <span class="timeline-year">2021</span>
         <div>
-          <h3>Tutankhamun Exhibition</h3>
-          <p>Permanent gallery showcasing complete treasures from the boy king's tomb.</p>
+          <h3><%= language === 'ar' ? 'معرض توت عنخ آمون' : 'Tutankhamun Exhibition' %></h3>
+          <p><%= language === 'ar' ? 'معرض دائم يعرض كنوز الملك الصغير كاملة من مقبرته.' : 'Permanent gallery showcasing complete treasures from the boy king\'s tomb.' %></p>
         </div>
       </article>
       <article class="timeline-entry">
         <span class="timeline-year">2020</span>
         <div>
-          <h3>Museum Founding</h3>
-          <p>Establishment of the Grand Egyptian Museum as the world's premier Egyptology institution.</p>
+          <h3><%= language === 'ar' ? 'تأسيس المتحف' : 'Museum Founding' %></h3>
+          <p><%= language === 'ar' ? 'تأسيس المتحف المصري الكبير كأبرز مؤسسة لعلم المصريات في العالم.' : 'Establishment of the Grand Egyptian Museum as the world\'s premier Egyptology institution.' %></p>
         </div>
       </article>
     </div>
