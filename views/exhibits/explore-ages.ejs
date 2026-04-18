@@ -1,0 +1,105 @@
+<%- include('../partials/header') %>
+<%- include('../partials/navbar') %>
+
+<main class="ages-page">
+  <section class="ages-hero" aria-labelledby="explore-ages-title">
+    <div class="ages-hero-fog" aria-hidden="true"></div>
+    <div class="container ages-hero-inner">
+      <p class="ages-kicker">Curating Eternity</p>
+      <h1 id="explore-ages-title">Explore the Ages</h1>
+      <p class="ages-intro">
+        Step across the threshold of time. From the celestial monuments of the Pharaohs to the
+        intricate geometries of the Islamic Golden Age.
+      </p>
+      <a class="ages-cta" href="#primary-eras">Begin Journey</a>
+    </div>
+  </section>
+
+  <section class="ages-section ages-section-eras" id="primary-eras" aria-labelledby="primary-eras-title">
+    <div class="container">
+      <h2 id="primary-eras-title">Primary Eras</h2>
+      <p class="ages-section-kicker">Select a portal to begin</p>
+
+      <div class="era-grid" role="list">
+        <article class="era-card era-card--pharaonic reveal" role="listitem">
+          <img src="/assets/images/pillarsbg.png" alt="Pharaonic temple hall lit by warm light" loading="lazy" />
+          <div class="era-card-body">
+            <h3>
+              <span class="era-prefix">The</span>
+              <span class="era-main">Pharaonic</span>
+              <span class="era-suffix">Era</span>
+            </h3>
+            <a class="era-enter" href="/exhibits/pharaoh">Enter Era</a>
+          </div>
+        </article>
+
+        <article class="era-card era-card--islamic reveal" role="listitem">
+          <img src="/assets/images/pyramidsbg.png" alt="Sunset over pyramids and desert dunes" loading="lazy" />
+          <div class="era-card-body">
+            <h3>
+              <span class="era-prefix">The</span>
+              <span class="era-main">Islamic</span>
+              <span class="era-suffix">Era</span>
+            </h3>
+            <a class="era-enter" href="/exhibits/islamic">Enter Era</a>
+          </div>
+        </article>
+
+        <article class="era-card era-card--coptic reveal" role="listitem">
+          <img src="/assets/images/shopherobg.png" alt="Coptic and ancient heritage artifacts" loading="lazy" />
+          <div class="era-card-body">
+            <h3>
+              <span class="era-prefix">The</span>
+              <span class="era-main">Coptic</span>
+              <span class="era-suffix">Era</span>
+            </h3>
+            <a class="era-enter" href="/exhibits/christian">Enter Era</a>
+          </div>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <section class="ages-section ages-section-wonders" aria-labelledby="curated-wonders-title">
+    <div class="container">
+      <h2 id="curated-wonders-title">Curated Wonders</h2>
+      <p class="ages-section-subtitle">
+        Each piece in our archive has been meticulously digitized and high-fidelity spatial scanning,
+        allowing you to examine every grain of history.
+      </p>
+
+      <div class="wonders-grid">
+        <article class="wonder-card wonder-card-main reveal">
+          <img src="/assets/images/desertmap.png" alt="Annotated map showing historic Egyptian regions" loading="lazy" />
+          <div class="wonder-body">
+            <h3>Kufic Quran Folio</h3>
+            <p class="wonder-meta">Early Islamic | 9th-10th century</p>
+            <a class="wonder-link" href="/exhibits/islamic">View Piece</a>
+          </div>
+        </article>
+
+        <div class="wonder-side">
+          <article class="wonder-card reveal">
+            <img src="/assets/images/pillarsbg.png" alt="Golden lit interior with ancient columns" loading="lazy" />
+            <div class="wonder-body">
+              <h3>Mamluk Lanterns</h3>
+              <p class="wonder-meta">Islamic Era</p>
+              <a class="wonder-link" href="/exhibits/islamic">View Piece</a>
+            </div>
+          </article>
+
+          <article class="wonder-card reveal">
+            <img src="/assets/images/shopherobg.png" alt="Ornamental artifacts and script-inspired motifs" loading="lazy" />
+            <div class="wonder-body">
+              <h3>Fatimid Carved Wood Minbar</h3>
+              <p class="wonder-meta">Fatimid</p>
+              <a class="wonder-link" href="/exhibits/islamic">View Piece</a>
+            </div>
+          </article>
+        </div>
+      </div>
+    </div>
+  </section>
+</main>
+
+<%- include('../partials/footer') %>

@@ -1,22 +1,65 @@
 <%- include('../partials/header') %>
 <%- include('../partials/navbar') %>
 
-<section class="page-hero">
+<section class="page-hero tour-landing-hero">
   <div class="container">
+    <p class="tour-kicker">Immersive Museum Navigator</p>
     <h1><%= t.virtualTour.title %></h1>
     <p><%= t.virtualTour.subtitle %></p>
+    <div class="tour-hero-actions">
+      <a class="btn tour-hero-btn-primary" href="/virtual-tour/pharaoh">Start With Pharaoh Era</a>
+      <a class="btn tour-hero-btn-ghost" href="#tour-preview">Watch Intro Preview</a>
+    </div>
   </div>
 </section>
 
-<section class="section">
+<section class="section tour-landing-section" id="tour-preview">
+  <div class="container tour-landing-grid">
+    <article class="tour-video-panel" aria-label="Virtual tour preview video">
+      <header class="tour-panel-header">
+        <h2>Preview The Experience</h2>
+        <p>Step into a guided 360 walkthrough before choosing your historical route.</p>
+      </header>
+      <div class="video-frame">
+        <iframe
+          src="https://www.youtube.com/embed/1d1mYyPpG0k"
+          title="Virtual Tour"
+          allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+          allowfullscreen>
+        </iframe>
+      </div>
+    </article>
+
+    <aside class="tour-era-panel" aria-label="Choose virtual tour era">
+      <h2>Choose Your Era</h2>
+      <a class="tour-era-card" href="/virtual-tour/pharaoh">
+        <span class="tour-era-chip">Ancient</span>
+        <strong>Pharaoh Era</strong>
+        <p>Monuments, dynasties, and divine kingship.</p>
+      </a>
+      <a class="tour-era-card" href="/virtual-tour/islamic">
+        <span class="tour-era-chip">Medieval</span>
+        <strong>Islamic Era</strong>
+        <p>Calligraphy, architecture, and crafted geometry.</p>
+      </a>
+      <a class="tour-era-card" href="/virtual-tour/christian">
+        <span class="tour-era-chip">Heritage</span>
+        <strong>Christian Era</strong>
+        <p>Icons, liturgy, and the Coptic legacy.</p>
+      </a>
+    </aside>
+  </div>
+</section>
+
+<section class="section tour-landing-tips">
   <div class="container">
-    <div class="video-frame">
-      <iframe
-        src="https://www.youtube.com/embed/1d1mYyPpG0k"
-        title="Virtual Tour"
-        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-        allowfullscreen>
-      </iframe>
+    <div class="tour-tips-card">
+      <h3>Tips For Best Experience</h3>
+      <ul class="tour-tips-list">
+        <li>Use fullscreen mode for more immersive exploration.</li>
+        <li>Enable the audio guide while navigating each location.</li>
+        <li>Download the brochure for highlights and route notes.</li>
+      </ul>
     </div>
   </div>
 </section>

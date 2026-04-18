@@ -1,8 +1,13 @@
 <article class="timeline-item <%= index % 2 === 0 ? 'left' : 'right' %>">
   <span class="timeline-node" aria-hidden="true"></span>
+  <% const disableTimelineCta = collectionKey === 'islamic' || collectionKey === 'christian'; %>
+  <% const displayDate = timeline.period || timeline.era || ""; %>
+  <% if (displayDate) { %>
+  <span class="timeline-date" aria-label="Historical date range"><%= displayDate %></span>
+  <% } %>
   <div class="timeline-card">
     <div class="timeline-card-media">
-      <img src="<%= timeline.imageUrl %>" alt="<%= timeline.title %>" loading="lazy" />
+      <img src="<%= timeline.imageUrl %>" alt="<%= timeline.title %>" loading="lazy" onerror="this.onerror=null;this.src='/assets/images/pillarsbg.png';" />
     </div>
     <div class="timeline-card-body">
       <span class="timeline-era"><%= timeline.era || "Historical Era" %></span>
@@ -13,7 +18,10 @@
         <% if (timeline.location) { %><span><strong>Location:</strong> <%= timeline.location %></span><% } %>
       </div>
       <% } %>
-      <p><%= timeline.description && timeline.description.length > 120 ? `${timeline.description.substring(0, 120)}...` : (timeline.description || "") %></p>
+      <p><%= timeline.description && timeline.description.length > 260 ? `${timeline.description.substring(0, 260)}...` : (timeline.description || "") %></p>
+      <% if (timeline.ctaHref && !disableTimelineCta) { %>
+      <a class="btn" href="<%= timeline.ctaHref %>"><%= timeline.ctaLabel || "View 3D Model Artifact" %></a>
+      <% } %>
     </div>
   </div>
 </article>

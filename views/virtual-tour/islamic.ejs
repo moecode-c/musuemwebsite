@@ -1,10 +1,17 @@
 <%- include('../partials/header') %>
 <%- include('../partials/navbar') %>
 
-<section class="tour-hero" id="tourinfo">
+<section class="tour-hero tour-hero--islamic" id="tourinfo">
   <div class="container">
-    <h1 class="tour-title"><%= t.virtualTour.heroTitle %></h1>
-    <p class="tour-subtitle"><%= t.virtualTour.islamicHeroSubtitle %></p>
+    <article class="tour-hero-card">
+      <p class="tour-kicker">360 Immersive Route</p>
+      <h1 class="tour-title"><%= t.virtualTour.islamicTitle %></h1>
+      <p class="tour-subtitle"><%= t.virtualTour.islamicHeroSubtitle %></p>
+      <div class="tour-hero-actions">
+        <a class="btn tour-hero-btn-primary" href="#tour-map">Enter Live Tour</a>
+        <a class="btn tour-hero-btn-ghost" href="#tour-notes">Read Notes</a>
+      </div>
+    </article>
   </div>
 </section>
 
@@ -15,8 +22,13 @@
   </div>
 </section>
 
-<section class="tour-map">
+<section class="tour-map" id="tour-map">
   <div class="container">
+    <header class="tour-map-heading">
+      <h3>Interactive Route</h3>
+      <p>Navigate the selected site in real time, then switch to fullscreen for a museum-like viewing mode.</p>
+    </header>
+
     <div class="map-frame">
       <iframe
         title="<%= t.virtualTour.islamicTitle %>"
@@ -30,21 +42,21 @@
       <div class="map-ornament ornament-4"></div>
     </div>
     <div class="tour-controls">
-      <button class="btn tour-btn" id="tour-fullscreen-btn"><i class="fas fa-expand"></i><%= t.virtualTour.fullscreen %></button>
+      <button class="btn tour-btn" id="tour-fullscreen-btn" type="button"><i class="fas fa-expand"></i><%= t.virtualTour.fullscreen %></button>
       <a class="btn tour-btn" href="#tourinfo"><i class="fas fa-info-circle"></i><%= t.virtualTour.tourInfo %></a>
-      <a class="btn tour-btn" href="/assets/brochure.pdf" download>
+      <a class="btn tour-btn" href="/assets/Afterlife-museum-brochure.pdf" download="Afterlife-museum-brochure.pdf">
         <i class="fas fa-file-arrow-down"></i><%= t.virtualTour.downloadBrochure %>
       </a>
-      <button class="btn tour-btn" id="tour-audio-btn"><i class="fas fa-volume-up"></i><%= t.virtualTour.audioGuide %></button>
+      <button class="btn tour-btn" id="tour-audio-btn" type="button" aria-label="Toggle audio guide"><i class="fas fa-volume-up"></i><%= t.virtualTour.audioGuide %></button>
     </div>
   </div>
 </section>
 
-<section class="tour-info">
+<section class="tour-info" id="tour-notes">
   <div class="container">
     <h3><%= t.virtualTour.tourNotesTitle %></h3>
     <p><%= t.virtualTour.islamicTourNotesText %></p>
-    <audio id="tour-audio" src="/assets/audio/islamic-tour.mp3"></audio>
+    <audio id="tour-audio" src="/audio/islamicVirtualaudio.mp3" preload="metadata"></audio>
   </div>
 </section>
 
