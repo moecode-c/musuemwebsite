@@ -16,6 +16,11 @@
               <a href="/lang/ar?returnTo=<%= encodeURIComponent(currentPathWithQuery || '/') %>" class="nav-link">AR</a>
             </div>
             <button class="nav-link theme-toggle" id="theme-toggle" type="button" data-theme-label="<%= t.nav.theme %>"><i class="nav-icon fas fa-moon"></i><%= t.nav.theme %></button>
+            <a href="/cart" class="nav-link cart-chip" aria-label="<%= t.nav.shopMenu.cart %>">
+              <i class="nav-icon fas fa-cart-shopping"></i>
+              <%= t.nav.shopMenu.cart %>
+              <span class="cart-count" id="cart-count">0</span>
+            </a>
           </div>
         </div>
       </div>

@@ -1,0 +1,129 @@
+<%- include('../partials/header') %>
+<%- include('../partials/navbar') %>
+
+<main class="checkout-page">
+  <section class="page-hero">
+    <div class="container">
+      <h1>Payment & Delivery</h1>
+      <p>Choose how you want to pay and receive your order.</p>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="container payment-portal">
+      
+      <div class="payment-receipt">
+        <div class="checkout-meta">
+          <span class="step-pill">Step 2 of 2</span>
+          <span class="muted">Secure payment</span>
+        </div>
+        <h2>Order Receipt</h2>
+        <% if (items && items.length) { %>
+          <details class="receipt-details">
+            <summary>View <strong><%= items.length %></strong> Items (Total: EGP <%= total %>)</summary>
+            <ul class="summary-list compact-receipt">
+              <% items.forEach((item) => { %>
+                <li>
+                  <div>
+                    <strong><%= item.name %></strong>
+                  </div>
+                  <div class="price">EGP <%= (item.price * item.quantity).toFixed(2) %></div>
+                </li>
+              <% }) %>
+            </ul>
+          </details>
+          <p class="muted small-note">Payment is a demo step. No charges are applied.</p>
+        <% } else { %>
+          <p class="muted">Your cart is empty.</p>
+        <% } %>
+      </div>
+
+      <div class="checkout-form centered-form">
+        <h2>Payment & Delivery</h2>
+        <form class="form" id="payment-delivery-form" method="post" action="/cart/payment">
+          <div class="stack">
+            <label>Payment Method</label>
+            <div class="option-grid compact">
+              <label class="option-card">
+                <input type="radio" name="paymentMethod" value="card" checked />
+                <div>
+                  <strong>Card</strong>
+                  <p>Visa / Mastercard</p>
+                </div>
+              </label>
+              <label class="option-card">
+                <input type="radio" name="paymentMethod" value="wallet" />
+                <div>
+                  <strong>Wallet</strong>
+                  <p>Apple Pay / Google Pay / PayPal</p>
+                </div>
+              </label>
+              <label class="option-card">
+                <input type="radio" name="paymentMethod" value="cod" />
+                <div>
+                  <strong>Cash on Delivery</strong>
+                  <p>Pay when it arrives</p>
+                </div>
+              </label>
+            </div>
+            <div class="field-grid compact card-fields">
+              <div>
+                <label>Card Number</label>
+                <input type="text" name="cardNumber" placeholder="1234 5678 9012 3456" />
+              </div>
+              <div>
+                <label>Expiry</label>
+                <input type="text" name="expiry" placeholder="MM/YY" />
+              </div>
+              <div>
+                <label>CVC</label>
+                <input type="text" name="cvc" placeholder="123" />
+              </div>
+            </div>
+            <p class="form-note card-fields-note">Card fields are optional unless you pick card.</p>
+          </div>
+
+          <div class="stack">
+            <label>Delivery Option</label>
+            <div class="option-grid compact">
+              <label class="option-card">
+                <input type="radio" name="deliveryOption" value="delivery" checked />
+                <div>
+                  <strong>Home Delivery</strong>
+                  <p>Doorstep delivery</p>
+                </div>
+              </label>
+              <label class="option-card">
+                <input type="radio" name="deliveryOption" value="pickup" />
+                <div>
+                  <strong>Pickup / Locker</strong>
+                  <p>Nearby pickup point</p>
+                </div>
+              </label>
+            </div>
+            <div class="field-grid compact">
+              <div>
+                <label>Preferred Date</label>
+                <input type="date" name="deliveryDate" />
+              </div>
+              <div>
+                <label>Time Window</label>
+                <input type="text" name="deliveryWindow" placeholder="12:00 - 15:00" />
+              </div>
+            </div>
+            <label>Pickup Location (optional)</label>
+            <input type="text" name="pickupSpot" placeholder="Locker or pickup point" />
+          </div>
+
+          <label>Notes</label>
+          <textarea name="notes" rows="2" placeholder="Delivery instructions"></textarea>
+
+          <button class="btn" type="submit">Confirm payment & delivery</button>
+          <p class="form-message" id="payment-message"></p>
+        </form>
+      </div>
+    </div>
+  </section>
+</main>
+
+<%- include('../partials/footer') %>
