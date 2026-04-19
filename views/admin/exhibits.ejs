@@ -35,8 +35,10 @@
       <p class="admin-map-note">Click the map to set X/Y coordinates.</p>
       <label>Image</label>
       <input type="file" name="image" accept="image/*" required />
+      <p class="admin-map-note">Required when creating. Optional when editing.</p>
       <label>3D Model (.glb/.gltf)</label>
       <input type="file" name="model" accept=".glb,.gltf" required />
+      <p class="admin-map-note">Upload a .glb or .gltf model. Required when creating. Optional when editing.</p>
       <button class="btn admin-submit" type="submit">Create Exhibit</button>
       <button class="btn btn-secondary admin-cancel" type="button">Cancel</button>
       <p class="form-message" id="admin-exhibit-message"></p>

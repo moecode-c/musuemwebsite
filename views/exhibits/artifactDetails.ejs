@@ -4,8 +4,22 @@
 <section class="section exhibit-detail-section">
   <div class="container">
     <article class="exhibit-spotlight-shell">
-      <figure class="exhibit-spotlight-media" aria-label="Artifact image">
+      <figure class="exhibit-spotlight-media" aria-label="Artifact media">
+        <% if (exhibit.modelUrl) { %>
+        <model-viewer
+          class="exhibit-spotlight-model"
+          src="<%= exhibit.modelUrl %>"
+          poster="<%= detailImageUrl || exhibit.imageUrl %>"
+          alt="3D model of <%= exhibit.title %>"
+          camera-controls
+          auto-rotate
+          shadow-intensity="1"
+          exposure="1"
+          interaction-prompt="none"
+          loading="eager"></model-viewer>
+        <% } else { %>
         <img src="<%= detailImageUrl || exhibit.imageUrl %>" alt="<%= exhibit.title %>" loading="lazy" onerror="this.onerror=null;this.src='/assets/images/pillarsbg.png';" />
+        <% } %>
       </figure>
 
       <div class="exhibit-spotlight-content" aria-label="Artifact information">

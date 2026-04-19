@@ -17,11 +17,26 @@
       })();
     </script>
     <link rel="stylesheet" href="/css/artifactPopup.css" />
+    <script type="module" src="https://unpkg.com/@google/model-viewer/dist/model-viewer.min.js"></script>
   </head>
   <body>
     <main class="artifact-popup" aria-label="Artifact popup preview">
-      <section class="artifact-popup-stage" aria-label="Artifact image">
+      <section class="artifact-popup-stage" aria-label="Artifact media">
+        <% if (exhibit.modelUrl) { %>
+        <model-viewer
+          class="artifact-popup-model"
+          src="<%= exhibit.modelUrl %>"
+          poster="<%= popupImageUrl || exhibit.imageUrl %>"
+          alt="3D model of <%= exhibit.title %>"
+          camera-controls
+          auto-rotate
+          shadow-intensity="1"
+          exposure="1"
+          interaction-prompt="none"
+          loading="eager"></model-viewer>
+        <% } else { %>
         <img src="<%= popupImageUrl || exhibit.imageUrl %>" alt="<%= exhibit.title %>" onerror="this.onerror=null;this.src='/assets/images/pillarsbg.png';" />
+        <% } %>
       </section>
 
       <section class="artifact-popup-panel" aria-label="Artifact information">
