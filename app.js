@@ -51,6 +51,22 @@ app.use(cookieParser());
 app.use(methodOverride("_method"));
 app.use(express.static(path.join(__dirname, "public")));
 
+app.get("/audio/pharoahVirtualaudio.mp3", (req, res) => {
+  res.sendFile(path.join(__dirname, "views", "virtual-tour", "pharoahVirtualaudio.mp3"));
+});
+
+app.get("/audio/islamicVirtualaudio.mp3", (req, res) => {
+  res.sendFile(path.join(__dirname, "views", "virtual-tour", "islamicVirtualaudio.mp3"));
+});
+
+app.get("/audio/christianVirtualaudio.mp3", (req, res) => {
+  res.sendFile(path.join(__dirname, "views", "virtual-tour", "ChrtistianVirtualaudio.mp3"));
+});
+
+app.get("/virtual-tour/Afterlife-museum-brochure.pdf", (req, res) => {
+  res.sendFile(path.join(__dirname, "views", "virtual-tour", "Afterlife-museum-brochure.pdf"));
+});
+
 app.use(
   session({
     secret: process.env.SESSION_SECRET || "change_this_secret",

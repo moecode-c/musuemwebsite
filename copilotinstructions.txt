@@ -62,7 +62,7 @@ FOLDER STRUCTURE (DO NOT CHANGE)
   newsletter.ejs
   location.ejs
   exhibits.ejs
-  exhibit-details.ejs
+  artifactDetails.ejs
   collections.ejs
   virtual-tour.ejs
   games.ejs
