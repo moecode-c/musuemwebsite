@@ -7,6 +7,53 @@ const { asyncHandler } = require("../utils/asyncHandler");
 const { getWeather } = require("../utils/apiClient");
 const { buildPagination } = require("../utils/pagination");
 
+const shopTypeConfig = {
+  books: {
+    label: "Books & Materials",
+    keywords: ["book", "guide", "catalog", "papyrus", "scroll", "manuscript", "material"],
+    heroTitle: "Stories in print, wisdom in every page.",
+    heroSubtitle: "Browse scholarly catalogs, illustrated guides, and collectible museum publications.",
+    heroTags: ["Curator notes included", "Archive-grade print", "Ideal for researchers"]
+  },
+  souvenirs: {
+    label: "Souvenirs",
+    keywords: ["souvenir", "gift", "mug", "postcard", "keychain", "magnet", "keepsake"],
+    heroTitle: "Memories you can hold and gift.",
+    heroSubtitle: "Take home meaningful keepsakes inspired by iconic artifacts and galleries.",
+    heroTags: ["Gift-ready packaging", "Limited artisan runs", "Ships in 48h"]
+  },
+  replicas: {
+    label: "Replicas",
+    keywords: ["replica", "statuette", "artifact", "ankh", "scarab", "model"],
+    heroTitle: "Iconic forms, faithfully recreated.",
+    heroSubtitle: "Discover precision-crafted replicas modeled after treasured museum pieces.",
+    heroTags: ["Gallery-inspired design", "Collector quality", "Certificate included"]
+  },
+  decor: {
+    label: "Home Decor",
+    keywords: ["decor", "vase", "lamp", "wall", "textile", "cushion", "home"],
+    heroTitle: "Turn your home into a gallery corner.",
+    heroSubtitle: "Refined decor pieces that blend contemporary interiors with ancient aesthetics.",
+    heroTags: ["Design-forward pieces", "Hand-finished details", "Museum-inspired palette"]
+  }
+};
+
+const defaultShopHero = {
+  heroTitle: "Curated relics, crafted keepsakes.",
+  heroSubtitle: "Bring home design-forward replicas, artisan-made decor, and exclusive souvenirs inspired by the galleries.",
+  heroTags: ["Gallery-approved quality", "Limited artisan runs", "Ships in 48h"]
+};
+
+const inferShopType = (item) => {
+  const text = `${item?.name || ""} ${item?.description || ""}`.toLowerCase();
+  for (const [type, config] of Object.entries(shopTypeConfig)) {
+    if (config.keywords.some((keyword) => text.includes(keyword))) {
+      return type;
+    }
+  }
+  return "souvenirs";
+};
+
 const buildCards = (items, type) => {
   return items
     .map((item) => {
@@ -21,6 +68,7 @@ const buildCards = (items, type) => {
         `;
       }
       if (type === "product") {
+        const productType = inferShopType(item);
         const createdDate = item.createdAt ? new Date(item.createdAt) : null;
         const isNew = createdDate ? Date.now() - createdDate.getTime() < 1000 * 60 * 60 * 24 * 30 : false;
         const isPreorder = item.stock <= 0;
@@ -55,7 +103,7 @@ const buildCards = (items, type) => {
         const sizeJson = JSON.stringify(sizeBreakdown).replace(/"/g, "&quot;");
 
         return `
-          <article class="card product-card" data-id="${item._id}" data-name="${safeName.toLowerCase()}" data-description="${safePreview}" data-description-full="${safeFullDesc}" data-price="${item.price}" data-stock="${item.stock}" data-created="${createdDate ? createdDate.toISOString() : ""}" data-image="${item.imageUrl}" data-sizes="${sizeJson}" data-preorder="${preorderDate ? preorderDate.toISOString() : ""}">
+          <article class="card product-card" data-id="${item._id}" data-name="${safeName.toLowerCase()}" data-description="${safePreview}" data-description-full="${safeFullDesc}" data-price="${item.price}" data-stock="${item.stock}" data-created="${createdDate ? createdDate.toISOString() : ""}" data-image="${item.imageUrl}" data-sizes="${sizeJson}" data-preorder="${preorderDate ? preorderDate.toISOString() : ""}" data-category="${productType}">
             <div class="card-media">
               <span class="status-badge ${stockClass}">${stockLabel}</span>
               ${isNew ? "<span class=\"status-badge is-new\">New</span>" : ""}
@@ -203,18 +251,34 @@ const gameExplorer = (req, res) => res.render("games/explorer", { pageTitle: "Ex
 const gamePyramid = (req, res) => res.render("games/pyramid", { pageTitle: "Pyramid Builder", pageCss: "pyramid-builder" });
 
 const shop = asyncHandler(async (req, res) => {
+  const requestedType = (req.query.type || "").toLowerCase();
+  const activeType = shopTypeConfig[requestedType] ? requestedType : "";
+  const heroContent = activeType
+    ? {
+      heroTitle: shopTypeConfig[activeType].heroTitle,
+      heroSubtitle: shopTypeConfig[activeType].heroSubtitle,
+      heroTags: shopTypeConfig[activeType].heroTags
+    }
+    : defaultShopHero;
   const page = parseInt(req.query.page || "1", 10);
   const limit = 6;
-  const total = await Product.countDocuments();
+  const allItems = await Product.find();
+  const filteredItems = activeType ? allItems.filter((item) => inferShopType(item) === activeType) : allItems;
+  const total = filteredItems.length;
   const totalPages = Math.ceil(total / limit) || 1;
-  const items = await Product.find()
-    .skip((page - 1) * limit)
-    .limit(limit);
+  const items = filteredItems.slice((page - 1) * limit, page * limit);
+  const shopBasePath = activeType ? `/shop?type=${activeType}` : "/shop";
+
   res.render("shop/index", {
     pageTitle: "Shop",
     pageCss: "shop",
+    activeType,
+    activeTypeLabel: activeType ? shopTypeConfig[activeType].label : "All Collections",
+    heroTitle: heroContent.heroTitle,
+    heroSubtitle: heroContent.heroSubtitle,
+    heroTags: heroContent.heroTags,
     productsHtml: buildCards(items, "product"),
-    paginationHtml: buildPagination(page, totalPages, "/shop")
+    paginationHtml: buildPagination(page, totalPages, shopBasePath)
   });
 });
 

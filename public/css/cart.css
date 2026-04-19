@@ -2,23 +2,23 @@
 
 :root {
 	/* dark default */
-	--cart-surface: #171325;
-	--cart-panel: #1f1a2f;
-	--cart-border: #2e2740;
-	--cart-ink: #f6f0ff;
-	--cart-muted: #c7bddf;
-	--cart-accent: #d7a647;
-	--cart-shadow: 0 16px 38px -20px rgba(0, 0, 0, 0.6);
+	--cart-surface: #0b1526;
+	--cart-panel: #0f1c30;
+	--cart-border: rgba(198, 156, 109, 0.2);
+	--cart-ink: #fdfaf6;
+	--cart-muted: #c8bca7;
+	--cart-accent: #c69c6d;
+	--cart-shadow: 0 8px 24px rgba(15, 28, 48, 0.8);
 }
 
 body.theme-light {
-	--cart-surface: #fffaf3;
-	--cart-panel: #fff5e8;
-	--cart-border: #e6d6bd;
-	--cart-ink: #33240f;
-	--cart-muted: #7a5b28;
-	--cart-accent: #c1842b;
-	--cart-shadow: 0 16px 38px -24px rgba(0, 0, 0, 0.28);
+	--cart-surface: #fdfaf6;
+	--cart-panel: #ffffff;
+	--cart-border: rgba(198, 156, 109, 0.3);
+	--cart-ink: #0f1c30;
+	--cart-muted: #4a5c75;
+	--cart-accent: #b58d3d;
+	--cart-shadow: 0 8px 24px rgba(15, 28, 48, 0.06);
 }
 
 .cart-section {
@@ -35,8 +35,8 @@ body.theme-light {
 .cart-panel {
 	background: var(--cart-panel);
 	border: 1px solid var(--cart-border);
-	border-radius: 16px;
-	padding: 18px;
+	border-radius: 8px;
+	padding: 2rem;
 	box-shadow: var(--cart-shadow);
 	color: var(--cart-ink);
 }
@@ -50,6 +50,9 @@ body.theme-light {
 
 .cart-panel h2 {
 	margin: 0;
+	font-family: "Cinzel", serif;
+	letter-spacing: 0.05em;
+	color: var(--cart-ink);
 }
 
 .cart-panel .muted.small {
@@ -58,8 +61,11 @@ body.theme-light {
 }
 
 .cart-summary {
-	background: linear-gradient(180deg, var(--cart-panel), var(--cart-surface));
+	background: var(--cart-panel);
 	border-color: var(--cart-border);
+	position: sticky;
+	top: 100px;
+	align-self: flex-start;
 }
 
 .cart-total-line {
@@ -82,14 +88,26 @@ body.theme-light {
 }
 
 .btn-primary {
-	background: linear-gradient(90deg, #d7a647, #bb7d1d);
-	border: 1px solid #b3741b;
+	background: linear-gradient(135deg, var(--cart-accent), color-mix(in srgb, var(--cart-accent) 80%, #000));
+	border: 1px solid rgba(255, 255, 255, 0.15);
 	color: #fff;
-	box-shadow: 0 12px 24px -14px rgba(0, 0, 0, 0.35);
+	font-weight: 600;
+	font-family: "Cinzel", serif;
+	letter-spacing: 0.05em;
+	text-transform: uppercase;
+	border-radius: 4px;
+	box-shadow: 0 4px 12px rgba(15, 28, 48, 0.1);
+	transition: all 0.3s ease;
 }
 
 .btn-primary:hover {
-	transform: translateY(-1px);
+	transform: translateY(-2px);
+	box-shadow: 0 8px 20px rgba(15, 28, 48, 0.15);
+}
+
+.btn-primary:active {
+	transform: translateY(0);
+	box-shadow: 0 2px 6px rgba(15, 28, 48, 0.1);
 }
 
 .link.subtle {

@@ -38,6 +38,23 @@
 
 .ticket-section-title {
 	text-align: center;
+	font-family: "Cinzel", serif;
+	letter-spacing: 0.1em;
+	color: var(--checkout-ink);
+}
+
+.semantic-fieldset {
+	border: none;
+	padding: 0;
+	margin: 0;
+	width: 100%;
+}
+
+.semantic-legend {
+	display: table;
+	margin: 0 auto;
+	width: auto;
+	margin-bottom: 12px;
 }
 
 .ticket-calendar {
@@ -193,25 +210,25 @@
 /* Theme variables and unified styling for ticket/product checkout */
 :root {
 	/* default: dark */
-	--checkout-bg: #161a24;
-	--checkout-surface: #1f2430;
-	--checkout-border: #2f3645;
-	--checkout-ink: #f5efe5;
-	--checkout-accent: #f4c76b;
-	--checkout-accent-strong: #d08a21;
-	--checkout-muted: #f0c27b;
-	--checkout-shadow: 0 18px 38px -24px rgba(0, 0, 0, 0.7);
+	--checkout-bg: #091221;
+	--checkout-surface: #0b1526;
+	--checkout-border: rgba(198, 156, 109, 0.2);
+	--checkout-ink: #fdfaf6;
+	--checkout-accent: #c69c6d;
+	--checkout-accent-strong: #9e7b54;
+	--checkout-muted: #c8bca7;
+	--checkout-shadow: 0 18px 38px -24px rgba(0, 0, 0, 0.8);
 }
 
 body.theme-light {
-	--checkout-bg: #fffaf3;
-	--checkout-surface: #fff;
-	--checkout-border: #e6d6bd;
-	--checkout-ink: #5f4212;
-	--checkout-accent: #e9a93c;
-	--checkout-accent-strong: #c97a14;
-	--checkout-muted: #d36b00;
-	--checkout-shadow: 0 18px 38px -24px rgba(0, 0, 0, 0.35);
+	--checkout-bg: #f9f5ed;
+	--checkout-surface: #ffffff;
+	--checkout-border: rgba(198, 156, 109, 0.3);
+	--checkout-ink: #0f1c30;
+	--checkout-accent: #b58d3d;
+	--checkout-accent-strong: #8c6a2a;
+	--checkout-muted: #5c6a82;
+	--checkout-shadow: 0 8px 24px rgba(15, 28, 48, 0.05);
 }
 
 .ticket-request {
@@ -262,8 +279,21 @@ body.theme-light {
 }
 
 .ticket-form button.btn {
-	border: 1px solid var(--checkout-accent-strong);
-	background: linear-gradient(90deg, var(--checkout-accent), var(--checkout-accent-strong));
+	border: 1px solid rgba(255,255,255,0.15);
+	background: linear-gradient(135deg, var(--checkout-accent), color-mix(in srgb, var(--checkout-accent) 80%, #000));
+	color: #fff;
+	text-transform: uppercase;
+	letter-spacing: 0.05em;
+	font-weight: 600;
+	font-family: "Cinzel", serif;
+	box-shadow: 0 4px 12px rgba(15, 28, 48, 0.1);
+	transition: all 0.3s ease;
+	border-radius: 4px;
+}
+
+.ticket-form button.btn:hover {
+	transform: translateY(-2px);
+	box-shadow: 0 8px 20px rgba(15, 28, 48, 0.15);
 }
 
 
@@ -275,8 +305,15 @@ body.theme-light {
 }
 
 .checkout-summary h2,
+.checkout-summary h3,
 .checkout-form h2,
-.summary-list li,
+.checkout-form h3 {
+	margin: 0 0 16px;
+	font-family: "Cinzel", serif;
+	letter-spacing: 0.05em;
+	color: var(--checkout-ink);
+}
+
 .summary-total,
 .checkout-form label,
 .checkout-form input,
@@ -337,9 +374,46 @@ body.theme-light {
 	background: var(--checkout-surface);
 	border: 1px solid var(--checkout-border);
 	box-shadow: var(--checkout-shadow);
-	border-radius: 14px;
-	padding: 18px;
+	border-radius: 8px;
+	padding: 24px;
 	color: var(--checkout-ink);
+}
+
+.payment-portal {
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	gap: 1.5rem;
+	max-width: 720px;
+	margin: 0 auto;
+}
+
+.payment-receipt {
+	width: 100%;
+	background: var(--checkout-bg);
+	border: 1px dashed var(--checkout-border);
+	border-radius: 8px;
+	padding: 1.5rem;
+	color: var(--checkout-ink);
+	text-align: center;
+}
+
+.receipt-details summary {
+	cursor: pointer;
+	font-weight: 600;
+	color: var(--checkout-accent);
+	margin-top: 0.5rem;
+}
+
+.compact-receipt {
+	margin-top: 1rem;
+	text-align: left;
+	border-top: 1px solid var(--checkout-border);
+	padding-top: 1rem;
+}
+
+.centered-form {
+	width: 100%;
 }
 
 .summary-list {
@@ -424,17 +498,19 @@ body.theme-light {
 	display: flex;
 	gap: 10px;
 	align-items: flex-start;
-	border: 1px solid var(--checkout-border);
-	background: var(--checkout-surface);
+	border: 2px solid transparent;
+	background: linear-gradient(var(--checkout-surface), var(--checkout-surface)) padding-box, linear-gradient(135deg, var(--checkout-border), transparent) border-box;
 	border-radius: 12px;
-	padding: 10px 12px;
+	padding: 12px 14px;
 	cursor: pointer;
-	transition: border-color 0.2s ease, box-shadow 0.2s ease;
+	transition: all 0.3s ease;
+	position: relative;
 }
 
 .option-card:hover {
-	border-color: var(--checkout-accent);
-	box-shadow: var(--checkout-shadow);
+	transform: translateY(-2px);
+	background: linear-gradient(color-mix(in srgb, var(--checkout-surface) 90%, var(--checkout-accent)), color-mix(in srgb, var(--checkout-surface) 90%, var(--checkout-accent))) padding-box, linear-gradient(135deg, var(--checkout-accent), transparent) border-box;
+	box-shadow: 0 12px 24px -14px rgba(0,0,0,0.5);
 }
 
 .option-card input {
@@ -468,8 +544,9 @@ body.theme-light {
 .checkout-form input:focus,
 .checkout-form textarea:focus {
 	outline: none;
-	border-color: var(--checkout-accent);
-	box-shadow: 0 0 0 2px color-mix(in srgb, var(--checkout-accent) 35%, transparent);
+	border-color: var(--checkout-accent-strong);
+	box-shadow: 0 0 0 3px color-mix(in srgb, var(--checkout-accent-strong) 25%, transparent);
+	background: var(--checkout-bg);
 }
 
 .stack {

@@ -339,10 +339,10 @@ document.addEventListener("DOMContentLoaded", () => {
   const focusableInModal = () =>
     quickViewModal
       ? Array.from(
-          quickViewModal.querySelectorAll(
-            'button, [href], input, select, textarea, [tabindex]:not([tabindex="-1"])'
-          )
-        ).filter((el) => !el.hasAttribute("disabled"))
+        quickViewModal.querySelectorAll(
+          'button, [href], input, select, textarea, [tabindex]:not([tabindex="-1"])'
+        )
+      ).filter((el) => !el.hasAttribute("disabled"))
       : [];
 
   const trapFocus = (event) => {

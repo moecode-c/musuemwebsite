@@ -16,55 +16,61 @@
       <span class="step">3</span>
       <span class="step">4</span>
     </div>
-    <h2 class="ticket-section-title">Select Date</h2>
-    <div class="ticket-calendar">
-      <input type="date" id="ticket-date" name="date" form="ticket-request-form" required />
-      <p class="ticket-hint">Unavailable dates have reached capacity.</p>
-    </div>
+    <fieldset class="semantic-fieldset">
+      <legend class="ticket-section-title semantic-legend">Select Date</legend>
+      <div class="ticket-calendar">
+        <input type="date" id="ticket-date" name="date" form="ticket-request-form" required />
+        <p class="ticket-hint">Unavailable dates have reached capacity.</p>
+      </div>
+    </fieldset>
 
-    <h2 class="ticket-section-title">Select Entry Time Slot</h2>
-    <div class="ticket-slots" role="group" aria-label="Time slots">
-      <label class="ticket-slot">
-        <input type="radio" name="timeSlot" value="08:30 - 11:00" form="ticket-request-form" required />
-        <span>08:30 - 11:00</span>
-      </label>
-      <label class="ticket-slot">
-        <input type="radio" name="timeSlot" value="11:00 - 13:00" form="ticket-request-form" />
-        <span>11:00 - 13:00</span>
-      </label>
-      <label class="ticket-slot">
-        <input type="radio" name="timeSlot" value="13:00 - 15:00" form="ticket-request-form" />
-        <span>13:00 - 15:00</span>
-      </label>
-    </div>
+    <fieldset class="semantic-fieldset">
+      <legend class="ticket-section-title semantic-legend">Select Entry Time Slot</legend>
+      <div class="ticket-slots" role="group" aria-label="Time slots">
+        <label class="ticket-slot">
+          <input type="radio" name="timeSlot" value="08:30 - 11:00" form="ticket-request-form" required />
+          <span>08:30 - 11:00</span>
+        </label>
+        <label class="ticket-slot">
+          <input type="radio" name="timeSlot" value="11:00 - 13:00" form="ticket-request-form" />
+          <span>11:00 - 13:00</span>
+        </label>
+        <label class="ticket-slot">
+          <input type="radio" name="timeSlot" value="13:00 - 15:00" form="ticket-request-form" />
+          <span>13:00 - 15:00</span>
+        </label>
+      </div>
+    </fieldset>
 
-    <h2 class="ticket-section-title">Select Tickets</h2>
-    <div class="ticket-groups">
-      <% const groupLabels = { egyptian: "Egyptians", arab: "Arabs or Other Nationalities", foreigner: "Expatriates" }; %>
-      <% const audienceLabels = { adult: "Adult", student: "Student", child: "Child", senior: "Senior" }; %>
-      <% Object.keys(groupLabels).forEach((groupKey) => { %>
-        <details class="ticket-group">
-          <summary><%= groupLabels[groupKey] %></summary>
-          <div class="ticket-group-body">
-            <% (groupedTickets[groupKey] || []).forEach((ticket) => { %>
-              <label class="ticket-option">
-                <input
-                  type="radio"
-                  name="ticketOption"
-                  value="<%= ticket.group %>:<%= ticket.audience %>"
-                  data-group="<%= ticket.group %>"
-                  data-audience="<%= ticket.audience %>"
-                  form="ticket-request-form"
-                  required
-                />
-                <span><%= audienceLabels[ticket.audience] || ticket.audience %></span>
-                <strong>EGP <%= ticket.price.toFixed(2) %></strong>
-              </label>
-            <% }) %>
-          </div>
-        </details>
-      <% }) %>
-    </div>
+    <fieldset class="semantic-fieldset">
+      <legend class="ticket-section-title semantic-legend">Select Tickets</legend>
+      <div class="ticket-groups">
+        <% const groupLabels = { egyptian: "Egyptians", arab: "Arabs or Other Nationalities", foreigner: "Expatriates" }; %>
+        <% const audienceLabels = { adult: "Adult", student: "Student", child: "Child", senior: "Senior" }; %>
+        <% Object.keys(groupLabels).forEach((groupKey) => { %>
+          <details class="ticket-group">
+            <summary><%= groupLabels[groupKey] %></summary>
+            <div class="ticket-group-body">
+              <% (groupedTickets[groupKey] || []).forEach((ticket) => { %>
+                <label class="ticket-option">
+                  <input
+                    type="radio"
+                    name="ticketOption"
+                    value="<%= ticket.group %>:<%= ticket.audience %>"
+                    data-group="<%= ticket.group %>"
+                    data-audience="<%= ticket.audience %>"
+                    form="ticket-request-form"
+                    required
+                  />
+                  <span><%= audienceLabels[ticket.audience] || ticket.audience %></span>
+                  <strong>EGP <%= ticket.price.toFixed(2) %></strong>
+                </label>
+              <% }) %>
+            </div>
+          </details>
+        <% }) %>
+      </div>
+    </fieldset>
 
     <form class="form ticket-form" id="ticket-request-form">
       <input type="hidden" name="category" id="ticket-category" required />

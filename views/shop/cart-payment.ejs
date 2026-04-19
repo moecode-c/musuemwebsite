@@ -10,32 +10,35 @@
   </section>
 
   <section class="section">
-    <div class="container checkout-shell">
-      <div class="checkout-summary">
+    <div class="container payment-portal">
+      
+      <div class="payment-receipt">
         <div class="checkout-meta">
           <span class="step-pill">Step 2 of 2</span>
           <span class="muted">Secure payment</span>
         </div>
-        <h2>Your Items</h2>
+        <h2>Order Receipt</h2>
         <% if (items && items.length) { %>
-          <ul class="summary-list">
-            <% items.forEach((item) => { %>
-              <li>
-                <div>
-                  <strong><%= item.name %></strong>
-                  <p class="muted">EGP <%= item.price.toFixed(2) %> × <%= item.quantity %></p>
-                </div>
-                <div class="price">EGP <%= (item.price * item.quantity).toFixed(2) %></div>
-              </li>
-            <% }) %>
-          </ul>
-          <div class="summary-total">Total: EGP <%= total %></div>
-          <p class="muted">Payment is a demo step. No charges are applied.</p>
+          <details class="receipt-details">
+            <summary>View <strong><%= items.length %></strong> Items (Total: EGP <%= total %>)</summary>
+            <ul class="summary-list compact-receipt">
+              <% items.forEach((item) => { %>
+                <li>
+                  <div>
+                    <strong><%= item.name %></strong>
+                  </div>
+                  <div class="price">EGP <%= (item.price * item.quantity).toFixed(2) %></div>
+                </li>
+              <% }) %>
+            </ul>
+          </details>
+          <p class="muted small-note">Payment is a demo step. No charges are applied.</p>
         <% } else { %>
           <p class="muted">Your cart is empty.</p>
         <% } %>
       </div>
-      <div class="checkout-form">
+
+      <div class="checkout-form centered-form">
         <h2>Payment & Delivery</h2>
         <form class="form" id="payment-delivery-form" method="post" action="/cart/payment">
           <div class="stack">
