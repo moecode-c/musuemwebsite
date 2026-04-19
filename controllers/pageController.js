@@ -33,13 +33,39 @@ const panelLabelByRole = {
 
 const getPanelLabelByRole = (role) => panelLabelByRole[role] || "Employee Panel";
 
+const DEFAULT_EXHIBIT_IMAGE = "/assets/images/pillarsbg.png";
+
+const normalizeImageUrl = (rawUrl, fallback = DEFAULT_EXHIBIT_IMAGE) => {
+  if (typeof rawUrl !== "string") return fallback;
+
+  let normalized = rawUrl.trim();
+  if (!normalized) return fallback;
+
+  normalized = normalized.replace(/\\/g, "/");
+
+  if (normalized.startsWith("public/")) {
+    normalized = normalized.slice("public".length);
+  }
+
+  if (/^(https?:)?\/\//i.test(normalized) || normalized.startsWith("data:") || normalized.startsWith("blob:")) {
+    return encodeURI(normalized);
+  }
+
+  if (!normalized.startsWith("/")) {
+    normalized = `/${normalized}`;
+  }
+
+  return encodeURI(normalized);
+};
+
 const buildCards = (items, type) => {
   return items
     .map((item) => {
       if (type === "exhibit") {
+        const imageUrl = normalizeImageUrl(item.imageUrl);
         return `
           <article class="card">
-            <img src="${item.imageUrl}" alt="${item.title}">
+            <img src="${imageUrl}" alt="${item.title}" onerror="this.onerror=null;this.src='${DEFAULT_EXHIBIT_IMAGE}';">
             <h3>${item.title}</h3>
             <p>${item.description.substring(0, 120)}...</p>
             <a class="btn" href="/exhibits/${item._id}">View Details</a>
@@ -122,6 +148,11 @@ const location = asyncHandler(async (req, res) => {
   res.render("about/location", { pageTitle: "Map", pageCss: "location", pinsHtml, commonPins });
 });
 
+const exploreAges = (req, res) =>
+  res.render("exhibits/explore-ages", {
+    pageTitle: "Explore the Ages",
+    pageCss: "explore-ages"
+  });
 const artifactEraInsights = {
   "early dynastic": "State unification and royal symbolism emerged in this phase, shaping the earliest formal dynastic traditions.",
   "old kingdom": "Known for pyramid-building and centralized court workshops, this era refined monumentality and royal funerary arts.",
@@ -255,7 +286,7 @@ const buildExhibitDetailsHref = (id, returnTo) => {
 const buildArtifactCardModel = (item, exhibitsBasePath, returnTo) => ({
   _id: item._id,
   title: item.title,
-  imageUrl: item.imageUrl,
+  imageUrl: normalizeImageUrl(item.imageUrl),
   description: item.description || "",
   eraInfo: resolveArtifactEraInfo(item),
   era: item.era,
@@ -269,7 +300,7 @@ const buildArtifactCardModel = (item, exhibitsBasePath, returnTo) => ({
 const buildTimelineCardModel = (item, returnTo) => ({
   _id: item._id,
   title: item.title,
-  imageUrl: item.imageUrl,
+  imageUrl: normalizeImageUrl(item.imageUrl),
   description: item.description || "",
   era: item.era,
   period: item.period,
@@ -338,7 +369,7 @@ const renderExhibitsPage = async (req, res, categoryKey, basePath) => {
   const timelineItems = timelineSourceItems.map((item) => buildTimelineCardModel(item, returnTo));
   const { heroTitle, heroSubtitle } = getCategoryTitles(t, categoryKey);
 
-  res.render("exhibits/index", {
+  res.render("exhibits/exhibits", {
     pageTitle: heroTitle,
     pageCss: "exhibits",
     heroTitle,
@@ -363,6 +394,34 @@ const exhibits = asyncHandler(async (req, res) => {
 const exhibitsPharaoh = asyncHandler(async (req, res) => renderExhibitsPage(req, res, "pharaoh", "/exhibits/pharaoh"));
 const exhibitsIslamic = asyncHandler(async (req, res) => renderExhibitsPage(req, res, "islamic", "/exhibits/islamic"));
 const exhibitsChristian = asyncHandler(async (req, res) => renderExhibitsPage(req, res, "christian", "/exhibits/christian"));
+const artifactPopup = asyncHandler(async (req, res) => {
+  const exhibitId = typeof req.query.id === "string" ? req.query.id : "";
+  let exhibit = null;
+
+  if (exhibitId) {
+    exhibit = await Exhibit.findById(exhibitId);
+  }
+
+  if (!exhibit) {
+    exhibit = await Exhibit.findOne().sort({ createdAt: -1 });
+  }
+
+  if (!exhibit) {
+    return res.status(404).render("404", { pageTitle: "Not Found", message: "Exhibit not found" });
+  }
+
+  const eraInfo = resolveArtifactEraInfo(exhibit);
+  const eraExtras = resolveArtifactEraExtras(exhibit);
+  const popupImageUrl = normalizeImageUrl(exhibit.imageUrl);
+
+  return res.render("exhibits/artifactPopup", {
+    pageTitle: exhibit.title,
+    exhibit,
+    eraInfo,
+    eraExtras,
+    popupImageUrl
+  });
+});
 
 const exhibitDetails = asyncHandler(async (req, res) => {
   const exhibit = await Exhibit.findById(req.params.id);
@@ -375,13 +434,17 @@ const exhibitDetails = asyncHandler(async (req, res) => {
     : "/exhibits";
   const eraInfo = resolveArtifactEraInfo(exhibit);
   const eraExtras = resolveArtifactEraExtras(exhibit);
-  res.render("exhibits/details", { pageTitle: exhibit.title, pageCss: "exhibits", exhibit, backHref, eraInfo, eraExtras });
+  const detailImageUrl = normalizeImageUrl(exhibit.imageUrl);
+  res.render("exhibits/artifactDetails", { pageTitle: exhibit.title, pageCss: "exhibits", exhibit, backHref, eraInfo, eraExtras, detailImageUrl });
 });
 
-const virtualTour = (req, res) => res.render("virtual-tour/index", { pageTitle: "Virtual Tour" });
-const virtualTourIslamic = (req, res) => res.render("virtual-tour/islamic", { pageTitle: "Islamic Virtual Tour" });
-const virtualTourPharaoh = (req, res) => res.render("virtual-tour/pharaoh", { pageTitle: "Pharaohs Virtual Tour" });
-const virtualTourChristian = (req, res) => res.render("virtual-tour/christian", { pageTitle: "Christian Virtual Tour" });
+const virtualTour = (req, res) => res.render("virtual-tour/index", { pageTitle: "Virtual Tour", pageCss: "virtual-tour" });
+const virtualTourIslamic = (req, res) =>
+  res.render("virtual-tour/islamic", { pageTitle: "Islamic Virtual Tour", pageCss: "virtual-tour" });
+const virtualTourPharaoh = (req, res) =>
+  res.render("virtual-tour/pharaoh", { pageTitle: "Pharaohs Virtual Tour", pageCss: "virtual-tour" });
+const virtualTourChristian = (req, res) =>
+  res.render("virtual-tour/christian", { pageTitle: "Christian Virtual Tour", pageCss: "virtual-tour" });
 const games = (req, res) => res.render("games/index", { pageTitle: "Games" });
 const gameQuiz = (req, res) => res.render("games/quiz", { pageTitle: "Quiz Game" });
 const gameExplorer = (req, res) => res.render("games/explorer", { pageTitle: "Explorer Game", pageCss: "pyramid-builder" });
@@ -520,10 +583,12 @@ module.exports = {
   accessibility,
   newsletter,
   location,
+  exploreAges,
   exhibits,
   exhibitsPharaoh,
   exhibitsIslamic,
   exhibitsChristian,
+  artifactPopup,
   exhibitDetails,
   virtualTour,
   virtualTourIslamic,

@@ -21,7 +21,8 @@ const create = asyncHandler(async (req, res) => {
   if (req.file && req.file.fieldname === "image") {
     const imageUpload = await uploadBuffer(req.file.buffer, {
       folder: "exhibits/images",
-      resource_type: "image"
+      resource_type: "image",
+      originalFilename: req.file.originalname
     });
     imageUrl = imageUpload.secure_url;
   }
@@ -41,10 +42,18 @@ const createWithFiles = asyncHandler(async (req, res) => {
   const imageFile = req.files?.image?.[0];
   const modelFile = req.files?.model?.[0];
   const imageUpload = imageFile
-    ? await uploadBuffer(imageFile.buffer, { folder: "exhibits/images", resource_type: "image" })
+    ? await uploadBuffer(imageFile.buffer, {
+      folder: "exhibits/images",
+      resource_type: "image",
+      originalFilename: imageFile.originalname
+    })
     : null;
   const modelUpload = modelFile
-    ? await uploadBuffer(modelFile.buffer, { folder: "exhibits/models", resource_type: "raw" })
+    ? await uploadBuffer(modelFile.buffer, {
+      folder: "exhibits/models",
+      resource_type: "raw",
+      originalFilename: modelFile.originalname
+    })
     : null;
 
   const imageUrl = imageUpload?.secure_url || req.body.imageUrl || "";
@@ -72,7 +81,8 @@ const update = asyncHandler(async (req, res) => {
   if (imageFile) {
     const imageUpload = await uploadBuffer(imageFile.buffer, {
       folder: "exhibits/images",
-      resource_type: "image"
+      resource_type: "image",
+      originalFilename: imageFile.originalname
     });
     updates.imageUrl = imageUpload.secure_url;
   }
@@ -80,7 +90,8 @@ const update = asyncHandler(async (req, res) => {
   if (modelFile) {
     const modelUpload = await uploadBuffer(modelFile.buffer, {
       folder: "exhibits/models",
-      resource_type: "raw"
+      resource_type: "raw",
+      originalFilename: modelFile.originalname
     });
     updates.modelUrl = modelUpload.secure_url;
   }

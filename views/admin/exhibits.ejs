@@ -37,6 +37,7 @@
       <input type="file" name="image" accept="image/*" required />
       <label><%= language === 'ar' ? 'نموذج ثلاثي الأبعاد (.glb/.gltf)' : '3D Model (.glb/.gltf)' %></label>
       <input type="file" name="model" accept=".glb,.gltf" required />
+      <p class="admin-map-note"><%= language === 'ar' ? 'ارفع ملف .glb أو .gltf. مطلوب عند الإنشاء واختياري عند التعديل.' : 'Upload a .glb or .gltf model. Required when creating. Optional when editing.' %></p>
       <button class="btn admin-submit" type="submit"><%= language === 'ar' ? 'إنشاء معرض' : 'Create Exhibit' %></button>
       <button class="btn btn-secondary admin-cancel" type="button"><%= language === 'ar' ? 'إلغاء' : 'Cancel' %></button>
       <p class="form-message" id="admin-exhibit-message"></p>
