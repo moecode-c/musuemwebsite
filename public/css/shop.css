@@ -15,7 +15,7 @@
 	color: var(--shop-ink);
 }
 
-.theme-light.page-shop .shop-page {
+.theme-light .page-shop .shop-page {
 	--shop-ink: #111824;
 	--shop-ink-soft: #5c6a82;
 	--shop-cream: #fbf8f3;

@@ -499,3 +499,136 @@ body.vrx-body-fullscreen-lock {
     grid-template-columns: 1fr;
   }
 }
+
+/* Light theme support */
+
+.theme-light .page-vr-experience {
+  background:
+    radial-gradient(1100px 560px at 8% -12%, rgba(188, 143, 56, 0.14), transparent 60%),
+    radial-gradient(900px 560px at 96% -8%, rgba(138, 102, 45, 0.1), transparent 62%),
+    linear-gradient(180deg, #f8f1e3 0%, #f3e8d6 100%);
+}
+
+.theme-light .page-vr-experience .vrx-kicker {
+  color: #8f6c2a;
+}
+
+.theme-light .page-vr-experience .vrx-title {
+  color: #2a2238;
+  text-shadow: 0 10px 24px rgba(154, 111, 31, 0.2);
+}
+
+.theme-light .page-vr-experience .vrx-subtitle {
+  color: #554c63;
+}
+
+.theme-light .page-vr-experience .vrx-btn {
+  border: 1px solid rgba(180, 140, 47, 0.35);
+  box-shadow: 0 10px 20px rgba(117, 88, 40, 0.18);
+}
+
+.theme-light .page-vr-experience .vrx-btn.is-enabled {
+  border-color: rgba(180, 140, 47, 0.72);
+  box-shadow: 0 0 0 1px rgba(180, 140, 47, 0.24), 0 10px 20px rgba(117, 88, 40, 0.22);
+}
+
+.theme-light .page-vr-experience .vrx-viewer-shell {
+  border-color: rgba(180, 140, 47, 0.42);
+  background: #efe3d0;
+  box-shadow: 0 20px 36px rgba(117, 88, 40, 0.2);
+}
+
+.theme-light .page-vr-experience .vrx-hotspot {
+  border-color: rgba(180, 140, 47, 0.72);
+  background: rgba(255, 248, 236, 0.94);
+  color: #5a451f;
+  box-shadow: 0 8px 14px rgba(117, 88, 40, 0.2);
+}
+
+.theme-light .page-vr-experience .vrx-hotspot:hover,
+.theme-light .page-vr-experience .vrx-hotspot.is-active {
+  border-color: rgba(154, 111, 31, 0.9);
+  background: rgba(246, 230, 202, 0.98);
+}
+
+.theme-light .page-vr-experience .vrx-caption {
+  color: #2d253d;
+  background: rgba(255, 248, 236, 0.92);
+  border-color: rgba(180, 140, 47, 0.42);
+}
+
+.theme-light .page-vr-experience .vrx-scene-btn.is-active {
+  border-color: rgba(180, 140, 47, 0.76);
+  box-shadow: 0 0 0 1px rgba(180, 140, 47, 0.24), 0 12px 22px rgba(117, 88, 40, 0.2);
+}
+
+.theme-light .page-vr-experience .vrx-note {
+  color: #645975;
+}
+
+.theme-light .page-vr-experience .vrx-loader {
+  background: radial-gradient(ellipse at center, #f6ecdb 0%, #efe2ce 100%);
+}
+
+.theme-light .page-vr-experience .vrx-loader p {
+  color: #8f6c2a;
+}
+
+.theme-light .page-vr-experience .vrx-loader-spinner {
+  border-color: rgba(154, 111, 31, 0.2);
+  border-top-color: #9a6f1f;
+}
+
+.theme-light .page-vr-experience .vrx-btn--cardboard {
+  border-color: rgba(161, 121, 41, 0.52);
+}
+
+.theme-light .page-vr-experience .vrx-btn--cardboard .fas {
+  color: #9a6f1f;
+}
+
+.theme-light .page-vr-experience .vrx-btn--cardboard.is-active {
+  border-color: rgba(46, 150, 84, 0.7);
+  box-shadow: 0 0 0 1px rgba(46, 150, 84, 0.24), 0 10px 20px rgba(117, 88, 40, 0.2);
+}
+
+.theme-light .page-vr-experience .vrx-mobile-tips {
+  border-color: rgba(180, 140, 47, 0.34);
+  background: linear-gradient(180deg, rgba(255, 248, 236, 0.8), rgba(246, 230, 202, 0.78));
+}
+
+.theme-light .page-vr-experience .vrx-tip .fas {
+  color: #9a6f1f;
+}
+
+.theme-light .page-vr-experience .vrx-tip span {
+  color: #5d526f;
+}
+
+.theme-light .page-vr-experience .vrx-back-link {
+  color: #76613b;
+}
+
+.theme-light .page-vr-experience .vrx-back-link:hover {
+  color: #9a6f1f;
+}
+
+.theme-light .page-vr-experience .vrx-cardboard-exit {
+  color: #3b2f17;
+  background: rgba(255, 248, 236, 0.94);
+  border-color: rgba(180, 140, 47, 0.58);
+}
+
+.theme-light .page-vr-experience .vrx-cardboard-exit:hover {
+  background: rgba(246, 230, 202, 0.98);
+}
+
+.theme-light .tour-era-card--vr .tour-era-chip {
+  color: #9a6f1f;
+  border-color: rgba(180, 140, 47, 0.56);
+  background: rgba(180, 140, 47, 0.12);
+}
+
+.theme-light .tour-era-card--vr:hover {
+  border-color: rgba(180, 140, 47, 0.7) !important;
+}
