@@ -2,8 +2,8 @@
 
 <section class="admin-page-header">
   <div>
-    <h1>Manage Map Pins</h1>
-    <p>Place and edit pins on the museum map.</p>
+    <h1><%= language === 'ar' ? 'إدارة دبابيس الخريطة' : 'Manage Map Pins' %></h1>
+    <p><%= language === 'ar' ? 'ضع دبابيس على خريطة المتحف وعدّلها، ثم ارسم مناطق التنظيف لمهام الموظفين.' : 'Place and edit pins on the museum map, then draw cleaning zones for staff tasks.' %></p>
   </div>
 </section>
 
@@ -11,18 +11,18 @@
   <div class="admin-split">
     <div>
       <div class="map-wrapper admin-map" id="admin-map">
-        <img src="/assets/map/map.png" alt="Museum map" class="map-image" />
+        <img src="/assets/map/map.png" alt="<%= language === 'ar' ? 'خريطة المتحف' : 'Museum map' %>" class="map-image" />
         <div class="map-layer">
           <%- pinsHtml %>
         </div>
       </div>
-      <p class="hint">Click on the map to add a pin.</p>
+      <p class="hint"><%= language === 'ar' ? 'انقر على الخريطة لإضافة دبوس.' : 'Click on the map to add a pin.' %></p>
     </div>
     <div class="admin-panel">
       <form class="form" id="admin-map-form">
-        <label>Label</label>
+        <label><%= language === 'ar' ? 'التسمية' : 'Label' %></label>
         <input type="text" name="label" required />
-        <label>Description</label>
+        <label><%= language === 'ar' ? 'الوصف' : 'Description' %></label>
         <textarea name="description" required></textarea>
         <label>X (%)</label>
         <input type="number" name="x" min="0" max="100" step="any" required />
@@ -30,17 +30,40 @@
         <input type="number" name="y" min="0" max="100" step="any" required />
         <label class="checkbox-row">
           <input type="checkbox" name="isCommon" />
-          Mark as most common pin
+          <%= language === 'ar' ? 'تحديد كدبوس الأكثر شيوعاً' : 'Mark as most common pin' %>
         </label>
-        <button class="btn admin-submit" type="submit">Create Pin</button>
-        <button class="btn btn-secondary admin-cancel" type="button">Cancel</button>
+        <button class="btn admin-submit" type="submit"><%= language === 'ar' ? 'إنشاء دبوس' : 'Create Pin' %></button>
+        <button class="btn btn-secondary admin-cancel" type="button"><%= language === 'ar' ? 'إلغاء' : 'Cancel' %></button>
         <p class="form-message" id="admin-map-message"></p>
       </form>
+
+      <form class="form" id="admin-zone-form">
+        <h3><%= language === 'ar' ? 'مناطق التنظيف' : 'Cleaning Zones' %></h3>
+        <p class="admin-map-note"><%= language === 'ar' ? 'انقر على نقاط الخريطة لرسم منطقة متعددة الأضلاع.' : 'Click map points to build a polygon zone.' %></p>
+        <label><%= language === 'ar' ? 'اسم المنطقة' : 'Zone Name' %></label>
+        <input type="text" name="zoneName" required />
+        <label><%= language === 'ar' ? 'الطابق' : 'Floor' %></label>
+        <input type="text" name="floor" value="<%= language === 'ar' ? 'الطابق الأرضي' : 'Ground' %>" required />
+        <label><%= language === 'ar' ? 'الوصف' : 'Description' %></label>
+        <textarea name="description"></textarea>
+        <input type="hidden" name="polygon" />
+        <div class="admin-actions">
+          <button class="btn" type="submit"><%= language === 'ar' ? 'إنشاء منطقة' : 'Create Zone' %></button>
+          <button class="btn btn-secondary" type="button" id="admin-zone-clear-points"><%= language === 'ar' ? 'مسح النقاط' : 'Clear Points' %></button>
+        </div>
+        <p class="form-message" id="admin-zone-message"></p>
+      </form>
+
+      <label><%= language === 'ar' ? 'تعيين عامل نظافة' : 'Assign Janitor' %></label>
+      <select id="admin-zone-assign-user"></select>
+
       <div class="admin-map-lists">
-        <h3>Most Common Pins</h3>
+        <h3><%= language === 'ar' ? 'الدبابيس الأكثر شيوعاً' : 'Most Common Pins' %></h3>
         <div id="admin-common-map-list" class="admin-list"></div>
-        <h3>All Pins</h3>
+        <h3><%= language === 'ar' ? 'جميع الدبابيس' : 'All Pins' %></h3>
         <div id="admin-map-list" class="admin-list"></div>
+        <h3><%= language === 'ar' ? 'مناطق التنظيف' : 'Cleaning Zones' %></h3>
+        <div id="admin-zone-list" class="admin-list"></div>
       </div>
     </div>
   </div>

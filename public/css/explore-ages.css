@@ -1,0 +1,993 @@
+.page-explore-ages {
+  --ages-midnight: #06255b;
+  --ages-midnight-deep: #04143a;
+  --ages-midnight-soft: #0b2f74;
+  --ages-gold: #deb356;
+  --ages-gold-soft: #f0d890;
+  --ages-ivory: #f4ecdf;
+  --ages-border: rgba(214, 173, 88, 0.56);
+  --ages-shadow: rgba(0, 0, 0, 0.42);
+  background:
+    radial-gradient(circle at 24% -12%, rgba(214, 173, 82, 0.2), transparent 35%),
+    radial-gradient(circle at 82% -8%, rgba(94, 129, 206, 0.22), transparent 40%),
+    linear-gradient(180deg, #082968 0%, #051d4f 24%, #04163f 61%, #03122f 100%);
+  color: var(--ages-ivory);
+}
+
+.ages-page {
+  overflow: hidden;
+}
+
+.page-explore-ages .site-header {
+  background: radial-gradient(circle at top, #2a1b45, #120e1f 65%);
+}
+
+.theme-light .page-explore-ages .site-header {
+  background: linear-gradient(120deg, #fff5e4, #f1e3c9);
+}
+
+.ages-hero {
+  position: relative;
+  min-height: clamp(420px, 68vh, 640px);
+  display: flex;
+  align-items: flex-end;
+  padding: 128px 0 74px;
+  background:
+    linear-gradient(120deg, rgba(5, 14, 36, 0.82) 12%, rgba(5, 17, 44, 0.44) 48%, rgba(6, 20, 52, 0.78) 100%),
+    linear-gradient(180deg, rgba(3, 10, 28, 0.2) 0%, rgba(3, 11, 30, 0.88) 100%),
+    url("/assets/images/pillarsbg.png") center/cover no-repeat;
+  border-bottom: 1px solid var(--ages-border);
+}
+
+.ages-hero::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  height: 150px;
+  background: linear-gradient(180deg, rgba(3, 12, 32, 0), rgba(4, 15, 40, 0.95));
+  pointer-events: none;
+}
+
+.ages-hero-fog {
+  position: absolute;
+  inset: 0;
+  background:
+    radial-gradient(circle at 80% 54%, rgba(236, 194, 108, 0.34), rgba(236, 194, 108, 0) 40%),
+    radial-gradient(circle at 87% 65%, rgba(255, 213, 140, 0.18), rgba(255, 213, 140, 0) 35%);
+  pointer-events: none;
+  mix-blend-mode: screen;
+}
+
+.ages-hero-inner {
+  position: relative;
+  z-index: 1;
+  max-width: 700px;
+}
+
+.ages-kicker {
+  margin: 0 0 12px;
+  text-transform: uppercase;
+  letter-spacing: 0.35em;
+  font-size: 0.68rem;
+  color: var(--ages-gold-soft);
+  font-family: "Cinzel Decorative", "Cinzel", serif;
+}
+
+.ages-hero h1 {
+  margin: 0;
+  font-size: clamp(2.35rem, 6.8vw, 4.2rem);
+  line-height: 1.02;
+  text-transform: uppercase;
+  color: #f8f1e7;
+  font-style: italic;
+  text-shadow: 0 10px 24px rgba(0, 0, 0, 0.5);
+}
+
+.ages-intro {
+  max-width: 560px;
+  margin: 16px 0 22px;
+  color: #efe5d3;
+  font-weight: 500;
+  font-size: clamp(0.95rem, 1.9vw, 1.08rem);
+}
+
+.ages-cta {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 40px;
+  padding: 0 18px;
+  text-transform: uppercase;
+  letter-spacing: 0.14em;
+  font-size: 0.66rem;
+  font-weight: 700;
+  border: 1px solid rgba(234, 197, 117, 0.95);
+  color: #281608;
+  background: linear-gradient(180deg, #e3be6d, #c79b45);
+  box-shadow: 0 10px 24px rgba(0, 0, 0, 0.3);
+  transition: transform 0.24s ease, box-shadow 0.24s ease, filter 0.24s ease;
+}
+
+.ages-cta:hover {
+  transform: translateY(-2px);
+  filter: brightness(1.06);
+  box-shadow: 0 12px 24px rgba(0, 0, 0, 0.34);
+}
+
+.ages-section {
+  position: relative;
+  padding: 52px 0;
+}
+
+.ages-section-eras {
+  background:
+    radial-gradient(circle at 28% -22%, rgba(225, 188, 105, 0.18), transparent 44%),
+    radial-gradient(circle at 84% -10%, rgba(105, 139, 214, 0.22), transparent 40%),
+    linear-gradient(180deg, #062763 0%, #072459 42%, #041a43 100%);
+  box-shadow: inset 0 -24px 34px rgba(2, 11, 31, 0.32);
+}
+
+.ages-section-eras::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(180deg, rgba(5, 19, 48, 0) 0%, rgba(3, 13, 34, 0.34) 100%);
+  pointer-events: none;
+}
+
+.ages-section-eras .container {
+  position: relative;
+  z-index: 1;
+  width: min(1120px, 92%);
+}
+
+.ages-section h2 {
+  margin: 0;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  font-size: clamp(1.85rem, 4vw, 2.7rem);
+  color: #f7efe2;
+}
+
+.ages-section-kicker {
+  margin: 4px 0 22px;
+  font-size: 0.62rem;
+  text-transform: uppercase;
+  letter-spacing: 0.25em;
+  color: var(--ages-gold-soft);
+  font-family: "Cinzel Decorative", "Cinzel", serif;
+}
+
+.ages-section-eras h2 {
+  text-transform: uppercase;
+  letter-spacing: 0.03em;
+  font-size: clamp(1.9rem, 3vw, 2.45rem);
+  color: #f2eadc;
+}
+
+.ages-section-eras .ages-section-kicker {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin: 2px 0 18px;
+  font-size: 0.56rem;
+  letter-spacing: 0.16em;
+  color: #e0ba68;
+}
+
+.ages-section-eras .ages-section-kicker::before {
+  content: "";
+  width: 36px;
+  height: 2px;
+  background: linear-gradient(90deg, rgba(228, 190, 103, 0.2), rgba(228, 190, 103, 0.95));
+}
+
+.era-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 10px;
+  max-width: 100%;
+  margin-top: 0;
+}
+
+.era-card {
+  position: relative;
+  isolation: isolate;
+  min-height: clamp(300px, 34vw, 420px);
+  border: 1px solid rgba(118, 159, 222, 0.36);
+  overflow: hidden;
+  background: #031742;
+  box-shadow:
+    0 24px 38px rgba(2, 10, 31, 0.62),
+    0 10px 22px rgba(1, 8, 24, 0.58),
+    0 2px 0 rgba(210, 170, 88, 0.18),
+    inset 0 0 0 1px rgba(227, 182, 95, 0.24),
+    inset 0 -18px 34px rgba(2, 8, 22, 0.24);
+  transition: transform 0.3s ease, box-shadow 0.3s ease, border-color 0.3s ease;
+}
+
+.era-card:hover,
+.era-card:focus-within {
+  transform: translateY(-5px) scale(1.01);
+  border-color: rgba(236, 198, 112, 0.8);
+  box-shadow:
+    0 24px 36px rgba(1, 8, 25, 0.72),
+    0 12px 22px rgba(2, 10, 30, 0.62),
+    0 0 0 1px rgba(239, 203, 124, 0.2),
+    inset 0 0 0 1px rgba(239, 203, 124, 0.38),
+    inset 0 -18px 30px rgba(2, 8, 22, 0.3);
+}
+
+.era-card img {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  filter: saturate(1.08) contrast(1.08);
+  transform: scale(1.01);
+  transition: transform 0.72s cubic-bezier(0.2, 0.7, 0.2, 1), filter 0.42s ease;
+}
+
+.era-card:hover img,
+.era-card:focus-within img {
+  filter: saturate(1.14) contrast(1.12);
+  transform: scale(1.08);
+}
+
+.era-card--pharaonic img {
+  object-position: 28% center;
+}
+
+.era-card--islamic img {
+  object-position: 40% center;
+}
+
+.era-card--coptic img {
+  object-position: 78% center;
+}
+
+.era-card::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  background:
+    linear-gradient(180deg, rgba(2, 9, 24, 0.04) 28%, rgba(3, 10, 26, 0.95) 88%),
+    linear-gradient(180deg, rgba(233, 194, 111, 0.13), rgba(233, 194, 111, 0));
+  transition: background 0.3s ease;
+}
+
+.era-card::after {
+  content: "";
+  position: absolute;
+  top: -15%;
+  left: -55%;
+  width: 64%;
+  height: 140%;
+  background: linear-gradient(110deg, rgba(255, 255, 255, 0), rgba(255, 244, 211, 0.35), rgba(255, 255, 255, 0));
+  transform: translateX(-65%) rotate(8deg);
+  opacity: 0;
+  pointer-events: none;
+  mix-blend-mode: soft-light;
+  transition: transform 0.56s ease, opacity 0.46s ease;
+}
+
+.era-card:hover::before,
+.era-card:focus-within::before {
+  background:
+    linear-gradient(180deg, rgba(2, 9, 24, 0.02) 26%, rgba(3, 10, 26, 0.9) 87%),
+    linear-gradient(180deg, rgba(233, 194, 111, 0.2), rgba(233, 194, 111, 0));
+}
+
+.era-card:hover::after,
+.era-card:focus-within::after {
+  transform: translateX(190%) rotate(8deg);
+  opacity: 0.75;
+}
+
+.era-card-body {
+  position: relative;
+  z-index: 1;
+  min-height: inherit;
+  padding: 14px 14px 12px;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  gap: 12px;
+}
+
+.era-card h3 {
+  margin: 0;
+  text-transform: uppercase;
+  line-height: 0.93;
+  max-width: 74%;
+  color: #faf2e5;
+  text-shadow: 0 8px 18px rgba(0, 0, 0, 0.56);
+}
+
+.era-prefix,
+.era-suffix {
+  display: block;
+  font-size: clamp(1.45rem, 2.6vw, 2rem);
+  letter-spacing: 0.02em;
+}
+
+.era-main {
+  display: block;
+  font-size: clamp(1.95rem, 3.5vw, 2.7rem);
+  letter-spacing: 0.02em;
+}
+
+.era-enter {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 28px;
+  width: 82px;
+  padding: 0 8px;
+  border: 1px solid rgba(239, 200, 114, 0.86);
+  color: #f5deb1;
+  background: rgba(4, 20, 54, 0.82);
+  box-shadow: inset 0 0 0 1px rgba(36, 83, 153, 0.4), 0 5px 11px rgba(2, 10, 29, 0.4);
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  font-size: 0.45rem;
+  font-weight: 700;
+  align-self: flex-start;
+  transition: background 0.28s ease, color 0.28s ease, transform 0.28s ease, box-shadow 0.28s ease;
+}
+
+.era-enter:hover,
+.era-enter:focus-visible {
+  background: rgba(236, 193, 105, 0.95);
+  color: #221306;
+  transform: translateY(-2px);
+  box-shadow: 0 8px 14px rgba(2, 10, 29, 0.5);
+}
+
+.ages-section-wonders {
+  padding-top: 44px;
+  padding-bottom: 70px;
+  background:
+    radial-gradient(circle at 76% 4%, rgba(215, 178, 92, 0.16), rgba(215, 178, 92, 0) 34%),
+    linear-gradient(180deg, #041f53 0%, #03173e 100%);
+  box-shadow: inset 0 24px 30px rgba(2, 11, 31, 0.28);
+}
+
+.ages-section-subtitle {
+  max-width: 720px;
+  margin: 6px 0 20px;
+  color: #dfd2b6;
+  font-size: 0.9rem;
+}
+
+.wonders-grid {
+  display: grid;
+  grid-template-columns: minmax(0, 2fr) minmax(0, 1fr);
+  gap: 12px;
+}
+
+.wonder-side {
+  display: grid;
+  gap: 12px;
+}
+
+.wonder-card {
+  position: relative;
+  min-height: 198px;
+  border: 1px solid var(--ages-border);
+  overflow: hidden;
+  background: #03143a;
+  box-shadow:
+    0 20px 34px rgba(1, 8, 23, 0.58),
+    0 8px 18px rgba(2, 10, 27, 0.52),
+    0 2px 0 rgba(212, 174, 91, 0.14),
+    inset 0 0 0 1px rgba(215, 178, 93, 0.2);
+  transition: transform 0.24s ease, box-shadow 0.24s ease;
+}
+
+.wonder-card-main {
+  min-height: 420px;
+}
+
+.wonder-card:hover {
+  transform: translateY(-5px) scale(1.01);
+  box-shadow:
+    0 30px 46px rgba(1, 8, 22, 0.72),
+    0 14px 26px rgba(2, 10, 27, 0.64),
+    0 0 0 1px rgba(236, 196, 108, 0.22),
+    inset 0 0 0 1px rgba(236, 196, 108, 0.3);
+}
+
+.wonder-card img {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.wonder-card::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(180deg, rgba(2, 8, 23, 0.08) 30%, rgba(2, 9, 25, 0.88) 86%);
+}
+
+.wonder-body {
+  position: relative;
+  z-index: 1;
+  min-height: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  padding: 14px;
+}
+
+.wonder-body h3 {
+  margin: 0;
+  text-transform: uppercase;
+  line-height: 1.01;
+  font-size: clamp(1.2rem, 3.3vw, 2.15rem);
+  color: #f8efe0;
+}
+
+.wonder-meta {
+  margin: 4px 0 8px;
+  color: var(--ages-gold-soft);
+  text-transform: uppercase;
+  letter-spacing: 0.15em;
+  font-size: 0.58rem;
+}
+
+.wonder-link {
+  width: fit-content;
+  padding: 4px 8px;
+  border: 1px solid rgba(232, 196, 113, 0.88);
+  color: #f7ddb3;
+  font-size: 0.56rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  background: rgba(6, 20, 48, 0.75);
+  transition: background 0.24s ease, color 0.24s ease;
+}
+
+.wonder-link:hover {
+  background: rgba(232, 196, 113, 0.92);
+  color: #241607;
+}
+
+@keyframes ages-reveal {
+  from {
+    opacity: 0;
+    transform: translateY(24px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.ages-hero-inner > * {
+  opacity: 0;
+  animation: ages-reveal 0.68s cubic-bezier(0.2, 0.65, 0.22, 1) forwards;
+}
+
+.ages-kicker {
+  animation-delay: 0.08s;
+}
+
+.ages-hero h1 {
+  animation-delay: 0.16s;
+}
+
+.ages-intro {
+  animation-delay: 0.24s;
+}
+
+.ages-cta {
+  animation-delay: 0.34s;
+}
+
+.reveal {
+  opacity: 0;
+  animation: ages-reveal 0.66s cubic-bezier(0.2, 0.65, 0.22, 1) forwards;
+}
+
+.era-grid .reveal:nth-child(1) {
+  animation-delay: 0.16s;
+}
+
+.era-grid .reveal:nth-child(2) {
+  animation-delay: 0.24s;
+}
+
+.era-grid .reveal:nth-child(3) {
+  animation-delay: 0.32s;
+}
+
+.wonders-grid > .reveal {
+  animation-delay: 0.14s;
+}
+
+.wonder-side .reveal:nth-child(1) {
+  animation-delay: 0.22s;
+}
+
+.wonder-side .reveal:nth-child(2) {
+  animation-delay: 0.3s;
+}
+
+/* Light theme follows global site palette tokens from style.css. */
+.theme-light .page-explore-ages .ages-hero {
+  background:
+    linear-gradient(120deg, rgba(250, 243, 230, 0.78) 10%, rgba(243, 232, 212, 0.58) 48%, rgba(224, 209, 181, 0.68) 100%),
+    linear-gradient(180deg, rgba(255, 251, 244, 0.14) 0%, rgba(230, 215, 186, 0.76) 100%),
+    url("/assets/images/pillarsbg.png") center/cover no-repeat;
+  border-bottom-color: color-mix(in srgb, var(--border) 70%, var(--accent) 30%);
+}
+
+.theme-light .page-explore-ages .ages-hero::after {
+  background: linear-gradient(180deg, rgba(251, 245, 236, 0), rgba(237, 226, 205, 0.95));
+}
+
+.theme-light .page-explore-ages .ages-hero-fog {
+  background:
+    radial-gradient(circle at 80% 54%, rgba(188, 149, 73, 0.2), rgba(188, 149, 73, 0) 40%),
+    radial-gradient(circle at 87% 65%, rgba(255, 250, 241, 0.24), rgba(255, 250, 241, 0) 35%);
+}
+
+.theme-light .page-explore-ages .ages-kicker,
+.theme-light .page-explore-ages .ages-section-kicker,
+.theme-light .page-explore-ages .ages-section-eras .ages-section-kicker {
+  color: color-mix(in srgb, var(--accent-strong) 75%, #5f4a1f 25%);
+}
+
+.theme-light .page-explore-ages .ages-hero h1,
+.theme-light .page-explore-ages .ages-section h2,
+.theme-light .page-explore-ages .ages-section-eras h2 {
+  color: color-mix(in srgb, var(--text) 80%, #18243f 20%);
+  text-shadow: 0 6px 14px rgba(255, 250, 240, 0.55);
+}
+
+.theme-light .page-explore-ages .ages-intro,
+.theme-light .page-explore-ages .ages-section-subtitle {
+  color: var(--text-muted);
+}
+
+.theme-light .page-explore-ages .ages-cta,
+.theme-light .page-explore-ages .era-enter,
+.theme-light .page-explore-ages .wonder-link {
+  border-color: color-mix(in srgb, var(--accent-strong) 70%, #2d3f67 30%);
+  background: linear-gradient(180deg, #364d77, #263a5f);
+  color: #f8eedb;
+  box-shadow: 0 8px 16px rgba(53, 70, 108, 0.24);
+}
+
+.theme-light .page-explore-ages .ages-cta:hover,
+.theme-light .page-explore-ages .era-enter:hover,
+.theme-light .page-explore-ages .era-enter:focus-visible,
+.theme-light .page-explore-ages .wonder-link:hover {
+  background: linear-gradient(180deg, color-mix(in srgb, var(--accent) 70%, #d0b074 30%), color-mix(in srgb, var(--accent-strong) 75%, #8f6d2f 25%));
+  color: #2a1e0f;
+}
+
+.theme-light .page-explore-ages .ages-section-eras {
+  background:
+    radial-gradient(circle at 28% -22%, rgba(188, 150, 76, 0.13), transparent 44%),
+    radial-gradient(circle at 84% -10%, rgba(151, 175, 210, 0.16), transparent 40%),
+    linear-gradient(180deg, #edf2f8 0%, #e2eaf4 44%, #d8e2ef 100%);
+  box-shadow: inset 0 -20px 30px rgba(86, 99, 124, 0.12);
+}
+
+.theme-light .page-explore-ages .ages-section-eras::before {
+  background: linear-gradient(180deg, rgba(255, 251, 244, 0) 0%, rgba(213, 204, 186, 0.2) 100%);
+}
+
+.theme-light .page-explore-ages .ages-section-eras .ages-section-kicker::before {
+  background: linear-gradient(90deg, rgba(148, 119, 63, 0.18), rgba(148, 119, 63, 0.86));
+}
+
+.theme-light .page-explore-ages .era-card,
+.theme-light .page-explore-ages .wonder-card {
+  border-color: color-mix(in srgb, var(--border) 74%, #94763f 26%);
+  box-shadow:
+    0 14px 24px rgba(56, 67, 88, 0.18),
+    0 8px 14px rgba(86, 72, 48, 0.16),
+    0 2px 0 rgba(164, 132, 76, 0.12),
+    inset 0 0 0 1px rgba(180, 147, 85, 0.18);
+}
+
+.theme-light .page-explore-ages .era-card:hover,
+.theme-light .page-explore-ages .era-card:focus-within,
+.theme-light .page-explore-ages .wonder-card:hover {
+  box-shadow:
+    0 20px 34px rgba(56, 67, 88, 0.22),
+    0 12px 20px rgba(86, 72, 48, 0.18),
+    0 0 0 1px rgba(174, 141, 82, 0.2),
+    inset 0 0 0 1px rgba(174, 141, 82, 0.26);
+}
+
+.theme-light .page-explore-ages .era-card::before,
+.theme-light .page-explore-ages .wonder-card::before {
+  background: linear-gradient(180deg, rgba(252, 246, 235, 0.04) 30%, rgba(29, 38, 56, 0.74) 86%);
+}
+
+.theme-light .page-explore-ages .ages-section-wonders {
+  background:
+    radial-gradient(circle at 76% 4%, rgba(171, 139, 78, 0.14), rgba(171, 139, 78, 0) 34%),
+    linear-gradient(180deg, #e5edf7 0%, #d7e2f0 100%);
+  box-shadow: inset 0 20px 28px rgba(86, 99, 124, 0.12);
+}
+
+.theme-light .page-explore-ages .wonder-meta {
+  color: color-mix(in srgb, var(--accent-strong) 70%, #e0c38b 30%);
+}
+
+@media (max-width: 1000px) {
+  .ages-section-eras .container {
+    width: min(920px, 92%);
+  }
+
+  .era-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    max-width: 760px;
+  }
+
+  .era-card {
+    min-height: 380px;
+  }
+
+  .wonders-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .wonder-side {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .wonder-card-main {
+    min-height: 360px;
+  }
+}
+
+@media (max-width: 720px) {
+  .ages-hero {
+    min-height: 440px;
+    padding-top: 122px;
+    padding-bottom: 58px;
+  }
+
+  .ages-kicker {
+    letter-spacing: 0.24em;
+  }
+
+  .ages-section {
+    padding-top: 42px;
+    padding-bottom: 50px;
+  }
+
+  .ages-section-eras .ages-section-kicker {
+    font-size: 0.56rem;
+    letter-spacing: 0.14em;
+  }
+
+  .ages-section-eras .ages-section-kicker::before {
+    width: 28px;
+  }
+
+  .era-grid {
+    grid-template-columns: 1fr;
+    max-width: 420px;
+  }
+
+  .era-card {
+    min-height: 340px;
+  }
+
+  .era-prefix,
+  .era-suffix {
+    font-size: clamp(1.2rem, 6vw, 1.8rem);
+  }
+
+  .era-main {
+    font-size: clamp(1.7rem, 8vw, 2.35rem);
+  }
+
+  .wonder-side {
+    grid-template-columns: 1fr;
+  }
+
+  .wonder-card-main {
+    min-height: 280px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .ages-cta,
+  .era-card,
+  .wonder-card,
+  .era-enter,
+  .wonder-link,
+  .reveal,
+  .ages-hero-inner > * {
+    transition: none;
+    animation: none;
+    transform: none;
+    opacity: 1;
+  }
+}
+
+/* --- New UI Enhancements (Icons, Glows, Overlays) --- */
+
+.era-card-glow, .wonder-glow {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 150%;
+  height: 150%;
+  background: radial-gradient(circle, rgba(255, 255, 255, 0.1) 0%, transparent 60%);
+  transform: translate(-50%, -50%) scale(0);
+  opacity: 0;
+  pointer-events: none;
+  transition: transform 0.6s cubic-bezier(0.2, 0.8, 0.2, 1), opacity 0.6s ease;
+  z-index: 1;
+}
+
+.era-card:hover .era-card-glow, .wonder-card:hover .wonder-glow {
+  transform: translate(-50%, -50%) scale(1);
+  opacity: 1;
+}
+
+.wonder-overlay {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(180deg, rgba(3, 15, 38, 0.2) 0%, rgba(2, 9, 24, 0.95) 90%);
+  z-index: 0;
+  transition: opacity 0.3s ease;
+}
+
+.era-icon {
+  width: 48px;
+  height: 48px;
+  border-radius: 50%;
+  background: rgba(22, 35, 71, 0.85);
+  border: 1px solid rgba(214, 173, 88, 0.6);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.3rem;
+  color: var(--ages-gold);
+  margin-bottom: auto;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.4);
+  transition: transform 0.4s cubic-bezier(0.3, 2, 0.4, 1), background 0.3s ease, color 0.3s ease, box-shadow 0.3s ease;
+}
+
+.era-card:hover .era-icon {
+  transform: translateY(-8px) scale(1.1);
+  background: var(--ages-gold);
+  color: var(--ages-midnight-deep);
+  box-shadow: 0 10px 25px rgba(214, 173, 88, 0.5);
+}
+
+.wonder-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 4px 10px;
+  background: rgba(214, 173, 88, 0.15);
+  border: 1px solid rgba(214, 173, 88, 0.4);
+  border-radius: 20px;
+  font-size: 0.65rem;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  color: var(--ages-gold-soft);
+  margin-bottom: 12px;
+  width: fit-content;
+  backdrop-filter: blur(4px);
+  position: relative;
+  z-index: 10;
+}
+
+.wonder-badge i {
+  color: var(--ages-gold);
+}
+
+.era-enter i, .wonder-link i {
+  margin-left: 6px;
+  font-size: 0.9em;
+  transition: transform 0.3s ease;
+}
+
+.era-enter:hover i, .wonder-link:hover i {
+  transform: translateX(4px);
+}
+
+.era-enter {
+  gap: 4px;
+}
+
+.wonder-link {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+/* Light Theme Adjustments for Glow */
+.theme-light .page-explore-ages .wonder-overlay {
+  background: linear-gradient(180deg, rgba(230, 215, 186, 0) 0%, rgba(45, 53, 72, 0.85) 90%);
+}
+
+.theme-light .page-explore-ages .era-icon {
+  background: rgba(255, 255, 255, 0.9);
+  color: #7b591b;
+  border-color: #b08d4b;
+}
+
+.theme-light .page-explore-ages .era-card:hover .era-icon {
+  background: #dbb362;
+  color: #fff;
+}
+@ i m p o r t   u r l ( " e x h i b i t s - u i . c s s " ) ; 
+ 
+ 
+
+/* Global Interaction and Animation Upgrade */
+.era-card, .wonder-card, .timeline-card, .artifact-card {
+    transition: transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275), box-shadow 0.4s ease, filter 0.4s ease;
+    will-change: transform, box-shadow;
+    overflow: hidden;
+    position: relative;
+}
+
+.era-card:hover, .wonder-card:hover, .timeline-card:hover, .artifact-card:hover {
+    transform: translateY(-8px) scale(1.02);
+    box-shadow: 0 20px 40px rgba(8, 36, 93, 0.5), 0 0 20px rgba(237, 204, 130, 0.3);
+    z-index: 2;
+}
+
+.era-card img, .wonder-card img, .timeline-card-media img, .artifact-card img {
+    transition: transform 0.6s ease;
+}
+
+.era-card:hover img, .wonder-card:hover img, .timeline-card:hover .timeline-card-media img, .artifact-card:hover img {
+    transform: scale(1.08);
+}
+
+.btn {
+    transition: all 0.3s ease;
+    position: relative;
+    overflow: hidden;
+}
+
+.btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 20px rgba(234, 194, 110, 0.4);
+    filter: brightness(1.1);
+}
+
+.btn::after {
+    content: "";
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 300%;
+    height: 300%;
+    background: radial-gradient(circle, rgba(255,255,255,0.3) 10%, transparent 10.01%);
+    background-repeat: no-repeat;
+    background-position: 50%;
+    transform: translate(-50%, -50%) scale(0);
+    opacity: 0;
+    transition: transform 0.6s, opacity 0.6s;
+}
+
+.btn:active::after {
+    transform: translate(-50%, -50%) scale(1);
+    opacity: 1;
+    transition: 0s;
+}
+
+.exhibit-spotlight-shell {
+    animation: fade-up 0.8s ease-out forwards;
+}
+
+@keyframes fade-up {
+    from { opacity: 0; transform: translateY(30px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+.exhibits-hero--immersive h1 {
+    animation: slide-in-left 1s cubic-bezier(0.2, 0.8, 0.2, 1) forwards;
+}
+
+.exhibits-hero--immersive p {
+    animation: slide-in-left 1s cubic-bezier(0.2, 0.8, 0.2, 1) 0.2s forwards;
+    opacity: 0;
+}
+
+.exhibits-hero-btn {
+    animation: fade-up 1s ease 0.4s forwards;
+    opacity: 0;
+}
+
+@keyframes slide-in-left {
+    from { opacity: 0; transform: translateX(-40px); }
+    to { opacity: 1; transform: translateX(0); }
+}
+
+/* Beautiful glow effect for active or hovered elements */
+.era-card-glow, .wonder-glow {
+    position: absolute;
+    top: 0; left: 0; right: 0; bottom: 0;
+    background: radial-gradient(circle at center, rgba(237, 204, 130, 0.2) 0%, transparent 70%);
+    opacity: 0;
+    transition: opacity 0.5s ease;
+    pointer-events: none;
+    z-index: 10;
+}
+
+.era-card:hover .era-card-glow, .wonder-card:hover .wonder-glow {
+    opacity: 1;
+}
+
+/* Timeline line animation */
+.timeline::before {
+    animation: grow-down 1.5s ease-out forwards;
+    transform-origin: top;
+}
+
+@keyframes grow-down {
+    from { transform: scaleY(0); }
+    to { transform: scaleY(1); }
+}
+
+/* Nodes pop in */
+.timeline-node {
+    animation: pop-in 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275) backwards;
+    opacity: 0;
+}
+
+.timeline-item:nth-child(1) .timeline-node { animation-delay: 0.3s; }
+.timeline-item:nth-child(2) .timeline-node { animation-delay: 0.6s; }
+.timeline-item:nth-child(3) .timeline-node { animation-delay: 0.9s; }
+.timeline-item:nth-child(4) .timeline-node { animation-delay: 1.2s; }
+
+@keyframes pop-in {
+    from { transform: translate(-50%, -50%) scale(0); opacity: 0; }
+    to { transform: translate(-50%, -50%) scale(1); opacity: 1; }
+}
+
+.artifact-grid {
+    gap: 30px;
+}
+
+/* Enhancing Model Viewer area */
+.exhibit-spotlight-media {
+    border: 2px solid rgba(237, 204, 130, 0.4);
+    box-shadow: 0 0 30px rgba(8, 36, 93, 0.6);
+    border-radius: 12px;
+    overflow: hidden;
+    position: relative;
+    background: #04122d;
+}
+
+.exhibit-spotlight-media::before {
+    content: "3D ARTIFACT";
+    position: absolute;
+    top: 10px; left: 10px;
+    background: rgba(237, 204, 130, 0.9);
+    color: #04122d;
+    font-size: 10px;
+    font-weight: bold;
+    padding: 4px 8px;
+    border-radius: 4px;
+    z-index: 10;
+    pointer-events: none;
+    letter-spacing: 1px;
+}
+
+

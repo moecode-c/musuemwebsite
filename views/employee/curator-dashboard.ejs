@@ -1,0 +1,11 @@
+<%- include('../partials/employeeLayoutStart') %>
+<section>
+  <h1><i class="fas fa-landmark"></i> <%= language === 'ar' ? 'لوحة تحكم أمين المعرض' : 'Curator Dashboard' %></h1>
+  <p><%= language === 'ar' ? `مرحباً، ${employeeName}. اعرض مهام إعداد المعروضات والمجموعات وحدّثها.` : `Welcome, ${employeeName}. View and update your exhibit preparation and collection tasks.` %></p>
+  <article class="card">
+    <h3><i class="fas fa-clipboard-list"></i> <%= language === 'ar' ? 'مهامي المعينة' : 'My Assigned Tasks' %></h3>
+    <p><%= language === 'ar' ? 'تحقق من مهام المعروضات والقطع الأثرية الحالية.' : 'Check your current exhibit and artifact handling tasks.' %></p>
+    <div class="admin-list" data-employee-task-list></div>
+  </article>
+</section>
+<%- include('../partials/employeeLayoutEnd') %>

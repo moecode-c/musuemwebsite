@@ -1,0 +1,71 @@
+<%- include('../partials/header') %>
+<%- include('../partials/navbar') %>
+
+<section class="section exhibit-detail-section">
+  <div class="container">
+    <article class="exhibit-spotlight-shell">
+      <figure class="exhibit-spotlight-media" aria-label="Artifact media">
+        <% if (exhibit.modelUrl) { %>
+        <model-viewer
+          class="exhibit-spotlight-model"
+          src="<%= exhibit.modelUrl %>"
+          poster="<%= detailImageUrl || exhibit.imageUrl %>"
+          alt="3D model of <%= exhibit.title %>"
+          camera-controls
+          auto-rotate
+          shadow-intensity="1"
+          exposure="1"
+          interaction-prompt="none"
+          loading="eager"></model-viewer>
+        <% } else { %>
+        <img src="<%= detailImageUrl || exhibit.imageUrl %>" alt="<%= exhibit.title %>" loading="lazy" onerror="this.onerror=null;this.src='/assets/images/pillarsbg.png';" />
+        <% } %>
+      </figure>
+
+      <div class="exhibit-spotlight-content" aria-label="Artifact information">
+        <h1><i class="fa-solid fa-gem" style="color: #e0b74f; font-size: 0.85em; margin-right: 10px; filter: drop-shadow(0 2px 8px rgba(224,183,79,0.4)); animation: float-icon 4s ease-in-out infinite;"></i><%= exhibit.title %></h1>
+        <p class="exhibit-spotlight-intro"><%= exhibit.description || "No description available for this artifact yet." %></p>
+
+        <div class="exhibit-spotlight-meta" aria-label="Artifact details">
+          <% if (exhibit.category) { %>
+          <p><strong><i class="fa-solid fa-shapes" style="margin-right: 6px;"></i>Type:</strong> <span><%= exhibit.category %></span></p>
+          <% } %>
+          <% if (exhibit.period || exhibit.era) { %>
+          <p><strong><i class="fa-solid fa-clock-rotate-left" style="margin-right: 6px;"></i>Period:</strong> <span><%= exhibit.period || exhibit.era %></span></p>
+          <% } %>
+          <% if (exhibit.location) { %>
+          <p><strong><i class="fa-solid fa-map-location-dot" style="margin-right: 6px;"></i>Origin:</strong> <span><%= exhibit.location %></span></p>
+          <% } %>
+        </div>
+
+        <% if (eraInfo) { %>
+        <p class="exhibit-spotlight-body"><%= eraInfo %></p>
+        <% } %>
+        <% if (eraExtras && (eraExtras.significance || eraExtras.legacy)) { %>
+        <p class="exhibit-spotlight-body">
+          <%= eraExtras.significance || "" %>
+          <%= eraExtras.legacy ? ` ${eraExtras.legacy}` : "" %>
+        </p>
+        <% } %>
+
+        <div class="exhibit-detail-actions">
+          <% if (exhibit.modelUrl) { %>
+          <a class="btn exhibit-spotlight-btn" href="/exhibits/artifactPopup?id=<%= exhibit._id %>">
+            <i class="fa-solid fa-cube" style="margin-right: 8px;"></i>Explore Artifact
+          </a>
+          <% } %>
+           <a class="btn exhibit-spotlight-link" href="<%= backHref || '/exhibits' %>">
+             <i class="fa-solid fa-arrow-left" style="margin-right: 6px;"></i>Back to Exhibits
+           </a>
+           <% if (exhibit.x !== null && exhibit.x !== undefined && exhibit.y !== null && exhibit.y !== undefined) { %>
+           <a class="btn exhibit-spotlight-link" href="/location?x=<%= exhibit.x %>&y=<%= exhibit.y %>&label=<%= encodeURIComponent(exhibit.title) %>&description=<%= encodeURIComponent(exhibit.category) %>">
+             <i class="fa-solid fa-location-dot" style="margin-right: 6px;"></i>View on Map
+           </a>
+           <% } %>
+        </div>
+      </div>
+    </article>
+  </div>
+</section>
+
+<%- include('../partials/footer') %>

@@ -1,46 +1,47 @@
 <%- include('../partials/header') %>
 <%- include('../partials/navbar') %>
 
-<section class="page-hero">
-  <div class="container">
-    <h1>Newsletter</h1>
-    <p>Get exhibition previews, curator stories, and event invitations straight to your inbox.</p>
-  </div>
-</section>
-
-<section class="section">
-  <div class="container">
-    <div class="split">
-      <div>
-        <h2>What you'll receive</h2>
-        <ul class="list">
-          <li>Monthly highlights from the Pharaohs, Islamic, and Christian galleries.</li>
-          <li>Behind-the-scenes conservation updates and artifact spotlights.</li>
-          <li>Early access to workshops, tours, and special programs.</li>
-          <li>Members-only discounts in the museum shop.</li>
-        </ul>
-        <div class="info-card newsletter-note">
-          <h3>Frequency</h3>
-          <p>We send 1-2 emails per month. No spam. Unsubscribe anytime.</p>
+<main class="newsletter-page">
+  <section class="newsletter-hero">
+    <div class="container">
+      <div class="hero-content-inner">
+        <div class="hero-label">
+          <span class="roman-numeral"><%= t.newsletter.monthlyEdition %></span>
+          <span class="divider">|</span>
+          <span class="issue-no"><%= t.newsletter.title %></span>
+        </div>
+        <h1 class="font-cinzel-deco"><%= t.newsletter.insiderTitle %></h1>
+        <div class="hero-subline">
+          <p><%= t.newsletter.subtitle %></p>
         </div>
       </div>
-      <form class="form" id="newsletter-form">
-        <label>Full Name (optional)</label>
-        <input type="text" name="name" placeholder="Your name" />
-        <label>Email</label>
-        <input type="email" name="email" placeholder="you@example.com" required />
-        <label>Interests</label>
-        <select name="interest">
-          <option value="all">All updates</option>
-          <option value="exhibitions">Exhibitions</option>
-          <option value="events">Events & Workshops</option>
-          <option value="research">Research & Conservation</option>
-        </select>
-        <button class="btn" type="submit">Subscribe</button>
-        <p class="form-message" id="newsletter-message"></p>
-      </form>
     </div>
-  </div>
-</section>
+  </section>
+
+  <section class="section">
+    <div class="container">
+      <div class="subscribe-wrapper">
+        <div class="newsletter-card">
+          <div class="card-header">
+            <i class="nav-icon fas fa-paper-plane"></i>
+            <span class="nav-title"><%= t.newsletter.title %></span>
+          </div>
+          <h2 class="card-title"><%= t.newsletter.subtitle %></h2>
+          <form action="/newsletter/subscribe" method="POST" class="subscribe-form" id="newsletter-form">
+            <div class="subscribe-fields">
+              <input type="text" name="name" placeholder="<%= t.newsletter.namePlaceholder %>" required class="subscribe-input" />
+              <input type="tel" name="phone" placeholder="<%= t.newsletter.phone %>" required class="subscribe-input" />
+            </div>
+            <div class="email-group">
+              <input type="email" name="email" placeholder="<%= t.newsletter.emailPlaceholder %>" required class="email-input" />
+            </div>
+            <button type="submit" class="btn-subscribe"><%= t.newsletter.subscribe %></button>
+          </form>
+          <p class="form-message" id="newsletter-message"></p>
+        </div>
+      </div>
+    </div>
+  </section>
+</main>
 
 <%- include('../partials/footer') %>

@@ -622,38 +622,35 @@ a {
 }
 
 .site-footer {
-  background: linear-gradient(120deg, rgba(18, 13, 32, 0.98), rgba(18, 13, 32, 0.9));
+  background: var(--surface);
   color: var(--text);
-  padding: 60px 0 24px;
+  padding: 48px 0 22px;
   border-top: 1px solid var(--border);
 }
 
 .theme-light .site-footer {
-  background: linear-gradient(120deg, #fff7e8, #f3e6cf);
+  background: var(--surface-alt);
 }
 
 .footer-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  grid-template-columns: 2fr 1fr 1fr 1.2fr;
   gap: 24px;
-  margin-bottom: 28px;
+  margin-bottom: 24px;
 }
 
-.footer-card {
-  background: rgba(255, 255, 255, 0.02);
-  border: 1px solid var(--border);
-  border-radius: 16px;
-  padding: 20px;
-  transition: transform 0.3s ease, border 0.3s ease;
+.footer-column h3,
+.footer-column h4 {
+  margin: 0 0 12px;
 }
 
-.theme-light .footer-card {
-  background: rgba(255, 255, 255, 0.6);
+.footer-column h3 {
+  font-size: 1.5rem;
 }
 
-.footer-card:hover {
-  transform: translateY(-4px);
-  border-color: var(--accent);
+.footer-column p {
+  margin: 0;
+  color: var(--text-muted);
 }
 
 .footer-links {
@@ -666,6 +663,7 @@ a {
 
 .footer-links a {
   color: var(--text-muted);
+  transition: color 0.2s ease;
 }
 
 .footer-links a:hover {
@@ -674,24 +672,23 @@ a {
 
 .footer-social {
   display: flex;
-  gap: 12px;
+  gap: 10px;
   margin-top: 16px;
 }
 
 .footer-social a {
-  width: 38px;
-  height: 38px;
+  width: 34px;
+  height: 34px;
   display: inline-flex;
   align-items: center;
   justify-content: center;
   border-radius: 50%;
   border: 1px solid var(--border);
   color: var(--accent);
-  transition: transform 0.2s ease, background 0.2s ease, color 0.2s ease;
+  transition: background 0.2s ease, color 0.2s ease;
 }
 
 .footer-social a:hover {
-  transform: translateY(-2px);
   background: var(--accent);
   color: #fff;
 }
@@ -703,13 +700,18 @@ a {
   gap: 12px;
   border-top: 1px solid var(--border);
   padding-top: 16px;
-  font-size: 0.95rem;
+  font-size: 0.9rem;
   flex-wrap: wrap;
+}
+
+.footer-bottom > span {
+  color: var(--text-muted);
 }
 
 .footer-bottom-links {
   display: flex;
   gap: 16px;
+  flex-wrap: wrap;
 }
 
 .footer-bottom-links a {
@@ -718,6 +720,18 @@ a {
 
 .footer-bottom-links a:hover {
   color: var(--accent);
+}
+
+@media (max-width: 1020px) {
+  .footer-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+@media (max-width: 720px) {
+  .footer-grid {
+    grid-template-columns: 1fr;
+  }
 }
 
 .weather-card {

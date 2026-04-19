@@ -1,0 +1,23 @@
+<%- include('./header') %>
+<div class="admin-layout">
+  <aside class="admin-sidebar">
+    <div class="admin-brand">
+      <span class="admin-brand-title"><%= t.siteTitle %></span>
+      <span class="admin-brand-subtitle"><%= panelLabel || (language === 'ar' ? 'لوحة الموظف' : 'Employee Panel') %></span>
+    </div>
+    <nav class="admin-nav">
+      <a class="admin-nav-link <%= employeeNavKey === 'dashboard' ? 'is-active' : '' %>" href="/employee/dashboard"><i class="fas fa-gauge"></i><%= language === 'ar' ? 'لوحة التحكم' : 'Dashboard' %></a>
+      <% if (dashboardRole === 'museum_manager') { %>
+      <a class="admin-nav-link <%= employeeNavKey === 'tasks' ? 'is-active' : '' %>" href="/employee/manager/tasks"><i class="fas fa-list-check"></i><%= language === 'ar' ? 'إدارة المهام' : 'Task Management' %></a>
+      <a class="admin-nav-link <%= employeeNavKey === 'zones' ? 'is-active' : '' %>" href="/employee/manager/zones"><i class="fas fa-map"></i><%= language === 'ar' ? 'إدارة المناطق' : 'Zone Management' %></a>
+      <% } %>
+    </nav>
+    <div class="admin-nav-footer">
+      <form class="inline-form" action="/auth/logout" method="post">
+        <button class="admin-nav-link dropdown-button" type="submit"><i class="fas fa-right-from-bracket"></i><%= language === 'ar' ? 'تسجيل الخروج' : 'Logout' %></button>
+      </form>
+      <a class="admin-nav-link" href="/"><i class="fas fa-arrow-left"></i><%= language === 'ar' ? 'العودة إلى الموقع' : 'Back to site' %></a>
+    </div>
+  </aside>
+  <main class="admin-content">
+    <div class="admin-content-inner">

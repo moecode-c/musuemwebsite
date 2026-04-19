@@ -1,5 +1,6 @@
 const Exhibit = require("../models/Exhibit");
 const { asyncHandler } = require("../utils/asyncHandler");
+const { uploadBuffer } = require("../utils/cloudinaryUpload");
 
 const parseCoordinate = (value) => {
   if (value === undefined || value === null || value === "") return undefined;
@@ -13,38 +14,88 @@ const list = asyncHandler(async (req, res) => {
 });
 
 const create = asyncHandler(async (req, res) => {
-  const { title, category, description, era } = req.body;
-  const imageUrl = req.file && req.file.fieldname === "image" ? `/assets/uploads/${req.file.filename}` : req.body.imageUrl;
+  const { title, category, description, era, period, location } = req.body;
+  let imageUrl = req.body.imageUrl || "";
   const modelUrl = req.body.modelUrl || "";
+
+  if (req.file && req.file.fieldname === "image") {
+    const imageUpload = await uploadBuffer(req.file.buffer, {
+      folder: "exhibits/images",
+      resource_type: "image",
+      originalFilename: req.file.originalname
+    });
+    imageUrl = imageUpload.secure_url;
+  }
+
+  if (!imageUrl || !modelUrl) {
+    return res.status(400).json({ message: "Image and 3D model are required." });
+  }
+
   const x = parseCoordinate(req.body.x);
   const y = parseCoordinate(req.body.y);
-  const exhibit = await Exhibit.create({ title, category, description, era, imageUrl, modelUrl, x, y });
+  const exhibit = await Exhibit.create({ title, category, description, era, period, location, imageUrl, modelUrl, x, y });
   res.status(201).json(exhibit);
 });
 
 const createWithFiles = asyncHandler(async (req, res) => {
-  const { title, category, description, era } = req.body;
+  const { title, category, description, era, period, location } = req.body;
   const imageFile = req.files?.image?.[0];
   const modelFile = req.files?.model?.[0];
-  const imageUrl = imageFile ? `/assets/uploads/${imageFile.filename}` : "";
-  const modelUrl = modelFile ? `/assets/uploads/${modelFile.filename}` : "";
+  const imageUpload = imageFile
+    ? await uploadBuffer(imageFile.buffer, {
+      folder: "exhibits/images",
+      resource_type: "image",
+      originalFilename: imageFile.originalname
+    })
+    : null;
+  const modelUpload = modelFile
+    ? await uploadBuffer(modelFile.buffer, {
+      folder: "exhibits/models",
+      resource_type: "raw",
+      originalFilename: modelFile.originalname
+    })
+    : null;
+
+  const imageUrl = imageUpload?.secure_url || req.body.imageUrl || "";
+  const modelUrl = modelUpload?.secure_url || req.body.modelUrl || "";
+
+  if (!imageUrl || !modelUrl) {
+    return res.status(400).json({ message: "Image and 3D model are required." });
+  }
+
   const x = parseCoordinate(req.body.x);
   const y = parseCoordinate(req.body.y);
-  const exhibit = await Exhibit.create({ title, category, description, era, imageUrl, modelUrl, x, y });
+  const exhibit = await Exhibit.create({ title, category, description, era, period, location, imageUrl, modelUrl, x, y });
   res.status(201).json(exhibit);
 });
 
 const update = asyncHandler(async (req, res) => {
-  const { title, category, description, era } = req.body;
+  const { title, category, description, era, period, location } = req.body;
   const imageFile = req.files?.image?.[0];
   const modelFile = req.files?.model?.[0];
-  const updates = { title, category, description, era };
+  const updates = { title, category, description, era, period, location };
   const x = parseCoordinate(req.body.x);
   const y = parseCoordinate(req.body.y);
   if (x !== undefined) updates.x = x;
   if (y !== undefined) updates.y = y;
-  if (imageFile) updates.imageUrl = `/assets/uploads/${imageFile.filename}`;
-  if (modelFile) updates.modelUrl = `/assets/uploads/${modelFile.filename}`;
+  if (imageFile) {
+    const imageUpload = await uploadBuffer(imageFile.buffer, {
+      folder: "exhibits/images",
+      resource_type: "image",
+      originalFilename: imageFile.originalname
+    });
+    updates.imageUrl = imageUpload.secure_url;
+  }
+
+  if (modelFile) {
+    const modelUpload = await uploadBuffer(modelFile.buffer, {
+      folder: "exhibits/models",
+      resource_type: "raw",
+      originalFilename: modelFile.originalname
+    });
+    updates.modelUrl = modelUpload.secure_url;
+  }
+
   const exhibit = await Exhibit.findByIdAndUpdate(req.params.id, updates, { new: true });
   res.json(exhibit);
 });

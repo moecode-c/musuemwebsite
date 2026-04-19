@@ -4,54 +4,51 @@
 <section class="auth-section">
   <div class="container auth-layout">
     <div class="auth-panel">
-      <p class="auth-eyebrow">Member access</p>
-      <h1>Welcome back to the museum</h1>
-      <p class="auth-subtitle">Sign in to manage tickets, saved exhibits, and your account preferences.</p>
+      <p class="auth-eyebrow"><%= language === 'ar' ? 'وصول الأعضاء' : 'Member access' %></p>
+      <h1><%= language === 'ar' ? 'مرحباً بعودتك إلى المتحف' : 'Welcome back to the museum' %></h1>
+      <p class="auth-subtitle"><%= language === 'ar' ? 'سجّل دخولك لإدارة التذاكر والمعروضات المحفوظة وتفضيلات حسابك.' : 'Sign in to manage tickets, saved exhibits, and your account preferences.' %></p>
       <div class="auth-highlights">
         <div>
           <i class="fa-solid fa-ticket"></i>
-          <span>Fast ticket checkout</span>
+          <span><%= language === 'ar' ? 'دفع سريع للتذاكر' : 'Fast ticket checkout' %></span>
         </div>
         <div>
           <i class="fa-solid fa-landmark"></i>
-          <span>Personalized exhibit picks</span>
+          <span><%= language === 'ar' ? 'معروضات مختارة لك' : 'Personalized exhibit picks' %></span>
         </div>
         <div>
           <i class="fa-solid fa-bell"></i>
-          <span>Event alerts</span>
+          <span><%= language === 'ar' ? 'تنبيهات الفعاليات' : 'Event alerts' %></span>
         </div>
       </div>
     </div>
-
     <div class="auth-card">
       <div class="auth-card-header">
-        <span class="auth-badge">Secure login</span>
-        <h2>Sign in</h2>
-        <p>Use your email and password to continue.</p>
+        <span class="auth-badge"><%= language === 'ar' ? 'دخول آمن' : 'Secure login' %></span>
+        <h2><%= language === 'ar' ? 'تسجيل الدخول' : 'Sign in' %></h2>
+        <p><%= language === 'ar' ? 'استخدم بريدك الإلكتروني وكلمة المرور للمتابعة.' : 'Use your email and password to continue.' %></p>
       </div>
-
       <form class="auth-form" id="login-form">
         <div class="input-group">
-          <label for="login-email">Email</label>
+          <label for="login-email"><%= language === 'ar' ? 'البريد الإلكتروني' : 'Email' %></label>
           <div class="input-field">
             <i class="fa-regular fa-envelope"></i>
             <input id="login-email" type="email" name="email" placeholder="you@example.com" required />
           </div>
         </div>
         <div class="input-group">
-          <label for="login-password">Password</label>
+          <label for="login-password"><%= language === 'ar' ? 'كلمة المرور' : 'Password' %></label>
           <div class="input-field">
             <i class="fa-solid fa-lock"></i>
-            <input id="login-password" type="password" name="password" placeholder="Enter your password" required />
+            <input id="login-password" type="password" name="password" placeholder="<%= language === 'ar' ? 'أدخل كلمة المرور' : 'Enter your password' %>" required />
           </div>
         </div>
-        <button class="btn auth-submit" type="submit">Login</button>
+        <button class="btn auth-submit" type="submit"><%= language === 'ar' ? 'دخول' : 'Login' %></button>
         <p class="form-message" id="login-message"></p>
       </form>
-
       <div class="auth-footer">
-        <span>New here?</span>
-        <a href="/auth/register">Create an account</a>
+        <span><%= language === 'ar' ? 'جديد هنا؟' : 'New here?' %></span>
+        <a href="/auth/register"><%= language === 'ar' ? 'إنشاء حساب' : 'Create an account' %></a>
       </div>
     </div>
   </div>

@@ -1,0 +1,48 @@
+<%- include('../partials/header') %>
+<%- include('../partials/navbar') %>
+
+<main class="info-page-shell">
+  <section class="section info-page-hero">
+    <div class="container">
+      <p class="info-kicker"><%= language === 'ar' ? 'برنامج العضوية' : 'Membership Program' %></p>
+      <h1><%= language === 'ar' ? 'عضوية المتحف المصري' : 'Egyptian Museum Membership' %></h1>
+      <p><%= language === 'ar' ? 'استمتع بدخول أسرع، مزايا حصرية، وتجارب ثقافية خاصة على مدار العام.' : 'Get priority access, exclusive previews, and curated cultural experiences year-round.' %></p>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="container info-grid">
+      <article class="info-card">
+        <h3><%= language === 'ar' ? 'عضوية فردية' : 'Individual Plan' %></h3>
+        <p><%= language === 'ar' ? 'دخول غير محدود، خصم على الفعاليات، وأولوية الحجز.' : 'Unlimited entry, event discounts, and priority reservations.' %></p>
+      </article>
+
+      <article class="info-card">
+        <h3><%= language === 'ar' ? 'عضوية عائلية' : 'Family Plan' %></h3>
+        <p><%= language === 'ar' ? 'زيارات مرنة للعائلة، وورش تعليمية للأطفال.' : 'Flexible family visits plus educational workshops for children.' %></p>
+      </article>
+
+      <article class="info-card">
+        <h3><%= language === 'ar' ? 'عضوية داعم' : 'Patron Plan' %></h3>
+        <p><%= language === 'ar' ? 'دعوات خاصة لليالي المقتنيات والجولات القيّمة.' : 'Invitations to private collection nights and curator-led tours.' %></p>
+      </article>
+    </div>
+
+    <div class="container">
+      <article class="info-card">
+        <h3><%= language === 'ar' ? 'كيف تبدأ؟' : 'How To Join' %></h3>
+        <ul class="info-list">
+          <li><i class="fa-solid fa-check"></i><span><%= language === 'ar' ? 'اختر الخطة المناسبة من مكتب الزوار.' : 'Choose a plan at the visitor desk.' %></span></li>
+          <li><i class="fa-solid fa-check"></i><span><%= language === 'ar' ? 'أكمل بيانات العضوية خلال دقائق.' : 'Complete registration in minutes.' %></span></li>
+          <li><i class="fa-solid fa-check"></i><span><%= language === 'ar' ? 'فعّل العضوية وابدأ استخدام المزايا فوراً.' : 'Activate and start using benefits immediately.' %></span></li>
+        </ul>
+        <div class="info-page-actions">
+          <a class="btn" href="/contact"><%= language === 'ar' ? 'تواصل معنا' : 'Contact Us' %></a>
+          <a class="btn btn-secondary" href="/newsletter"><%= t.footer.newsletter %></a>
+        </div>
+      </article>
+    </div>
+  </section>
+</main>
+
+<%- include('../partials/footer') %>

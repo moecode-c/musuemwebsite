@@ -6,6 +6,57 @@ const MapPin = require("../models/MapPin");
 const { asyncHandler } = require("../utils/asyncHandler");
 const { getWeather } = require("../utils/apiClient");
 const { buildPagination } = require("../utils/pagination");
+const { ROLES } = require("../middleware/roles");
+const toArabicNumber = (value) =>
+  String(value).replace(/\d/g, (d) => "٠١٢٣٤٥٦٧٨٩"[d]);
+
+const employeeDashboardViewByRole = {
+  [ROLES.MUSEUM_MANAGER]: "employee/manager-dashboard",
+  [ROLES.CURATOR]: "employee/curator-dashboard",
+  [ROLES.FRONT_DESK]: "employee/frontdesk-dashboard",
+  [ROLES.SECURITY_OFFICER]: "employee/security-dashboard",
+  [ROLES.MAINTENANCE_TECHNICIAN]: "employee/technician-dashboard",
+  [ROLES.JANITOR]: "employee/janitor-dashboard",
+  [ROLES.EDUCATOR_GUIDE]: "employee/educator-dashboard"
+};
+
+const panelLabelByRole = {
+  [ROLES.MUSEUM_MANAGER]: "Museum Manager Panel",
+  [ROLES.CURATOR]: "Curator Panel",
+  [ROLES.FRONT_DESK]: "Front Desk Panel",
+  [ROLES.SECURITY_OFFICER]: "Security Officer Panel",
+  [ROLES.MAINTENANCE_TECHNICIAN]: "Maintenance Technician Panel",
+  [ROLES.JANITOR]: "Janitor Panel",
+  [ROLES.EDUCATOR_GUIDE]: "Educator Guide Panel",
+  [ROLES.ADMIN]: "Admin Panel"
+};
+
+const getPanelLabelByRole = (role) => panelLabelByRole[role] || "Employee Panel";
+
+const DEFAULT_EXHIBIT_IMAGE = "/assets/images/pillarsbg.png";
+
+const normalizeImageUrl = (rawUrl, fallback = DEFAULT_EXHIBIT_IMAGE) => {
+  if (typeof rawUrl !== "string") return fallback;
+
+  let normalized = rawUrl.trim();
+  if (!normalized) return fallback;
+
+  normalized = normalized.replace(/\\/g, "/");
+
+  if (normalized.startsWith("public/")) {
+    normalized = normalized.slice("public".length);
+  }
+
+  if (/^(https?:)?\/\//i.test(normalized) || normalized.startsWith("data:") || normalized.startsWith("blob:")) {
+    return encodeURI(normalized);
+  }
+
+  if (!normalized.startsWith("/")) {
+    normalized = `/${normalized}`;
+  }
+
+  return encodeURI(normalized);
+};
 
 const shopTypeConfig = {
   books: {
@@ -58,9 +109,10 @@ const buildCards = (items, type) => {
   return items
     .map((item) => {
       if (type === "exhibit") {
+        const imageUrl = normalizeImageUrl(item.imageUrl);
         return `
           <article class="card">
-            <img src="${item.imageUrl}" alt="${item.title}">
+            <img src="${imageUrl}" alt="${item.title}" onerror="this.onerror=null;this.src='${DEFAULT_EXHIBIT_IMAGE}';">
             <h3>${item.title}</h3>
             <p>${item.description.substring(0, 120)}...</p>
             <a class="btn" href="/exhibits/${item._id}">View Details</a>
@@ -132,9 +184,14 @@ const buildCards = (items, type) => {
       }
       if (type === "testimonial") {
         return `
-          <article class="card">
-            <h3>${item.name}</h3>
-            <p>${item.message}</p>
+          <article class="card testimonial-card">
+            <div class="card-quote">
+              <i class="fas fa-quote-left nav-icon"></i>
+              <p>${item.message}</p>
+            </div>
+            <div class="card-footer">
+              <span class="nav-title testimonial-name">${item.name}</span>
+            </div>
           </article>
         `;
       }
@@ -150,9 +207,15 @@ const home = asyncHandler(async (req, res) => {
     Testimonial.find().limit(3)
   ]);
   const weather = await getWeather().catch(() => null);
+  const isAr = req.cookies.lang === "ar";
+
   const weatherHtml = weather
-    ? `<div class="weather-card">Current temperature: ${weather.temperature_2m}°C | Wind: ${weather.wind_speed_10m} km/h</div>`
-    : "<div class=\"weather-card\">Weather data unavailable</div>";
+    ? `<div class="weather-card">${
+        isAr
+          ? `درجة الحرارة الحالية: ${toArabicNumber(weather.temperature_2m)}°C | سرعة الرياح: ${toArabicNumber(weather.wind_speed_10m)} كم/س`
+          : `Current temperature: ${weather.temperature_2m}°C | Wind: ${weather.wind_speed_10m} km/h`
+      }</div>`
+    : `<div class="weather-card">${isAr ? "بيانات الطقس غير متاحة" : "Weather data unavailable"}</div>`;
 
   res.render("home", {
     pageTitle: "Home",
@@ -164,9 +227,11 @@ const home = asyncHandler(async (req, res) => {
   });
 });
 
-const about = (req, res) => res.render("about/about", { pageTitle: "About" });
-const accessibility = (req, res) => res.render("about/accessibility", { pageTitle: "Accessibility" });
-const newsletter = (req, res) => res.render("about/newsletter", { pageTitle: "Newsletter" });
+const about = (req, res) => res.render("about/about", { pageTitle: "About", pageCss: "about" });
+const mission = (req, res) => res.render("about/mission", { pageTitle: "Mission & Goal", pageCss: "mission" });
+const accessibility = (req, res) =>
+  res.render("about/accessibility", { pageTitle: "Accessibility", pageCss: "accessibility" });
+const newsletter = (req, res) => res.render("about/newsletter", { pageTitle: "Newsletter", pageCss: "newsletter" });
 
 const location = asyncHandler(async (req, res) => {
   const [pins, commonPins] = await Promise.all([
@@ -183,43 +248,240 @@ const location = asyncHandler(async (req, res) => {
   res.render("about/location", { pageTitle: "Map", pageCss: "location", pinsHtml, commonPins });
 });
 
-const categoryConfig = {
-  pharaoh: {
-    label: "Pharaoh's",
-    categoryValue: "Pharaoh",
-    subtitle: "Explore royal artifacts, sacred relics, and treasures of the dynasties."
+const exploreAges = (req, res) =>
+  res.render("exhibits/explore-ages", {
+    pageTitle: "Explore the Ages",
+    pageCss: "explore-ages"
+  });
+const artifactEraInsights = {
+  "early dynastic": "State unification and royal symbolism emerged in this phase, shaping the earliest formal dynastic traditions.",
+  "old kingdom": "Known for pyramid-building and centralized court workshops, this era refined monumentality and royal funerary arts.",
+  "middle kingdom": "A period of reunification and administrative reform with strong growth in literary, temple, and elite craft traditions.",
+  "new kingdom": "Egypt's imperial age; expanded diplomacy and warfare fueled major temple projects and luxury workshop production.",
+  ptolemaic: "Greek and Egyptian traditions coexisted, producing bilingual administration and hybrid artistic and religious expressions.",
+  "early islamic": "Early Islamic Egypt saw growth in manuscript culture, religious institutions, and urban craft production in Fustat.",
+  fatimid: "Fatimid Cairo became a major center for calligraphy, carved wood, and ceremonial arts tied to court patronage.",
+  ayyubid: "Ayyubid rule strengthened citadel and religious complexes, with metalwork and epigraphy prominent in elite objects.",
+  mamluk: "Mamluk patronage made Cairo a global hub of scholarship and craftsmanship, especially in glass and inlaid metalwork.",
+  ottoman: "Ottoman-era Egypt remained integrated in Mediterranean exchange networks, visible in ceramics and decorative arts.",
+  "late antique": "Late Antique workshops sustained textile and monastic production, preserving religious and regional visual identities.",
+  "byzantine-coptic": "Coptic communities adapted Byzantine liturgical and visual forms in devotional objects and church furnishings.",
+  "medieval coptic": "Medieval Coptic art preserved icon, fresco, and manuscript traditions through active church and monastic centers.",
+  "christian era": "Christian Egyptian heritage reflects long continuity in liturgical art, manuscript production, and monastic life.",
+  "islamic era": "Islamic-era material culture in Egypt highlights calligraphy, geometry, and highly specialized craft guild traditions."
+};
+
+const artifactCategoryFallback = {
+  pharaoh: "Pharaonic collections emphasize kingship, ritual practice, and funerary beliefs across multiple dynasties.",
+  islamic: "Islamic collections document urban religious life, manuscript traditions, and refined decorative craftsmanship.",
+  christian: "Christian collections preserve Coptic devotional, liturgical, and monastic traditions across centuries."
+};
+
+const artifactEraExtraDetails = {
+  "early dynastic": {
+    significance: "Royal imagery and ceremonial palettes from this period helped establish visual language for kingship in later dynasties.",
+    legacy: "Administrative standardization and early hieroglyphic usage laid the foundations of pharaonic state culture."
   },
-  islamic: {
-    label: "Islamic",
-    categoryValue: "Islamic",
-    subtitle: "Discover artistic traditions, manuscripts, and architectural masterpieces."
+  "old kingdom": {
+    significance: "Monumental stone architecture and elite statuary defined the court-centered aesthetics of the Pyramid Age.",
+    legacy: "Workshop conventions in proportion, materials, and funerary symbolism influenced Egyptian art for centuries."
   },
-  christian: {
-    label: "Christian",
-    categoryValue: "Christian",
-    subtitle: "Experience icons, textiles, and heritage from Egypt's Christian era."
+  "middle kingdom": {
+    significance: "Cultural revival and political reunification supported temple patronage and refinement of funerary equipment.",
+    legacy: "Texts and material culture from this era became reference models for later royal and elite traditions."
+  },
+  "new kingdom": {
+    significance: "Imperial expansion linked Egypt to wider trade networks, increasing diversity in materials and artistic motifs.",
+    legacy: "Temple relief programs and elite burial assemblages from this era remain central to understanding state ideology."
+  },
+  ptolemaic: {
+    significance: "Multilingual inscriptions and decrees document interactions between Greek and Egyptian administration.",
+    legacy: "Ptolemaic evidence was critical for modern epigraphy and historical reconstruction of late pharaonic religious institutions."
+  },
+  "early islamic": {
+    significance: "Early Islamic Egypt shaped new religious, civic, and manuscript practices centered around Fustat.",
+    legacy: "Calligraphic and architectural traditions formed in this phase informed later Fatimid and Mamluk developments."
+  },
+  fatimid: {
+    significance: "Fatimid patronage stimulated high-quality craftsmanship in carved wood, manuscript arts, and ceremonial objects.",
+    legacy: "Urban and artistic institutions founded in Fatimid Cairo had long-term influence on later Islamic visual culture in Egypt."
+  },
+  ayyubid: {
+    significance: "Ayyubid military-religious patronage supported architectural and decorative programs across major political centers.",
+    legacy: "Metalwork and epigraphic styles from this era bridge earlier Fatimid and later Mamluk artistic traditions."
+  },
+  mamluk: {
+    significance: "Mamluk-era Cairo became a major intellectual and commercial center, reflected in sophisticated glass, metal, and manuscript arts.",
+    legacy: "Institutional endowments and workshop systems contributed to durable artistic continuity across late medieval Egypt."
+  },
+  ottoman: {
+    significance: "Ottoman-period works show adaptation of imperial styles to local Egyptian tastes and existing craft practices.",
+    legacy: "Ceramic and decorative motifs from this era document Egypt's role in wider Mediterranean artistic exchange."
+  },
+  "late antique": {
+    significance: "Late Antique material reflects transitions in religious life, especially monastic growth and changing devotional practices.",
+    legacy: "Textiles, manuscripts, and sacred objects preserve evidence of local communities during a transformative historical phase."
+  },
+  "byzantine-coptic": {
+    significance: "Objects from this period illustrate adaptation of Byzantine forms within distinct Coptic theological and liturgical contexts.",
+    legacy: "Church metalwork and icon-related production helped define long-standing Coptic visual traditions."
+  },
+  "medieval coptic": {
+    significance: "Monasteries and churches served as key centers for manuscript production, icon painting, and devotional arts.",
+    legacy: "These artistic traditions preserved language, ritual memory, and communal identity across changing political periods."
+  },
+  "christian era": {
+    significance: "Christian-period artifacts document the continuity of Coptic worship, education, and artistic production.",
+    legacy: "Their preservation offers rare insight into liturgical life, script traditions, and regional workshop networks."
+  },
+  "islamic era": {
+    significance: "Islamic-era collections in Egypt reveal deep integration of calligraphy, geometry, and religious patronage.",
+    legacy: "These works help trace the evolution of urban institutions and artisan knowledge across multiple dynasties."
   }
 };
 
-const renderExhibitsPage = asyncHandler(async (req, res, categoryKey, basePath) => {
+const artifactCategoryExtraFallback = {
+  pharaoh: {
+    significance: "Pharaonic objects preserve key evidence for royal ideology, funerary theology, and temple-centered ritual systems.",
+    legacy: "Their inscriptions and iconography remain primary sources for reconstructing ancient Egyptian governance and belief."
+  },
+  islamic: {
+    significance: "Islamic collections reflect major developments in scholarly, civic, and devotional life across medieval and early modern Egypt.",
+    legacy: "Material evidence from these works documents continuity in craftsmanship, epigraphy, and institutional patronage."
+  },
+  christian: {
+    significance: "Christian collections preserve Coptic liturgical and monastic traditions expressed through manuscripts, icons, and ritual objects.",
+    legacy: "They provide long-duration evidence of local worship practices and artistic continuity in Egypt."
+  }
+};
+
+const resolveArtifactEraInfo = (item) => {
+  const eraKey = String(item?.era || "").trim().toLowerCase();
+  const categoryKey = String(item?.category || "").trim().toLowerCase();
+  return (
+    artifactEraInsights[eraKey] ||
+    artifactCategoryFallback[categoryKey] ||
+    "This artifact represents an important phase in Egypt's evolving historical and artistic legacy."
+  );
+};
+
+const resolveArtifactEraExtras = (item) => {
+  const eraKey = String(item?.era || "").trim().toLowerCase();
+  const categoryKey = String(item?.category || "").trim().toLowerCase();
+  return (
+    artifactEraExtraDetails[eraKey] ||
+    artifactCategoryExtraFallback[categoryKey] || {
+      significance: "This object is part of an important historical context within Egypt's long cultural timeline.",
+      legacy: "Ongoing scholarship continues to refine how this artifact is interpreted in relation to its era."
+    }
+  );
+};
+
+const buildExhibitDetailsHref = (id, returnTo) => {
+  if (!id) return "/exhibits";
+  const safeReturnTo = typeof returnTo === "string" && returnTo.startsWith("/") ? returnTo : "/exhibits";
+  return `/exhibits/${id}?returnTo=${encodeURIComponent(safeReturnTo)}`;
+};
+
+const buildArtifactCardModel = (item, exhibitsBasePath, returnTo) => ({
+  _id: item._id,
+  title: item.title,
+  imageUrl: normalizeImageUrl(item.imageUrl),
+  description: item.description || "",
+  eraInfo: resolveArtifactEraInfo(item),
+  era: item.era,
+  period: item.period,
+  location: item.location,
+  museumLabel: "Egyptian Museum",
+  ctaLabel: "View 3D Model Artifact",
+  ctaHref: item._id ? buildExhibitDetailsHref(item._id, returnTo) : exhibitsBasePath || "/exhibits"
+});
+
+const buildTimelineCardModel = (item, returnTo) => ({
+  _id: item._id,
+  title: item.title,
+  imageUrl: normalizeImageUrl(item.imageUrl),
+  description: item.description || "",
+  era: item.era,
+  period: item.period,
+  location: item.location,
+  ctaLabel: item._id ? "View 3D Model Artifact" : null,
+  ctaHref: item._id ? buildExhibitDetailsHref(item._id, returnTo) : null
+});
+
+const TARGET_ARTIFACT_CARDS = 8;
+const TARGET_TIMELINE_ITEMS = 8;
+
+const getCategoryTitles = (t, categoryKey) => {
+  if (!categoryKey) {
+    return {
+      heroTitle: t.exhibits.allTitle,
+      heroSubtitle: t.exhibits.allSubtitle
+    };
+  }
+  const map = {
+    pharaoh: { heroTitle: t.exhibits.pharaohTitle, heroSubtitle: t.exhibits.pharaohSubtitle },
+    islamic: { heroTitle: t.exhibits.islamicTitle, heroSubtitle: t.exhibits.islamicSubtitle },
+    christian: { heroTitle: t.exhibits.christianTitle, heroSubtitle: t.exhibits.christianSubtitle }
+  };
+  return map[categoryKey] || { heroTitle: t.exhibits.allTitle, heroSubtitle: t.exhibits.allSubtitle };
+};
+
+const categoryConfig = {
+  pharaoh: { categoryValue: "Pharaoh" },
+  islamic: { categoryValue: "Islamic" },
+  christian: { categoryValue: "Christian" }
+};
+
+const renderExhibitsPage = async (req, res, categoryKey, basePath) => {
+  const t = res.locals.t;
   const page = parseInt(req.query.page || "1", 10);
-  const limit = 6;
+  const limit = 8;
   const config = categoryKey ? categoryConfig[categoryKey] : null;
   const filter = config ? { category: new RegExp(`^${config.categoryValue}$`, "i") } : {};
   const total = await Exhibit.countDocuments(filter);
   const totalPages = Math.ceil(total / limit) || 1;
   const items = await Exhibit.find(filter)
+    .sort({ createdAt: -1 })
     .skip((page - 1) * limit)
     .limit(limit);
 
-  res.render("exhibits/index", {
-    pageTitle: config ? `${config.label} Collection` : "Exhibits",
-    heroTitle: config ? `${config.label} Collection` : "Exhibits",
-    heroSubtitle: config ? config.subtitle : "Discover Pharaoh, Islamic, and Christian galleries.",
-    exhibitsHtml: buildCards(items, "exhibit"),
+  let cardSourceItems = [...items];
+  if (cardSourceItems.length < TARGET_ARTIFACT_CARDS) {
+    const existingIds = cardSourceItems.map((item) => item._id);
+    const fillItems = await Exhibit.find({ ...filter, _id: { $nin: existingIds } })
+      .sort({ createdAt: -1 })
+      .limit(TARGET_ARTIFACT_CARDS - cardSourceItems.length);
+    cardSourceItems = [...cardSourceItems, ...fillItems];
+  }
+
+  let timelineSourceItems = [...items];
+  if (timelineSourceItems.length < TARGET_TIMELINE_ITEMS) {
+    const existingIds = timelineSourceItems.map((item) => item._id);
+    const fillTimelineItems = await Exhibit.find({ ...filter, _id: { $nin: existingIds } })
+      .sort({ createdAt: -1 })
+      .limit(TARGET_TIMELINE_ITEMS - timelineSourceItems.length);
+    timelineSourceItems = [...timelineSourceItems, ...fillTimelineItems];
+  }
+
+  const returnTo = req.originalUrl || basePath || "/exhibits";
+  const artifactItems = cardSourceItems.map((item) => buildArtifactCardModel(item, basePath, returnTo));
+  const timelineItems = timelineSourceItems.map((item) => buildTimelineCardModel(item, returnTo));
+  const { heroTitle, heroSubtitle } = getCategoryTitles(t, categoryKey);
+
+  res.render("exhibits/exhibits", {
+    pageTitle: heroTitle,
+    pageCss: "exhibits",
+    heroTitle,
+    heroSubtitle,
+    exhibits: items,
+    timelineItems,
+    artifactItems,
+    collectionKey: categoryKey || "all",
+    exhibitsBasePath: basePath,
     paginationHtml: buildPagination(page, totalPages, basePath)
   });
-});
+};
 
 const exhibits = asyncHandler(async (req, res) => {
   const categoryKey = (req.query.category || "").toLowerCase();
@@ -229,25 +491,65 @@ const exhibits = asyncHandler(async (req, res) => {
   return renderExhibitsPage(req, res, null, "/exhibits");
 });
 
-const exhibitsPharaoh = (req, res) => renderExhibitsPage(req, res, "pharaoh", "/exhibits/pharaoh");
-const exhibitsIslamic = (req, res) => renderExhibitsPage(req, res, "islamic", "/exhibits/islamic");
-const exhibitsChristian = (req, res) => renderExhibitsPage(req, res, "christian", "/exhibits/christian");
+const exhibitsPharaoh = asyncHandler(async (req, res) => renderExhibitsPage(req, res, "pharaoh", "/exhibits/pharaoh"));
+const exhibitsIslamic = asyncHandler(async (req, res) => renderExhibitsPage(req, res, "islamic", "/exhibits/islamic"));
+const exhibitsChristian = asyncHandler(async (req, res) => renderExhibitsPage(req, res, "christian", "/exhibits/christian"));
+const artifactPopup = asyncHandler(async (req, res) => {
+  const exhibitId = typeof req.query.id === "string" ? req.query.id : "";
+  let exhibit = null;
+
+  if (exhibitId) {
+    exhibit = await Exhibit.findById(exhibitId);
+  }
+
+  if (!exhibit) {
+    exhibit = await Exhibit.findOne().sort({ createdAt: -1 });
+  }
+
+  if (!exhibit) {
+    return res.status(404).render("404", { pageTitle: "Not Found", message: "Exhibit not found" });
+  }
+
+  const eraInfo = resolveArtifactEraInfo(exhibit);
+  const eraExtras = resolveArtifactEraExtras(exhibit);
+  const popupImageUrl = normalizeImageUrl(exhibit.imageUrl);
+
+  return res.render("exhibits/artifactPopup", {
+    pageTitle: exhibit.title,
+    exhibit,
+    eraInfo,
+    eraExtras,
+    popupImageUrl
+  });
+});
 
 const exhibitDetails = asyncHandler(async (req, res) => {
   const exhibit = await Exhibit.findById(req.params.id);
   if (!exhibit) {
     return res.status(404).render("404", { pageTitle: "Not Found", message: "Exhibit not found" });
   }
-  res.render("exhibits/details", { pageTitle: exhibit.title, exhibit });
+  const requestedReturnTo = typeof req.query.returnTo === "string" ? req.query.returnTo : "";
+  const backHref = requestedReturnTo.startsWith("/") && !requestedReturnTo.startsWith("//")
+    ? requestedReturnTo
+    : "/exhibits";
+  const eraInfo = resolveArtifactEraInfo(exhibit);
+  const eraExtras = resolveArtifactEraExtras(exhibit);
+  const detailImageUrl = normalizeImageUrl(exhibit.imageUrl);
+  res.render("exhibits/artifactDetails", { pageTitle: exhibit.title, pageCss: "exhibits", exhibit, backHref, eraInfo, eraExtras, detailImageUrl });
 });
 
-const virtualTour = (req, res) => res.render("virtual-tour/index", { pageTitle: "Virtual Tour" });
-const virtualTourIslamic = (req, res) => res.render("virtual-tour/islamic", { pageTitle: "Islamic Virtual Tour" });
-const virtualTourPharaoh = (req, res) => res.render("virtual-tour/pharaoh", { pageTitle: "Pharaohs Virtual Tour" });
-const virtualTourChristian = (req, res) => res.render("virtual-tour/christian", { pageTitle: "Christian Virtual Tour" });
+const virtualTour = (req, res) => res.render("virtual-tour/index", { pageTitle: "Virtual Tour", pageCss: "virtual-tour" });
+const virtualTourIslamic = (req, res) =>
+  res.render("virtual-tour/islamic", { pageTitle: "Islamic Virtual Tour", pageCss: "virtual-tour" });
+const virtualTourPharaoh = (req, res) =>
+  res.render("virtual-tour/pharaoh", { pageTitle: "Pharaohs Virtual Tour", pageCss: "virtual-tour" });
+const virtualTourChristian = (req, res) =>
+  res.render("virtual-tour/christian", { pageTitle: "Christian Virtual Tour", pageCss: "virtual-tour" });
+const vrExperience = (req, res) =>
+  res.render("virtual-tour/vr-experience", { pageTitle: "VR Experience", pageCss: "vr-experience" });
 const games = (req, res) => res.render("games/index", { pageTitle: "Games" });
 const gameQuiz = (req, res) => res.render("games/quiz", { pageTitle: "Quiz Game" });
-const gameExplorer = (req, res) => res.render("games/explorer", { pageTitle: "Explorer Game" });
+const gameExplorer = (req, res) => res.render("games/explorer", { pageTitle: "Explorer Game", pageCss: "pyramid-builder" });
 const gamePyramid = (req, res) => res.render("games/pyramid", { pageTitle: "Pyramid Builder", pageCss: "pyramid-builder" });
 
 const shop = asyncHandler(async (req, res) => {
@@ -323,15 +625,27 @@ const testimonials = asyncHandler(async (req, res) => {
   const items = await Testimonial.find().limit(10);
   res.render("testimonials/index", {
     pageTitle: "Testimonials",
+    pageCss: "testimonials",
     testimonialsHtml: buildCards(items, "testimonial")
   });
 });
 
+const contact = (req, res) => res.render("about/contact", { pageTitle: "Contact", pageCss: "info-pages" });
+const membership = (req, res) =>
+  res.render("about/membership", { pageTitle: "Membership", pageCss: "info-pages" });
+const faqs = (req, res) => res.render("about/faqs", { pageTitle: "FAQs", pageCss: "info-pages" });
+
 const planTrip = asyncHandler(async (req, res) => {
   const weather = await getWeather().catch(() => null);
+  const isAr = req.cookies.lang === "ar";
+
   const weatherHtml = weather
-    ? `<div class="weather-card">Current temperature: ${weather.temperature_2m}°C | Wind: ${weather.wind_speed_10m} km/h</div>`
-    : "<div class=\"weather-card\">Weather data unavailable</div>";
+    ? `<div class="weather-card">${
+        isAr
+          ? `درجة الحرارة الحالية: ${toArabicNumber(weather.temperature_2m)}°C | سرعة الرياح: ${toArabicNumber(weather.wind_speed_10m)} كم/س`
+          : `Current temperature: ${weather.temperature_2m}°C | Wind: ${weather.wind_speed_10m} km/h`
+      }</div>`
+    : `<div class="weather-card">${isAr ? "بيانات الطقس غير متاحة" : "Weather data unavailable"}</div>`;
   const tickets = await Ticket.find();
   const groupOrder = ["egyptian", "arab", "foreigner"];
   const audienceOrder = ["adult", "student", "child", "senior"];
@@ -343,21 +657,68 @@ const planTrip = asyncHandler(async (req, res) => {
   res.render("plan-trip/index", { pageTitle: "Plan Your Trip", weatherHtml, tickets });
 });
 
+const employeeDashboard = (req, res) => {
+  const user = req.session.user;
+  const role = user?.role;
+  const viewName = employeeDashboardViewByRole[role];
+
+  if (!viewName) {
+    return res.status(403).render("404", { pageTitle: "Forbidden", message: "Access denied." });
+  }
+
+  return res.render(viewName, {
+    pageTitle: "Employee Dashboard",
+    pageCss: "admin",
+    dashboardRole: role,
+    employeeNavKey: "dashboard",
+    employeeName: user?.name || "Employee",
+    panelLabel: getPanelLabelByRole(role)
+  });
+};
+
+const managerTasksDashboard = (req, res) => {
+  const user = req.session.user;
+  return res.render("employee/manager-tasks", {
+    pageTitle: "Manager Tasks",
+    pageCss: "admin",
+    dashboardRole: user?.role,
+    employeeNavKey: "tasks",
+    employeeName: user?.name || "Employee",
+    panelLabel: getPanelLabelByRole(user?.role)
+  });
+};
+
+const managerZonesDashboard = (req, res) => {
+  const user = req.session.user;
+  return res.render("employee/manager-zones", {
+    pageTitle: "Manager Zones",
+    pageCss: "admin",
+    dashboardRole: user?.role,
+    employeeNavKey: "zones",
+    employeeName: user?.name || "Employee",
+    panelLabel: getPanelLabelByRole(user?.role)
+  });
+};
+
 module.exports = {
   home,
   about,
+  mission,
   accessibility,
   newsletter,
   location,
+  exploreAges,
   exhibits,
   exhibitsPharaoh,
   exhibitsIslamic,
   exhibitsChristian,
+  artifactPopup,
   exhibitDetails,
   virtualTour,
   virtualTourIslamic,
   virtualTourPharaoh,
   virtualTourChristian,
+  vrExperience,
   games,
   gameQuiz,
   gameExplorer,
@@ -366,5 +727,11 @@ module.exports = {
   cart,
   checkout,
   testimonials,
-  planTrip
+  contact,
+  membership,
+  faqs,
+  planTrip,
+  employeeDashboard,
+  managerTasksDashboard,
+  managerZonesDashboard
 };

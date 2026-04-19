@@ -1,0 +1,71 @@
+<%- include('../partials/header') %>
+<%- include('../partials/navbar') %>
+
+<section class="page-hero exhibits-hero--immersive collection-<%= collectionKey || 'all' %>">
+  <div class="container">
+    <% const heroDisplayByCollection = {
+      pharaoh: { kicker: 'PRIMARY ERA ARCHIVE', titleHtml: 'THE<br>PHARAONIC<br>AGE' },
+      islamic: { kicker: 'PRIMARY ERA ARCHIVE', titleHtml: 'THE<br>ISLAMIC<br>ERA' },
+      christian: { kicker: 'PRIMARY ERA ARCHIVE', titleHtml: 'THE<br>CHRISTIAN<br>ERA' }
+    }; %>
+    <% const heroDisplay = heroDisplayByCollection[collectionKey]; %>
+    <p class="exhibits-hero-kicker"><%= heroDisplay ? heroDisplay.kicker : (heroTitle || "Exhibits").toUpperCase() %></p>
+    <h1><%- heroDisplay ? heroDisplay.titleHtml : (heroTitle || "Exhibits") %></h1>
+    <p>
+      <%= collectionKey === 'pharaoh'
+        ? 'A JOURNEY THROUGH THREE MILLENNIA OF DIVINE KINGSHIP AND ETERNAL MONUMENTS.'
+        : (heroSubtitle || 'Discover Pharaoh, Islamic, and Christian galleries.') %>
+    </p>
+    <a class="btn exhibits-hero-btn" href="#collection-timeline">
+      <span>Start Exploring</span>
+      <i class="fa-solid fa-arrow-down" style="margin-left:8px; transition: transform 0.3s ease;"></i>
+    </a>
+  </div>
+</section>
+
+<section class="section exhibits-timeline-section collection-<%= collectionKey || 'all' %>" id="collection-timeline">
+  <div class="container">
+    <div class="timeline-heading">
+      <h2><%= collectionKey === 'pharaoh' ? 'Pharaonic Legacy Timeline' : `${heroTitle || 'Collection'} Timeline` %></h2>
+      <p>
+        <%= collectionKey === 'pharaoh'
+          ? 'A dynamic arc of continuity, innovation, and monumental structure across ancient Egypt.'
+          : 'Walk through defining pieces from this collection in a curated visual chronology.' %>
+      </p>
+    </div>
+
+    <% if ((timelineItems || []).length === 0) { %>
+    <div class="timeline-empty">
+      <h3>Timeline coming soon</h3>
+      <p>New artifacts are being curated now. Check back soon for a complete historical journey.</p>
+    </div>
+    <% } else { %>
+    <div class="timeline" aria-label="Collection timeline">
+      <% (timelineItems || []).forEach((timeline, index) => { %>
+      <%- include('../partials/timelineCard', { timeline, index, collectionKey }) %>
+      <% }) %>
+    </div>
+    <% } %>
+  </div>
+</section>
+
+<section class="section exhibits-artifacts-section collection-<%= collectionKey || 'all' %>">
+  <div class="container">
+    <% if ((artifactItems || []).length === 0) { %>
+    <div class="timeline-empty grid-empty">
+      <h3>No exhibits found yet</h3>
+      <p>When exhibits are added, they will appear here with full details and timeline placement.</p>
+    </div>
+    <% } else { %>
+    <div class="artifact-showcase-title"><span><%= (heroTitle || "Exhibits").toUpperCase() %> ARTIFACTS</span></div>
+    <div class="artifact-grid">
+      <% artifactItems.forEach((card) => { %>
+      <%- include('../partials/artifactCard', { card }) %>
+      <% }) %>
+    </div>
+    <% } %>
+    <%- paginationHtml %>
+  </div>
+</section>
+
+<%- include('../partials/footer') %>

@@ -1,0 +1,49 @@
+<%- include('../partials/employeeLayoutStart') %>
+<section id="manager-zones-page">
+  <header class="admin-page-header">
+    <div>
+      <h1><i class="fas fa-map-location-dot"></i> <%= language === 'ar' ? 'إدارة مناطق المدير' : 'Manager Zone Management' %></h1>
+      <p><%= language === 'ar' ? 'أنشئ مناطق تنظيف من الخريطة وعيّن عمال النظافة في صفحة مخصصة.' : 'Create cleaning zones from the map and assign janitors in a dedicated page.' %></p>
+    </div>
+  </header>
+  <div class="admin-split">
+    <article class="card admin-panel">
+      <h3><i class="fas fa-draw-polygon"></i> <%= language === 'ar' ? 'إنشاء منطقة تنظيف' : 'Create Cleaning Zone' %></h3>
+      <p><%= language === 'ar' ? 'اختر وضع الرسم: مستطيل (اسحب على الخريطة) أو مضلع (انقر على النقاط).' : 'Choose draw mode: rectangle (drag on map) or polygon (click points).' %></p>
+      <label><%= language === 'ar' ? 'وضع الرسم' : 'Draw Mode' %></label>
+      <select id="manager-zone-draw-mode">
+        <option value="rectangle" selected><%= language === 'ar' ? 'مستطيل' : 'Rectangle' %></option>
+        <option value="polygon"><%= language === 'ar' ? 'مضلع' : 'Polygon' %></option>
+      </select>
+      <div class="map-wrapper admin-map" id="manager-zone-map">
+        <img src="/assets/map/map.png" alt="<%= language === 'ar' ? 'خريطة المتحف' : 'Museum map' %>" class="map-image" />
+        <div class="map-layer" id="manager-zone-hit-area"></div>
+      </div>
+      <form class="form" id="manager-zone-form">
+        <input type="hidden" name="editingZoneId" id="manager-zone-editing-id" />
+        <label><%= language === 'ar' ? 'اسم المنطقة' : 'Zone Name' %></label>
+        <input type="text" name="zoneName" required />
+        <label><%= language === 'ar' ? 'الطابق' : 'Floor' %></label>
+        <input type="text" name="floor" value="<%= language === 'ar' ? 'الطابق الأرضي' : 'Ground' %>" required />
+        <label><%= language === 'ar' ? 'لون المنطقة' : 'Zone Color' %></label>
+        <input type="color" name="color" value="#b7842a" />
+        <label><%= language === 'ar' ? 'الوصف' : 'Description' %></label>
+        <textarea name="description"></textarea>
+        <input type="hidden" name="polygon" />
+        <div class="admin-actions">
+          <button class="btn" type="submit" id="manager-zone-submit"><%= language === 'ar' ? 'إنشاء منطقة' : 'Create Zone' %></button>
+          <button class="btn btn-secondary admin-cancel" type="button" id="manager-zone-cancel-edit"><%= language === 'ar' ? 'إلغاء التعديل' : 'Cancel Edit' %></button>
+          <button class="btn btn-secondary" type="button" id="manager-zone-clear-points"><%= language === 'ar' ? 'مسح النقاط' : 'Clear Points' %></button>
+        </div>
+        <p class="form-message" id="manager-zone-message"></p>
+      </form>
+      <label><%= language === 'ar' ? 'تعيين عامل نظافة' : 'Assign Janitor' %></label>
+      <select id="zone-assign-user"></select>
+    </article>
+    <article class="card">
+      <h3><i class="fas fa-layer-group"></i> <%= language === 'ar' ? 'قائمة المناطق' : 'Zone List' %></h3>
+      <div id="manager-zone-list" class="admin-list"></div>
+    </article>
+  </div>
+</section>
+<%- include('../partials/employeeLayoutEnd') %>

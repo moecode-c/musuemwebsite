@@ -1,42 +1,120 @@
 <%- include('../partials/header') %>
 <%- include('../partials/navbar') %>
 
-<section class="page-hero">
-  <div class="container">
-    <h1>Testimonials</h1>
-    <p>Real stories from visitors who explored the heart of Egypt.</p>
-  </div>
-</section>
-
-<section class="section">
-  <div class="container split">
-    <div>
-      <div class="testimonials-summary">
-        <div>
-          <h2>Visitor Highlights</h2>
-          <p>Every review helps us create more meaningful experiences for future visitors.</p>
+<main class="testimonials-page">
+  <section class="page-hero testimonials-hero">
+    <div class="container">
+      <h1 class="hero-title"><%= t.testimonials.heroTitle %></h1>
+      <p class="hero-subtitle"><%= t.testimonials.heroSubtitle %></p>
+      <div class="stats-row">
+        <div class="stat-card">
+          <h3>4.9/5</h3>
+          <p><%= t.testimonials.averageRating %></p>
         </div>
-        <div class="rating-badge">
-          <span class="rating-score">4.9</span>
-          <span class="rating-text">Average rating</span>
+        <div class="stat-card">
+          <h3>2,500+</h3>
+          <p><%= t.testimonials.happyVisitors %></p>
         </div>
-      </div>
-      <div class="grid">
-        <%- testimonialsHtml %>
+        <div class="stat-card">
+          <h3>15+</h3>
+          <p><%= t.testimonials.yearsOfDiscovery %></p>
+        </div>
       </div>
     </div>
-    <form class="form" id="testimonial-form">
-      <h3>Share your experience</h3>
-      <label>Name</label>
-      <input type="text" name="name" required />
-      <label>Message</label>
-      <textarea name="message" required></textarea>
-      <label>Rating (1-5)</label>
-      <input type="number" name="rating" min="1" max="5" value="5" required />
-      <button class="btn" type="submit">Submit</button>
-      <p class="form-message" id="testimonial-message"></p>
-    </form>
-  </div>
-</section>
+  </section>
+
+  <section class="section">
+    <div class="container">
+      <h2 class="section-title"><%= t.testimonials.highlightsTitle %></h2>
+      <div class="split featured-stories">
+        <article class="card featured-card">
+          <div class="featured-header">
+            <img src="/assets/images/pillarsbg.png" alt="<%= t.testimonials.featured[0].name %>" class="featured-avatar" />
+            <div>
+              <h4><%= t.testimonials.featured[0].name %></h4>
+              <p class="featured-meta"><%= t.testimonials.featured[0].meta %></p>
+              <div class="featured-stars">★★★★★</div>
+            </div>
+          </div>
+          <p class="featured-quote">"<%= t.testimonials.featured[0].quote %>"</p>
+          <div class="featured-footnote"><%= t.testimonials.featured[0].footnote %></div>
+        </article>
+
+        <article class="card featured-card">
+          <div class="featured-header">
+            <img src="/assets/images/pyramidsbg.png" alt="<%= t.testimonials.featured[1].name %>" class="featured-avatar" />
+            <div>
+              <h4><%= t.testimonials.featured[1].name %></h4>
+              <p class="featured-meta"><%= t.testimonials.featured[1].meta %></p>
+              <div class="featured-stars">★★★★★</div>
+            </div>
+          </div>
+          <p class="featured-quote">"<%= t.testimonials.featured[1].quote %>"</p>
+          <div class="featured-footnote"><%= t.testimonials.featured[1].footnote %></div>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <section class="section alt">
+    <div class="container">
+      <h2 class="section-title"><%= t.testimonials.trustedTitle %></h2>
+      <div class="trust-grid">
+        <div class="trust-card">
+          <h3>TripAdvisor</h3>
+          <div class="featured-stars">★★★★★</div>
+          <p><%= t.testimonials.certExcellence %></p>
+        </div>
+        <div class="trust-card">
+          <h3>Google Reviews</h3>
+          <div class="featured-stars">★★★★★</div>
+          <p><%= t.testimonials.googleRating %></p>
+        </div>
+        <div class="trust-card">
+          <h3><%= t.testimonials.licensed %></h3>
+          <p><%= t.testimonials.ministry %></p>
+        </div>
+        <div class="trust-card">
+          <h3><%= t.testimonials.awardWinner %></h3>
+          <p><%= t.testimonials.bestOperator %></p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="container">
+      <div class="hero-card cta-card">
+        <h2><%= t.testimonials.ctaTitle %></h2>
+        <p><%= t.testimonials.ctaText %></p>
+        <div class="cta-actions">
+          <a href="/exhibits" class="btn"><%= t.buttons.exploreExhibits %></a>
+          <a href="/contact" class="btn btn-outline"><%= t.testimonials.contactUs %></a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section chronicle-section">
+    <div class="container">
+      <div class="split chronicle-split">
+        <div class="cta-text">
+          <h2 class="font-cinzel"><%= t.testimonials.chronicleTitle %></h2>
+          <p><%= t.testimonials.chronicleText %></p>
+        </div>
+        <div class="form-wrapper">
+          <form class="form" id="testimonial-form" action="/api/testimonials" method="POST">
+            <h3 class="nav-title form-title"><%= t.testimonials.formTitle %></h3>
+            <input type="text" name="name" placeholder="<%= t.testimonials.name %>" required />
+            <textarea name="message" rows="4" placeholder="<%= t.testimonials.message %>" required></textarea>
+            <input type="number" name="rating" min="1" max="5" value="5" required class="rating-input" />
+            <button type="submit" class="btn"><%= t.testimonials.submit %></button>
+            <p class="form-message" id="testimonial-message"></p>
+          </form>
+        </div>
+      </div>
+    </div>
+  </section>
+</main>
 
 <%- include('../partials/footer') %>

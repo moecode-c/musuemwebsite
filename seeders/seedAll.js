@@ -9,6 +9,8 @@ const { seedMapPins } = require("./mapPins.seed");
 const { seedTickets } = require("./tickets.seed");
 const { seedTestimonials } = require("./testimonials.seed");
 const { seedNewsletter } = require("./newsletter.seed");
+const { seedCleaningZones } = require("./cleaningZones.seed");
+const { seedTasks } = require("./tasks.seed");
 
 const User = require("../models/User");
 const Exhibit = require("../models/Exhibit");
@@ -17,6 +19,8 @@ const MapPin = require("../models/MapPin");
 const Ticket = require("../models/Ticket");
 const Testimonial = require("../models/Testimonial");
 const Newsletter = require("../models/Newsletter");
+const CleaningZone = require("../models/CleaningZone");
+const Task = require("../models/Task");
 
 dotenv.config();
 
@@ -40,7 +44,9 @@ const seedAll = async () => {
     MapPin.deleteMany(),
     Ticket.deleteMany(),
     Testimonial.deleteMany(),
-    Newsletter.deleteMany()
+    Newsletter.deleteMany(),
+    CleaningZone.deleteMany(),
+    Task.deleteMany()
   ]);
 
   await seedUsers();
@@ -50,6 +56,8 @@ const seedAll = async () => {
   await seedTickets();
   await seedTestimonials();
   await seedNewsletter();
+  await seedCleaningZones();
+  await seedTasks();
 
   console.log("Seeders completed");
   await mongoose.disconnect();

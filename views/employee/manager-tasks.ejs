@@ -1,0 +1,52 @@
+<%- include('../partials/employeeLayoutStart') %>
+<section id="manager-tasks-page">
+  <header class="admin-page-header">
+    <div>
+      <h1><i class="fas fa-list-check"></i> <%= language === 'ar' ? 'إدارة مهام المدير' : 'Manager Task Management' %></h1>
+      <p><%= language === 'ar' ? 'أنشئ مهام الموظفين وراقبها في مساحة عمل واحدة.' : 'Create and monitor employee tasks in one focused workspace.' %></p>
+    </div>
+  </header>
+  <div class="admin-split">
+    <article class="card admin-panel">
+      <h3><i class="fas fa-user-plus"></i> <%= language === 'ar' ? 'تعيين مهمة لموظف' : 'Assign Employee Task' %></h3>
+      <form class="form" id="manager-task-form">
+        <label><%= language === 'ar' ? 'العنوان' : 'Title' %></label>
+        <input type="text" name="title" required />
+        <label><%= language === 'ar' ? 'الوصف' : 'Description' %></label>
+        <textarea name="description"></textarea>
+        <label><%= language === 'ar' ? 'الأولوية' : 'Priority' %></label>
+        <select name="priority">
+          <option value="low"><%= language === 'ar' ? 'منخفضة' : 'Low' %></option>
+          <option value="medium" selected><%= language === 'ar' ? 'متوسطة' : 'Medium' %></option>
+          <option value="high"><%= language === 'ar' ? 'عالية' : 'High' %></option>
+          <option value="urgent"><%= language === 'ar' ? 'عاجلة' : 'Urgent' %></option>
+        </select>
+        <label><%= language === 'ar' ? 'تعيين إلى' : 'Assign To' %></label>
+        <select id="task-assigned-to" name="assignedTo" required></select>
+        <label><%= language === 'ar' ? 'الدور المستهدف' : 'Role Target' %></label>
+        <select name="roleTarget">
+          <option value="museum_manager"><%= language === 'ar' ? 'مدير المتحف' : 'Museum Manager' %></option>
+          <option value="curator"><%= language === 'ar' ? 'أمين المعرض' : 'Curator' %></option>
+          <option value="front_desk"><%= language === 'ar' ? 'موظف الاستقبال' : 'Front Desk' %></option>
+          <option value="security_officer"><%= language === 'ar' ? 'ضابط الأمن' : 'Security Officer' %></option>
+          <option value="maintenance_technician"><%= language === 'ar' ? 'فني الصيانة' : 'Maintenance Technician' %></option>
+          <option value="janitor"><%= language === 'ar' ? 'عامل نظافة' : 'Janitor' %></option>
+          <option value="educator_guide"><%= language === 'ar' ? 'مرشد تعليمي' : 'Educator Guide' %></option>
+        </select>
+        <label><%= language === 'ar' ? 'المنطقة (اختياري)' : 'Zone (Optional)' %></label>
+        <select id="task-zone-id" name="zoneId"></select>
+        <label><%= language === 'ar' ? 'تاريخ الاستحقاق' : 'Due Date' %></label>
+        <input type="datetime-local" name="dueAt" />
+        <label><%= language === 'ar' ? 'قائمة التحقق (عنصر واحد في كل سطر)' : 'Checklist (one item per line)' %></label>
+        <textarea name="checklist"></textarea>
+        <button class="btn" type="submit"><%= language === 'ar' ? 'تعيين المهمة' : 'Assign Task' %></button>
+        <p class="form-message" id="manager-task-message"></p>
+      </form>
+    </article>
+    <article class="card">
+      <h3><i class="fas fa-clipboard-list"></i> <%= language === 'ar' ? 'قائمة المهام' : 'Task List' %></h3>
+      <div id="manager-task-list" class="admin-list"></div>
+    </article>
+  </div>
+</section>
+<%- include('../partials/employeeLayoutEnd') %>

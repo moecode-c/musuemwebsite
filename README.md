@@ -22,5 +22,6 @@ Option B (Hosting)
 
 ## Deployment Notes
 - Set MONGODB_URI to MongoDB Atlas connection string.
+- If your network blocks SRV lookups (`querySrv ECONNREFUSED`), set `MONGODB_URI_DIRECT` to Atlas's standard (non-SRV) connection string.
 - Configure SESSION_SECRET and enable HTTPS in production.
 - Set NODE_ENV=production for best performance.

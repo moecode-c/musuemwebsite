@@ -2,43 +2,48 @@
 
 <section class="admin-page-header">
   <div>
-    <h1>Manage Exhibits</h1>
-    <p>Add, edit, and remove museum exhibits.</p>
+    <h1><%= language === 'ar' ? 'إدارة المعروضات' : 'Manage Exhibits' %></h1>
+    <p><%= language === 'ar' ? 'إضافة وتعديل وحذف معروضات المتحف.' : 'Add, edit, and remove museum exhibits.' %></p>
   </div>
 </section>
 
 <section class="admin-section">
   <div class="admin-split">
     <form class="form" id="admin-exhibit-form" enctype="multipart/form-data">
-      <label>Title</label>
+      <label><%= language === 'ar' ? 'العنوان' : 'Title' %></label>
       <input type="text" name="title" required />
-      <label>Category</label>
+      <label><%= language === 'ar' ? 'الفئة' : 'Category' %></label>
       <input type="text" name="category" required />
-      <label>Description</label>
+      <label><%= language === 'ar' ? 'الوصف' : 'Description' %></label>
       <textarea name="description" required></textarea>
-      <label>Era</label>
+      <label><%= language === 'ar' ? 'الحقبة' : 'Era' %></label>
       <input type="text" name="era" />
+      <label><%= language === 'ar' ? 'الفترة' : 'Period' %></label>
+      <input type="text" name="period" />
+      <label><%= language === 'ar' ? 'الموقع' : 'Location' %></label>
+      <input type="text" name="location" />
       <label>X (%)</label>
       <input type="number" name="x" min="0" max="100" step="any" />
       <label>Y (%)</label>
       <input type="number" name="y" min="0" max="100" step="any" />
       <div class="map-wrapper admin-exhibit-map" id="admin-exhibit-map">
-        <img src="/assets/map/map.png" alt="Museum map" class="map-image" />
+        <img src="/assets/map/map.png" alt="<%= language === 'ar' ? 'خريطة المتحف' : 'Museum map' %>" class="map-image" />
         <div class="map-layer">
           <div class="map-pin map-pin-highlight" id="admin-exhibit-pin" style="display: none;"></div>
         </div>
       </div>
-      <p class="admin-map-note">Click the map to set X/Y coordinates.</p>
-      <label>Image</label>
+      <p class="admin-map-note"><%= language === 'ar' ? 'انقر على الخريطة لتحديد إحداثيات X/Y.' : 'Click the map to set X/Y coordinates.' %></p>
+      <label><%= language === 'ar' ? 'الصورة' : 'Image' %></label>
       <input type="file" name="image" accept="image/*" required />
-      <label>3D Model (.glb/.gltf)</label>
+      <label><%= language === 'ar' ? 'نموذج ثلاثي الأبعاد (.glb/.gltf)' : '3D Model (.glb/.gltf)' %></label>
       <input type="file" name="model" accept=".glb,.gltf" required />
-      <button class="btn admin-submit" type="submit">Create Exhibit</button>
-      <button class="btn btn-secondary admin-cancel" type="button">Cancel</button>
+      <p class="admin-map-note"><%= language === 'ar' ? 'ارفع ملف .glb أو .gltf. مطلوب عند الإنشاء واختياري عند التعديل.' : 'Upload a .glb or .gltf model. Required when creating. Optional when editing.' %></p>
+      <button class="btn admin-submit" type="submit"><%= language === 'ar' ? 'إنشاء معرض' : 'Create Exhibit' %></button>
+      <button class="btn btn-secondary admin-cancel" type="button"><%= language === 'ar' ? 'إلغاء' : 'Cancel' %></button>
       <p class="form-message" id="admin-exhibit-message"></p>
     </form>
     <div>
-      <h3>Exhibit List</h3>
+      <h3><%= language === 'ar' ? 'قائمة المعروضات' : 'Exhibit List' %></h3>
       <div id="admin-exhibit-list" class="admin-list"></div>
     </div>
   </div>

@@ -5,16 +5,20 @@ const Ticket = require("../models/Ticket");
 const User = require("../models/User");
 const Testimonial = require("../models/Testimonial");
 const TicketRequest = require("../models/TicketRequest");
+const Task = require("../models/Task");
+const CleaningZone = require("../models/CleaningZone");
 const { asyncHandler } = require("../utils/asyncHandler");
 
 const dashboard = asyncHandler(async (req, res) => {
-  const [exhibitCount, productCount, userCount, ticketCount, testimonialCount, ticketRequestCount] = await Promise.all([
+  const [exhibitCount, productCount, userCount, ticketCount, testimonialCount, ticketRequestCount, taskCount, cleaningZoneCount] = await Promise.all([
     Exhibit.countDocuments(),
     Product.countDocuments(),
     User.countDocuments(),
     Ticket.countDocuments(),
     Testimonial.countDocuments(),
-    TicketRequest.countDocuments()
+    TicketRequest.countDocuments(),
+    Task.countDocuments(),
+    CleaningZone.countDocuments()
   ]);
 
   res.render("admin/dashboard", {
@@ -26,7 +30,9 @@ const dashboard = asyncHandler(async (req, res) => {
       userCount,
       ticketCount,
       testimonialCount,
-      ticketRequestCount
+      ticketRequestCount,
+      taskCount,
+      cleaningZoneCount
     }
   });
 });

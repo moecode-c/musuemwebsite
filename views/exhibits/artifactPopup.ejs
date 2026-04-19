@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Artifact Popup</title>
+    <script>
+      (function () {
+        try {
+          var savedTheme = localStorage.getItem("museum-theme");
+          if (savedTheme === "light") {
+            document.documentElement.classList.add("theme-light");
+          }
+        } catch (e) {
+          // Ignore storage access issues.
+        }
+      })();
+    </script>
+    <link rel="stylesheet" href="/css/artifactPopup.css" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
+    <script type="module" src="https://unpkg.com/@google/model-viewer/dist/model-viewer.min.js"></script>
+  </head>
+  <body>
+    <main class="artifact-popup" aria-label="Artifact popup preview">
+      <section class="artifact-popup-stage" aria-label="Artifact media">
+        <% if (exhibit.modelUrl) { %>
+        <model-viewer
+          class="artifact-popup-model"
+          src="<%= exhibit.modelUrl %>"
+          poster="<%= popupImageUrl || exhibit.imageUrl %>"
+          alt="3D model of <%= exhibit.title %>"
+          camera-controls
+          auto-rotate
+          shadow-intensity="1"
+          exposure="1"
+          interaction-prompt="none"
+          loading="eager"></model-viewer>
+        <% } else { %>
+        <img src="<%= popupImageUrl || exhibit.imageUrl %>" alt="<%= exhibit.title %>" onerror="this.onerror=null;this.src='/assets/images/pillarsbg.png';" />
+        <% } %>
+      </section>
+
+      <section class="artifact-popup-panel" aria-label="Artifact information">
+        <button type="button" class="artifact-popup-close" data-close-artifact-popup aria-label="Close artifact popup">&times;</button>
+        <h1 class="artifact-popup-title"><i class="fa-solid fa-cube"></i> <%= exhibit.title %></h1>
+
+        <div class="artifact-popup-tabs" role="tablist" aria-label="Artifact sections">
+          <button type="button" class="artifact-popup-tab is-active" role="tab" id="tab-description" data-tab="description" aria-controls="panel-description" aria-selected="true"><i class="fa-solid fa-file-alt"></i> Description</button>
+          <button type="button" class="artifact-popup-tab" role="tab" id="tab-history" data-tab="history" aria-controls="panel-history" aria-selected="false" tabindex="-1"><i class="fa-solid fa-landmark"></i> History</button>
+          <button type="button" class="artifact-popup-tab" role="tab" id="tab-significance" data-tab="significance" aria-controls="panel-significance" aria-selected="false" tabindex="-1"><i class="fa-solid fa-star"></i> Significance</button>
+        </div>
+
+        <div class="artifact-popup-scroll" aria-hidden="true">
+          <div class="artifact-popup-scroll-indicator"></div>
+        </div>
+
+        <div class="artifact-popup-copy is-active" role="tabpanel" id="panel-description" aria-labelledby="tab-description" data-panel="description">
+          <p><%= exhibit.description || "No description available for this artifact yet." %></p>
+        </div>
+
+        <div class="artifact-popup-copy" role="tabpanel" id="panel-history" aria-labelledby="tab-history" data-panel="history" hidden>
+          <% if (eraInfo) { %>
+          <p><%= eraInfo %></p>
+          <% } else { %>
+          <p>No historical context available for this artifact yet.</p>
+          <% } %>
+          <% if (exhibit.period || exhibit.era || exhibit.location) { %>
+          <p>
+            <%= exhibit.period || exhibit.era ? `Period: ${exhibit.period || exhibit.era}.` : "" %>
+            <%= exhibit.location ? ` Origin: ${exhibit.location}.` : "" %>
+          </p>
+          <% } %>
+        </div>
+
+        <div class="artifact-popup-copy" role="tabpanel" id="panel-significance" aria-labelledby="tab-significance" data-panel="significance" hidden>
+          <% if (eraExtras && (eraExtras.significance || eraExtras.legacy)) { %>
+          <p>
+            <%= eraExtras.significance || "" %>
+            <%= eraExtras.legacy ? ` ${eraExtras.legacy}` : "" %>
+          </p>
+          <% } else { %>
+          <p>No significance details available for this artifact yet.</p>
+          <% } %>
+        </div>
+      </section>
+    </main>
+    <script src="/javascript/artifactPopup-tabs.js" defer></script>
+  </body>
+</html>

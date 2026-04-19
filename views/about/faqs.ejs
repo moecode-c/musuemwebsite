@@ -1,0 +1,50 @@
+<%- include('../partials/header') %>
+<%- include('../partials/navbar') %>
+
+<main class="info-page-shell">
+  <section class="section info-page-hero">
+    <div class="container">
+      <p class="info-kicker"><%= language === 'ar' ? 'الأسئلة الشائعة' : 'Frequently Asked Questions' %></p>
+      <h1><%= language === 'ar' ? 'الأسئلة الأكثر تكراراً' : 'Answers To Common Questions' %></h1>
+      <p><%= language === 'ar' ? 'كل ما تحتاج معرفته قبل زيارتك للمتحف.' : 'Everything you need before your museum visit.' %></p>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="container info-grid">
+      <article class="info-card" style="grid-column: span 2;">
+        <h3><%= language === 'ar' ? 'الأسئلة' : 'FAQs' %></h3>
+        <div class="info-list">
+          <details class="info-faq-item" open>
+            <summary><%= language === 'ar' ? 'هل يمكن شراء التذاكر عبر الإنترنت؟' : 'Can I purchase tickets online?' %></summary>
+            <p><%= language === 'ar' ? 'نعم، يمكنك طلب التذاكر من صفحة طلب التذاكر أو من خلال مكتب الاستقبال.' : 'Yes. You can request tickets online through the checkout page or at the front desk.' %></p>
+          </details>
+          <details class="info-faq-item">
+            <summary><%= language === 'ar' ? 'هل تتوفر جولات إرشادية؟' : 'Are guided tours available?' %></summary>
+            <p><%= language === 'ar' ? 'تتوفر جولات يومية بعدة لغات مع مرشدين متخصصين.' : 'Daily guided tours are available in multiple languages with specialist guides.' %></p>
+          </details>
+          <details class="info-faq-item">
+            <summary><%= language === 'ar' ? 'هل يمكن الوصول بالكراسي المتحركة؟' : 'Is wheelchair access available?' %></summary>
+            <p><%= language === 'ar' ? 'نعم، جميع المناطق الرئيسية مجهزة للوصول السهل.' : 'Yes, all main areas support step-free access and accessibility assistance.' %></p>
+          </details>
+          <details class="info-faq-item">
+            <summary><%= language === 'ar' ? 'كيف أتواصل مع الدعم؟' : 'How do I contact support?' %></summary>
+            <p><%= language === 'ar' ? 'يمكنك التواصل عبر البريد الإلكتروني أو الهاتف في صفحة التواصل.' : 'Reach out by email or phone on the Contact page.' %></p>
+          </details>
+        </div>
+      </article>
+
+      <article class="info-card">
+        <h3><%= language === 'ar' ? 'روابط سريعة' : 'Quick Links' %></h3>
+        <ul class="info-list">
+          <li><i class="fa-solid fa-arrow-right"></i><a href="/plan-trip"><%= t.footer.planTrip %></a></li>
+          <li><i class="fa-solid fa-arrow-right"></i><a href="/accessibility"><%= t.footer.accessibility %></a></li>
+          <li><i class="fa-solid fa-arrow-right"></i><a href="/contact"><%= language === 'ar' ? 'تواصل معنا' : 'Contact' %></a></li>
+          <li><i class="fa-solid fa-arrow-right"></i><a href="/membership"><%= language === 'ar' ? 'العضوية' : 'Membership' %></a></li>
+        </ul>
+      </article>
+    </div>
+  </section>
+</main>
+
+<%- include('../partials/footer') %>

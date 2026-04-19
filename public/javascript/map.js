@@ -1,6 +1,32 @@
 document.addEventListener("DOMContentLoaded", () => {
   const tooltip = document.getElementById("map-tooltip");
   let activePop = null;
+  const pointsToString = (points) => points.map((point) => `${point.x},${point.y}`).join(" ");
+
+  const ensureZoneSvg = (container) => {
+    if (!container) return null;
+    let svg = container.querySelector(".map-zone-svg");
+    if (!svg) {
+      svg = document.createElementNS("http://www.w3.org/2000/svg", "svg");
+      svg.setAttribute("class", "map-zone-svg");
+      svg.setAttribute("viewBox", "0 0 100 100");
+      svg.setAttribute("preserveAspectRatio", "none");
+      container.appendChild(svg);
+    }
+    return svg;
+  };
+
+  const drawZonePolygons = (svg, zones) => {
+    if (!svg) return;
+    svg.innerHTML = "";
+    zones.forEach((zone) => {
+      const polygon = document.createElementNS("http://www.w3.org/2000/svg", "polygon");
+      polygon.setAttribute("class", "map-zone-polygon");
+      polygon.setAttribute("points", pointsToString(zone.polygon || []));
+      polygon.setAttribute("title", zone.zoneName || "Cleaning Zone");
+      svg.appendChild(polygon);
+    });
+  };
   const setPinPosition = (pin) => {
     const x = pin.dataset.x;
     const y = pin.dataset.y;
@@ -105,9 +131,16 @@ document.addEventListener("DOMContentLoaded", () => {
   const adminForm = document.getElementById("admin-map-form");
   const adminList = document.getElementById("admin-map-list");
   const adminCommonList = document.getElementById("admin-common-map-list");
+  const adminZoneForm = document.getElementById("admin-zone-form");
+  const adminZoneList = document.getElementById("admin-zone-list");
+  const adminZoneAssignUser = document.getElementById("admin-zone-assign-user");
+  const adminZoneMessage = document.getElementById("admin-zone-message");
   if (adminMap && adminForm) {
+    const zoneSvg = ensureZoneSvg(adminMap);
+    const zoneClearPointsBtn = document.getElementById("admin-zone-clear-points");
     const submitBtn = adminForm.querySelector(".admin-submit");
     const cancelBtn = adminForm.querySelector(".admin-cancel");
+    let currentZonePoints = [];
 
     const setEditing = (isEditing) => {
       if (!submitBtn) return;
@@ -185,6 +218,87 @@ document.addEventListener("DOMContentLoaded", () => {
       }
     };
 
+    const drawCurrentZonePreview = () => {
+      if (!zoneSvg) return;
+      const previewId = "admin-zone-preview";
+      const existingPreview = document.getElementById(previewId);
+      if (existingPreview) {
+        existingPreview.remove();
+      }
+
+      if (currentZonePoints.length < 3) return;
+
+      const preview = document.createElementNS("http://www.w3.org/2000/svg", "polygon");
+      preview.setAttribute("id", previewId);
+      preview.setAttribute("class", "map-zone-polygon map-zone-polygon-preview");
+      preview.setAttribute("points", pointsToString(currentZonePoints));
+      zoneSvg.appendChild(preview);
+    };
+
+    const loadUsers = async () => {
+      if (!adminZoneAssignUser) return;
+      const response = await fetch("/api/users");
+      const users = await response.json();
+      const janitors = users.filter((user) => user.role === "janitor");
+      adminZoneAssignUser.innerHTML = `<option value="">Select janitor</option>${janitors
+        .map((user) => `<option value="${user._id}">${user.name}</option>`)
+        .join("")}`;
+    };
+
+    const loadZones = async () => {
+      if (!adminZoneList) return;
+      const response = await fetch("/api/cleaning-zones");
+      const zones = await response.json();
+
+      drawZonePolygons(zoneSvg, zones);
+      drawCurrentZonePreview();
+
+      adminZoneList.innerHTML = zones
+        .map(
+          (zone) => `
+            <div class="admin-item">
+              <div class="admin-item-content">
+                <strong>${zone.zoneName}</strong>
+                <span class="admin-item-meta">Floor: ${zone.floor || "Ground"}</span>
+                <span class="admin-item-meta">Assigned: ${zone.assignedTo?.name || "Unassigned"}</span>
+              </div>
+              <div class="admin-actions">
+                <button class="btn btn-secondary" data-zone-action="assign" data-zone-id="${zone._id}">Assign</button>
+                <button class="btn" data-zone-action="delete" data-zone-id="${zone._id}">Delete</button>
+              </div>
+            </div>
+          `
+        )
+        .join("");
+
+      adminZoneList.querySelectorAll("button[data-zone-action]").forEach((button) => {
+        button.addEventListener("click", async () => {
+          const action = button.dataset.zoneAction;
+          const zoneId = button.dataset.zoneId;
+
+          if (action === "delete") {
+            await fetch(`/api/cleaning-zones/${zoneId}`, { method: "DELETE" });
+            loadZones();
+            return;
+          }
+
+          if (action === "assign") {
+            if (!adminZoneAssignUser || !adminZoneAssignUser.value) {
+              if (adminZoneMessage) adminZoneMessage.textContent = "Select a janitor first.";
+              return;
+            }
+            await fetch(`/api/cleaning-zones/${zoneId}/assign`, {
+              method: "PATCH",
+              headers: { "Content-Type": "application/json" },
+              body: JSON.stringify({ assignedTo: adminZoneAssignUser.value })
+            });
+            if (adminZoneMessage) adminZoneMessage.textContent = "Zone assigned.";
+            loadZones();
+          }
+        });
+      });
+    };
+
     if (cancelBtn) {
       cancelBtn.addEventListener("click", () => setEditing(false));
     }
@@ -195,6 +309,12 @@ document.addEventListener("DOMContentLoaded", () => {
       const y = ((event.clientY - rect.top) / rect.height) * 100;
       adminForm.querySelector("input[name='x']").value = x;
       adminForm.querySelector("input[name='y']").value = y;
+
+      if (adminZoneForm) {
+        currentZonePoints.push({ x: Number(x.toFixed(2)), y: Number(y.toFixed(2)) });
+        adminZoneForm.polygon.value = JSON.stringify(currentZonePoints);
+        drawCurrentZonePreview();
+      }
     });
 
     adminForm.addEventListener("submit", async (event) => {
@@ -221,6 +341,48 @@ document.addEventListener("DOMContentLoaded", () => {
       }
     });
 
+    if (zoneClearPointsBtn) {
+      zoneClearPointsBtn.addEventListener("click", () => {
+        currentZonePoints = [];
+        if (adminZoneForm) {
+          adminZoneForm.polygon.value = "";
+        }
+        drawCurrentZonePreview();
+      });
+    }
+
+    if (adminZoneForm) {
+      adminZoneForm.addEventListener("submit", async (event) => {
+        event.preventDefault();
+        if (currentZonePoints.length < 3) {
+          if (adminZoneMessage) adminZoneMessage.textContent = "Select at least 3 points for the zone.";
+          return;
+        }
+
+        const payload = Object.fromEntries(new FormData(adminZoneForm));
+        payload.polygon = JSON.stringify(currentZonePoints);
+
+        const response = await fetch("/api/cleaning-zones", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify(payload)
+        });
+
+        if (adminZoneMessage) {
+          adminZoneMessage.textContent = response.ok ? "Zone created" : "Error creating zone";
+        }
+
+        if (response.ok) {
+          currentZonePoints = [];
+          adminZoneForm.reset();
+          drawCurrentZonePreview();
+          loadZones();
+        }
+      });
+    }
+
     loadPins();
+    loadUsers();
+    loadZones();
   }
 });

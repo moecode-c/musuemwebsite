@@ -3,8 +3,8 @@
 
 <section class="page-hero">
   <div class="container">
-    <h1>Your Cart</h1>
-    <p>Review items and update quantities.</p>
+    <h1><%= t.cart.title %></h1>
+    <p><%= t.cart.subtitle %></p>
   </div>
 </section>
 
@@ -12,8 +12,8 @@
   <div class="container cart-shell">
     <div class="cart-panel">
       <div class="cart-panel__header">
-        <h2>Your Items</h2>
-        <p class="muted">Review and update quantities</p>
+        <h2><%= language === 'ar' ? 'العناصر في السلة' : 'Your Items' %></h2>
+        <p class="muted"><%= language === 'ar' ? 'راجع الكميات وعدّلها قبل إتمام الطلب' : 'Review and update quantities' %></p>
       </div>
       <div id="cart-items">
         <%- cartItemsHtml %>
@@ -21,14 +21,14 @@
     </div>
 
     <aside class="cart-panel cart-summary">
-      <h2>Order Summary</h2>
+      <h2><%= language === 'ar' ? 'ملخص الطلب' : 'Order Summary' %></h2>
       <div class="cart-total-line">
-        <span>Total</span>
+        <span><%= t.cart.total %></span>
         <span class="cart-total-amount">EGP <span id="cart-total"><%= total %></span></span>
       </div>
-      <p class="muted small">Shipping and delivery choices are selected at checkout.</p>
-      <a class="btn btn-primary btn-block" href="/cart/checkout">Proceed to Checkout</a>
-      <a class="link subtle" href="/shop">Continue shopping</a>
+      <p class="muted small"><%= language === 'ar' ? 'يمكنك اختيار الشحن أو الاستلام أثناء إتمام الطلب.' : 'Shipping and delivery choices are selected at checkout.' %></p>
+      <a class="btn btn-primary btn-block" href="/cart/checkout"><%= t.cart.checkout %></a>
+      <a class="link subtle" href="/shop"><%= language === 'ar' ? 'متابعة التسوق' : 'Continue shopping' %></a>
     </aside>
   </div>
 </section>

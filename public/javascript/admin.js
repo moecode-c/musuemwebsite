@@ -38,6 +38,25 @@ const adminFetchList = async (endpoint, container, labelField, onEdit) => {
   }, onEdit);
 };
 
+const parseApiError = async (response, fallbackMessage) => {
+  let body = null;
+  try {
+    body = await response.json();
+  } catch (error) {
+    body = null;
+  }
+
+  if (body) {
+    if (Array.isArray(body.errors) && body.errors.length) {
+      return body.errors[0].msg || fallbackMessage;
+    }
+    if (body.message) return body.message;
+    if (body.error) return body.error;
+  }
+
+  return fallbackMessage;
+};
+
 const initEditableForm = (form, submitLabel) => {
   if (!form) return {};
   const submitBtn = form.querySelector(".admin-submit");
@@ -100,26 +119,39 @@ document.addEventListener("DOMContentLoaded", () => {
   }
   if (exhibitForm) {
     const { setEditing } = initEditableForm(exhibitForm, "Update Exhibit");
+    const imageInput = exhibitForm.querySelector("input[name='image']");
+    const modelInput = exhibitForm.querySelector("input[name='model']");
+    const setExhibitFileRequirements = (isEditing) => {
+      if (imageInput) imageInput.required = !isEditing;
+      if (modelInput) modelInput.required = !isEditing;
+    };
+
+    setExhibitFileRequirements(false);
+
     const exhibitCancel = exhibitForm.querySelector(".admin-cancel");
     if (exhibitCancel) {
-      exhibitCancel.addEventListener("click", () => setExhibitPin("", ""));
+      exhibitCancel.addEventListener("click", () => {
+        setExhibitPin("", "");
+        setExhibitFileRequirements(false);
+      });
     }
     adminFetchList("/api/exhibits", exhibitList, "title", (item) => {
       exhibitForm.title.value = item.title || "";
       exhibitForm.category.value = item.category || "";
       exhibitForm.description.value = item.description || "";
       exhibitForm.era.value = item.era || "";
+      exhibitForm.period.value = item.period || "";
+      exhibitForm.location.value = item.location || "";
       exhibitForm.x.value = item.x ?? "";
       exhibitForm.y.value = item.y ?? "";
       exhibitForm.dataset.editId = item._id;
       setEditing(true, "Update Exhibit");
+      setExhibitFileRequirements(true);
       setExhibitPin(item.x, item.y);
     });
     exhibitForm.addEventListener("submit", async (event) => {
       event.preventDefault();
       const formData = new FormData(exhibitForm);
-      const imageInput = exhibitForm.querySelector("input[name='image']");
-      const modelInput = exhibitForm.querySelector("input[name='model']");
       if (imageInput && imageInput.files.length === 0) formData.delete("image");
       if (modelInput && modelInput.files.length === 0) formData.delete("model");
       const editId = exhibitForm.dataset.editId;
@@ -127,30 +159,40 @@ document.addEventListener("DOMContentLoaded", () => {
         method: editId ? "PUT" : "POST",
         body: formData
       });
+
       const messageEl = document.getElementById("admin-exhibit-message");
-      messageEl.textContent = response.ok
-        ? editId
-          ? "Exhibit updated"
-          : "Exhibit created"
-        : "Error saving exhibit";
-      if (response.ok) {
-        if (editId) {
-          setEditing(false);
-        } else {
-          exhibitForm.reset();
-        }
-        adminFetchList("/api/exhibits", exhibitList, "title", (item) => {
-          exhibitForm.title.value = item.title || "";
-          exhibitForm.category.value = item.category || "";
-          exhibitForm.description.value = item.description || "";
-          exhibitForm.era.value = item.era || "";
-          exhibitForm.x.value = item.x ?? "";
-          exhibitForm.y.value = item.y ?? "";
-          exhibitForm.dataset.editId = item._id;
-          setEditing(true, "Update Exhibit");
-          setExhibitPin(item.x, item.y);
-        });
+
+      if (!response.ok) {
+        messageEl.textContent = await parseApiError(response, "Error saving exhibit");
+        return;
       }
+
+      messageEl.textContent = editId
+        ? "Exhibit updated"
+        : "Exhibit created";
+
+      if (editId) {
+        setEditing(false);
+        setExhibitFileRequirements(false);
+      } else {
+        exhibitForm.reset();
+        setExhibitFileRequirements(false);
+      }
+
+      adminFetchList("/api/exhibits", exhibitList, "title", (item) => {
+        exhibitForm.title.value = item.title || "";
+        exhibitForm.category.value = item.category || "";
+        exhibitForm.description.value = item.description || "";
+        exhibitForm.era.value = item.era || "";
+        exhibitForm.period.value = item.period || "";
+        exhibitForm.location.value = item.location || "";
+        exhibitForm.x.value = item.x ?? "";
+        exhibitForm.y.value = item.y ?? "";
+        exhibitForm.dataset.editId = item._id;
+        setEditing(true, "Update Exhibit");
+        setExhibitFileRequirements(true);
+        setExhibitPin(item.x, item.y);
+      });
     });
   }
 
@@ -278,12 +320,29 @@ document.addEventListener("DOMContentLoaded", () => {
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(payload)
       });
+      let responseBody = null;
+      try {
+        responseBody = await response.json();
+      } catch (error) {
+        responseBody = null;
+      }
+
+      const extractErrorMessage = (body) => {
+        if (!body) return "Error saving user";
+        if (Array.isArray(body.errors) && body.errors.length) {
+          return body.errors[0].msg || "Error saving user";
+        }
+        if (body.message) return body.message;
+        if (body.error) return body.error;
+        return "Error saving user";
+      };
+
       const messageEl = document.getElementById("admin-user-message");
       messageEl.textContent = response.ok
         ? editId
           ? "User updated"
           : "User created"
-        : "Error saving user";
+        : extractErrorMessage(responseBody);
       if (response.ok) {
         if (editId) {
           setEditing(false);

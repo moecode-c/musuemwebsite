@@ -1,0 +1,109 @@
+<%- include('../partials/header') %>
+<%- include('../partials/navbar') %>
+
+<section class="vrx-hero">
+  <div class="container">
+    <p class="vrx-kicker"><%= language === 'ar' ? 'مستوى الغمر الكامل' : 'Full Immersion Level' %></p>
+    <h1 class="vrx-title"><%= language === 'ar' ? 'تجربة الواقع الافتراضي' : 'VR Experience' %></h1>
+    <p class="vrx-subtitle">
+      <%= language === 'ar'
+        ? 'استكشف مشاهد بانورامية بزاوية 360° من المتحف عبر عارض WebGL مضمّن تفاعلي. حرّك هاتفك للنظر حولك، أو استخدم سماعة Cardboard للغمر الكامل.'
+        : 'Explore 360° panoramic scenes of the museum via a built-in interactive WebGL viewer. Move your phone to look around, or drop it into a Cardboard headset for full immersion.' %>
+    </p>
+    <div class="vrx-actions">
+      <button
+        class="btn vrx-btn"
+        id="vr-motion-btn"
+        type="button"
+        data-label-default="<%= language === 'ar' ? 'تفعيل جيروسكوب الهاتف' : 'Enable Gyroscope' %>"
+        data-label-enabled="<%= language === 'ar' ? 'الجيروسكوب مفعّل ✓' : 'Gyroscope Active ✓' %>"
+        data-label-blocked="<%= language === 'ar' ? 'تم حظر الحركة' : 'Motion Blocked' %>"
+      >
+        <i class="fas fa-mobile-screen-button"></i>
+        <span><%= language === 'ar' ? 'تفعيل جيروسكوب الهاتف' : 'Enable Gyroscope' %></span>
+      </button>
+      <button class="btn vrx-btn vrx-btn--cardboard" id="vr-cardboard-btn" type="button">
+        <i class="fas fa-vr-cardboard"></i>
+        <span><%= language === 'ar' ? 'وضع كارد بورد VR' : 'Cardboard VR Mode' %></span>
+      </button>
+      <button class="btn vrx-btn" id="vr-fullscreen-btn" type="button">
+        <i class="fas fa-expand"></i>
+        <span><%= language === 'ar' ? 'ملء الشاشة' : 'Fullscreen' %></span>
+      </button>
+    </div>
+  </div>
+</section>
+
+<section class="vrx-stage" aria-label="VR panorama viewer">
+  <div class="container">
+
+    <div class="vrx-viewer-shell">
+      <!-- Loading overlay -->
+      <div class="vrx-loader" id="vrx-loader" aria-live="polite" aria-label="Loading panorama">
+        <div class="vrx-loader-spinner"></div>
+        <p><%= language === 'ar' ? 'جارٍ تحميل البانوراما…' : 'Loading panorama…' %></p>
+      </div>
+
+      <!-- Cardboard split-screen overlay -->
+      <div class="vrx-cardboard-bar" id="vrx-cardboard-bar" hidden>
+        <div class="vrx-cardboard-divider"></div>
+        <button class="vrx-cardboard-exit" id="vrx-cardboard-exit" type="button" aria-label="Exit Cardboard mode">
+          <i class="fas fa-times"></i>
+          <%= language === 'ar' ? 'إنهاء وضع كارد بورد' : 'Exit Cardboard' %>
+        </button>
+      </div>
+
+      <div id="vrx-viewer" class="vrx-viewer" role="application" aria-label="360 panorama"></div>
+      <div id="vrx-hotspot-layer" class="vrx-hotspot-layer"></div>
+    </div>
+
+    <!-- Scene switcher -->
+    <div class="vrx-scenes" role="group" aria-label="Panorama scenes">
+      <button class="btn vrx-scene-btn is-active" data-scene="royal_hall" type="button">
+        <i class="fas fa-monument"></i>
+        <span><%= language === 'ar' ? 'القاعة الكبرى' : 'Grand Atrium' %></span>
+      </button>
+      <button class="btn vrx-scene-btn" data-scene="sanctuary_gallery" type="button">
+        <i class="fas fa-mosque"></i>
+        <span><%= language === 'ar' ? 'جناح الفنون الإسلامية' : 'Islamic Arts Wing' %></span>
+      </button>
+      <button class="btn vrx-scene-btn" data-scene="heritage_chamber" type="button">
+        <i class="fas fa-cross"></i>
+        <span><%= language === 'ar' ? 'قاعة التراث القبطي' : 'Coptic Heritage Gallery' %></span>
+      </button>
+    </div>
+
+    <!-- Mobile VR tips -->
+    <div class="vrx-mobile-tips">
+      <div class="vrx-tip">
+        <i class="fas fa-hand-pointer"></i>
+        <span><%= language === 'ar' ? 'اسحب للتحريك' : 'Drag to look around' %></span>
+      </div>
+      <div class="vrx-tip">
+        <i class="fas fa-search-plus"></i>
+        <span><%= language === 'ar' ? 'دولاب الفأرة للتكبير' : 'Scroll wheel to zoom' %></span>
+      </div>
+      <div class="vrx-tip">
+        <i class="fas fa-mobile-alt"></i>
+        <span><%= language === 'ar' ? 'حرّك الهاتف مع الجيروسكوب' : 'Tilt phone with gyroscope on' %></span>
+      </div>
+      <div class="vrx-tip">
+        <i class="fas fa-vr-cardboard"></i>
+        <span><%= language === 'ar' ? 'ضع الهاتف في الخوذة للـ VR' : 'Insert into headset for VR' %></span>
+      </div>
+    </div>
+
+    <div class="vrx-footer-row">
+      <a class="vrx-back-link" href="/virtual-tour">
+        <i class="fas fa-arrow-left"></i>
+        <%= language === 'ar' ? 'العودة إلى الجولات' : 'Back to Tours' %>
+      </a>
+    </div>
+
+  </div>
+</section>
+
+<script src="https://cdn.jsdelivr.net/npm/three@0.160.0/build/three.min.js"></script>
+<script src="/javascript/vr-experience.js?v=20260419c"></script>
+
+<%- include('../partials/footer') %>

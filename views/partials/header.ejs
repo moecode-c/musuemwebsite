@@ -1,9 +1,24 @@
 <!DOCTYPE html>
-<html lang="<%= language %>">
+<html lang="<%= language %>" dir="<%= dir %>">
   <head>
     <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+    <meta name="mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
     <title><%= pageTitle %> | <%= t.siteTitle %></title>
+    <script>
+      (function () {
+        try {
+          var savedTheme = localStorage.getItem("museum-theme");
+          if (savedTheme === "light") {
+            document.documentElement.classList.add("theme-light");
+          }
+        } catch (e) {
+          // Ignore storage access issues.
+        }
+      })();
+    </script>
     <link rel="stylesheet" href="/css/base.css" />
     <% if (pageCss) { %>
     <link rel="stylesheet" href="/css/<%= pageCss %>.css" />

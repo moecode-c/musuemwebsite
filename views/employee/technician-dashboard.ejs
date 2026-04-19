@@ -1,0 +1,11 @@
+<%- include('../partials/employeeLayoutStart') %>
+<section>
+  <h1><i class="fas fa-screwdriver-wrench"></i> <%= t.technician.title %></h1>
+  <p><%= t.technician.welcome %>, <%= employeeName %>. <%= t.technician.subtitle %></p>
+  <article class="card">
+    <h3><i class="fas fa-toolbox"></i> <%= t.technician.maintenanceTasks %></h3>
+    <p><%= t.technician.viewTasks %></p>
+    <div class="admin-list" data-employee-task-list></div>
+  </article>
+</section>
+<%- include('../partials/employeeLayoutEnd') %>

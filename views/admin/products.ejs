@@ -2,30 +2,30 @@
 
 <section class="admin-page-header">
   <div>
-    <h1>Manage Products</h1>
-    <p>Control shop items and inventory.</p>
+    <h1><%= language === 'ar' ? 'إدارة المنتجات' : 'Manage Products' %></h1>
+    <p><%= language === 'ar' ? 'التحكم في عناصر المتجر والمخزون.' : 'Control shop items and inventory.' %></p>
   </div>
 </section>
 
 <section class="admin-section">
   <div class="admin-split">
     <form class="form" id="admin-product-form" enctype="multipart/form-data">
-      <label>Name</label>
+      <label><%= language === 'ar' ? 'الاسم' : 'Name' %></label>
       <input type="text" name="name" required />
-      <label>Description</label>
+      <label><%= language === 'ar' ? 'الوصف' : 'Description' %></label>
       <textarea name="description" required></textarea>
-      <label>Price</label>
+      <label><%= language === 'ar' ? 'السعر' : 'Price' %></label>
       <input type="number" name="price" min="0" step="0.01" required />
-      <label>Stock</label>
+      <label><%= language === 'ar' ? 'المخزون' : 'Stock' %></label>
       <input type="number" name="stock" min="0" required />
-      <label>Image</label>
+      <label><%= language === 'ar' ? 'الصورة' : 'Image' %></label>
       <input type="file" name="image" accept="image/*" required />
-      <button class="btn admin-submit" type="submit">Create Product</button>
-      <button class="btn btn-secondary admin-cancel" type="button">Cancel</button>
+      <button class="btn admin-submit" type="submit"><%= language === 'ar' ? 'إنشاء منتج' : 'Create Product' %></button>
+      <button class="btn btn-secondary admin-cancel" type="button"><%= language === 'ar' ? 'إلغاء' : 'Cancel' %></button>
       <p class="form-message" id="admin-product-message"></p>
     </form>
     <div>
-      <h3>Product List</h3>
+      <h3><%= language === 'ar' ? 'قائمة المنتجات' : 'Product List' %></h3>
       <div id="admin-product-list" class="admin-list"></div>
     </div>
   </div>
