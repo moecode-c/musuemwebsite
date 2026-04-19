@@ -17,6 +17,7 @@
       })();
     </script>
     <link rel="stylesheet" href="/css/artifactPopup.css" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
     <script type="module" src="https://unpkg.com/@google/model-viewer/dist/model-viewer.min.js"></script>
   </head>
   <body>
@@ -41,12 +42,12 @@
 
       <section class="artifact-popup-panel" aria-label="Artifact information">
         <button type="button" class="artifact-popup-close" data-close-artifact-popup aria-label="Close artifact popup">&times;</button>
-        <h1 class="artifact-popup-title"><%= exhibit.title %></h1>
+        <h1 class="artifact-popup-title"><i class="fa-solid fa-cube"></i> <%= exhibit.title %></h1>
 
         <div class="artifact-popup-tabs" role="tablist" aria-label="Artifact sections">
-          <button type="button" class="artifact-popup-tab is-active" role="tab" id="tab-description" data-tab="description" aria-controls="panel-description" aria-selected="true">Description</button>
-          <button type="button" class="artifact-popup-tab" role="tab" id="tab-history" data-tab="history" aria-controls="panel-history" aria-selected="false" tabindex="-1">History</button>
-          <button type="button" class="artifact-popup-tab" role="tab" id="tab-significance" data-tab="significance" aria-controls="panel-significance" aria-selected="false" tabindex="-1">Significance</button>
+          <button type="button" class="artifact-popup-tab is-active" role="tab" id="tab-description" data-tab="description" aria-controls="panel-description" aria-selected="true"><i class="fa-solid fa-file-alt"></i> Description</button>
+          <button type="button" class="artifact-popup-tab" role="tab" id="tab-history" data-tab="history" aria-controls="panel-history" aria-selected="false" tabindex="-1"><i class="fa-solid fa-landmark"></i> History</button>
+          <button type="button" class="artifact-popup-tab" role="tab" id="tab-significance" data-tab="significance" aria-controls="panel-significance" aria-selected="false" tabindex="-1"><i class="fa-solid fa-star"></i> Significance</button>
         </div>
 
         <div class="artifact-popup-scroll" aria-hidden="true">

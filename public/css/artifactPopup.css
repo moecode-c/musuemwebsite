@@ -486,3 +486,40 @@ body {
 .theme-light .artifact-popup-scroll-indicator::after {
   border-top-color: rgba(72, 84, 117, 0.86);
 }
+
+/* --- Icons & Animations for Popup --- */
+.artifact-popup-title i {
+  color: var(--gold-strong);
+  font-size: 0.85em;
+  margin-right: 8px;
+  filter: drop-shadow(0 2px 10px rgba(240, 196, 79, 0.4));
+  animation: float-icon 4s ease-in-out infinite;
+}
+
+@keyframes float-icon {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-4px); }
+}
+
+.artifact-popup-tab i {
+  margin-right: 6px;
+  color: var(--gold);
+  transition: transform 0.3s ease, color 0.3s ease;
+}
+
+.artifact-popup-tab:hover i, .artifact-popup-tab:focus-visible i {
+  transform: scale(1.15) rotate(5deg);
+  color: var(--gold-strong);
+}
+
+.artifact-popup-tab.is-active i {
+  color: #111521;
+}
+
+.theme-light .artifact-popup-tab.is-active i {
+  color: #1a223d;
+}
+
+.theme-light .artifact-popup-title i {
+  color: #b8842e;
+}

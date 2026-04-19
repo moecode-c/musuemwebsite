@@ -1876,3 +1876,225 @@ body.artifact-popup-open {
 	background: rgba(224, 236, 255, 0.94);
 	color: #1f3158;
 }
+
+/* --- Artifact Card Icons & Animations --- */
+
+.artifact-card .artifact-icon-title {
+	font-size: 0.85em;
+	color: #e0b74f;
+	margin-right: 6px;
+	transition: transform 0.3s ease;
+}
+
+.artifact-card:hover .artifact-icon-title {
+	transform: rotate(15deg) scale(1.1);
+}
+
+.artifact-museum i, .artifact-era-info i, .artifact-facts i {
+	color: #c5a452;
+	margin-right: 4px;
+	width: 14px;
+	text-align: center;
+}
+
+.artifact-btn {
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+	gap: 6px;
+}
+
+.artifact-btn i {
+	font-size: 0.9em;
+	transition: transform 0.3s ease;
+}
+
+.artifact-btn:hover i {
+	transform: translateX(4px);
+}
+
+/* Glowing Border Animation for Artifact Cards */
+.artifact-card::before {
+	content: "";
+	position: absolute;
+	top: -50%;
+	left: -50%;
+	width: 200%;
+	height: 200%;
+	background: radial-gradient(circle, rgba(234, 191, 78, 0.2) 0%, transparent 50%);
+	opacity: 0;
+	pointer-events: none;
+	transition: opacity 0.5s ease;
+	z-index: 10;
+	mix-blend-mode: screen;
+}
+
+.artifact-card:hover::before {
+	opacity: 1;
+	animation: artifact-glow-spin 6s linear infinite;
+}
+
+@keyframes artifact-glow-spin {
+	from { transform: rotate(0deg); }
+	to { transform: rotate(360deg); }
+}
+/ *   U I   U X   I m p r o v e m e n t s   * / 
+ 
+ 
+
+
+/* Global Interaction and Animation Upgrade */
+.era-card, .wonder-card, .timeline-card, .artifact-card {
+    transition: transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275), box-shadow 0.4s ease, filter 0.4s ease;
+    will-change: transform, box-shadow;
+    overflow: hidden;
+    position: relative;
+}
+
+.era-card:hover, .wonder-card:hover, .timeline-card:hover, .artifact-card:hover {
+    transform: translateY(-8px) scale(1.02);
+    box-shadow: 0 20px 40px rgba(8, 36, 93, 0.5), 0 0 20px rgba(237, 204, 130, 0.3);
+    z-index: 2;
+}
+
+.era-card img, .wonder-card img, .timeline-card-media img, .artifact-card img {
+    transition: transform 0.6s ease;
+}
+
+.era-card:hover img, .wonder-card:hover img, .timeline-card:hover .timeline-card-media img, .artifact-card:hover img {
+    transform: scale(1.08);
+}
+
+.btn {
+    transition: all 0.3s ease;
+    position: relative;
+    overflow: hidden;
+}
+
+.btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 20px rgba(234, 194, 110, 0.4);
+    filter: brightness(1.1);
+}
+
+.btn::after {
+    content: "";
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 300%;
+    height: 300%;
+    background: radial-gradient(circle, rgba(255,255,255,0.3) 10%, transparent 10.01%);
+    background-repeat: no-repeat;
+    background-position: 50%;
+    transform: translate(-50%, -50%) scale(0);
+    opacity: 0;
+    transition: transform 0.6s, opacity 0.6s;
+}
+
+.btn:active::after {
+    transform: translate(-50%, -50%) scale(1);
+    opacity: 1;
+    transition: 0s;
+}
+
+.exhibit-spotlight-shell {
+    animation: fade-up 0.8s ease-out forwards;
+}
+
+@keyframes fade-up {
+    from { opacity: 0; transform: translateY(30px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+.exhibits-hero--immersive h1 {
+    animation: slide-in-left 1s cubic-bezier(0.2, 0.8, 0.2, 1) forwards;
+}
+
+.exhibits-hero--immersive p {
+    animation: slide-in-left 1s cubic-bezier(0.2, 0.8, 0.2, 1) 0.2s forwards;
+    opacity: 0;
+}
+
+.exhibits-hero-btn {
+    animation: fade-up 1s ease 0.4s forwards;
+    opacity: 0;
+}
+
+@keyframes slide-in-left {
+    from { opacity: 0; transform: translateX(-40px); }
+    to { opacity: 1; transform: translateX(0); }
+}
+
+/* Beautiful glow effect for active or hovered elements */
+.era-card-glow, .wonder-glow {
+    position: absolute;
+    top: 0; left: 0; right: 0; bottom: 0;
+    background: radial-gradient(circle at center, rgba(237, 204, 130, 0.2) 0%, transparent 70%);
+    opacity: 0;
+    transition: opacity 0.5s ease;
+    pointer-events: none;
+    z-index: 10;
+}
+
+.era-card:hover .era-card-glow, .wonder-card:hover .wonder-glow {
+    opacity: 1;
+}
+
+/* Timeline line animation */
+.timeline::before {
+    animation: grow-down 1.5s ease-out forwards;
+    transform-origin: top;
+}
+
+@keyframes grow-down {
+    from { transform: scaleY(0); }
+    to { transform: scaleY(1); }
+}
+
+/* Nodes pop in */
+.timeline-node {
+    animation: pop-in 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275) backwards;
+    opacity: 0;
+}
+
+.timeline-item:nth-child(1) .timeline-node { animation-delay: 0.3s; }
+.timeline-item:nth-child(2) .timeline-node { animation-delay: 0.6s; }
+.timeline-item:nth-child(3) .timeline-node { animation-delay: 0.9s; }
+.timeline-item:nth-child(4) .timeline-node { animation-delay: 1.2s; }
+
+@keyframes pop-in {
+    from { transform: translate(-50%, -50%) scale(0); opacity: 0; }
+    to { transform: translate(-50%, -50%) scale(1); opacity: 1; }
+}
+
+.artifact-grid {
+    gap: 30px;
+}
+
+/* Enhancing Model Viewer area */
+.exhibit-spotlight-media {
+    border: 2px solid rgba(237, 204, 130, 0.4);
+    box-shadow: 0 0 30px rgba(8, 36, 93, 0.6);
+    border-radius: 12px;
+    overflow: hidden;
+    position: relative;
+    background: #04122d;
+}
+
+.exhibit-spotlight-media::before {
+    content: "3D ARTIFACT";
+    position: absolute;
+    top: 10px; left: 10px;
+    background: rgba(237, 204, 130, 0.9);
+    color: #04122d;
+    font-size: 10px;
+    font-weight: bold;
+    padding: 4px 8px;
+    border-radius: 4px;
+    z-index: 10;
+    pointer-events: none;
+    letter-spacing: 1px;
+}
+
+

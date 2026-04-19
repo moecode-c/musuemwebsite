@@ -10,17 +10,20 @@
       <img src="<%= timeline.imageUrl %>" alt="<%= timeline.title %>" loading="lazy" onerror="this.onerror=null;this.src='/assets/images/pillarsbg.png';" />
     </div>
     <div class="timeline-card-body">
-      <span class="timeline-era"><%= timeline.era || (language === 'ar' ? 'حقبة تاريخية' : 'Historical Era') %></span>
-      <h3><%= timeline.title %></h3>
+      <span class="timeline-era"><i class="fa-solid fa-clock-rotate-left"></i> <%= timeline.era || (language === 'ar' ? 'حقبة تاريخية' : 'Historical Era') %></span>
+      <h3><i class="fa-solid fa-landmark-flag" style="color:var(--ex-gold); font-size: 0.85em; margin-right:6px"></i><%= timeline.title %></h3>
       <% if (timeline.period || timeline.location) { %>
       <div class="timeline-meta">
-        <% if (timeline.period) { %><span><strong><%= t.exhibitDetail.period %>:</strong> <%= timeline.period %></span><% } %>
-        <% if (timeline.location) { %><span><strong><%= t.exhibitDetail.origin %>:</strong> <%= timeline.location %></span><% } %>
+        <% if (timeline.period) { %><span><strong><i class="fa-regular fa-clock" style="margin-right:4px"></i><%= t.exhibitDetail.period %>:</strong> <%= timeline.period %></span><% } %>
+        <% if (timeline.location) { %><span><strong><i class="fa-solid fa-earth-africa" style="margin-right:4px"></i><%= t.exhibitDetail.origin %>:</strong> <%= timeline.location %></span><% } %>
       </div>
       <% } %>
       <p><%= timeline.description && timeline.description.length > 260 ? `${timeline.description.substring(0, 260)}...` : (timeline.description || "") %></p>
       <% if (timeline.ctaHref && !disableTimelineCta) { %>
-      <a class="btn" href="<%= timeline.ctaHref %>"><%= timeline.ctaLabel || "View 3D Model Artifact" %></a>
+      <a class="btn" href="<%= timeline.ctaHref %>">
+        <span><%= timeline.ctaLabel || "View 3D Model Artifact" %></span>
+        <i class="fa-solid fa-cube" style="margin-left: 6px; transition: transform 0.3s ease;"></i>
+      </a>
       <% } %>
     </div>
   </div>

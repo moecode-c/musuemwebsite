@@ -4,17 +4,20 @@
   <% const defaultCta = (typeof t !== "undefined" && t.buttons && t.buttons.learnMore) ? t.buttons.learnMore : "View 3D Model Artifact"; %>
   <img class="artifact-image" src="<%= card.imageUrl %>" alt="<%= card.title %>" loading="lazy" onerror="this.onerror=null;this.src='/assets/images/pillarsbg.png';" />
   <div class="artifact-body">
-    <h3><%= card.title %></h3>
-    <p class="artifact-museum"><%= museumLabel %></p>
+    <h3><i class="fa-solid fa-cube artifact-icon-title"></i> <%= card.title %></h3>
+    <p class="artifact-museum"><i class="fa-solid fa-landmark"></i> <%= museumLabel %></p>
     <p class="artifact-description"><%= card.description && card.description.length > 150 ? `${card.description.substring(0, 150)}...` : (card.description || "") %></p>
     <% if (card.eraInfo) { %>
-    <p class="artifact-era-info"><%= card.eraInfo %></p>
+    <p class="artifact-era-info"><i class="fa-solid fa-hourglass-half"></i> <%= card.eraInfo %></p>
     <% } %>
     <div class="artifact-facts">
-      <% if (card.era) { %><p><%= card.era %></p><% } %>
-      <% if (card.period) { %><p><%= card.period %></p><% } %>
-      <% if (card.location) { %><p><%= card.location %></p><% } %>
+      <% if (card.era) { %><p><i class="fa-solid fa-timeline"></i> <%= card.era %></p><% } %>
+      <% if (card.period) { %><p><i class="fa-regular fa-clock"></i> <%= card.period %></p><% } %>
+      <% if (card.location) { %><p><i class="fa-solid fa-map-location-dot"></i> <%= card.location %></p><% } %>
     </div>
-    <a class="btn artifact-btn" href="<%= detailsHref %>"><%= card.ctaLabel || defaultCta %></a>
+    <a class="btn artifact-btn" href="<%= detailsHref %>">
+      <span><%= card.ctaLabel || defaultCta %></span>
+      <i class="fa-solid fa-arrow-right"></i>
+    </a>
   </div>
 </article>
