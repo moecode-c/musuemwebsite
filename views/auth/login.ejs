@@ -28,19 +28,19 @@
         <h2><%= language === 'ar' ? 'تسجيل الدخول' : 'Sign in' %></h2>
         <p><%= language === 'ar' ? 'استخدم بريدك الإلكتروني وكلمة المرور للمتابعة.' : 'Use your email and password to continue.' %></p>
       </div>
-      <form class="auth-form" id="login-form">
+      <form class="auth-form" id="login-form" autocomplete="on">
         <div class="input-group">
           <label for="login-email"><%= language === 'ar' ? 'البريد الإلكتروني' : 'Email' %></label>
           <div class="input-field">
             <i class="fa-regular fa-envelope"></i>
-            <input id="login-email" type="email" name="email" placeholder="you@example.com" required />
+            <input id="login-email" type="email" name="email" autocomplete="email" placeholder="you@example.com" required />
           </div>
         </div>
         <div class="input-group">
           <label for="login-password"><%= language === 'ar' ? 'كلمة المرور' : 'Password' %></label>
           <div class="input-field">
             <i class="fa-solid fa-lock"></i>
-            <input id="login-password" type="password" name="password" placeholder="<%= language === 'ar' ? 'أدخل كلمة المرور' : 'Enter your password' %>" required />
+            <input id="login-password" type="password" name="password" autocomplete="current-password" placeholder="<%= language === 'ar' ? 'أدخل كلمة المرور' : 'Enter your password' %>" required />
           </div>
         </div>
         <button class="btn auth-submit" type="submit"><%= language === 'ar' ? 'دخول' : 'Login' %></button>

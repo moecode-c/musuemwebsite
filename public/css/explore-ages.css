@@ -35,7 +35,7 @@
   background:
     linear-gradient(120deg, rgba(5, 14, 36, 0.82) 12%, rgba(5, 17, 44, 0.44) 48%, rgba(6, 20, 52, 0.78) 100%),
     linear-gradient(180deg, rgba(3, 10, 28, 0.2) 0%, rgba(3, 11, 30, 0.88) 100%),
-    url("/assets/images/pillarsbg.png") center/cover no-repeat;
+    url("/assets/images/pyramidsbg.png") center/cover no-repeat;
   border-bottom: 1px solid var(--ages-border);
 }
 
@@ -525,9 +525,9 @@
 /* Light theme follows global site palette tokens from style.css. */
 .theme-light .page-explore-ages .ages-hero {
   background:
-    linear-gradient(120deg, rgba(250, 243, 230, 0.78) 10%, rgba(243, 232, 212, 0.58) 48%, rgba(224, 209, 181, 0.68) 100%),
-    linear-gradient(180deg, rgba(255, 251, 244, 0.14) 0%, rgba(230, 215, 186, 0.76) 100%),
-    url("/assets/images/pillarsbg.png") center/cover no-repeat;
+    linear-gradient(120deg, rgba(250, 243, 230, 0.367) 10%, rgba(243, 232, 212, 0.323) 48%, rgba(224, 209, 181, 0.68) 100%),
+    linear-gradient(180deg, rgba(255, 251, 244, 0.14) 0%, rgba(230, 215, 186, 0.421) 100%),
+    url("/assets/images/pyramidsbg.png") center/cover no-repeat;
   border-bottom-color: color-mix(in srgb, var(--border) 70%, var(--accent) 30%);
 }
 
@@ -832,9 +832,6 @@
   background: #dbb362;
   color: #fff;
 }
-@ i m p o r t   u r l ( " e x h i b i t s - u i . c s s " ) ; 
- 
- 
 
 /* Global Interaction and Animation Upgrade */
 .era-card, .wonder-card, .timeline-card, .artifact-card {

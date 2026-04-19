@@ -3,6 +3,8 @@ const Product = require("../models/Product");
 const Testimonial = require("../models/Testimonial");
 const Ticket = require("../models/Ticket");
 const MapPin = require("../models/MapPin");
+const fs = require("fs");
+const path = require("path");
 const { asyncHandler } = require("../utils/asyncHandler");
 const { getWeather } = require("../utils/apiClient");
 const { buildPagination } = require("../utils/pagination");
@@ -34,6 +36,28 @@ const panelLabelByRole = {
 const getPanelLabelByRole = (role) => panelLabelByRole[role] || "Employee Panel";
 
 const DEFAULT_EXHIBIT_IMAGE = "/assets/images/pillarsbg.png";
+const PUBLIC_ROOT = path.join(__dirname, "..", "public");
+
+const decodeSafely = (value) => {
+  try {
+    return decodeURIComponent(value);
+  } catch {
+    return value;
+  }
+};
+
+const localAssetExists = (urlPath) => {
+  if (typeof urlPath !== "string" || !urlPath.startsWith("/")) return false;
+
+  const cleanPath = urlPath.split("#")[0].split("?")[0];
+  const relativePath = cleanPath.replace(/^\/+/, "");
+  if (!relativePath) return false;
+
+  const absolutePath = path.resolve(PUBLIC_ROOT, relativePath);
+  if (!absolutePath.startsWith(PUBLIC_ROOT)) return false;
+
+  return fs.existsSync(absolutePath);
+};
 
 const normalizeImageUrl = (rawUrl, fallback = DEFAULT_EXHIBIT_IMAGE) => {
   if (typeof rawUrl !== "string") return fallback;
@@ -48,14 +72,28 @@ const normalizeImageUrl = (rawUrl, fallback = DEFAULT_EXHIBIT_IMAGE) => {
   }
 
   if (/^(https?:)?\/\//i.test(normalized) || normalized.startsWith("data:") || normalized.startsWith("blob:")) {
-    return encodeURI(normalized);
+    return normalized;
   }
 
   if (!normalized.startsWith("/")) {
     normalized = `/${normalized}`;
   }
 
-  return encodeURI(normalized);
+  // Decode at most twice to recover already-encoded or double-encoded local filenames.
+  let decoded = normalized;
+  for (let i = 0; i < 2; i += 1) {
+    const next = decodeSafely(decoded);
+    if (next === decoded) break;
+    decoded = next;
+  }
+
+  const localPath = decoded.split("#")[0].split("?")[0];
+  if (!localAssetExists(localPath)) {
+    return fallback;
+  }
+
+  // Return a browser-safe local URL without double encoding percent signs.
+  return encodeURI(localPath);
 };
 
 const buildCards = (items, type) => {

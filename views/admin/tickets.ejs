@@ -9,7 +9,7 @@
 
 <section class="admin-section">
   <div class="admin-split">
-    <form class="form" id="admin-ticket-form">
+    <form class="form" id="admin-ticket-form" autocomplete="off">
       <label><%= language === 'ar' ? 'الفئة' : 'Category' %></label>
       <select name="group" required>
         <option value="egyptian"><%= language === 'ar' ? 'مصري' : 'Egyptian' %></option>
@@ -24,9 +24,9 @@
         <option value="senior"><%= language === 'ar' ? 'كبير السن' : 'Senior' %></option>
       </select>
       <label><%= language === 'ar' ? 'السعر' : 'Price' %></label>
-      <input type="number" name="price" min="0" step="0.01" required />
+      <input type="number" name="price" autocomplete="off" min="0" step="0.01" required />
       <label><%= language === 'ar' ? 'الوصف' : 'Description' %></label>
-      <textarea name="description"></textarea>
+      <textarea name="description" autocomplete="off"></textarea>
       <button class="btn admin-submit" type="submit"><%= language === 'ar' ? 'إنشاء تذكرة' : 'Create Ticket' %></button>
       <button class="btn btn-secondary admin-cancel" type="button"><%= language === 'ar' ? 'إلغاء' : 'Cancel' %></button>
       <p class="form-message" id="admin-ticket-message"></p>

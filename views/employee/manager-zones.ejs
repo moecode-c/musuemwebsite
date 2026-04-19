@@ -19,17 +19,17 @@
         <img src="/assets/map/map.png" alt="<%= language === 'ar' ? 'خريطة المتحف' : 'Museum map' %>" class="map-image" />
         <div class="map-layer" id="manager-zone-hit-area"></div>
       </div>
-      <form class="form" id="manager-zone-form">
-        <input type="hidden" name="editingZoneId" id="manager-zone-editing-id" />
+      <form class="form" id="manager-zone-form" autocomplete="off">
+        <input type="hidden" name="editingZoneId" id="manager-zone-editing-id" autocomplete="off" />
         <label><%= language === 'ar' ? 'اسم المنطقة' : 'Zone Name' %></label>
-        <input type="text" name="zoneName" required />
+        <input type="text" name="zoneName" autocomplete="off" required />
         <label><%= language === 'ar' ? 'الطابق' : 'Floor' %></label>
-        <input type="text" name="floor" value="<%= language === 'ar' ? 'الطابق الأرضي' : 'Ground' %>" required />
+        <input type="text" name="floor" autocomplete="off" value="<%= language === 'ar' ? 'الطابق الأرضي' : 'Ground' %>" required />
         <label><%= language === 'ar' ? 'لون المنطقة' : 'Zone Color' %></label>
-        <input type="color" name="color" value="#b7842a" />
+        <input type="color" name="color" autocomplete="off" value="#b7842a" />
         <label><%= language === 'ar' ? 'الوصف' : 'Description' %></label>
-        <textarea name="description"></textarea>
-        <input type="hidden" name="polygon" />
+        <textarea name="description" autocomplete="off"></textarea>
+        <input type="hidden" name="polygon" autocomplete="off" />
         <div class="admin-actions">
           <button class="btn" type="submit" id="manager-zone-submit"><%= language === 'ar' ? 'إنشاء منطقة' : 'Create Zone' %></button>
           <button class="btn btn-secondary admin-cancel" type="button" id="manager-zone-cancel-edit"><%= language === 'ar' ? 'إلغاء التعديل' : 'Cancel Edit' %></button>

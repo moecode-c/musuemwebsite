@@ -1,53 +1,84 @@
 <%- include('../partials/header') %>
 <%- include('../partials/navbar') %>
 
-<section class="page-hero">
-  <div class="container">
-    <h1><%= t.planTrip.title %></h1>
-    <p><%= t.planTrip.subtitle %></p>
-  </div>
-</section>
+<main class="trip-page">
+  <section class="trip-section">
+    <div class="container">
+      <div class="trip-layout">
+        <aside class="trip-visual" aria-hidden="true">
+          <div class="trip-visual-image"></div>
+          <div class="trip-visual-copy">
+            <p class="trip-quote">
+              <%= language === 'ar'
+                ? '"السفر هو جسر الحكايات بين الأمس واليوم."'
+                : '"Travel is the bridge between ancient stories and today."' %>
+            </p>
+            <p class="trip-quote-meta">
+              <%= language === 'ar' ? 'ابدأ مخطط رحلتك الآن' : 'Start planning your museum day' %>
+            </p>
+          </div>
+        </aside>
 
-<section class="section">
-  <div class="container split">
-    <div>
-      <h2><%= t.planTrip.weatherTitle %></h2>
-      <%- weatherHtml %>
+        <section class="trip-card" aria-labelledby="trip-title">
+          <p class="trip-kicker">
+            <%= language === 'ar' ? 'تخطيط الزيارة' : 'Visit Planning' %>
+          </p>
+          <h1 id="trip-title"><%= t.planTrip.title %></h1>
+          <p class="trip-subtitle"><%= t.planTrip.subtitle %></p>
 
-      <h2><%= t.planTrip.tips.title %></h2>
-      <ul class="list">
-        <li><%= t.planTrip.tips.tip1 %></li>
-        <li><%= t.planTrip.tips.tip2 %></li>
-        <li><%= t.planTrip.tips.tip3 %></li>
-      </ul>
+          <div class="trip-insights">
+            <div class="trip-info-block">
+              <h2><%= t.planTrip.weatherTitle %></h2>
+              <div class="trip-weather-wrap"><%- weatherHtml %></div>
+            </div>
+
+            <div class="trip-info-block">
+              <h2><%= t.planTrip.tips.title %></h2>
+              <ul class="trip-tips-list">
+                <li><%= t.planTrip.tips.tip1 %></li>
+                <li><%= t.planTrip.tips.tip2 %></li>
+                <li><%= t.planTrip.tips.tip3 %></li>
+              </ul>
+            </div>
+          </div>
+
+          <form class="trip-form" id="trip-form" autocomplete="on">
+            <div class="trip-field-group">
+              <label for="trip-name"><%= t.planTrip.form.fullName %></label>
+              <input id="trip-name" type="text" name="name" autocomplete="name" required />
+            </div>
+
+            <div class="trip-field-group">
+              <label for="trip-email"><%= t.planTrip.form.email %></label>
+              <input id="trip-email" type="email" name="email" autocomplete="email" required />
+            </div>
+
+            <div class="trip-field-group">
+              <label for="trip-ticket"><%= t.planTrip.form.ticketType %></label>
+              <select id="trip-ticket" name="ticketId" required>
+                <option value="" disabled selected><%= t.planTrip.form.selectTicket %></option>
+                <% if (tickets && tickets.length) { %>
+                  <% tickets.forEach((ticket) => { %>
+                    <option value="<%= ticket._id %>">
+                      <%= (ticket.group || "").toUpperCase() %> - <%= ticket.audience || "" %>
+                      (EGP <%= Number(ticket.price || 0).toFixed(2) %>)
+                    </option>
+                  <% }) %>
+                <% } %>
+              </select>
+            </div>
+
+            <div class="trip-field-group">
+              <label for="trip-date"><%= t.planTrip.form.visitDate %></label>
+              <input id="trip-date" type="date" name="date" autocomplete="off" required />
+            </div>
+
+            <button class="btn trip-submit" type="submit"><%= t.planTrip.form.submit %></button>
+          </form>
+        </section>
+      </div>
     </div>
-
-    <form class="form" id="trip-form">
-      <label><%= t.planTrip.form.fullName %></label>
-      <input type="text" name="name" required />
-
-      <label><%= t.planTrip.form.email %></label>
-      <input type="email" name="email" required />
-
-      <label><%= t.planTrip.form.ticketType %></label>
-      <select name="ticketId" required>
-        <option value="" disabled selected><%= t.planTrip.form.selectTicket %></option>
-        <% if (tickets && tickets.length) { %>
-          <% tickets.forEach((ticket) => { %>
-            <option value="<%= ticket._id %>">
-              <%= (ticket.group || "").toUpperCase() %> - <%= ticket.audience || "" %>
-              (EGP <%= Number(ticket.price || 0).toFixed(2) %>)
-            </option>
-          <% }) %>
-        <% } %>
-      </select>
-
-      <label><%= t.planTrip.form.visitDate %></label>
-      <input type="date" name="date" required />
-
-      <button class="btn" type="submit"><%= t.planTrip.form.submit %></button>
-    </form>
-  </div>
-</section>
+  </section>
+</main>
 
 <%- include('../partials/footer') %>

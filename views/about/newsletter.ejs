@@ -14,13 +14,33 @@
         <div class="hero-subline">
           <p><%= t.newsletter.subtitle %></p>
         </div>
+        <div class="hero-meta" role="list" aria-label="<%= t.newsletter.title %>">
+          <span class="meta-chip" role="listitem"><i class="fas fa-envelope-open-text" aria-hidden="true"></i><%= t.newsletter.receiveTitle %></span>
+          <span class="meta-chip" role="listitem"><i class="fas fa-calendar-alt" aria-hidden="true"></i><%= t.newsletter.frequencyTitle %></span>
+        </div>
       </div>
     </div>
   </section>
 
-  <section class="section">
+  <section class="section newsletter-signup-section">
     <div class="container">
-      <div class="subscribe-wrapper">
+      <div class="newsletter-layout">
+        <aside class="newsletter-benefits" aria-label="<%= t.newsletter.receiveTitle %>">
+          <p class="benefits-kicker"><%= t.newsletter.receiveTitle %></p>
+          <ul class="benefits-list">
+            <% (t.newsletter.receiveList || []).forEach((item) => { %>
+              <li>
+                <i class="fas fa-check-circle" aria-hidden="true"></i>
+                <span><%= item %></span>
+              </li>
+            <% }) %>
+          </ul>
+          <div class="frequency-note">
+            <h3><%= t.newsletter.frequencyTitle %></h3>
+            <p><%= t.newsletter.frequencyText %></p>
+          </div>
+        </aside>
+
         <div class="newsletter-card">
           <div class="card-header">
             <i class="nav-icon fas fa-paper-plane"></i>
@@ -28,16 +48,50 @@
           </div>
           <h2 class="card-title"><%= t.newsletter.subtitle %></h2>
           <form action="/newsletter/subscribe" method="POST" class="subscribe-form" id="newsletter-form">
-            <div class="subscribe-fields">
-              <input type="text" name="name" placeholder="<%= t.newsletter.namePlaceholder %>" required class="subscribe-input" />
-              <input type="tel" name="phone" placeholder="<%= t.newsletter.phone %>" required class="subscribe-input" />
+            <div class="form-grid">
+              <div class="field-group">
+                <label for="newsletter-name"><%= t.newsletter.fullName %></label>
+                <input
+                  id="newsletter-name"
+                  type="text"
+                  name="name"
+                  placeholder="<%= t.newsletter.namePlaceholder %>"
+                  required
+                  minlength="2"
+                  autocomplete="name"
+                  class="subscribe-input"
+                />
+              </div>
+              <div class="field-group">
+                <label for="newsletter-phone"><%= t.newsletter.phone %></label>
+                <input
+                  id="newsletter-phone"
+                  type="tel"
+                  name="phone"
+                  placeholder="<%= t.newsletter.phone %>"
+                  required
+                  minlength="6"
+                  inputmode="tel"
+                  autocomplete="tel"
+                  class="subscribe-input"
+                />
+              </div>
+              <div class="field-group field-group-full">
+                <label for="newsletter-email"><%= t.newsletter.email %></label>
+                <input
+                  id="newsletter-email"
+                  type="email"
+                  name="email"
+                  placeholder="<%= t.newsletter.emailPlaceholder %>"
+                  required
+                  autocomplete="email"
+                  class="subscribe-input"
+                />
+              </div>
             </div>
-            <div class="email-group">
-              <input type="email" name="email" placeholder="<%= t.newsletter.emailPlaceholder %>" required class="email-input" />
-            </div>
-            <button type="submit" class="btn-subscribe"><%= t.newsletter.subscribe %></button>
+            <button type="submit" class="btn-subscribe" data-default-text="<%= t.newsletter.subscribe %>"><%= t.newsletter.subscribe %></button>
           </form>
-          <p class="form-message" id="newsletter-message"></p>
+          <p class="form-message" id="newsletter-message" role="status" aria-live="polite"></p>
         </div>
       </div>
     </div>
