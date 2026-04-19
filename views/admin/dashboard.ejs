@@ -15,66 +15,66 @@
 
 <section class="admin-page-header">
   <div>
-    <h1>Overview</h1>
-    <p>Manage museum content and operations.</p>
+    <h1><%= language === 'ar' ? 'نظرة عامة' : 'Overview' %></h1>
+    <p><%= language === 'ar' ? 'إدارة محتوى المتحف والعمليات.' : 'Manage museum content and operations.' %></p>
   </div>
 </section>
 
 <section class="admin-section">
   <div class="admin-grid admin-stats">
-    <div class="admin-stat">Exhibits <strong><%= stats.exhibitCount %></strong></div>
-    <div class="admin-stat">Products <strong><%= stats.productCount %></strong></div>
-    <div class="admin-stat">Users <strong><%= stats.userCount %></strong></div>
-    <div class="admin-stat">Tickets <strong><%= stats.ticketCount %></strong></div>
-    <div class="admin-stat">Testimonials <strong><%= stats.testimonialCount %></strong></div>
-    <div class="admin-stat">Ticket Requests <strong><%= stats.ticketRequestCount %></strong></div>
-    <div class="admin-stat">Tasks <strong><%= stats.taskCount %></strong></div>
-    <div class="admin-stat">Cleaning Zones <strong><%= stats.cleaningZoneCount %></strong></div>
+    <div class="admin-stat"><%= language === 'ar' ? 'المعروضات' : 'Exhibits' %> <strong><%= stats.exhibitCount %></strong></div>
+    <div class="admin-stat"><%= language === 'ar' ? 'المنتجات' : 'Products' %> <strong><%= stats.productCount %></strong></div>
+    <div class="admin-stat"><%= language === 'ar' ? 'المستخدمون' : 'Users' %> <strong><%= stats.userCount %></strong></div>
+    <div class="admin-stat"><%= language === 'ar' ? 'التذاكر' : 'Tickets' %> <strong><%= stats.ticketCount %></strong></div>
+    <div class="admin-stat"><%= language === 'ar' ? 'الشهادات' : 'Testimonials' %> <strong><%= stats.testimonialCount %></strong></div>
+    <div class="admin-stat"><%= language === 'ar' ? 'طلبات التذاكر' : 'Ticket Requests' %> <strong><%= stats.ticketRequestCount %></strong></div>
+    <div class="admin-stat"><%= language === 'ar' ? 'المهام' : 'Tasks' %> <strong><%= stats.taskCount %></strong></div>
+    <div class="admin-stat"><%= language === 'ar' ? 'مناطق التنظيف' : 'Cleaning Zones' %> <strong><%= stats.cleaningZoneCount %></strong></div>
   </div>
 </section>
 
 <section class="admin-section">
   <div class="admin-section-title">
-    <h2>Statistics</h2>
+    <h2><%= language === 'ar' ? 'الإحصائيات' : 'Statistics' %></h2>
   </div>
   <div class="admin-chart">
     <div class="admin-chart-row">
-      <span>Exhibits</span>
+      <span><%= language === 'ar' ? 'المعروضات' : 'Exhibits' %></span>
       <div class="admin-chart-bar"><span style="width: <%= (stats.exhibitCount / maxStat) * 100 %>%"></span></div>
       <strong><%= stats.exhibitCount %></strong>
     </div>
     <div class="admin-chart-row">
-      <span>Products</span>
+      <span><%= language === 'ar' ? 'المنتجات' : 'Products' %></span>
       <div class="admin-chart-bar"><span style="width: <%= (stats.productCount / maxStat) * 100 %>%"></span></div>
       <strong><%= stats.productCount %></strong>
     </div>
     <div class="admin-chart-row">
-      <span>Users</span>
+      <span><%= language === 'ar' ? 'المستخدمون' : 'Users' %></span>
       <div class="admin-chart-bar"><span style="width: <%= (stats.userCount / maxStat) * 100 %>%"></span></div>
       <strong><%= stats.userCount %></strong>
     </div>
     <div class="admin-chart-row">
-      <span>Tickets</span>
+      <span><%= language === 'ar' ? 'التذاكر' : 'Tickets' %></span>
       <div class="admin-chart-bar"><span style="width: <%= (stats.ticketCount / maxStat) * 100 %>%"></span></div>
       <strong><%= stats.ticketCount %></strong>
     </div>
     <div class="admin-chart-row">
-      <span>Testimonials</span>
+      <span><%= language === 'ar' ? 'الشهادات' : 'Testimonials' %></span>
       <div class="admin-chart-bar"><span style="width: <%= (stats.testimonialCount / maxStat) * 100 %>%"></span></div>
       <strong><%= stats.testimonialCount %></strong>
     </div>
     <div class="admin-chart-row">
-      <span>Ticket Requests</span>
+      <span><%= language === 'ar' ? 'طلبات التذاكر' : 'Ticket Requests' %></span>
       <div class="admin-chart-bar"><span style="width: <%= (stats.ticketRequestCount / maxStat) * 100 %>%"></span></div>
       <strong><%= stats.ticketRequestCount %></strong>
     </div>
     <div class="admin-chart-row">
-      <span>Tasks</span>
+      <span><%= language === 'ar' ? 'المهام' : 'Tasks' %></span>
       <div class="admin-chart-bar"><span style="width: <%= (stats.taskCount / maxStat) * 100 %>%"></span></div>
       <strong><%= stats.taskCount %></strong>
     </div>
     <div class="admin-chart-row">
-      <span>Cleaning Zones</span>
+      <span><%= language === 'ar' ? 'مناطق التنظيف' : 'Cleaning Zones' %></span>
       <div class="admin-chart-bar"><span style="width: <%= (stats.cleaningZoneCount / maxStat) * 100 %>%"></span></div>
       <strong><%= stats.cleaningZoneCount %></strong>
     </div>
@@ -83,43 +83,43 @@
 
 <section class="admin-section">
   <div class="admin-section-title">
-    <h2>Quick edits</h2>
+    <h2><%= language === 'ar' ? 'تعديلات سريعة' : 'Quick Edits' %></h2>
   </div>
   <div class="admin-grid">
     <div class="admin-card">
-      <h3>Exhibits</h3>
-      <p>Create, update, and organize exhibits.</p>
-      <a class="btn" href="/admin/exhibits">Manage Exhibits</a>
+      <h3><%= language === 'ar' ? 'المعروضات' : 'Exhibits' %></h3>
+      <p><%= language === 'ar' ? 'إنشاء وتحديث وتنظيم المعروضات.' : 'Create, update, and organize exhibits.' %></p>
+      <a class="btn" href="/admin/exhibits"><%= language === 'ar' ? 'إدارة المعروضات' : 'Manage Exhibits' %></a>
     </div>
     <div class="admin-card">
-      <h3>Products</h3>
-      <p>Edit shop products, pricing, and inventory.</p>
-      <a class="btn" href="/admin/products">Manage Products</a>
+      <h3><%= language === 'ar' ? 'المنتجات' : 'Products' %></h3>
+      <p><%= language === 'ar' ? 'تعديل منتجات المتجر والأسعار والمخزون.' : 'Edit shop products, pricing, and inventory.' %></p>
+      <a class="btn" href="/admin/products"><%= language === 'ar' ? 'إدارة المنتجات' : 'Manage Products' %></a>
     </div>
     <div class="admin-card">
-      <h3>Map Pins</h3>
-      <p>Update museum map pins and cleaning zones.</p>
-      <a class="btn" href="/admin/map">Manage Map</a>
+      <h3><%= language === 'ar' ? 'دبابيس الخريطة' : 'Map Pins' %></h3>
+      <p><%= language === 'ar' ? 'تحديث دبابيس خريطة المتحف ومناطق التنظيف.' : 'Update museum map pins and cleaning zones.' %></p>
+      <a class="btn" href="/admin/map"><%= language === 'ar' ? 'إدارة الخريطة' : 'Manage Map' %></a>
     </div>
     <div class="admin-card">
-      <h3>Tickets</h3>
-      <p>Adjust ticket types and availability.</p>
-      <a class="btn" href="/admin/tickets">Manage Tickets</a>
+      <h3><%= language === 'ar' ? 'التذاكر' : 'Tickets' %></h3>
+      <p><%= language === 'ar' ? 'ضبط أنواع التذاكر والتوفر.' : 'Adjust ticket types and availability.' %></p>
+      <a class="btn" href="/admin/tickets"><%= language === 'ar' ? 'إدارة التذاكر' : 'Manage Tickets' %></a>
     </div>
     <div class="admin-card">
-      <h3>Ticket Overview</h3>
-      <p>View all ticket requests and top countries.</p>
-      <a class="btn" href="/admin/ticket-requests">View Requests</a>
+      <h3><%= language === 'ar' ? 'نظرة عامة على التذاكر' : 'Ticket Overview' %></h3>
+      <p><%= language === 'ar' ? 'عرض جميع طلبات التذاكر والدول الأكثر طلباً.' : 'View all ticket requests and top countries.' %></p>
+      <a class="btn" href="/admin/ticket-requests"><%= language === 'ar' ? 'عرض الطلبات' : 'View Requests' %></a>
     </div>
     <div class="admin-card">
-      <h3>Users</h3>
-      <p>Review and manage user accounts.</p>
-      <a class="btn" href="/admin/users">Manage Users</a>
+      <h3><%= language === 'ar' ? 'المستخدمون' : 'Users' %></h3>
+      <p><%= language === 'ar' ? 'مراجعة وإدارة حسابات المستخدمين.' : 'Review and manage user accounts.' %></p>
+      <a class="btn" href="/admin/users"><%= language === 'ar' ? 'إدارة المستخدمين' : 'Manage Users' %></a>
     </div>
     <div class="admin-card">
-      <h3>Settings</h3>
-      <p>Configure site-wide preferences.</p>
-      <a class="btn" href="/admin/settings">Open Settings</a>
+      <h3><%= language === 'ar' ? 'الإعدادات' : 'Settings' %></h3>
+      <p><%= language === 'ar' ? 'ضبط تفضيلات الموقع العامة.' : 'Configure site-wide preferences.' %></p>
+      <a class="btn" href="/admin/settings"><%= language === 'ar' ? 'فتح الإعدادات' : 'Open Settings' %></a>
     </div>
   </div>
 </section>

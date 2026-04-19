@@ -1,8 +1,94 @@
-// utils/i18n.js
-
 const translations = {
   en: {
     siteTitle: "Egyptian Museum",
+
+    mission: {
+      kicker: "Established 1835",
+      title: "Mission and Goals",
+      lead: "To protect, preserve, and present the immortal spirit of Egyptian heritage for the enlightenment of the world.",
+      subtitle: "The Egyptian Museum stands as the global custodian of the longest continuous civilization in human history.",
+      stats: [
+        { label: "Artifacts Preserved" },
+        { label: "Years of History" },
+        { label: "Visitors Annually" },
+        { label: "Research Partners" }
+      ],
+      pillarsEyebrow: "Pillars of Purpose",
+      pillarsTitle: "Our Goals",
+      pillarsSubtitle: "Five foundational principles guide every decision, exhibition, and interaction at the museum.",
+      pillars: [
+        {
+          title: "Preservation",
+          summary: "Protecting artifacts for future generations through ethical conservation.",
+          detailsLabel: "How we do this",
+          details: [
+            "State-of-the-art conservation laboratories",
+            "Climate-controlled artifact storage",
+            "Ethical restoration practices guided by international standards"
+          ]
+        },
+        {
+          title: "Education",
+          summary: "Supporting learning for all ages through exhibitions and programs.",
+          detailsLabel: "How we do this",
+          details: [
+            "Interactive exhibitions and guided tours",
+            "School and university partnership programs",
+            "Digital archives and virtual learning resources"
+          ]
+        },
+        {
+          title: "Accessibility",
+          summary: "Welcoming all visitors with equal access regardless of ability.",
+          detailsLabel: "How we do this",
+          details: [
+            "Wheelchair-accessible galleries and pathways",
+            "Multi-language audio guides and signage",
+            "Sensory-friendly visiting hours and tactile exhibits"
+          ]
+        },
+        {
+          title: "Research",
+          summary: "Advancing knowledge through archaeological and historical research.",
+          detailsLabel: "How we do this",
+          details: [
+            "Collaboration with international research institutions",
+            "Publication of scholarly journals and findings",
+            "Support for emerging Egyptologists and archaeologists"
+          ]
+        },
+        {
+          title: "Cultural Identity",
+          summary: "Promoting Egyptian heritage and connecting history to the world.",
+          detailsLabel: "How we do this",
+          details: [
+            "Traveling exhibitions showcasing Egyptian civilization",
+            "Cultural exchange programs with global museums",
+            "Community events celebrating Egyptian traditions"
+          ]
+        }
+      ],
+      timelineEyebrow: "Through Time",
+      timelineTitle: "Past · Present · Future",
+      timeline: [
+        {
+          era: "Preserve the Past",
+          description: "We safeguard over 120,000 artifacts spanning 5,000 years of Egyptian civilization. Through meticulous conservation and ethical stewardship, we ensure these treasures endure for millennia to come."
+        },
+        {
+          era: "Educate the Present",
+          description: "Our exhibitions, workshops, and digital resources bring ancient Egypt to life. We serve students, researchers, families, and tourists — fostering curiosity and understanding across all ages and abilities."
+        },
+        {
+          era: "Inspire the Future",
+          description: "By connecting Egypt's timeless legacy to the global community, we inspire new generations of scholars, artists, and cultural leaders. The museum is a bridge between civilizations — past, present, and future."
+        }
+      ],
+      ctaQuote: "\"Our mission guides every exhibition, every artifact, and every visitor experience.\"",
+      ctaSub: "Step inside and discover five thousand years of wonder, knowledge, and cultural pride.",
+      ctaExplore: "Explore the Collection",
+      ctaPlan: "Plan Your Visit"
+    },
 
     shop: {
       title: "Shop",
@@ -45,7 +131,13 @@ const translations = {
     explorer: {
       title: "Explorer Game",
       subtitle: "Exploration challenge coming soon.",
-      placeholder: "Add your explorer game content here."
+      placeholder: "Add your explorer game content here.",
+      exploreWorld: "Explore the world",
+      description: "Move through the map and discover the environment. The game runs inside this frame while the rest of your normal page layout stays the same.",
+      howToPlay: "How to play",
+      tip1: "Click inside the game frame to focus it.",
+      tip2: "Move with W, A, S, D.",
+      tip3: "Press P to toggle collision debug in-game."
     },
 
     pyramid: {
@@ -97,6 +189,8 @@ const translations = {
       dashboard: "Dashboard",
       menu: "Menu",
       theme: "Theme",
+      account: "Account",
+      logout: "Logout",
       aboutMenu: {
         aboutUs: "About Us",
         mission: "Mission and Goal",
@@ -236,6 +330,8 @@ const translations = {
     newsletter: {
       title: "Newsletter",
       subtitle: "Get exhibition previews, curator stories, and event invitations straight to your inbox.",
+      monthlyEdition: "MONTHLY EDITION",
+      insiderTitle: "MUSEUM INSIDER",
       receiveTitle: "What you'll receive",
       receiveList: [
         "Monthly highlights from the Pharaohs, Islamic, and Christian galleries.",
@@ -247,6 +343,7 @@ const translations = {
       frequencyText: "We send 1-2 emails per month. No spam. Unsubscribe anytime.",
       fullName: "Full Name (optional)",
       namePlaceholder: "Your name",
+      phone: "Phone number",
       email: "Email",
       emailPlaceholder: "you@example.com",
       interests: "Interests",
@@ -281,16 +378,44 @@ const translations = {
     },
 
     testimonials: {
-      title: "Testimonials",
-      subtitle: "Real stories from visitors who explored the heart of Egypt.",
+      heroTitle: "What Our Visitors Say",
+      heroSubtitle: "Discover why thousands of guests trust us to create their perfect Egyptian journey.",
+      averageRating: "Average rating",
+      happyVisitors: "Happy visitors",
+      yearsOfDiscovery: "Years of discovery",
       highlightsTitle: "Visitor Highlights",
       highlightsText: "Every review helps us create more meaningful experiences for future visitors.",
-      averageRating: "Average rating",
-      formTitle: "Share your experience",
-      name: "Name",
-      message: "Message",
+      trustedTitle: "Trusted & Certified",
+      certExcellence: "Certificate of Excellence",
+      googleRating: "4.9 out of 5 stars",
+      licensed: "Licensed",
+      ministry: "Egyptian Ministry of Tourism",
+      awardWinner: "Award Winner",
+      bestOperator: "Best Tour Operator 2025",
+      ctaTitle: "Ready to create your own story?",
+      ctaText: "Join thousands of satisfied guests and experience the magic of Egypt.",
+      contactUs: "Contact Us",
+      chronicleTitle: "Join the Chronicle",
+      chronicleText: "Share your story from the land of the Nile. From temple shadows to golden galleries, let your words shine like hieroglyphs on stone.",
+      formTitle: "Submit Feedback",
+      name: "Your Name",
+      message: "Your experience...",
       rating: "Rating (1-5)",
-      submit: "Submit"
+      submit: "Post Testimonial",
+featured: [
+  {
+    name: "Sarah Johnson",
+    meta: "Travel blogger, USA",
+    quote: "An absolutely breathtaking experience. Our guide was incredibly knowledgeable about Egyptian history. The sunrise at the pyramids was magical, and every detail was perfectly planned.",
+    footnote: "Pyramids & Nile Cruise • December 2025"
+  },
+  {
+    name: "Michael Chen",
+    meta: "Photographer, Singapore",
+    quote: "As a photographer, I needed flexibility and access to unique locations. The team went above and beyond and we visited hidden gems most tourists never see. This was my best trip to Egypt.",
+    footnote: "Custom Photo Tour • November 2025"
+  }
+],
     },
 
     exhibits: {
@@ -302,6 +427,30 @@ const translations = {
       islamicSubtitle: "Discover artistic traditions, manuscripts, and architectural masterpieces.",
       christianTitle: "Christian Collection",
       christianSubtitle: "Experience icons, textiles, and heritage from Egypt's Christian era."
+    },
+
+    exhibitDetail: {
+      ancientEgypt: "Ancient Egypt",
+      noDescription: "No description available for this artifact yet.",
+      eraInsight: "Era Insight",
+      historicalSignificance: "Historical Significance",
+      legacy: "Legacy",
+      type: "Type",
+      period: "Period",
+      origin: "Origin",
+      backToExhibits: "Back to Exhibits",
+      viewOnMap: "View on Map",
+      noModel: "3D model is not available for this artifact yet."
+    },
+
+    exhibitCollection: {
+      timeline: "Timeline",
+      timelineSubtitle: "Walk through defining pieces from this collection in a curated visual chronology.",
+      timelineComingSoon: "Timeline coming soon",
+      timelineComingSoonText: "New artifacts are being curated now. Check back soon for a complete historical journey.",
+      noExhibits: "No exhibits found yet",
+      noExhibitsText: "When exhibits are added, they will appear here with full details and timeline placement.",
+      artifacts: "ARTIFACTS"
     },
 
     planTrip: {
@@ -347,11 +496,161 @@ const translations = {
       christianHeroSubtitle: "Explore historic churches, sacred art, and Christian heritage.",
       christianWelcome: "Welcome",
       christianTourNotesText: "Use the guide to learn about Christian history, art, and cultural influence."
+    },
+
+    janitor: {
+      title: "Janitor Dashboard",
+      welcome: "Welcome",
+      subtitle: "View your cleaning tasks and assigned map cleaning areas.",
+      assignedZones: "Assigned Cleaning Zones",
+      myTasks: "My Cleaning Tasks",
+      zonesList: "Zones",
+      tasksList: "Tasks"
+    },
+
+    curator: {
+      title: "Curator Dashboard",
+      welcome: "Welcome",
+      subtitle: "View and update your exhibit preparation and collection tasks.",
+      myTasks: "My Assigned Tasks",
+      checkTasks: "Check your current exhibit and artifact handling tasks."
+    },
+
+    technician: {
+      title: "Maintenance Technician Dashboard",
+      welcome: "Welcome",
+      subtitle: "Track facility and equipment maintenance tasks assigned to you.",
+      maintenanceTasks: "Maintenance Tasks",
+      viewTasks: "View active repair, inspection, and preventive tasks."
+    },
+
+    educator: {
+      title: "Educator Dashboard",
+      welcome: "Welcome",
+      subtitle: "Manage tour, workshop, and session support tasks.",
+      sessionTasks: "Session Tasks",
+      viewTasks: "Review assigned preparation, delivery, and follow-up tasks for educational sessions."
+    },
+
+    frontdesk: {
+      title: "Front Desk Dashboard",
+      welcome: "Welcome",
+      subtitle: "Manage queue, visitor support tasks, and front desk requests.",
+      visitorSupport: "Visitor Support Tasks",
+      viewTasks: "Review open front-desk assignments and priorities."
+    },
+
+    manager: {
+      title: "Museum Manager Dashboard",
+      welcome: "Welcome",
+      subtitle: "Use separate pages to manage tasks and cleaning zones.",
+      taskManagement: "Task Management",
+      taskDescription: "Create assignments, set priority, add checklists, and track all employee task statuses.",
+      zoneManagement: "Zone Management",
+      zoneDescription: "Create cleaning zones on the map and assign janitors without mixing this with task forms.",
+      openTasks: "Open Task Management",
+      openZones: "Open Zone Management"
+    },
+
+    security: {
+      title: "Security Dashboard",
+      welcome: "Welcome",
+      subtitle: "Monitor patrol and incident-related tasks assigned to you.",
+      patrolTasks: "Patrol & Incident Tasks",
+      viewTasks: "See checkpoint, patrol, and incident follow-up tasks with due times."
     }
   },
 
   ar: {
     siteTitle: "المتحف المصري",
+
+    mission: {
+      kicker: "تأسس عام 1835",
+      title: "الرسالة والأهداف",
+      lead: "حماية التراث المصري الخالد والحفاظ عليه وتقديمه لإنارة العالم.",
+      subtitle: "يقف المتحف المصري حارسًا عالميًا لأطول حضارة متواصلة في تاريخ البشرية.",
+      stats: [
+        { label: "قطعة أثرية محفوظة" },
+        { label: "عام من التاريخ" },
+        { label: "زائر سنويًا" },
+        { label: "شريك بحثي" }
+      ],
+      pillarsEyebrow: "ركائز الهدف",
+      pillarsTitle: "أهدافنا",
+      pillarsSubtitle: "خمسة مبادئ أساسية توجّه كل قرار ومعرض وتفاعل في المتحف.",
+      pillars: [
+        {
+          title: "الحفظ",
+          summary: "حماية القطع الأثرية للأجيال القادمة من خلال الترميم الأخلاقي.",
+          detailsLabel: "كيف نفعل ذلك",
+          details: [
+            "مختبرات ترميم متطورة",
+            "تخزين القطع الأثرية في بيئة محكومة مناخيًا",
+            "ممارسات ترميم أخلاقية وفق المعايير الدولية"
+          ]
+        },
+        {
+          title: "التعليم",
+          summary: "دعم التعلم لجميع الأعمار من خلال المعارض والبرامج.",
+          detailsLabel: "كيف نفعل ذلك",
+          details: [
+            "معارض تفاعلية وجولات إرشادية",
+            "برامج شراكة مع المدارس والجامعات",
+            "أرشيف رقمي وموارد تعليمية افتراضية"
+          ]
+        },
+        {
+          title: "إمكانية الوصول",
+          summary: "استقبال جميع الزوار بإمكانية وصول متساوية بغض النظر عن القدرة.",
+          detailsLabel: "كيف نفعل ذلك",
+          details: [
+            "قاعات ومسارات مهيأة لذوي الإعاقة",
+            "أدلة صوتية ولافتات متعددة اللغات",
+            "ساعات زيارة مناسبة حسيًا ومعارض لمسية"
+          ]
+        },
+        {
+          title: "البحث العلمي",
+          summary: "تطوير المعرفة من خلال الأبحاث الأثرية والتاريخية.",
+          detailsLabel: "كيف نفعل ذلك",
+          details: [
+            "التعاون مع مؤسسات البحث الدولية",
+            "نشر المجلات العلمية والنتائج",
+            "دعم علماء الآثار الناشئين"
+          ]
+        },
+        {
+          title: "الهوية الثقافية",
+          summary: "تعزيز التراث المصري وربط التاريخ بالعالم.",
+          detailsLabel: "كيف نفعل ذلك",
+          details: [
+            "معارض متنقلة تعرض الحضارة المصرية",
+            "برامج تبادل ثقافي مع المتاحف العالمية",
+            "فعاليات مجتمعية تحتفي بالتقاليد المصرية"
+          ]
+        }
+      ],
+      timelineEyebrow: "عبر الزمن",
+      timelineTitle: "الماضي · الحاضر · المستقبل",
+      timeline: [
+        {
+          era: "صون الماضي",
+          description: "نحافظ على أكثر من 120,000 قطعة أثرية تمتد عبر 5,000 عام من الحضارة المصرية."
+        },
+        {
+          era: "تثقيف الحاضر",
+          description: "تُحيي معارضنا وورش العمل والموارد الرقمية مصر القديمة."
+        },
+        {
+          era: "إلهام المستقبل",
+          description: "من خلال ربط إرث مصر الخالد بالمجتمع العالمي، نلهم أجيالًا جديدة من العلماء والفنانين والقادة الثقافيين."
+        }
+      ],
+      ctaQuote: "\"رسالتنا توجّه كل معرض وكل قطعة أثرية وكل تجربة زائر.\"",
+      ctaSub: "ادخل واكتشف خمسة آلاف عام من العجب والمعرفة والفخر الثقافي.",
+      ctaExplore: "استكشف المجموعة",
+      ctaPlan: "خطط زيارتك"
+    },
 
     shop: {
       title: "المتجر",
@@ -377,7 +676,7 @@ const translations = {
       score: "النتيجة",
       question: "السؤال",
       of: "من",
-      intro: "ابدأ الاختبار عندما تكون مستعدًا. حاول الإجابة بناءً على ما تعرفه — ثم اقرأ الشرح لتتعلم المزيد عن التاريخ المصري.",
+      intro: "ابدأ الاختبار عندما تكون مستعدًا.",
       selectAnswer: "اختر إجابة للكشف عن الشرح.",
       correct: "✅ إجابة صحيحة!",
       incorrect: "❌ ليس تمامًا.",
@@ -394,7 +693,13 @@ const translations = {
     explorer: {
       title: "لعبة المستكشف",
       subtitle: "تحدي الاستكشاف قادم قريبًا.",
-      placeholder: "أضف محتوى لعبة المستكشف هنا."
+      placeholder: "أضف محتوى لعبة المستكشف هنا.",
+      exploreWorld: "استكشف العالم",
+      description: "تحرك عبر الخريطة واكتشف البيئة.",
+      howToPlay: "كيفية اللعب",
+      tip1: "انقر داخل إطار اللعبة لتركيز التحكم.",
+      tip2: "تحرك باستخدام W، A، S، D.",
+      tip3: "اضغط P لتبديل تصحيح التصادم داخل اللعبة."
     },
 
     pyramid: {
@@ -446,6 +751,8 @@ const translations = {
       dashboard: "لوحة التحكم",
       menu: "القائمة",
       theme: "المظهر",
+      account: "الحساب",
+      logout: "تسجيل الخروج",
       aboutMenu: {
         aboutUs: "عن المتحف",
         mission: "الرسالة والهدف",
@@ -509,7 +816,7 @@ const translations = {
       title: "عن المتحف",
       subtitle: "نُكرّم تراث مصر من خلال السرد التفاعلي، والبحث العلمي، والابتكار.",
       missionTitle: "الرسالة والهدف",
-      missionText: "تتمثل رسالتنا في الحفاظ على التراث الثقافي المصري وتفسيره ومشاركته. نهدف إلى إلهام الفضول وتعميق الفهم التاريخي وربط الزوار بالأشخاص والمعتقدات والإنجازات التي شكّلت الحضارة.",
+      missionText: "تتمثل رسالتنا في الحفاظ على التراث الثقافي المصري وتفسيره ومشاركته.",
       deliverTitle: "ماذا نقدم",
       deliver: [
         "معارض علمية قائمة على أبحاث مستمرة",
@@ -539,7 +846,7 @@ const translations = {
       },
       visitor: {
         title: "تجربة الزائر",
-        text: "كل زيارة هي رحلة عبر الزمن. صُممت قاعاتنا لتغمرك في مصر القديمة كما لم تره من قبل.",
+        text: "كل زيارة هي رحلة عبر الزمن.",
         list: [
           "جلسات يومية مع القيّمين على المعارض",
           "مختبرات تعليمية عملية للطلاب والمعلمين",
@@ -585,6 +892,8 @@ const translations = {
     newsletter: {
       title: "النشرة البريدية",
       subtitle: "احصل على معاينات المعارض وقصص القيّمين ودعوات الفعاليات مباشرة في صندوق بريدك.",
+      monthlyEdition: "الإصدار الشهري",
+      insiderTitle: "نشرة المتحف الداخلية",
       receiveTitle: "ما الذي ستتلقاه",
       receiveList: [
         "أبرز ما يميز قاعات الفراعنة والإسلامية والقبطية شهريًا.",
@@ -596,6 +905,7 @@ const translations = {
       frequencyText: "نرسل 1-2 رسائل بريدية شهريًا. لا رسائل مزعجة. إلغاء الاشتراك في أي وقت.",
       fullName: "الاسم الكامل (اختياري)",
       namePlaceholder: "اسمك",
+      phone: "رقم الهاتف",
       email: "البريد الإلكتروني",
       emailPlaceholder: "you@example.com",
       interests: "الاهتمامات",
@@ -630,16 +940,44 @@ const translations = {
     },
 
     testimonials: {
-      title: "آراء الزوار",
-      subtitle: "قصص حقيقية من زوار استكشفوا قلب مصر.",
+      heroTitle: "ماذا يقول زوارنا",
+      heroSubtitle: "اكتشف لماذا يثق بنا آلاف الضيوف لإنشاء رحلتهم المصرية المثالية.",
+      averageRating: "متوسط التقييم",
+      happyVisitors: "زائر سعيد",
+      yearsOfDiscovery: "سنوات من الاكتشاف",
       highlightsTitle: "أبرز آراء الزوار",
       highlightsText: "كل تقييم يساعدنا على خلق تجارب أكثر معنى للزوار القادمين.",
-      averageRating: "متوسط التقييم",
+      trustedTitle: "موثوق ومعتمد",
+      certExcellence: "شهادة التميز",
+      googleRating: "4.9 من 5 نجوم",
+      licensed: "مرخص",
+      ministry: "وزارة السياحة المصرية",
+      awardWinner: "الفائز بالجائزة",
+      bestOperator: "أفضل مشغل سياحي 2025",
+      ctaTitle: "هل أنت مستعد لصنع قصتك الخاصة؟",
+      ctaText: "انضم إلى آلاف الضيوف الراضين واختبر سحر مصر.",
+      contactUs: "تواصل معنا",
+      chronicleTitle: "انضم إلى السجل",
+      chronicleText: "شارك قصتك من أرض النيل. من ظلال المعابد إلى القاعات الذهبية، دع كلماتك تتألق كالهيروغليفية على الحجر.",
       formTitle: "شارك تجربتك",
-      name: "الاسم",
-      message: "الرسالة",
+      name: "اسمك",
+      message: "تجربتك...",
       rating: "التقييم (1-5)",
-      submit: "إرسال"
+      submit: "نشر التقييم",
+featured: [
+  {
+    name: "Sarah Johnson",
+    meta: "مدوّنة سفر، الولايات المتحدة",
+    quote: "تجربة رائعة حقًا. كان مرشدنا على دراية واسعة بالتاريخ المصري. كان شروق الشمس عند الأهرامات ساحرًا، وكل التفاصيل كانت مخططة بشكل مثالي.",
+    footnote: "جولة الأهرامات ونهر النيل • ديسمبر 2025"
+  },
+  {
+    name: "Michael Chen",
+    meta: "مصوّر، سنغافورة",
+    quote: "بصفتي مصورًا، كنت أحتاج إلى مرونة والوصول إلى مواقع فريدة. بذل الفريق جهدًا استثنائيًا وزرنا أماكن مخفية لا يراها معظم السياح. كانت أفضل رحلة لي إلى مصر.",
+    footnote: "جولة تصوير مخصصة • نوفمبر 2025"
+  }
+],
     },
 
     exhibits: {
@@ -651,6 +989,30 @@ const translations = {
       islamicSubtitle: "اكتشف التقاليد الفنية والمخطوطات والروائع المعمارية.",
       christianTitle: "المجموعة القبطية",
       christianSubtitle: "استكشف الأيقونات والمنسوجات والتراث من العصر القبطي."
+    },
+
+    exhibitDetail: {
+      ancientEgypt: "مصر القديمة",
+      noDescription: "لا يوجد وصف متاح لهذه القطعة الأثرية بعد.",
+      eraInsight: "نظرة على الحقبة",
+      historicalSignificance: "الأهمية التاريخية",
+      legacy: "الإرث",
+      type: "النوع",
+      period: "الفترة",
+      origin: "المنشأ",
+      backToExhibits: "العودة إلى المعروضات",
+      viewOnMap: "عرض على الخريطة",
+      noModel: "النموذج ثلاثي الأبعاد غير متاح لهذه القطعة بعد."
+    },
+
+    exhibitCollection: {
+      timeline: "الجدول الزمني",
+      timelineSubtitle: "تجوّل عبر القطع المميزة من هذه المجموعة في تسلسل زمني بصري مختار.",
+      timelineComingSoon: "الجدول الزمني قادم قريبًا",
+      timelineComingSoonText: "يتم الآن اختيار القطع الأثرية. تفقد الصفحة قريبًا لرحلة تاريخية كاملة.",
+      noExhibits: "لا توجد معروضات بعد",
+      noExhibitsText: "عند إضافة المعروضات، ستظهر هنا مع تفاصيلها الكاملة وموضعها في الجدول الزمني.",
+      artifacts: "القطع الأثرية"
     },
 
     planTrip: {
@@ -677,33 +1039,92 @@ const translations = {
       title: "الجولة الافتراضية",
       subtitle: "استمتع بجولة إرشادية غامرة عبر قاعاتنا.",
       heroTitle: "تجربة المتحف الافتراضية",
-      heroSubtitle: "انطلق في رحلة غامرة عبر مجموعاتنا من أي مكان في العالم. استكشف القطع الأثرية القديمة والكنوز التاريخية بتفاصيل مذهلة.",
+      heroSubtitle: "انطلق في رحلة غامرة عبر مجموعاتنا من أي مكان في العالم.",
       pharaohTitle: "جولة الفراعنة الافتراضية",
-      pharaohIntro: "مرحبًا بك في جولة الفراعنة الافتراضية في متحف الحياة الأخرى! تتيح لك هذه الصفحة التفاعلية استكشاف عجائب مصر القديمة من أي مكان في العالم.",
+      pharaohIntro: "مرحبًا بك في جولة الفراعنة الافتراضية في متحف الحياة الأخرى!",
       islamicTitle: "الجولة الافتراضية الإسلامية",
-      islamicIntro: "مرحبًا بك في الجولة الافتراضية الإسلامية في متحف الحياة الأخرى! استكشف التقاليد الفنية الغنية والمخطوطات والروائع المعمارية للعالم الإسلامي من منزلك.",
+      islamicIntro: "مرحبًا بك في الجولة الافتراضية الإسلامية في متحف الحياة الأخرى!",
       christianTitle: "الجولة الافتراضية القبطية",
-      christianIntro: "مرحبًا بك في الجولة الافتراضية القبطية في متحف الحياة الأخرى! اكتشف الأيقونات والمنسوجات والتراث من العصر القبطي الغني في مصر.",
+      christianIntro: "مرحبًا بك في الجولة الافتراضية القبطية في متحف الحياة الأخرى!",
       audioGuide: "الدليل الصوتي",
       downloadBrochure: "تنزيل الكتيب",
       tourInfo: "معلومات الجولة",
       fullscreen: "ملء الشاشة",
       tourNotesTitle: "ملاحظات الجولة",
-      tourNotesText: "تستخدم جولتنا الافتراضية تقنية متطورة لتوفير تجربة متحفية سلسة. تنقّل عبر معارضنا، وقرّب القطع الأثرية، وتعرّف على تاريخها.",
-      islamicHeroSubtitle: "استكشف فن العمارة الإسلامية والكنوز التاريخية من خلال تجربة افتراضية إرشادية.",
+      tourNotesText: "تستخدم جولتنا الافتراضية تقنية متطورة لتوفير تجربة متحفية سلسة.",
+      islamicHeroSubtitle: "استكشف فن العمارة الإسلامية والكنوز التاريخية.",
       islamicWelcome: "مرحبًا",
       islamicTourNotesText: "للحصول على أفضل تجربة، استخدم سماعات الرأس واستكشف كل نقطة بانورامية.",
       christianHeroSubtitle: "استكشف الكنائس التاريخية والفن المقدس والتراث المسيحي.",
       christianWelcome: "مرحبًا",
       christianTourNotesText: "استخدم الدليل للتعرف على التاريخ المسيحي والفن والتأثير الثقافي."
+    },
+
+    janitor: {
+      title: "لوحة تحكم عامل النظافة",
+      welcome: "مرحباً",
+      subtitle: "اعرض مهام التنظيف ومناطق الخريطة المعينة لك.",
+      assignedZones: "مناطق التنظيف المعينة",
+      myTasks: "مهام التنظيف الخاصة بي",
+      zonesList: "المناطق",
+      tasksList: "المهام"
+    },
+
+    curator: {
+      title: "لوحة تحكم أمين المعرض",
+      welcome: "مرحباً",
+      subtitle: "اعرض مهام إعداد المعروضات والمجموعات وحدّثها.",
+      myTasks: "مهامي المعينة",
+      checkTasks: "تحقق من مهام المعروضات والقطع الأثرية الحالية."
+    },
+
+    technician: {
+      title: "لوحة تحكم الفني الأساسي",
+      welcome: "مرحباً",
+      subtitle: "تتبع مهام صيانة المرافق والمعدات المعينة لك.",
+      maintenanceTasks: "مهام الصيانة",
+      viewTasks: "عرض مهام الإصلاح والفحص والصيانة الوقائية النشطة."
+    },
+
+    educator: {
+      title: "لوحة تحكم المرشد التعليمي",
+      welcome: "مرحباً",
+      subtitle: "أدر مهام الجولات وورش العمل والدورات.",
+      sessionTasks: "مهام الدورات",
+      viewTasks: "راجع مهام التحضير والتنفيذ والمتابعة للدورات التعليمية."
+    },
+
+    frontdesk: {
+      title: "لوحة تحكم الاستقبال",
+      welcome: "مرحباً",
+      subtitle: "أدر طابور الانتظار ومهام دعم الزوار وطلبات الاستقبال.",
+      visitorSupport: "مهام دعم الزوار",
+      viewTasks: "راجع مهام الاستقبال المفتوحة وأولوياتها."
+    },
+
+    manager: {
+      title: "لوحة تحكم مدير المتحف",
+      welcome: "مرحباً",
+      subtitle: "استخدم الصفحات المنفصلة لإدارة المهام ومناطق التنظيف.",
+      taskManagement: "إدارة المهام",
+      taskDescription: "أنشئ مهام وحدد الأولويات وأضف قوائم تحقق وتتبع حالة مهام الموظفين.",
+      zoneManagement: "إدارة المناطق",
+      zoneDescription: "أنشئ مناطق تنظيف على الخريطة وعيّن عمال النظافة.",
+      openTasks: "فتح إدارة المهام",
+      openZones: "فتح إدارة المناطق"
+    },
+
+    security: {
+      title: "لوحة تحكم الأمن",
+      welcome: "مرحباً",
+      subtitle: "راقب مهام الدوريات والحوادث المعينة لك.",
+      patrolTasks: "مهام الدوريات والحوادث",
+      viewTasks: "اعرض مهام نقاط التفتيش والدوريات ومتابعة الحوادث مع مواعيد الاستحقاق."
     }
   }
 };
 
 const getTranslations = (lang) => translations[lang] || translations.en;
-
-const makeT = (lang) => {
-  return getTranslations(lang);
-};
+const makeT = (lang) => getTranslations(lang);
 
 module.exports = { getTranslations, makeT };

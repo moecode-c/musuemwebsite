@@ -2,18 +2,18 @@
 
 <section class="admin-page-header">
   <div>
-    <h1>Ticket Overview</h1>
-    <p>Review ticket requests and visitor statistics.</p>
+    <h1><%= language === 'ar' ? 'نظرة عامة على التذاكر' : 'Ticket Overview' %></h1>
+    <p><%= language === 'ar' ? 'مراجعة طلبات التذاكر وإحصائيات الزوار.' : 'Review ticket requests and visitor statistics.' %></p>
   </div>
 </section>
 
 <section class="admin-section">
   <div class="admin-section-title">
-    <h2>Top Countries</h2>
+    <h2><%= language === 'ar' ? 'أكثر الدول زيارةً' : 'Top Countries' %></h2>
   </div>
   <div class="admin-chart">
     <% if (countries.length === 0) { %>
-      <p>No ticket requests yet.</p>
+      <p><%= language === 'ar' ? 'لا توجد طلبات تذاكر بعد.' : 'No ticket requests yet.' %></p>
     <% } %>
     <% const maxCountry = Math.max(...countries.map((item) => item.count), 1); %>
     <% countries.forEach((item) => { %>
@@ -28,22 +28,22 @@
 
 <section class="admin-section">
   <div class="admin-section-title">
-    <h2>All Ticket Requests</h2>
+    <h2><%= language === 'ar' ? 'جميع طلبات التذاكر' : 'All Ticket Requests' %></h2>
   </div>
   <div class="admin-table">
     <div class="admin-table-row admin-table-head">
-      <span>Name</span>
-      <span>Nationality</span>
-      <span>Category</span>
-      <span>Audience</span>
-      <span>Qty</span>
-      <span>Date</span>
-      <span>Time Slot</span>
-      <span>Contact</span>
+      <span><%= language === 'ar' ? 'الاسم' : 'Name' %></span>
+      <span><%= language === 'ar' ? 'الجنسية' : 'Nationality' %></span>
+      <span><%= language === 'ar' ? 'الفئة' : 'Category' %></span>
+      <span><%= language === 'ar' ? 'الجمهور' : 'Audience' %></span>
+      <span><%= language === 'ar' ? 'الكمية' : 'Qty' %></span>
+      <span><%= language === 'ar' ? 'التاريخ' : 'Date' %></span>
+      <span><%= language === 'ar' ? 'الفترة الزمنية' : 'Time Slot' %></span>
+      <span><%= language === 'ar' ? 'التواصل' : 'Contact' %></span>
     </div>
     <% if (requests.length === 0) { %>
       <div class="admin-table-row">
-        <span>No requests yet.</span>
+        <span><%= language === 'ar' ? 'لا توجد طلبات بعد.' : 'No requests yet.' %></span>
       </div>
     <% } %>
     <% requests.forEach((request) => { %>

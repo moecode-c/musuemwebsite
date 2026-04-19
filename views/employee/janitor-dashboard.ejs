@@ -1,25 +1,21 @@
 <%- include('../partials/employeeLayoutStart') %>
-
 <section id="janitor-dashboard">
-  <h1><i class="fas fa-broom"></i> Janitor Dashboard</h1>
-    <p>Welcome, <%= employeeName %>. View your cleaning tasks and assigned map cleaning areas.</p>
-
-    <div class="admin-split">
-      <article class="card">
-        <h3><i class="fas fa-map"></i> Assigned Cleaning Zones</h3>
-        <div class="map-wrapper admin-map" id="janitor-zone-map">
-          <img src="/assets/map/map.png" alt="Museum map" class="map-image" />
-          <div class="map-layer"></div>
-        </div>
-        <div id="janitor-zone-list" class="admin-list"></div>
-        <p class="form-message" id="janitor-zone-message"></p>
-      </article>
-
-      <article class="card">
-        <h3><i class="fas fa-clipboard-check"></i> My Cleaning Tasks</h3>
-        <div id="janitor-task-list" class="admin-list"></div>
-      </article>
-    </div>
+  <h1><i class="fas fa-broom"></i> <%= language === 'ar' ? 'لوحة تحكم عامل النظافة' : 'Janitor Dashboard' %></h1>
+  <p><%= language === 'ar' ? `مرحباً، ${employeeName}. اعرض مهام التنظيف ومناطق الخريطة المعينة لك.` : `Welcome, ${employeeName}. View your cleaning tasks and assigned map cleaning areas.` %></p>
+  <div class="admin-split">
+    <article class="card">
+      <h3><i class="fas fa-map"></i> <%= language === 'ar' ? 'مناطق التنظيف المعينة' : 'Assigned Cleaning Zones' %></h3>
+      <div class="map-wrapper admin-map" id="janitor-zone-map">
+        <img src="/assets/map/map.png" alt="<%= language === 'ar' ? 'خريطة المتحف' : 'Museum map' %>" class="map-image" />
+        <div class="map-layer"></div>
+      </div>
+      <div id="janitor-zone-list" class="admin-list"></div>
+      <p class="form-message" id="janitor-zone-message"></p>
+    </article>
+    <article class="card">
+      <h3><i class="fas fa-clipboard-check"></i> <%= language === 'ar' ? 'مهام التنظيف الخاصة بي' : 'My Cleaning Tasks' %></h3>
+      <div id="janitor-task-list" class="admin-list"></div>
+    </article>
+  </div>
 </section>
-
 <%- include('../partials/employeeLayoutEnd') %>

@@ -8,14 +8,12 @@
     aspect-ratio: 16 / 9;
     margin: 0 auto;
   }
-
   .page-pyramid-builder #explorer-frame iframe {
     width: 100%;
     height: 100%;
     display: block;
     background: #000;
   }
-
   .page-pyramid-builder #explorer-frame:fullscreen {
     width: 100vw;
     height: 100vh;
@@ -23,7 +21,6 @@
     aspect-ratio: auto;
     border-radius: 0;
   }
-
   .page-pyramid-builder #explorer-frame:fullscreen iframe {
     width: 100%;
     height: 100%;
@@ -32,8 +29,8 @@
 
 <section class="page-hero">
   <div class="container">
-    <h1><%= t?.explorer?.title || "Explorer Game" %></h1>
-    <p><%= t?.explorer?.subtitle || "Explore the map in a framed game view, just like Pyramid Builder." %></p>
+    <h1><%= t.explorer.title %></h1>
+    <p><%= t.explorer.subtitle %></p>
   </div>
 </section>
 
@@ -41,17 +38,14 @@
   <div class="container">
     <div class="game-panel">
       <div class="game-info">
-        <h2>Explore the world</h2>
-        <p>
-          Move through the map and discover the environment. The game runs inside this frame while the
-          rest of your normal page layout stays the same.
-        </p>
+        <h2><%= t.explorer.exploreWorld || "Explore the world" %></h2>
+        <p><%= t.explorer.description || "Move through the map and discover the environment." %></p>
         <div class="game-tips">
-          <h3>How to play</h3>
+          <h3><%= t.explorer.howToPlay || "How to play" %></h3>
           <ul>
-            <li>Click inside the game frame to focus it.</li>
-            <li>Move with <strong>W</strong>, <strong>A</strong>, <strong>S</strong>, <strong>D</strong>.</li>
-            <li>Press <strong>P</strong> to toggle collision debug in-game.</li>
+            <li><%= t.explorer.tip1 || "Click inside the game frame to focus it." %></li>
+            <li><%= t.explorer.tip2 || "Move with W, A, S, D." %></li>
+            <li><%= t.explorer.tip3 || "Press P to toggle collision debug in-game." %></li>
           </ul>
         </div>
       </div>
@@ -77,7 +71,6 @@
     const frame = document.getElementById("explorer-frame");
     const button = document.getElementById("explorer-fullscreen");
     if (!frame || !button) return;
-
     const updateIcon = () => {
       const icon = button.querySelector("i");
       if (!icon) return;
@@ -85,7 +78,6 @@
       icon.classList.toggle("fa-expand", !isFullscreen);
       icon.classList.toggle("fa-compress", isFullscreen);
     };
-
     button.addEventListener("click", async () => {
       try {
         if (document.fullscreenElement === frame) {
@@ -97,7 +89,6 @@
         console.error(error);
       }
     });
-
     document.addEventListener("fullscreenchange", updateIcon);
     updateIcon();
   })();

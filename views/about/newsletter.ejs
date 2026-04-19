@@ -6,15 +6,13 @@
     <div class="container">
       <div class="hero-content-inner">
         <div class="hero-label">
-          <span class="roman-numeral">MONTHLY EDITION</span>
+          <span class="roman-numeral"><%= t.newsletter.monthlyEdition %></span>
           <span class="divider">|</span>
-          <span class="issue-no">NEWSLETTER</span>
+          <span class="issue-no"><%= t.newsletter.title %></span>
         </div>
-
-        <h1 class="font-cinzel-deco">MUSEUM INSIDER</h1>
-
+        <h1 class="font-cinzel-deco"><%= t.newsletter.insiderTitle %></h1>
         <div class="hero-subline">
-          <p>CURATED UPDATES FROM EXHIBITIONS, EVENTS, AND DISCOVERIES</p>
+          <p><%= t.newsletter.subtitle %></p>
         </div>
       </div>
     </div>
@@ -26,42 +24,19 @@
         <div class="newsletter-card">
           <div class="card-header">
             <i class="nav-icon fas fa-paper-plane"></i>
-            <span class="nav-title">Newsletter</span>
+            <span class="nav-title"><%= t.newsletter.title %></span>
           </div>
-
-          <h2 class="card-title">Stay updated on the future of intellectual property.</h2>
-
+          <h2 class="card-title"><%= t.newsletter.subtitle %></h2>
           <form action="/newsletter/subscribe" method="POST" class="subscribe-form" id="newsletter-form">
             <div class="subscribe-fields">
-              <input
-                type="text"
-                name="name"
-                placeholder="Full name"
-                required
-                class="subscribe-input"
-              />
-              <input
-                type="tel"
-                name="phone"
-                placeholder="Phone number"
-                required
-                class="subscribe-input"
-              />
+              <input type="text" name="name" placeholder="<%= t.newsletter.namePlaceholder %>" required class="subscribe-input" />
+              <input type="tel" name="phone" placeholder="<%= t.newsletter.phone %>" required class="subscribe-input" />
             </div>
             <div class="email-group">
-              <input
-                type="email"
-                name="email"
-                placeholder="name@email.com"
-                required
-                class="email-input"
-              />
+              <input type="email" name="email" placeholder="<%= t.newsletter.emailPlaceholder %>" required class="email-input" />
             </div>
-            <button type="submit" class="btn-subscribe">
-              Subscribe
-            </button>
+            <button type="submit" class="btn-subscribe"><%= t.newsletter.subscribe %></button>
           </form>
-
           <p class="form-message" id="newsletter-message"></p>
         </div>
       </div>
