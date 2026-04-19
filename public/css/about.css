@@ -331,6 +331,95 @@
   color: var(--about-muted);
 }
 
+.page-about .about-three-section {
+  padding-top: 26px;
+}
+
+.page-about .about-three-grid {
+  display: grid;
+  grid-template-columns: 0.9fr 1.1fr;
+  gap: 22px;
+  align-items: stretch;
+}
+
+.page-about .about-three-copy {
+  border-radius: 20px;
+  border: 1px solid var(--about-border);
+  background: var(--about-surface-soft);
+  box-shadow: 0 18px 32px rgba(2, 11, 27, 0.34);
+  padding: 28px;
+}
+
+.page-about .about-three-stage {
+  position: relative;
+  min-height: 420px;
+  border-radius: 20px;
+  border: 1px solid rgba(136, 172, 232, 0.34);
+  background:
+    radial-gradient(circle at 50% 22%, rgba(126, 174, 242, 0.3), rgba(7, 23, 52, 0.96) 62%),
+    linear-gradient(180deg, rgba(5, 23, 54, 0.94), rgba(3, 15, 38, 0.98));
+  overflow: hidden;
+  box-shadow: 0 24px 38px rgba(2, 11, 27, 0.44);
+}
+
+.page-about .about-three-canvas {
+  position: absolute;
+  inset: 0;
+  display: block;
+  width: 100% !important;
+  height: 100% !important;
+  z-index: 2;
+  cursor: grab;
+}
+
+.page-about .about-three-canvas:active {
+  cursor: grabbing;
+}
+
+.page-about .about-three-glow {
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  pointer-events: none;
+  background:
+    radial-gradient(circle at 24% 24%, rgba(123, 165, 242, 0.34), transparent 52%),
+    radial-gradient(circle at 78% 74%, rgba(224, 191, 117, 0.2), transparent 54%);
+  mix-blend-mode: screen;
+  animation: about-three-glow 4.8s ease-in-out infinite;
+}
+
+.page-about .about-three-hint {
+  position: absolute;
+  left: 16px;
+  bottom: 14px;
+  z-index: 3;
+  margin: 0;
+  padding: 8px 12px;
+  border-radius: 999px;
+  border: 1px solid rgba(150, 181, 234, 0.5);
+  background: rgba(7, 26, 58, 0.75);
+  color: #d9e8ff;
+  font-size: 0.72rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.page-about .about-three-stage[data-three-failed="true"]::after {
+  content: "3D scene unavailable on this device";
+  position: absolute;
+  top: 16px;
+  right: 16px;
+  z-index: 3;
+  padding: 7px 10px;
+  border-radius: 999px;
+  border: 1px solid rgba(224, 191, 117, 0.42);
+  background: rgba(7, 26, 58, 0.72);
+  color: #e3cb9a;
+  font-size: 0.68rem;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+}
+
 .page-about .about-story {
   background: linear-gradient(180deg, rgba(5, 23, 47, 0.72), rgba(3, 18, 38, 0.72));
 }
@@ -535,6 +624,18 @@
   }
 }
 
+@keyframes about-three-glow {
+  0%,
+  100% {
+    opacity: 0.64;
+    transform: scale(1);
+  }
+  50% {
+    opacity: 1;
+    transform: scale(1.05);
+  }
+}
+
 .theme-light .page-about .about-scroll-progress {
   background: rgba(189, 164, 120, 0.22);
 }
@@ -599,6 +700,19 @@
   color: var(--about-gold);
 }
 
+.theme-light .page-about .about-three-stage {
+  border-color: rgba(175, 146, 92, 0.44);
+  background:
+    radial-gradient(circle at 50% 22%, rgba(133, 172, 231, 0.22), rgba(10, 32, 71, 0.9) 62%),
+    linear-gradient(180deg, rgba(8, 28, 62, 0.92), rgba(7, 24, 52, 0.94));
+}
+
+.theme-light .page-about .about-three-hint {
+  border-color: rgba(205, 171, 102, 0.45);
+  background: rgba(6, 24, 55, 0.76);
+  color: #e3cb9a;
+}
+
 .theme-light .page-about .visitor-media-badge {
   background: rgba(255, 249, 238, 0.96);
   border-color: rgba(175, 143, 83, 0.5);
@@ -636,7 +750,8 @@
   }
 
   .page-about .about-vision-grid,
-  .page-about .about-visitor-grid {
+  .page-about .about-visitor-grid,
+  .page-about .about-three-grid {
     grid-template-columns: 1fr;
   }
 }
@@ -668,8 +783,13 @@
   .page-about .story-card,
   .page-about .value-card,
   .page-about .visitor-copy,
-  .page-about .about-cta-panel {
+  .page-about .about-cta-panel,
+  .page-about .about-three-copy {
     padding: 22px;
+  }
+
+  .page-about .about-three-stage {
+    min-height: 340px;
   }
 }
 
@@ -687,6 +807,7 @@
   .page-about .about-hero::before,
   .page-about .about-hero::after,
   .page-about .metric-chip,
+  .page-about .about-three-glow,
   .page-about .about-reveal,
   .page-about .about-interactive,
   .page-about .about-interactive::after,

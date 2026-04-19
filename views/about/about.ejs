@@ -75,6 +75,35 @@
     </div>
   </section>
 
+  <section class="section about-three-section">
+    <div class="container about-three-grid">
+      <article class="about-three-copy about-reveal">
+        <p class="about-kicker"><%= language === 'ar' ? 'التجربة ثلاثية الأبعاد' : '3D Experience' %></p>
+        <h2 class="about-heading"><%= language === 'ar' ? 'استكشف قطعة متحفية مصرية حيّة' : 'Explore A Live Egyptian Museum Relic' %></h2>
+        <p class="about-panel-text">
+          <%= language === 'ar'
+            ? 'حرّك المؤشر أو اسحب لتدوير مشهد هرم ومسلة رقمية بإضاءة متحفية مستوحاة من مقتنيات مصر القديمة.'
+            : 'Move your cursor or drag to rotate a pyramid-and-obelisk museum scene with lighting inspired by Ancient Egyptian artifacts.' %>
+        </p>
+        <ul class="about-deliver-list">
+          <li>
+            <i class="fa-solid fa-cube" aria-hidden="true"></i>
+            <span><%= language === 'ar' ? 'تكوين متحفي: هرم ومسلة وقاعدة أثرية' : 'Museum composition: pyramid, obelisk, and artifact pedestal' %></span>
+          </li>
+          <li>
+            <i class="fa-solid fa-lightbulb" aria-hidden="true"></i>
+            <span><%= language === 'ar' ? 'إضاءة عرض تفاعلية في الزمن الحقيقي' : 'Real-time interactive showcase lighting' %></span>
+          </li>
+        </ul>
+      </article>
+
+      <div class="about-three-stage about-reveal delay-1" id="about-three-stage" role="img" aria-label="Interactive Three.js Egyptian museum relic scene">
+        <div class="about-three-glow" aria-hidden="true"></div>
+        <p class="about-three-hint"><%= language === 'ar' ? 'حرك المؤشر لتدوير القطعة' : 'Move cursor to rotate relic' %></p>
+      </div>
+    </div>
+  </section>
+
   <section class="section about-story">
     <div class="container">
       <p class="about-kicker about-center about-reveal"><%= t.about.storyTitle %></p>
@@ -148,5 +177,5 @@
   </section>
 </main>
 
-<script src="/javascript/about.js"></script>
+<script type="module" src="/javascript/about.js"></script>
 <%- include('../partials/footer') %>
