@@ -9,17 +9,17 @@
 
 <section class="admin-section">
   <div class="admin-split">
-    <form class="form" id="admin-product-form" enctype="multipart/form-data">
+    <form class="form" id="admin-product-form" autocomplete="off" enctype="multipart/form-data">
       <label><%= language === 'ar' ? 'الاسم' : 'Name' %></label>
-      <input type="text" name="name" required />
+      <input type="text" name="name" autocomplete="off" required />
       <label><%= language === 'ar' ? 'الوصف' : 'Description' %></label>
-      <textarea name="description" required></textarea>
+      <textarea name="description" autocomplete="off" required></textarea>
       <label><%= language === 'ar' ? 'السعر' : 'Price' %></label>
-      <input type="number" name="price" min="0" step="0.01" required />
+      <input type="number" name="price" autocomplete="off" min="0" step="0.01" required />
       <label><%= language === 'ar' ? 'المخزون' : 'Stock' %></label>
-      <input type="number" name="stock" min="0" required />
+      <input type="number" name="stock" autocomplete="off" min="0" required />
       <label><%= language === 'ar' ? 'الصورة' : 'Image' %></label>
-      <input type="file" name="image" accept="image/*" required />
+      <input type="file" name="image" autocomplete="off" accept="image/*" required />
       <button class="btn admin-submit" type="submit"><%= language === 'ar' ? 'إنشاء منتج' : 'Create Product' %></button>
       <button class="btn btn-secondary admin-cancel" type="button"><%= language === 'ar' ? 'إلغاء' : 'Cancel' %></button>
       <p class="form-message" id="admin-product-message"></p>

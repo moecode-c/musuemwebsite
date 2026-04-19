@@ -258,11 +258,11 @@ import * as THREE from "/javascript/vendor/three.module.min.js";
       const resizeObserver = new ResizeObserver(setSize);
       resizeObserver.observe(threeStage);
 
-      const clock = new THREE.Clock();
+      const startTime = performance.now();
       const autoMotion = reduceMotion ? 0 : 1;
 
       const animate = () => {
-        const elapsed = clock.getElapsedTime();
+        const elapsed = (performance.now() - startTime) / 1000;
 
         rootGroup.rotation.y += (targetRotY - rootGroup.rotation.y) * 0.06;
         rootGroup.rotation.x += (targetRotX - rootGroup.rotation.x) * 0.06;

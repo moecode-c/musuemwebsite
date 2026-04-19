@@ -9,11 +9,11 @@
   <div class="admin-split">
     <article class="card admin-panel">
       <h3><i class="fas fa-user-plus"></i> <%= language === 'ar' ? 'تعيين مهمة لموظف' : 'Assign Employee Task' %></h3>
-      <form class="form" id="manager-task-form">
+      <form class="form" id="manager-task-form" autocomplete="off">
         <label><%= language === 'ar' ? 'العنوان' : 'Title' %></label>
-        <input type="text" name="title" required />
+        <input type="text" name="title" autocomplete="off" required />
         <label><%= language === 'ar' ? 'الوصف' : 'Description' %></label>
-        <textarea name="description"></textarea>
+        <textarea name="description" autocomplete="off"></textarea>
         <label><%= language === 'ar' ? 'الأولوية' : 'Priority' %></label>
         <select name="priority">
           <option value="low"><%= language === 'ar' ? 'منخفضة' : 'Low' %></option>
@@ -36,9 +36,9 @@
         <label><%= language === 'ar' ? 'المنطقة (اختياري)' : 'Zone (Optional)' %></label>
         <select id="task-zone-id" name="zoneId"></select>
         <label><%= language === 'ar' ? 'تاريخ الاستحقاق' : 'Due Date' %></label>
-        <input type="datetime-local" name="dueAt" />
+        <input type="datetime-local" name="dueAt" autocomplete="off" />
         <label><%= language === 'ar' ? 'قائمة التحقق (عنصر واحد في كل سطر)' : 'Checklist (one item per line)' %></label>
-        <textarea name="checklist"></textarea>
+        <textarea name="checklist" autocomplete="off"></textarea>
         <button class="btn" type="submit"><%= language === 'ar' ? 'تعيين المهمة' : 'Assign Task' %></button>
         <p class="form-message" id="manager-task-message"></p>
       </form>

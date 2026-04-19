@@ -88,7 +88,7 @@
         <h2><%= t.testimonials.ctaTitle %></h2>
         <p><%= t.testimonials.ctaText %></p>
         <div class="cta-actions">
-          <a href="/exhibits" class="btn"><%= t.buttons.exploreExhibits %></a>
+	      <a href="/explore-ages" class="btn"><%= t.buttons.exploreExhibits %></a>
           <a href="/contact" class="btn btn-outline"><%= t.testimonials.contactUs %></a>
         </div>
       </div>
@@ -103,11 +103,11 @@
           <p><%= t.testimonials.chronicleText %></p>
         </div>
         <div class="form-wrapper">
-          <form class="form" id="testimonial-form" action="/api/testimonials" method="POST">
+          <form class="form" id="testimonial-form" action="/api/testimonials" method="POST" autocomplete="on">
             <h3 class="nav-title form-title"><%= t.testimonials.formTitle %></h3>
-            <input type="text" name="name" placeholder="<%= t.testimonials.name %>" required />
-            <textarea name="message" rows="4" placeholder="<%= t.testimonials.message %>" required></textarea>
-            <input type="number" name="rating" min="1" max="5" value="5" required class="rating-input" />
+            <input type="text" name="name" autocomplete="name" placeholder="<%= t.testimonials.name %>" required />
+            <textarea name="message" autocomplete="off" rows="4" placeholder="<%= t.testimonials.message %>" required></textarea>
+            <input type="number" name="rating" autocomplete="off" min="1" max="5" value="5" required class="rating-input" />
             <button type="submit" class="btn"><%= t.testimonials.submit %></button>
             <p class="form-message" id="testimonial-message"></p>
           </form>

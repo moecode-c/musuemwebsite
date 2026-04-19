@@ -25,14 +25,23 @@
   --about-muted: #53627c;
 }
 
+.theme-light .page-about .about-page-shell {
+  background:
+    radial-gradient(circle at 8% 6%, rgba(145, 178, 232, 0.24), transparent 40%),
+    radial-gradient(circle at 92% 18%, rgba(195, 149, 77, 0.2), transparent 42%),
+    linear-gradient(180deg, rgba(251, 245, 232, 0.62) 0%, rgba(245, 236, 220, 0.54) 48%, rgba(239, 229, 212, 0.6) 100%),
+    url("/assets/images/g7.jpg") center/cover no-repeat;
+}
+
 .page-about .about-page-shell {
   position: relative;
   isolation: isolate;
   overflow: hidden;
   background:
-    radial-gradient(circle at 10% 0%, rgba(74, 122, 196, 0.24), transparent 48%),
-    radial-gradient(circle at 90% 20%, rgba(216, 174, 99, 0.16), transparent 42%),
-    linear-gradient(180deg, var(--about-bg-900) 0%, var(--about-bg-950) 45%, var(--about-bg-900) 100%);
+    radial-gradient(circle at 10% 0%, rgba(74, 122, 196, 0.18), transparent 48%),
+    radial-gradient(circle at 90% 20%, rgba(216, 174, 99, 0.12), transparent 42%),
+    linear-gradient(180deg, rgba(5, 24, 53, 0.58) 0%, rgba(2, 13, 34, 0.66) 45%, rgba(5, 24, 53, 0.58) 100%),
+    url("/assets/images/g7.jpg") center/cover no-repeat;
   color: var(--about-text);
 }
 
@@ -71,9 +80,9 @@
   padding: 136px 0 88px;
   background-position: center, center, calc(50% + var(--hero-parallax-x, 0px)) calc(50% + var(--hero-parallax-y, 0px));
   background:
-    linear-gradient(122deg, rgba(4, 20, 44, 0.94), rgba(5, 22, 49, 0.72) 52%, rgba(9, 31, 65, 0.92)),
-    linear-gradient(180deg, rgba(2, 11, 28, 0.25), rgba(2, 11, 28, 0.94)),
-    url("/assets/images/pillarsbg.png") center/cover no-repeat;
+    linear-gradient(122deg, rgba(4, 20, 44, 0.82), rgba(5, 22, 49, 0.54) 52%, rgba(9, 31, 65, 0.8)),
+    linear-gradient(180deg, rgba(2, 11, 28, 0.14), rgba(2, 11, 28, 0.72)),
+    url("/assets/images/g7.jpg") center/cover no-repeat;
   border-bottom: 1px solid rgba(210, 174, 103, 0.34);
 }
 
@@ -83,7 +92,7 @@
   position: absolute;
   border-radius: 999px;
   filter: blur(4px);
-  opacity: 0.55;
+  opacity: 0.34;
   pointer-events: none;
   animation: about-float 14s ease-in-out infinite;
 }
@@ -421,7 +430,7 @@
 }
 
 .page-about .about-story {
-  background: linear-gradient(180deg, rgba(5, 23, 47, 0.72), rgba(3, 18, 38, 0.72));
+  background: transparent;
 }
 
 .page-about .about-story-grid {
@@ -647,49 +656,99 @@
 
 .theme-light .page-about .about-hero {
   background:
-    linear-gradient(122deg, rgba(248, 236, 214, 0.94), rgba(246, 231, 205, 0.78) 52%, rgba(241, 223, 193, 0.92)),
-    linear-gradient(180deg, rgba(255, 246, 230, 0.22), rgba(245, 230, 204, 0.88)),
-    url("/assets/images/pillarsbg.png") center/cover no-repeat;
+    linear-gradient(122deg, rgba(250, 239, 217, 0.32), rgba(248, 235, 208, 0.08) 52%, rgba(238, 217, 182, 0.28)),
+    linear-gradient(180deg, rgba(255, 247, 232, 0), rgba(244, 226, 194, 0.14)),
+    url("/assets/images/g7.jpg") center/cover no-repeat;
   border-bottom: 1px solid rgba(177, 146, 87, 0.36);
+  box-shadow: inset 0 -92px 140px rgba(238, 223, 197, 0.2);
 }
 
 .theme-light .page-about .about-hero::before {
-  background: radial-gradient(circle, rgba(112, 151, 219, 0.32), transparent 70%);
+  background: radial-gradient(circle, rgba(112, 151, 219, 0.22), transparent 70%);
 }
 
 .theme-light .page-about .about-hero::after {
-  background: radial-gradient(circle, rgba(173, 126, 58, 0.32), transparent 72%);
+  background: radial-gradient(circle, rgba(173, 126, 58, 0.22), transparent 72%);
 }
 
 .theme-light .page-about .about-title {
-  text-shadow: 0 10px 18px rgba(125, 92, 47, 0.18);
+  color: #1b2c4a;
+  text-shadow: 0 10px 20px rgba(255, 247, 230, 0.35);
 }
 
 .theme-light .page-about .about-kicker {
   color: color-mix(in srgb, var(--about-gold) 78%, #7f6540 22%);
 }
 
+.theme-light .page-about .about-lead {
+  color: #405777;
+}
+
 .theme-light .page-about .about-btn-primary {
   border-color: rgba(163, 122, 50, 0.9);
-  box-shadow: 0 10px 20px rgba(132, 100, 49, 0.22);
+  background: linear-gradient(180deg, #e5c378, #c7963d);
+  color: #26201a;
+  box-shadow: 0 12px 24px rgba(148, 109, 48, 0.28);
 }
 
 .theme-light .page-about .about-btn-ghost {
-  background: rgba(255, 250, 242, 0.86);
-  border-color: rgba(177, 149, 96, 0.45);
+  background: rgba(255, 252, 246, 0.92);
+  border-color: rgba(181, 152, 99, 0.54);
   color: var(--about-text);
+  box-shadow: 0 8px 18px rgba(138, 108, 62, 0.12);
+}
+
+.theme-light .page-about .about-btn-primary:hover {
+  box-shadow: 0 16px 28px rgba(148, 109, 48, 0.34);
+  filter: saturate(1.04);
 }
 
 .theme-light .page-about .about-btn-ghost:hover {
   background: rgba(251, 240, 221, 0.98);
+  box-shadow: 0 12px 20px rgba(138, 108, 62, 0.16);
 }
 
 .theme-light .page-about .metric-chip {
-  background: rgba(255, 249, 240, 0.95);
+  background: linear-gradient(180deg, rgba(255, 251, 244, 0.95), rgba(247, 239, 226, 0.93));
+  border-color: rgba(177, 149, 96, 0.35);
+  box-shadow: 0 12px 24px rgba(133, 104, 61, 0.14);
+  backdrop-filter: blur(4px);
+}
+
+.theme-light .page-about .metric-value {
+  color: #b08233;
+}
+
+.theme-light .page-about .metric-label {
+  color: #516888;
 }
 
 .theme-light .page-about .about-story {
-  background: linear-gradient(180deg, rgba(244, 233, 214, 0.9), rgba(243, 231, 210, 0.78));
+  background: transparent;
+}
+
+.theme-light .page-about .about-panel,
+.theme-light .page-about .about-visual,
+.theme-light .page-about .story-card,
+.theme-light .page-about .value-card,
+.theme-light .page-about .visitor-media,
+.theme-light .page-about .visitor-copy,
+.theme-light .page-about .about-three-copy {
+  background: linear-gradient(180deg, rgba(255, 251, 244, 0.96), rgba(247, 238, 222, 0.9));
+  border-color: rgba(177, 149, 96, 0.33);
+  box-shadow: 0 16px 30px rgba(122, 96, 57, 0.14);
+}
+
+.theme-light .page-about .about-heading,
+.theme-light .page-about .story-card h3,
+.theme-light .page-about .value-card h3 {
+  color: #233552;
+}
+
+.theme-light .page-about .story-index {
+  border-color: rgba(170, 134, 69, 0.5);
+  background: linear-gradient(180deg, rgba(241, 222, 183, 0.68), rgba(235, 210, 160, 0.52));
+  color: #946923;
 }
 
 .theme-light .page-about .about-visual figcaption {
@@ -703,14 +762,21 @@
 .theme-light .page-about .about-three-stage {
   border-color: rgba(175, 146, 92, 0.44);
   background:
-    radial-gradient(circle at 50% 22%, rgba(133, 172, 231, 0.22), rgba(10, 32, 71, 0.9) 62%),
-    linear-gradient(180deg, rgba(8, 28, 62, 0.92), rgba(7, 24, 52, 0.94));
+    radial-gradient(circle at 50% 20%, rgba(229, 210, 169, 0.4), rgba(166, 194, 236, 0.42) 30%, rgba(55, 87, 140, 0.78) 66%),
+    linear-gradient(180deg, rgba(234, 244, 255, 0.94), rgba(191, 213, 245, 0.88));
+  box-shadow: 0 20px 34px rgba(96, 123, 173, 0.26);
 }
 
 .theme-light .page-about .about-three-hint {
-  border-color: rgba(205, 171, 102, 0.45);
-  background: rgba(6, 24, 55, 0.76);
-  color: #e3cb9a;
+  border-color: rgba(183, 149, 90, 0.5);
+  background: rgba(255, 249, 237, 0.88);
+  color: #3c4f75;
+}
+
+.theme-light .page-about .about-three-stage[data-three-failed="true"]::after {
+  border-color: rgba(174, 136, 67, 0.44);
+  background: rgba(255, 246, 227, 0.9);
+  color: #7b5926;
 }
 
 .theme-light .page-about .visitor-media-badge {
@@ -719,15 +785,37 @@
   box-shadow: 0 10px 16px rgba(129, 103, 63, 0.18);
 }
 
+.theme-light .page-about .visitor-media-badge span {
+  color: #6a7f9e;
+}
+
+.theme-light .page-about .visitor-media-badge strong {
+  color: #9f7429;
+}
+
 .theme-light .page-about .about-cta-panel {
   background:
-    linear-gradient(135deg, rgba(248, 236, 214, 0.95), rgba(241, 223, 193, 0.92)),
+    linear-gradient(135deg, rgba(251, 240, 218, 0.66), rgba(245, 228, 198, 0.62)),
     url("/assets/images/desertmap.png") center/cover no-repeat;
   border-color: rgba(177, 146, 87, 0.42);
+  box-shadow: 0 18px 30px rgba(126, 98, 58, 0.18);
+}
+
+.theme-light .page-about .about-cta-panel h2 {
+  color: #2a3d5f;
 }
 
 .theme-light .page-about .about-cta-panel p {
   color: var(--about-muted);
+}
+
+.theme-light .page-about .about-interactive::after {
+  background: radial-gradient(circle at var(--pointer-x, 50%) var(--pointer-y, 50%), rgba(186, 148, 77, 0.16), transparent 60%);
+}
+
+.theme-light .page-about .about-interactive:hover {
+  border-color: rgba(177, 146, 87, 0.58);
+  box-shadow: 0 22px 34px rgba(124, 92, 48, 0.2);
 }
 
 [dir="rtl"] .page-about .about-deliver-list li,
