@@ -8,13 +8,28 @@
   </div>
 </section>
 
-<section class="section">
-  <div class="container">
-    <div id="cart-items">
-      <%- cartItemsHtml %>
+<section class="section cart-section">
+  <div class="container cart-shell">
+    <div class="cart-panel">
+      <div class="cart-panel__header">
+        <h2><%= language === 'ar' ? 'العناصر في السلة' : 'Your Items' %></h2>
+        <p class="muted"><%= language === 'ar' ? 'راجع الكميات وعدّلها قبل إتمام الطلب' : 'Review and update quantities' %></p>
+      </div>
+      <div id="cart-items">
+        <%- cartItemsHtml %>
+      </div>
     </div>
-    <div class="cart-total"><%= t.cart.total %>: EGP <span id="cart-total"><%= total %></span></div>
-    <a class="btn" href="/checkout"><%= t.cart.checkout %></a>
+
+    <aside class="cart-panel cart-summary">
+      <h2><%= language === 'ar' ? 'ملخص الطلب' : 'Order Summary' %></h2>
+      <div class="cart-total-line">
+        <span><%= t.cart.total %></span>
+        <span class="cart-total-amount">EGP <span id="cart-total"><%= total %></span></span>
+      </div>
+      <p class="muted small"><%= language === 'ar' ? 'يمكنك اختيار الشحن أو الاستلام أثناء إتمام الطلب.' : 'Shipping and delivery choices are selected at checkout.' %></p>
+      <a class="btn btn-primary btn-block" href="/cart/checkout"><%= t.cart.checkout %></a>
+      <a class="link subtle" href="/shop"><%= language === 'ar' ? 'متابعة التسوق' : 'Continue shopping' %></a>
+    </aside>
   </div>
 </section>
 

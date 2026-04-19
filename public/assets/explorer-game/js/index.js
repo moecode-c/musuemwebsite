@@ -16,6 +16,22 @@ const normalizeLayer = (layer, rows, cols) =>
     Array.from({ length: cols }, (_, x) => layer?.[y]?.[x] ?? 0),
   )
 
+const collisionsProvided =
+  typeof collisions !== 'undefined' && Array.isArray(collisions)
+const collisionsData = collisionsProvided
+  ? normalizeLayer(collisions, MAP_ROWS, MAP_COLS)
+  : null
+
+if (collisionsProvided) {
+  const collisionsRows = collisions.length
+  const collisionsCols = Array.isArray(collisions?.[0]) ? collisions[0].length : 0
+  if (collisionsRows !== MAP_ROWS || collisionsCols !== MAP_COLS) {
+    console.warn(
+      'Collision grid size does not match the map. Using normalized collision data.',
+    )
+  }
+}
+
 const layersData = {
   l_terrain: normalizeLayer(l_terrain, MAP_ROWS, MAP_COLS),
   l_boats: normalizeLayer(l_boats, MAP_ROWS, MAP_COLS),
@@ -37,6 +53,9 @@ const tilesets = {
 const collisionBlocks = []
 const blockSize = TILE_SIZE // Assuming each tile is 16x16 pixels
 let debugDrawCollisions = false
+const CLICK_STEP = 12
+let camX = 0
+let camY = 0
 
 // Tiles that should NOT be solid even if present in a "solid" layer.
 // (Your bridge tiles are in `l_buldings` around ids 983..1057.)
@@ -92,15 +111,10 @@ const buildCollisionBlocks = () => {
   // 1) Preferred: explicit collision map (you control exactly what is solid).
   // If it exists AND matches the expected dimensions, it is authoritative
   // even if it's all zeros.
-  const hasCollisionMap =
-    typeof collisions !== 'undefined' &&
-    Array.isArray(collisions) &&
-    collisions.length === WORLD_ROWS &&
-    Array.isArray(collisions[0]) &&
-    collisions[0].length === WORLD_COLS
+  const hasCollisionMap = Array.isArray(collisionsData)
 
   if (hasCollisionMap) {
-    markSolidsFromGrid(collisions)
+    markSolidsFromGrid(collisionsData)
   } else {
     // 2) Practical default: build collision from map layers.
     // - `l_buldings` contains walls/structures (but also includes bridge tiles -> excluded above)
@@ -240,6 +254,118 @@ const keys = {
   },
 }
 
+const modalBackdrop = document.querySelector('#modalBackdrop')
+const infoModal = document.querySelector('#infoModal')
+const modalText = infoModal?.querySelector('.modal-card__text')
+const modalClose = infoModal?.querySelector('.modal-card__close')
+
+let messageHideTimer = null
+let activeTriggerKey = null
+let dismissedTriggerKey = null
+let isPaused = false
+
+const triggerBlocks = [
+  {
+    id: 'egypt-1',
+    x: 19,
+    y: 7,
+    width: 1,
+    height: 1,
+    message:
+      'The Nile River flooded each year, leaving rich soil on its banks. Farmers planted wheat and barley in this fresh mud, which helped towns grow. Egyptians watched the stars to predict the flood season so they could prepare their fields and irrigation canals.'
+  },
+  {
+    id: 'egypt-2',
+    x: 20,
+    y: 19,
+    width: 1,
+    height: 1,
+    message:
+      'Ancient Egyptians wrote in hieroglyphs, a picture-based writing system. Scribes used reed pens and ink on papyrus, a paper made from a river plant. Writing helped keep track of harvests, taxes, and stories about their gods and kings.'
+  },
+  {
+    id: 'egypt-3',
+    x: 10,
+    y: 15,
+    width: 1,
+    height: 1,
+    message:
+      'Mummification was a careful process that could take about 70 days. Egyptians removed organs, dried the body with natron salt, and wrapped it in linen. They believed this helped the spirit live on in the afterlife.'
+  },
+  {
+    id: 'egypt-4',
+    x: 40,
+    y: 20,
+    width: 1,
+    height: 1,
+    message:
+      'The Great Pyramid of Giza was built from about 2.3 million stone blocks. Workers organized in teams, hauled stones on sleds, and used ramps to lift them. It stayed the tallest man-made structure for thousands of years.'
+  },
+]
+
+const getTriggerAtPlayer = (playerRef) => {
+  const hb = playerRef.hitbox
+
+  for (let i = 0; i < triggerBlocks.length; i++) {
+    const t = triggerBlocks[i]
+    const tX = t.x * TILE_SIZE
+    const tY = t.y * TILE_SIZE
+    const tW = (t.width ?? 1) * TILE_SIZE
+    const tH = (t.height ?? 1) * TILE_SIZE
+
+    const hit =
+      hb.x <= tX + tW &&
+      hb.x + hb.width >= tX &&
+      hb.y + hb.height >= tY &&
+      hb.y <= tY + tH
+
+    if (hit) return t
+  }
+
+  return null
+}
+
+const showMessageModal = (text, key) => {
+  if (!infoModal || !modalText || !modalBackdrop) return
+
+  modalText.textContent = text
+  infoModal.classList.add('is-visible')
+  modalBackdrop.classList.add('is-visible')
+  infoModal.setAttribute('aria-hidden', 'false')
+  modalBackdrop.setAttribute('aria-hidden', 'false')
+  activeTriggerKey = key
+  dismissedTriggerKey = null
+  isPaused = true
+
+  if (messageHideTimer) {
+    window.clearTimeout(messageHideTimer)
+    messageHideTimer = null
+  }
+}
+
+const hideMessageModal = () => {
+  if (!infoModal || !modalText || !modalBackdrop) return
+
+  infoModal.classList.remove('is-visible')
+  modalBackdrop.classList.remove('is-visible')
+  infoModal.setAttribute('aria-hidden', 'true')
+  modalBackdrop.setAttribute('aria-hidden', 'true')
+  modalText.textContent = ''
+  isPaused = false
+
+  if (messageHideTimer) {
+    window.clearTimeout(messageHideTimer)
+    messageHideTimer = null
+  }
+}
+
+if (modalClose) {
+  modalClose.addEventListener('click', () => {
+    hideMessageModal()
+    dismissedTriggerKey = activeTriggerKey
+  })
+}
+
 let lastTime = performance.now()
 function animate(backgroundCanvas) {
   // Calculate delta time
@@ -247,17 +373,33 @@ function animate(backgroundCanvas) {
   const deltaTime = (currentTime - lastTime) / 1000
   lastTime = currentTime
 
-  // Update player position
-  player.handleInput(keys)
-  player.update(deltaTime, collisionBlocks)
+  if (!isPaused) {
+    // Update player position
+    player.handleInput(keys)
+    player.update(deltaTime, collisionBlocks)
 
-  // Keep player inside the world bounds
-  player.x = Math.max(0, Math.min(player.x, WORLD_W - player.width))
-  player.y = Math.max(0, Math.min(player.y, WORLD_H - player.height))
+    // Keep player inside the world bounds
+    player.x = Math.max(0, Math.min(player.x, WORLD_W - player.width))
+    player.y = Math.max(0, Math.min(player.y, WORLD_H - player.height))
+    player.updateHitbox()
+
+    const trigger = getTriggerAtPlayer(player)
+    const triggerKey = trigger?.id ?? null
+
+    if (!trigger) {
+      activeTriggerKey = null
+      dismissedTriggerKey = null
+      hideMessageModal()
+    } else if (activeTriggerKey !== triggerKey) {
+      showMessageModal(trigger.message, triggerKey)
+    } else if (dismissedTriggerKey === triggerKey) {
+      hideMessageModal()
+    }
+  }
 
   // Camera (top-left of the viewport in world coords)
-  const camX = Math.max(0, Math.min(player.x + player.width / 2 - VIEW_W / 2, WORLD_W - VIEW_W))
-  const camY = Math.max(0, Math.min(player.y + player.height / 2 - VIEW_H / 2, WORLD_H - VIEW_H))
+  camX = Math.max(0, Math.min(player.x + player.width / 2 - VIEW_W / 2, WORLD_W - VIEW_W))
+  camY = Math.max(0, Math.min(player.y + player.height / 2 - VIEW_H / 2, WORLD_H - VIEW_H))
 
   // Render scene
   c.save()
@@ -288,6 +430,30 @@ const startRendering = async () => {
 }
 
 startRendering()
+
+canvas.addEventListener('click', (event) => {
+  const rect = canvas.getBoundingClientRect()
+  const scaleX = VIEW_W / rect.width
+  const scaleY = VIEW_H / rect.height
+  const worldX = (event.clientX - rect.left) * scaleX + camX
+  const worldY = (event.clientY - rect.top) * scaleY + camY
+
+  const playerCenterX = player.x + player.width / 2
+  const playerCenterY = player.y + player.height / 2
+  const dx = worldX - playerCenterX
+  const dy = worldY - playerCenterY
+  const distance = Math.hypot(dx, dy)
+
+  if (!distance) return
+
+  const stepX = (dx / distance) * CLICK_STEP
+  const stepY = (dy / distance) * CLICK_STEP
+
+  player.moveBy(stepX, stepY, collisionBlocks)
+  player.x = Math.max(0, Math.min(player.x, WORLD_W - player.width))
+  player.y = Math.max(0, Math.min(player.y, WORLD_H - player.height))
+  player.updateHitbox()
+})
 
 // Debug toggle for collision blocks
 window.addEventListener('keydown', (e) => {

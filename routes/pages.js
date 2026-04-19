@@ -25,6 +25,7 @@ router.get("/virtual-tour", pageController.virtualTour);
 router.get("/virtual-tour/pharaoh", pageController.virtualTourPharaoh);
 router.get("/virtual-tour/islamic", pageController.virtualTourIslamic);
 router.get("/virtual-tour/christian", pageController.virtualTourChristian);
+router.get("/vr-experience", pageController.vrExperience);
 router.get("/games", pageController.games);
 router.get("/games/quiz", pageController.gameQuiz);
 router.get("/games/explorer", pageController.gameExplorer);

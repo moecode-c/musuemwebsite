@@ -33,6 +33,7 @@
       <iframe
         title="<%= t.virtualTour.pharaohTitle %>"
         src="https://www.google.com/maps/embed?pb=!4v1756480706236!6m8!1m7!1sCAoSF0NJSE0wb2dLRUlDQWdJQ0V0WlhPckFF!2m2!1d37.33336496785927!2d-121.9228248894391!3f46.78690720026922!4f-27.030580023533155!5f0.7820865974627469"
+        allow="fullscreen; geolocation"
         allowfullscreen
         loading="lazy"
         referrerpolicy="no-referrer-when-downgrade"></iframe>
@@ -56,7 +57,7 @@
   <div class="container">
     <h3><%= t.virtualTour.tourNotesTitle %></h3>
     <p><%= t.virtualTour.tourNotesText %></p>
-    <audio id="tour-audio" src="/audio/pharoahVirtualaudio.mp3" preload="metadata"></audio>
+    <audio id="tour-audio" src="/assets/audio/pharoahVirtualaudio.mp3" preload="metadata"></audio>
   </div>
 </section>
 

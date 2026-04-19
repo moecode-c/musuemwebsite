@@ -33,6 +33,7 @@
       <iframe
         title="<%= t.virtualTour.islamicTitle %>"
         src="https://www.google.com/maps/embed?pb=!4v1756509146609!6m8!1m7!1sIdzjvtjfHTwF6xW5unYS8w!2m2!1d25.29564881538289!2d51.53934068111935!3f279.5574869588035!4f-11.930292460529216!5f0.7820865974627469"
+        allow="fullscreen; geolocation"
         allowfullscreen
         loading="lazy"
         referrerpolicy="no-referrer-when-downgrade"></iframe>
@@ -56,7 +57,7 @@
   <div class="container">
     <h3><%= t.virtualTour.tourNotesTitle %></h3>
     <p><%= t.virtualTour.islamicTourNotesText %></p>
-    <audio id="tour-audio" src="/audio/islamicVirtualaudio.mp3" preload="metadata"></audio>
+    <audio id="tour-audio" src="/assets/audio/islamicVirtualaudio.mp3" preload="metadata"></audio>
   </div>
 </section>
 

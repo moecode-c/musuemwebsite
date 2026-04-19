@@ -16,6 +16,11 @@
               <a href="/lang/ar?returnTo=<%= encodeURIComponent(currentPathWithQuery || '/') %>" class="nav-link">AR</a>
             </div>
             <button class="nav-link theme-toggle" id="theme-toggle" type="button" data-theme-label="<%= t.nav.theme %>"><i class="nav-icon fas fa-moon"></i><%= t.nav.theme %></button>
+            <a href="/cart" class="nav-link cart-chip" aria-label="<%= t.nav.shopMenu.cart %>">
+              <i class="nav-icon fas fa-cart-shopping"></i>
+              <%= t.nav.shopMenu.cart %>
+              <span class="cart-count" id="cart-count">0</span>
+            </a>
           </div>
         </div>
       </div>
@@ -52,6 +57,7 @@
             <a href="/virtual-tour/pharaoh" class="dropdown-link"><i class="dropdown-icon fas fa-crown"></i><%= t.nav.virtualTourMenu.pharaoh %></a>
             <a href="/virtual-tour/islamic" class="dropdown-link"><i class="dropdown-icon fas fa-star-and-crescent"></i><%= t.nav.virtualTourMenu.islamic %></a>
             <a href="/virtual-tour/christian" class="dropdown-link"><i class="dropdown-icon fas fa-book-bible"></i><%= t.nav.virtualTourMenu.christian %></a>
+            <a href="/vr-experience" class="dropdown-link"><i class="dropdown-icon fas fa-vr-cardboard"></i><%= language === "ar" ? "تجربة الواقع الافتراضي" : "VR Experience" %></a>
           </div>
         </div>
 

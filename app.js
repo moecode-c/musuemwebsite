@@ -1,4 +1,7 @@
 const path = require("path");
+const fs = require("fs");
+const http = require("http");
+const https = require("https");
 const express = require("express");
 const mongoose = require("mongoose");
 const session = require("express-session");
@@ -136,16 +139,49 @@ app.use(errorHandler);
 
 const startPort = Number(process.env.PORT) || 3000;
 
-const startServer = (port) => {
-  const server = app.listen(port, () => {
-    console.log(`Server running on http://localhost:${port}`);
+const resolveProjectPath = (targetPath) => {
+  if (!targetPath || typeof targetPath !== "string") return null;
+  return path.isAbsolute(targetPath) ? targetPath : path.join(__dirname, targetPath);
+};
+
+const getTlsOptions = () => {
+  if (process.env.HTTPS !== "true") return null;
+
+  const keyPath = resolveProjectPath(process.env.SSL_KEY_PATH || "certs/localhost-key.pem");
+  const certPath = resolveProjectPath(process.env.SSL_CERT_PATH || "certs/localhost.pem");
+
+  if (!keyPath || !certPath || !fs.existsSync(keyPath) || !fs.existsSync(certPath)) {
+    console.warn("HTTPS was requested, but certificate files were not found. Falling back to HTTP.");
+    console.warn(`Expected key: ${keyPath}`);
+    console.warn(`Expected cert: ${certPath}`);
+    return null;
+  }
+
+  try {
+    return {
+      key: fs.readFileSync(keyPath),
+      cert: fs.readFileSync(certPath)
+    };
+  } catch (error) {
+    console.warn("Failed to read HTTPS certificate files. Falling back to HTTP.");
+    console.warn(error.message);
+    return null;
+  }
+};
+
+const startServer = (port, tlsOptions) => {
+  const protocol = tlsOptions ? "https" : "http";
+  const server = tlsOptions ? https.createServer(tlsOptions, app) : http.createServer(app);
+
+  server.listen(port, () => {
+    console.log(`Server running on ${protocol}://localhost:${port}`);
   });
 
   server.on("error", (error) => {
     if (error.code === "EADDRINUSE") {
       const nextPort = port + 1;
       console.warn(`Port ${port} is in use. Trying ${nextPort}...`);
-      startServer(nextPort);
+      startServer(nextPort, tlsOptions);
       return;
     }
 
@@ -156,7 +192,8 @@ const startServer = (port) => {
 const bootstrap = async () => {
   try {
     await dbConnectPromise;
-    startServer(startPort);
+    const tlsOptions = getTlsOptions();
+    startServer(startPort, tlsOptions);
   } catch (error) {
     process.exit(1);
   }

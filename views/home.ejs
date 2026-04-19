@@ -1,107 +1,246 @@
 <%- include('partials/header') %>
 <%- include('partials/navbar') %>
 
-<section class="hero hero--image">
-  <div class="hero-overlay"></div>
+<section class="hero-section">
+  <div class="bg-stage" id="bgStage"></div>
+  <div
+    class="bg-overlay"
+    style="position:absolute; inset:0; z-index:1; pointer-events:none; background: linear-gradient(90deg, rgba(18,15,28,0.9) 0%, rgba(18,15,28,0.55) 50%, rgba(18,15,28,0.25) 100%);"
+  ></div>
 
-  <div class="container hero-content">
-    <div class="hero-copy">
-      <p class="hero-kicker"><%= t.hero.museumName %></p>
-      <h1><%= t.hero.title %></h1>
-      <p><%= t.hero.subtitle %></p>
+  <div class="brand">The <span>Afterlife</span> Museum</div>
+  <div class="timeline" id="timeline"></div>
 
-      <div class="hero-actions">
-        <a class="btn" href="/explore-ages"><%= t.buttons.exploreExhibits %></a>
-        <a class="btn ghost" href="/virtual-tour"><%= t.buttons.startVirtualTour %></a>
-      </div>
+  <div class="frame">
+    <div class="content" id="content">
+      <div class="eyebrow" id="eyebrow">Egyptian Museum - Cairo</div>
+      <h1 class="title" id="title">PYRAMIDS</h1>
+      <p class="desc" id="desc">Loading...</p>
+      <button class="explore-btn" aria-label="Explore this exhibit">
+        Explore <span class="arrow" aria-hidden="true">→</span>
+      </button>
     </div>
+    <div class="cards-wrap" id="cardsWrap"></div>
+  </div>
 
-    <div class="hero-media">
-      <model-viewer
-        class="hero-model"
-        src="/assets/3dmodels/tutenkahmonhead.glb"
-        alt="Tutankhamun head sculpture"
-        camera-controls
-        auto-rotate
-        rotation-per-second="18deg"
-        shadow-intensity="0.8"
-        exposure="1.1"
-        environment-image="neutral"
-        disable-zoom
-        interaction-prompt="none"
-      ></model-viewer>
-    </div>
+  <div class="corner"><span id="counterCur">01</span> / <span id="counterTotal">06</span></div>
+  <div class="controls">
+    <button class="ctrl" id="prevBtn" aria-label="Previous exhibit">‹</button>
+    <button class="ctrl" id="nextBtn" aria-label="Next exhibit">›</button>
   </div>
 </section>
-<section class="section home-video">
-  <div class="container home-video-grid">
-    <div class="home-video-copy">
-<p class="home-video-kicker"><%= t.home.spotlightKicker %></p>
-<h2><%= t.home.spotlightTitle %></h2>
-<p><%= t.home.spotlightText %></p>
 
-<div class="home-video-actions">
-  <a class="btn" href="/virtual-tour"><%= t.home.enterVirtualTour %></a>
-  <span class="home-video-note"><%= t.home.autoPlaysNote %></span>
-</div>
-    </div>
-    <div class="home-video-frame">
+<section class="about-section" id="about">
+  <div class="about-grid">
+    <div class="about-video-wrap">
       <video
-        class="home-video-media"
+        src="/assets/videos/homepagevid.mp4"
         autoplay
         muted
         loop
         playsinline
-        preload="metadata"
-      >
-        <source src="/assets/videos/homepagevid.mp4" type="video/mp4" />
-        Your browser does not support the video tag.
-      </video>
-      <div class="home-video-glow" aria-hidden="true"></div>
+        aria-label="Museum interior footage"
+      ></video>
     </div>
-  </div>
-</section>
-
-<section class="section weather-section">
-  <div class="container">
-    <div class="weather-panel">
-      <div>
-<h3><%= t.home.weatherTitle %></h3>
-<p class="weather-subtitle"><%= t.home.weatherSubtitle %></p>
+    <div class="about-text">
+      <div class="about-eyebrow">The Afterlife Museum - Cairo</div>
+      <h2 class="about-heading">Guardians of an Eternal Legacy</h2>
+      <p class="about-desc">
+        Step inside a world where pharaohs still whisper through stone and gold.
+        Our museum holds the largest collection of Egyptian antiquities — from
+        the boy king's golden mask to the colossal statues of the New Kingdom.
+        Every artifact is a doorway to a civilization that shaped the world.
+      </p>
+      <div class="about-mini-photos">
+        <div class="about-mini-photo" style="background-image:url('/assets/images/tut1.png')" role="img" aria-label="Tutankhamun exhibit"></div>
+        <div class="about-mini-photo" style="background-image:url('/assets/images/sph1.png')" role="img" aria-label="Great Sphinx exhibit"></div>
       </div>
-      <div class="weather-data">
-        <%- weatherHtml %>
+      <button class="about-cta" aria-label="Discover more about the museum">Discover More</button>
+    </div>
+  </div>
+</section>
+
+<section class="spotlight-wrap">
+  <div class="spotlight-section">
+    <div class="spotlight-kicker">The Afterlife Museum - Cairo</div>
+    <h2 class="spotlight-title">Virtual Odyssey</h2>
+    <p class="spotlight-text">
+      Take a guided virtual tour through the galleries. Zoom into artifacts,
+      explore 360-degree halls, and walk the museum from anywhere in the world.
+    </p>
+    <button class="spotlight-btn" aria-label="Start virtual tour">Discover More</button>
+  </div>
+</section>
+
+<div class="section-divider" role="presentation"></div>
+
+<section class="shop-section">
+  <div class="shop-layout">
+    <div class="shop-gallery" aria-label="Shop gallery">
+      <div class="shop-img wide" style="background-image:url('/assets/images/valley.png')" role="img" aria-label="Valley of the Kings"></div>
+      <div class="shop-img" style="background-image:url('/assets/images/sph1.png')" role="img" aria-label="Sphinx"></div>
+      <div class="shop-img" style="background-image:url('/assets/images/tut1.png')" role="img" aria-label="Tutankhamun"></div>
+      <div class="shop-img wide" style="background-image:url('/assets/images/karnak.png')" role="img" aria-label="Karnak Temple"></div>
+    </div>
+
+    <div class="shop-divider" aria-hidden="true">
+      <div class="shop-glyph">𓂀 𓆣 𓇋 𓅓 𓋹 𓇗</div>
+    </div>
+
+    <div class="shop-content">
+      <h2 class="shop-title">Museum Shop</h2>
+      <p class="shop-text">
+        Curated replicas, artisan jewelry, and modern prints inspired by
+        ancient motifs. Bring a piece of the story home.
+      </p>
+      <button class="shop-btn" aria-label="Visit the museum shop">Visit Shop</button>
+    </div>
+  </div>
+</section>
+
+<section class="gallery-wrap">
+  <div class="gallery-section">
+    <h2 class="gallery-title">Photo Gallery</h2>
+    <div class="gallery-block">
+      <div class="gallery-slider" aria-label="Photo gallery slider" role="region">
+        <div class="slider-track" id="sliderTrack">
+          <div class="slider-page" role="group" aria-label="Gallery page 1">
+            <div class="slide-tile gallery-item-1" style="background-image:url('https://tse4.mm.bing.net/th/id/OIP.h56HHeX38QjU6uL3XDm8-gHaEK?rs=1&pid=ImgDetMain&o=7&rm=3')" role="img" aria-label="Pyramids at sunset"></div>
+            <div class="slide-tile gallery-item-2" style="background-image:url('https://tse4.mm.bing.net/th/id/OIP.NZA4wX7LxAnDXQLOEv2-mAHaEK?rs=1&pid=ImgDetMain&o=7&rm=3')" role="img" aria-label="Egyptian landscape"></div>
+            <div class="slide-tile gallery-item-3" style="background-image:url('https://tse3.mm.bing.net/th/id/OIP.AJFH_EIaaJw7hEDnLe6eqAHaE9?rs=1&pid=ImgDetMain&o=7&rm=3')" role="img" aria-label="Temple columns"></div>
+            <div class="slide-tile gallery-item-4" style="background-image:url('https://www.egypttoursportal.com/images/2025/04/Nile-River-Egypt-Tours-Portal.jpg')" role="img" aria-label="Nile River"></div>
+            <div class="slide-tile gallery-item-5" style="background-image:url('https://greekreporter.com/wp-content/uploads/2021/12/Saint_Catherines_-Monastery_credit_patano_wikimedia_commons-1024x542.jpg')" role="img" aria-label="Saint Catherine's Monastery"></div>
+            <div class="slide-tile gallery-item-6" style="background-image:url('https://ucarecdn.com/613c264d-f5af-481a-af0a-9d6a2f0b6efc/-/crop/680x357/0,2/-/preview/-/resize/x400/')" role="img" aria-label="Egypt landscape"></div>
+            <div class="slide-tile gallery-item-7" style="background-image:url('https://i.pinimg.com/originals/d2/8a/9d/d28a9d33a3a095fdd51751e6cc4e2964.jpg')" role="img" aria-label="Desert dunes"></div>
+            <div class="slide-tile gallery-item-8" style="background-image:url('https://tse3.mm.bing.net/th/id/OIP.CGFs9K-P6RsS4IUwP_q_kAHaG6?rs=1&pid=ImgDetMain&o=7&rm=3')" role="img" aria-label="Ancient ruins"></div>
+          </div>
+
+          <div class="slider-page" role="group" aria-label="Gallery page 2">
+            <div class="slide-tile gallery-item-1" style="background-image:url('/assets/images/sph1.png')" role="img" aria-label="Great Sphinx"></div>
+            <div class="slide-tile gallery-item-2" style="background-image:url('/assets/images/karnak.png')" role="img" aria-label="Karnak Temple"></div>
+            <div class="slide-tile gallery-item-3" style="background-image:url('/assets/images/pyramidsbg.png')" role="img" aria-label="Pyramids of Giza"></div>
+            <div class="slide-tile gallery-item-4" style="background-image:url('/assets/images/abu1.png')" role="img" aria-label="Abu Simbel"></div>
+            <div class="slide-tile gallery-item-5" style="background-image:url('/assets/images/valley.png')" role="img" aria-label="Valley of the Kings"></div>
+            <div class="slide-tile gallery-item-6" style="background-image:url('/assets/images/tut1.png')" role="img" aria-label="Tutankhamun's Mask"></div>
+            <div class="slide-tile gallery-item-7" style="background-image:url('/assets/images/sph1.png')" role="img" aria-label="Sphinx close-up"></div>
+            <div class="slide-tile gallery-item-8" style="background-image:url('/assets/images/karnak.png')" role="img" aria-label="Temple hypostyle hall"></div>
+          </div>
+
+          <div class="slider-page" role="group" aria-label="Gallery page 3">
+            <div class="slide-tile gallery-item-1" style="background-image:url('/assets/images/abu1.png')" role="img" aria-label="Abu Simbel facade"></div>
+            <div class="slide-tile gallery-item-2" style="background-image:url('/assets/images/valley.png')" role="img" aria-label="Valley at dusk"></div>
+            <div class="slide-tile gallery-item-3" style="background-image:url('/assets/images/tut1.png')" role="img" aria-label="Golden mask detail"></div>
+            <div class="slide-tile gallery-item-4" style="background-image:url('/assets/images/pyramidsbg.png')" role="img" aria-label="Pyramid at dawn"></div>
+            <div class="slide-tile gallery-item-5" style="background-image:url('/assets/images/karnak.png')" role="img" aria-label="Karnak corridor"></div>
+            <div class="slide-tile gallery-item-6" style="background-image:url('/assets/images/sph1.png')" role="img" aria-label="Sphinx profile"></div>
+            <div class="slide-tile gallery-item-7" style="background-image:url('/assets/images/abu1.png')" role="img" aria-label="Ramesses statues"></div>
+            <div class="slide-tile gallery-item-8" style="background-image:url('/assets/images/valley.png')" role="img" aria-label="Valley tomb entrance"></div>
+          </div>
+        </div>
+
+        <div class="slider-controls">
+          <button class="slider-btn" type="button" id="sliderPrev" aria-label="Previous gallery page">‹</button>
+          <button class="slider-btn" type="button" id="sliderNext" aria-label="Next gallery page">›</button>
+        </div>
+        <div class="gallery-dots" id="galleryDots" role="tablist" aria-label="Gallery pages"></div>
       </div>
     </div>
   </div>
 </section>
 
-<section class="section">
-  <div class="container">
-<h2><%= t.home.featuredExhibits %></h2>
-    <div class="grid">
-      <%- exhibitsHtml %>
+<div class="section-divider" role="presentation"></div>
+
+<section class="reviews-section">
+  <div class="reviews-stage">
+    <header class="reviews-header">
+      <div class="reviews-title">What Visitors Say</div>
+      <div class="reviews-title-line"></div>
+    </header>
+
+    <div class="reviews-slider" id="reviewsSlider" aria-label="Visitor reviews" role="region">
+      <div class="reviews-track" id="reviewsTrack">
+        <article class="reviews-slide">
+          <div class="review-card">
+            <div class="review-photo-banner" style="background-image:url('https://images.unsplash.com/photo-1568515387631-8b650bbcdb90?q=80&w=800&auto=format&fit=crop')" role="img" aria-label="Cairo skyline"></div>
+            <div class="review-avatar-wrap">
+              <div class="review-avatar" style="background-image:url('https://images.unsplash.com/photo-1500530855697-b586d89ba3ee?q=80&w=200&auto=format&fit=crop')" role="img" aria-label="Isabella's photo"></div>
+            </div>
+            <div class="review-body">
+              <div class="review-name">Isabella</div>
+              <div class="review-meta">22 June 2021</div>
+              <div class="review-stars" aria-label="5 stars">★★★★★</div>
+              <div class="review-divider"></div>
+              <p class="review-text">
+                Really nice, relaxing and impressive. Would recommend to everyone who is interested in ancient history and Egyptian culture. The colors and textures of every exhibit were so incredibly interesting — unlike anything I have ever experienced.
+              </p>
+              <button class="review-link" type="button" aria-expanded="false">Read more</button>
+            </div>
+          </div>
+        </article>
+
+        <article class="reviews-slide">
+          <div class="review-card">
+            <div class="review-photo-banner" style="background-image:url('https://images.unsplash.com/photo-1539768942893-daf4b5b4e0c8?q=80&w=800&auto=format&fit=crop')" role="img" aria-label="Pyramids view"></div>
+            <div class="review-avatar-wrap">
+              <div class="review-avatar" style="background-image:url('https://images.unsplash.com/photo-1500534314209-a25ddb2bd429?q=80&w=200&auto=format&fit=crop')" role="img" aria-label="Mara's photo"></div>
+            </div>
+            <div class="review-body">
+              <div class="review-name">Mara</div>
+              <div class="review-meta">03 November 2021</div>
+              <div class="review-stars" aria-label="5 stars">★★★★★</div>
+              <div class="review-divider"></div>
+              <p class="review-text">
+                The scenery was breathtaking. Every gallery felt like entering a new painting. Quiet, peaceful, unforgettable. The curators have done an extraordinary job making ancient history feel alive and immediate.
+              </p>
+              <button class="review-link" type="button" aria-expanded="false">Read more</button>
+            </div>
+          </div>
+        </article>
+
+        <article class="reviews-slide">
+          <div class="review-card">
+            <div class="review-photo-banner" style="background-image:url('https://images.unsplash.com/photo-1588416936097-41850ab3d86d?q=80&w=800&auto=format&fit=crop')" role="img" aria-label="Egypt monument"></div>
+            <div class="review-avatar-wrap">
+              <div class="review-avatar" style="background-image:url('https://images.unsplash.com/photo-1469474968028-56623f02e42e?q=80&w=200&auto=format&fit=crop')" role="img" aria-label="Elena's photo"></div>
+            </div>
+            <div class="review-body">
+              <div class="review-name">Elena</div>
+              <div class="review-meta">14 April 2022</div>
+              <div class="review-stars" aria-label="5 stars">★★★★★</div>
+              <div class="review-divider"></div>
+              <p class="review-text">
+                Perfectly paced, and the guided tour was absolutely amazing. We felt safe and thrilled the entire time. The staff's knowledge is deep and their passion for Egyptian history is genuinely contagious.
+              </p>
+              <button class="review-link" type="button" aria-expanded="false">Read more</button>
+            </div>
+          </div>
+        </article>
+
+        <article class="reviews-slide">
+          <div class="review-card">
+            <div class="review-photo-banner" style="background-image:url('https://images.unsplash.com/photo-1553913861-c0fddf2619ee?q=80&w=800&auto=format&fit=crop')" role="img" aria-label="Ancient hieroglyphs"></div>
+            <div class="review-avatar-wrap">
+              <div class="review-avatar" style="background-image:url('https://images.unsplash.com/photo-1521119989659-a83eee488004?q=80&w=200&auto=format&fit=crop')" role="img" aria-label="Omar's photo"></div>
+            </div>
+            <div class="review-body">
+              <div class="review-name">Omar</div>
+              <div class="review-meta">09 January 2023</div>
+              <div class="review-stars" aria-label="5 stars">★★★★★</div>
+              <div class="review-divider"></div>
+              <p class="review-text">
+                As an Egyptian myself, I was moved to see our history presented with such care and reverence. World-class presentation, impeccable lighting, and a journey through time I will never forget.
+              </p>
+              <button class="review-link" type="button" aria-expanded="false">Read more</button>
+            </div>
+          </div>
+        </article>
+      </div>
     </div>
+    <p class="reviews-pause-hint" id="pauseHint">Click to pause - Click again to resume</p>
   </div>
 </section>
 
-<section class="section">
-  <div class="container">
-<h2><%= t.home.shopHighlights %></h2>
-    <div class="grid">
-      <%- productsHtml %>
-    </div>
-  </div>
-</section>
-
-<section class="section alt">
-  <div class="container">
-<h2><%= t.home.visitorTestimonials %></h2>
-    <div class="grid">
-      <%- testimonialsHtml %>
-    </div>
-  </div>
-</section>
+<script src="/javascript/home.js"></script>
 
 <script type="module" src="https://unpkg.com/@google/model-viewer/dist/model-viewer.min.js"></script>
 
