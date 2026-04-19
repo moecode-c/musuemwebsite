@@ -127,7 +127,7 @@ const home = asyncHandler(async (req, res) => {
   });
 });
 
-const about = (req, res) => res.render("about/about", { pageTitle: "About" });
+const about = (req, res) => res.render("about/about", { pageTitle: "About", pageCss: "about" });
 const mission = (req, res) => res.render("about/mission", { pageTitle: "Mission & Goal", pageCss: "mission" });
 const accessibility = (req, res) =>
   res.render("about/accessibility", { pageTitle: "Accessibility", pageCss: "accessibility" });
@@ -511,6 +511,11 @@ const testimonials = asyncHandler(async (req, res) => {
   });
 });
 
+const contact = (req, res) => res.render("about/contact", { pageTitle: "Contact", pageCss: "info-pages" });
+const membership = (req, res) =>
+  res.render("about/membership", { pageTitle: "Membership", pageCss: "info-pages" });
+const faqs = (req, res) => res.render("about/faqs", { pageTitle: "FAQs", pageCss: "info-pages" });
+
 const planTrip = asyncHandler(async (req, res) => {
   const weather = await getWeather().catch(() => null);
   const isAr = req.cookies.lang === "ar";
@@ -602,6 +607,9 @@ module.exports = {
   cart,
   checkout,
   testimonials,
+  contact,
+  membership,
+  faqs,
   planTrip,
   employeeDashboard,
   managerTasksDashboard,

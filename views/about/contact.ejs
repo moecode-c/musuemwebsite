@@ -1,0 +1,45 @@
+<%- include('../partials/header') %>
+<%- include('../partials/navbar') %>
+
+<main class="info-page-shell">
+  <section class="section info-page-hero">
+    <div class="container">
+      <p class="info-kicker"><%= language === 'ar' ? 'الدعم والتواصل' : 'Support & Contact' %></p>
+      <h1><%= language === 'ar' ? 'تواصل مع فريق المتحف' : 'Contact The Museum Team' %></h1>
+      <p><%= language === 'ar' ? 'نحن هنا لمساعدتك في الحجز، الجولات الإرشادية، والوصول إلى الخدمات.' : 'Reach us for booking support, guided tours, accessibility requests, and partnerships.' %></p>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="container info-grid">
+      <article class="info-card">
+        <h3><%= language === 'ar' ? 'مكتب الزيارة' : 'Visitor Desk' %></h3>
+        <ul class="info-list">
+          <li><i class="fa-solid fa-envelope"></i><a href="mailto:info@egyptianmuseum.edu">info@egyptianmuseum.edu</a></li>
+          <li><i class="fa-solid fa-phone"></i><a href="tel:+20225796584" dir="ltr">+20 2 2579 6584</a></li>
+          <li><i class="fa-solid fa-location-dot"></i><span><%= language === 'ar' ? 'ميدان التحرير، القاهرة' : 'Tahrir Square, Cairo' %></span></li>
+        </ul>
+      </article>
+
+      <article class="info-card">
+        <h3><%= language === 'ar' ? 'ساعات العمل' : 'Working Hours' %></h3>
+        <ul class="info-list">
+          <li><i class="fa-regular fa-clock"></i><span><%= language === 'ar' ? 'الأحد - الخميس: 9:00 ص - 5:00 م' : 'Sun - Thu: 9:00 AM - 5:00 PM' %></span></li>
+          <li><i class="fa-regular fa-clock"></i><span><%= language === 'ar' ? 'الجمعة - السبت: 10:00 ص - 7:00 م' : 'Fri - Sat: 10:00 AM - 7:00 PM' %></span></li>
+          <li><i class="fa-solid fa-circle-info"></i><span><%= language === 'ar' ? 'تتوفر جولات خاصة بالحجز المسبق.' : 'Private tours available by advance booking.' %></span></li>
+        </ul>
+      </article>
+
+      <article class="info-card">
+        <h3><%= language === 'ar' ? 'ابدأ الآن' : 'Get Started' %></h3>
+        <p><%= language === 'ar' ? 'يمكنك التخطيط لزيارتك أو طلب الدعم مباشرة من خلال صفحات الخدمة.' : 'Plan your trip, submit a request, or explore accessibility services.' %></p>
+        <div class="info-page-actions">
+          <a class="btn" href="/plan-trip"><%= language === 'ar' ? 'خطط الزيارة' : 'Plan Trip' %></a>
+          <a class="btn btn-secondary" href="/accessibility"><%= t.footer.accessibility %></a>
+        </div>
+      </article>
+    </div>
+  </section>
+</main>
+
+<%- include('../partials/footer') %>
