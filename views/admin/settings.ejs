@@ -9,14 +9,14 @@
 
 <section class="admin-section">
   <div class="admin-panel">
-    <form class="form" id="admin-settings-form">
+    <form class="form" id="admin-settings-form" autocomplete="on">
       <label><%= language === 'ar' ? 'اللغة الافتراضية' : 'Default Language' %></label>
       <select name="defaultLanguage">
         <option value="en"><%= language === 'ar' ? 'الإنجليزية' : 'English' %></option>
         <option value="ar"><%= language === 'ar' ? 'العربية' : 'Arabic' %></option>
       </select>
       <label><%= language === 'ar' ? 'البريد الإلكتروني للتواصل' : 'Contact Email' %></label>
-      <input type="email" name="contactEmail" />
+      <input type="email" name="contactEmail" autocomplete="email" />
       <button class="btn" type="submit"><%= language === 'ar' ? 'حفظ الإعدادات' : 'Save Settings' %></button>
       <p class="form-message" id="admin-settings-message"></p>
     </form>

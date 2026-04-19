@@ -19,7 +19,7 @@
     <fieldset class="semantic-fieldset">
       <legend class="ticket-section-title semantic-legend">Select Date</legend>
       <div class="ticket-calendar">
-        <input type="date" id="ticket-date" name="date" form="ticket-request-form" required />
+        <input type="date" id="ticket-date" name="date" form="ticket-request-form" autocomplete="off" required />
         <p class="ticket-hint">Unavailable dates have reached capacity.</p>
       </div>
     </fieldset>
@@ -28,15 +28,15 @@
       <legend class="ticket-section-title semantic-legend">Select Entry Time Slot</legend>
       <div class="ticket-slots" role="group" aria-label="Time slots">
         <label class="ticket-slot">
-          <input type="radio" name="timeSlot" value="08:30 - 11:00" form="ticket-request-form" required />
+          <input type="radio" name="timeSlot" value="08:30 - 11:00" form="ticket-request-form" autocomplete="off" required />
           <span>08:30 - 11:00</span>
         </label>
         <label class="ticket-slot">
-          <input type="radio" name="timeSlot" value="11:00 - 13:00" form="ticket-request-form" />
+          <input type="radio" name="timeSlot" value="11:00 - 13:00" form="ticket-request-form" autocomplete="off" />
           <span>11:00 - 13:00</span>
         </label>
         <label class="ticket-slot">
-          <input type="radio" name="timeSlot" value="13:00 - 15:00" form="ticket-request-form" />
+          <input type="radio" name="timeSlot" value="13:00 - 15:00" form="ticket-request-form" autocomplete="off" />
           <span>13:00 - 15:00</span>
         </label>
       </div>
@@ -72,21 +72,21 @@
       </div>
     </fieldset>
 
-    <form class="form ticket-form" id="ticket-request-form">
-      <input type="hidden" name="category" id="ticket-category" required />
-      <input type="hidden" name="audience" id="ticket-audience" required />
+    <form class="form ticket-form" id="ticket-request-form" autocomplete="on">
+      <input type="hidden" name="category" id="ticket-category" autocomplete="off" required />
+      <input type="hidden" name="audience" id="ticket-audience" autocomplete="off" required />
       <label>Full Name</label>
-      <input type="text" name="name" required />
+      <input type="text" name="name" autocomplete="name" required />
       <label>Age</label>
-      <input type="number" name="age" min="1" required />
+      <input type="number" name="age" autocomplete="off" min="1" required />
       <label>Email</label>
-      <input type="email" name="email" required />
+      <input type="email" name="email" autocomplete="email" required />
       <label>Nationality</label>
-      <input type="text" name="nationality" required />
+      <input type="text" name="nationality" autocomplete="country-name" required />
       <label>Phone Number</label>
-      <input type="text" name="phone" required />
+      <input type="text" name="phone" autocomplete="tel" required />
       <label>Tickets Quantity</label>
-      <input type="number" name="quantity" min="1" value="1" required />
+      <input type="number" name="quantity" autocomplete="off" min="1" value="1" required />
       <button class="btn" type="submit">Submit Ticket Request</button>
       <p class="form-message" id="ticket-request-message"></p>
     </form>

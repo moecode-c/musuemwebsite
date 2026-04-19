@@ -9,23 +9,23 @@
 
 <section class="admin-section">
   <div class="admin-split">
-    <form class="form" id="admin-exhibit-form" enctype="multipart/form-data">
+    <form class="form" id="admin-exhibit-form" autocomplete="off" enctype="multipart/form-data">
       <label><%= language === 'ar' ? 'العنوان' : 'Title' %></label>
-      <input type="text" name="title" required />
+      <input type="text" name="title" autocomplete="off" required />
       <label><%= language === 'ar' ? 'الفئة' : 'Category' %></label>
-      <input type="text" name="category" required />
+      <input type="text" name="category" autocomplete="off" required />
       <label><%= language === 'ar' ? 'الوصف' : 'Description' %></label>
-      <textarea name="description" required></textarea>
+      <textarea name="description" autocomplete="off" required></textarea>
       <label><%= language === 'ar' ? 'الحقبة' : 'Era' %></label>
-      <input type="text" name="era" />
+      <input type="text" name="era" autocomplete="off" />
       <label><%= language === 'ar' ? 'الفترة' : 'Period' %></label>
-      <input type="text" name="period" />
+      <input type="text" name="period" autocomplete="off" />
       <label><%= language === 'ar' ? 'الموقع' : 'Location' %></label>
-      <input type="text" name="location" />
+      <input type="text" name="location" autocomplete="off" />
       <label>X (%)</label>
-      <input type="number" name="x" min="0" max="100" step="any" />
+      <input type="number" name="x" autocomplete="off" min="0" max="100" step="any" />
       <label>Y (%)</label>
-      <input type="number" name="y" min="0" max="100" step="any" />
+      <input type="number" name="y" autocomplete="off" min="0" max="100" step="any" />
       <div class="map-wrapper admin-exhibit-map" id="admin-exhibit-map">
         <img src="/assets/map/map.png" alt="<%= language === 'ar' ? 'خريطة المتحف' : 'Museum map' %>" class="map-image" />
         <div class="map-layer">
@@ -34,9 +34,9 @@
       </div>
       <p class="admin-map-note"><%= language === 'ar' ? 'انقر على الخريطة لتحديد إحداثيات X/Y.' : 'Click the map to set X/Y coordinates.' %></p>
       <label><%= language === 'ar' ? 'الصورة' : 'Image' %></label>
-      <input type="file" name="image" accept="image/*" required />
+      <input type="file" name="image" autocomplete="off" accept="image/*" required />
       <label><%= language === 'ar' ? 'نموذج ثلاثي الأبعاد (.glb/.gltf)' : '3D Model (.glb/.gltf)' %></label>
-      <input type="file" name="model" accept=".glb,.gltf" required />
+      <input type="file" name="model" autocomplete="off" accept=".glb,.gltf" required />
       <p class="admin-map-note"><%= language === 'ar' ? 'ارفع ملف .glb أو .gltf. مطلوب عند الإنشاء واختياري عند التعديل.' : 'Upload a .glb or .gltf model. Required when creating. Optional when editing.' %></p>
       <button class="btn admin-submit" type="submit"><%= language === 'ar' ? 'إنشاء معرض' : 'Create Exhibit' %></button>
       <button class="btn btn-secondary admin-cancel" type="button"><%= language === 'ar' ? 'إلغاء' : 'Cancel' %></button>

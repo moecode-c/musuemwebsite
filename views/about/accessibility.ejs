@@ -140,16 +140,16 @@
 
       <section class="assistance-panel" id="assistance-panel" hidden>
         <div class="assistance-grid">
-          <form class="form assistance-form" id="assistance-form">
+          <form class="form assistance-form" id="assistance-form" autocomplete="on">
             <h3><%= language === 'ar' ? 'طلب المساعدة' : 'Assistance Request' %></h3>
             <label for="assist-name"><%= language === 'ar' ? 'الاسم الكامل' : 'Full name' %></label>
-            <input type="text" id="assist-name" name="name" placeholder="<%= language === 'ar' ? 'اسمك' : 'Your name' %>" required />
+            <input type="text" id="assist-name" name="name" autocomplete="name" placeholder="<%= language === 'ar' ? 'اسمك' : 'Your name' %>" required />
             <label for="assist-email"><%= language === 'ar' ? 'البريد الإلكتروني' : 'Email' %></label>
-            <input type="email" id="assist-email" name="email" placeholder="<%= language === 'ar' ? 'بريدك@مثال.com' : 'you@example.com' %>" required />
+            <input type="email" id="assist-email" name="email" autocomplete="email" placeholder="<%= language === 'ar' ? 'بريدك@مثال.com' : 'you@example.com' %>" required />
             <label for="assist-phone"><%= language === 'ar' ? 'الهاتف' : 'Phone' %></label>
-            <input type="tel" id="assist-phone" name="phone" placeholder="+20 2 0000 0000" required />
+            <input type="tel" id="assist-phone" name="phone" autocomplete="tel" placeholder="+20 2 0000 0000" required />
             <label for="assist-date"><%= language === 'ar' ? 'تاريخ الزيارة' : 'Visit date' %></label>
-            <input type="date" id="assist-date" name="date" required />
+            <input type="date" id="assist-date" name="date" autocomplete="off" required />
             <label for="assist-type"><%= language === 'ar' ? 'نوع المساعدة المطلوبة' : 'Assistance needed' %></label>
             <select id="assist-type" name="type" required>
               <option value=""><%= language === 'ar' ? 'اختر خياراً' : 'Select an option' %></option>
@@ -160,7 +160,7 @@
               <option value="other"><%= language === 'ar' ? 'تسهيلات أخرى' : 'Other accommodations' %></option>
             </select>
             <label for="assist-notes"><%= language === 'ar' ? 'ملاحظات' : 'Notes' %></label>
-            <textarea id="assist-notes" name="notes" rows="4" placeholder="<%= language === 'ar' ? 'أخبرنا كيف يمكننا المساعدة' : 'Tell us how we can help' %>"></textarea>
+            <textarea id="assist-notes" name="notes" autocomplete="off" rows="4" placeholder="<%= language === 'ar' ? 'أخبرنا كيف يمكننا المساعدة' : 'Tell us how we can help' %>"></textarea>
             <button class="btn" type="submit"><%= language === 'ar' ? 'إرسال الطلب' : 'Send Request' %></button>
           </form>
 
