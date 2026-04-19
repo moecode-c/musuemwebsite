@@ -33,6 +33,7 @@
       <iframe
         title="<%= t.virtualTour.christianTitle %>"
         src="https://www.google.com/maps/embed?pb=!4v1756514091656!6m8!1m7!1sKxGiVsq4lyvQfLGofekgrQ!2m2!1d45.45452731239332!2d9.181193583672036!3f169.97287295006342!4f0.3149009128870546!5f0.7820865974627469"
+        allow="fullscreen; geolocation"
         allowfullscreen
         loading="lazy"
         referrerpolicy="no-referrer-when-downgrade"></iframe>
@@ -56,7 +57,7 @@
   <div class="container">
     <h3><%= t.virtualTour.tourNotesTitle %></h3>
     <p><%= t.virtualTour.christianTourNotesText %></p>
-    <audio id="tour-audio" src="/audio/christianVirtualaudio.mp3" preload="metadata"></audio>
+    <audio id="tour-audio" src="/assets/audio/christianVirtualaudio.mp3" preload="metadata"></audio>
   </div>
 </section>
 

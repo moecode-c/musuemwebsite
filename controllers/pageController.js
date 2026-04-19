@@ -445,6 +445,8 @@ const virtualTourPharaoh = (req, res) =>
   res.render("virtual-tour/pharaoh", { pageTitle: "Pharaohs Virtual Tour", pageCss: "virtual-tour" });
 const virtualTourChristian = (req, res) =>
   res.render("virtual-tour/christian", { pageTitle: "Christian Virtual Tour", pageCss: "virtual-tour" });
+const vrExperience = (req, res) =>
+  res.render("virtual-tour/vr-experience", { pageTitle: "VR Experience", pageCss: "vr-experience" });
 const games = (req, res) => res.render("games/index", { pageTitle: "Games" });
 const gameQuiz = (req, res) => res.render("games/quiz", { pageTitle: "Quiz Game" });
 const gameExplorer = (req, res) => res.render("games/explorer", { pageTitle: "Explorer Game", pageCss: "pyramid-builder" });
@@ -599,6 +601,7 @@ module.exports = {
   virtualTourIslamic,
   virtualTourPharaoh,
   virtualTourChristian,
+  vrExperience,
   games,
   gameQuiz,
   gameExplorer,

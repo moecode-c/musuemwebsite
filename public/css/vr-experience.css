@@ -1,0 +1,501 @@
+.page-vr-experience {
+  background:
+    radial-gradient(1100px 560px at 8% -12%, rgba(218, 182, 95, 0.12), transparent 60%),
+    radial-gradient(900px 560px at 96% -8%, rgba(112, 146, 230, 0.16), transparent 62%),
+    linear-gradient(180deg, #071536 0%, #06122d 100%);
+}
+
+.vrx-hero {
+  padding: clamp(74px, 10vw, 108px) 0 26px;
+  text-align: center;
+}
+
+.vrx-kicker {
+  margin: 0;
+  font-family: "Cinzel", serif;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: #dfc88f;
+  font-size: 0.72rem;
+}
+
+.vrx-title {
+  margin: 10px 0 0;
+  font-family: "Cinzel", serif;
+  font-size: clamp(2rem, 5vw, 3.2rem);
+  color: #f0d596;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+}
+
+.vrx-subtitle {
+  max-width: 760px;
+  margin: 14px auto 0;
+  line-height: 1.6;
+  color: #d7e4ff;
+}
+
+.vrx-actions {
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin-top: 18px;
+}
+
+.vrx-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  min-width: 190px;
+}
+
+.vrx-btn.is-enabled {
+  border-color: rgba(228, 196, 115, 0.76);
+  box-shadow: 0 0 0 1px rgba(228, 196, 115, 0.24), 0 10px 20px rgba(3, 11, 31, 0.4);
+}
+
+.vrx-stage {
+  padding: 8px 0 58px;
+}
+
+.vrx-viewer-shell {
+  position: relative;
+  border: 1px solid rgba(124, 157, 235, 0.45);
+  border-radius: 16px;
+  overflow: hidden;
+  background: #081b46;
+  box-shadow: 0 22px 38px rgba(2, 8, 24, 0.48);
+}
+
+.vrx-viewer {
+  width: 100%;
+  aspect-ratio: 16 / 9;
+  min-height: 420px;
+  touch-action: none;
+}
+
+.vrx-viewer canvas {
+  display: block;
+  width: 100%;
+  height: 100%;
+}
+
+.vrx-hotspot-layer {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+}
+
+.vrx-hotspot {
+  position: absolute;
+  transform: translate(-50%, -50%);
+  pointer-events: auto;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border: 1px solid rgba(234, 210, 143, 0.75);
+  background: rgba(8, 25, 63, 0.84);
+  color: #f7e3a6;
+  border-radius: 999px;
+  padding: 6px 12px;
+  font-size: 0.82rem;
+  line-height: 1;
+  cursor: pointer;
+  box-shadow: 0 8px 14px rgba(1, 5, 16, 0.42);
+  transition: transform 0.2s ease, background 0.2s ease, border-color 0.2s ease;
+}
+
+.vrx-hotspot:hover,
+.vrx-hotspot.is-active {
+  transform: translate(-50%, -50%) scale(1.04);
+  border-color: rgba(255, 228, 150, 0.95);
+  background: rgba(17, 45, 108, 0.92);
+}
+
+.vrx-caption {
+  position: absolute;
+  left: 16px;
+  right: 16px;
+  bottom: 14px;
+  margin: 0;
+  color: #ecf3ff;
+  background: rgba(7, 22, 56, 0.82);
+  border: 1px solid rgba(124, 157, 235, 0.45);
+  border-radius: 12px;
+  padding: 10px 12px;
+  font-size: 0.9rem;
+  line-height: 1.4;
+  backdrop-filter: blur(2px);
+}
+
+.vrx-viewer-shell:fullscreen,
+.vrx-viewer-shell:-webkit-full-screen {
+  width: 100vw;
+  height: 100vh;
+  max-width: none;
+  border-radius: 0;
+  border: none;
+}
+
+.vrx-viewer-shell:fullscreen .vrx-viewer,
+.vrx-viewer-shell:-webkit-full-screen .vrx-viewer {
+  height: 100vh;
+  min-height: 0;
+  aspect-ratio: auto;
+}
+
+.vrx-viewer-shell:fullscreen .vrx-caption,
+.vrx-viewer-shell:-webkit-full-screen .vrx-caption {
+  left: 18px;
+  right: 18px;
+  bottom: 16px;
+}
+
+body.vrx-body-fullscreen-lock {
+  overflow: hidden;
+}
+
+html.vrx-html-fullscreen-lock,
+body.vrx-body-fullscreen-lock {
+  width: 100%;
+  height: 100%;
+  overscroll-behavior: none;
+}
+
+body.vrx-body-fullscreen-lock {
+  position: fixed;
+  inset: 0;
+  background: #000;
+  touch-action: none;
+}
+
+.vrx-viewer-shell.vrx-viewer-shell--fallback-fullscreen {
+  position: fixed;
+  inset: 0;
+  width: 100vw;
+  height: 100vh;
+  height: 100dvh;
+  max-width: none;
+  border-radius: 0;
+  border: none;
+  margin: 0 !important;
+  z-index: 9999;
+}
+
+.vrx-viewer-shell.vrx-viewer-shell--fallback-fullscreen .vrx-viewer {
+  height: 100vh;
+  height: 100dvh;
+  min-height: 0;
+  aspect-ratio: auto;
+}
+
+.vrx-viewer-shell.vrx-viewer-shell--fallback-fullscreen.vrx-viewer-shell--force-landscape {
+  inset: auto;
+  top: 50%;
+  left: 50%;
+  width: 100dvh;
+  height: 100vw;
+  transform: translate(-50%, -50%) rotate(90deg);
+  transform-origin: center;
+}
+
+.vrx-viewer-shell.vrx-viewer-shell--fallback-fullscreen.vrx-viewer-shell--force-landscape .vrx-viewer {
+  width: 100%;
+  height: 100%;
+}
+
+.vrx-viewer-shell.vrx-viewer-shell--fallback-fullscreen .vrx-caption {
+  left: calc(16px + env(safe-area-inset-left, 0px));
+  right: calc(16px + env(safe-area-inset-right, 0px));
+  bottom: calc(12px + env(safe-area-inset-bottom, 0px));
+}
+
+.vrx-scenes {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(180px, 1fr));
+  gap: 10px;
+  margin-top: 16px;
+}
+
+.vrx-scene-btn {
+  width: 100%;
+}
+
+.vrx-scene-btn.is-active {
+  border-color: rgba(228, 196, 115, 0.8);
+  box-shadow: 0 0 0 1px rgba(228, 196, 115, 0.28), 0 12px 22px rgba(3, 11, 31, 0.42);
+}
+
+.vrx-note {
+  margin: 14px 0 0;
+  color: #cad9f8;
+  line-height: 1.55;
+}
+
+.vrx-error {
+  height: 100%;
+  min-height: 320px;
+  display: grid;
+  place-items: center;
+  text-align: center;
+  color: #fff3cd;
+  padding: 18px;
+  background: linear-gradient(180deg, rgba(56, 23, 23, 0.6), rgba(31, 13, 13, 0.75));
+}
+
+@media (max-width: 640px) {
+  .vrx-viewer {
+    min-height: min(52vh, 300px);
+  }
+
+  .vrx-btn {
+    min-width: 0;
+    width: 100%;
+  }
+}
+
+/* ── Loading overlay ─────────────────────────────────────────────── */
+
+.vrx-loader {
+  position: absolute;
+  inset: 0;
+  z-index: 8;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 16px;
+  background: radial-gradient(ellipse at center, #0c1d4c 0%, #06122d 100%);
+  transition: opacity 0.4s ease;
+  pointer-events: none;
+}
+
+.vrx-loader.vrx-loader--hidden {
+  opacity: 0;
+  pointer-events: none;
+}
+
+.vrx-loader p {
+  margin: 0;
+  font-family: "Cinzel", serif;
+  font-size: 0.78rem;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: #dfc88f;
+}
+
+.vrx-loader-spinner {
+  width: 48px;
+  height: 48px;
+  border: 3px solid rgba(223, 200, 143, 0.2);
+  border-top-color: #dfc88f;
+  border-radius: 50%;
+  animation: vrx-spin 0.9s linear infinite;
+}
+
+@keyframes vrx-spin {
+  to { transform: rotate(360deg); }
+}
+
+/* ── Cardboard / Google VR split-screen ──────────────────────────── */
+
+.vrx-btn--cardboard {
+  border-color: rgba(165, 196, 255, 0.5);
+}
+
+.vrx-btn--cardboard .fas {
+  color: #a5c4ff;
+}
+
+.vrx-btn--cardboard.is-active {
+  border-color: rgba(74, 222, 128, 0.7);
+  box-shadow: 0 0 0 1px rgba(74, 222, 128, 0.26), 0 10px 20px rgba(3, 11, 31, 0.4);
+}
+
+.vrx-btn--cardboard.is-active .fas {
+  color: #4ade80;
+}
+
+/* The split-screen divider rendered inside the viewer shell */
+.vrx-cardboard-bar {
+  position: absolute;
+  inset: 0;
+  z-index: 6;
+  pointer-events: none;
+}
+
+.vrx-cardboard-divider {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 4px;
+  background: #000;
+  pointer-events: none;
+}
+
+.vrx-cardboard-exit {
+  position: absolute;
+  bottom: 70px;
+  left: 50%;
+  transform: translateX(-50%);
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  padding: 8px 16px;
+  font-family: "Inter", sans-serif;
+  font-size: 0.7rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: #fff;
+  background: rgba(8, 22, 58, 0.86);
+  border: 1px solid rgba(226, 190, 108, 0.56);
+  border-radius: 6px;
+  cursor: pointer;
+  pointer-events: auto;
+  white-space: nowrap;
+  touch-action: manipulation;
+  transition: background 0.2s ease;
+}
+
+.vrx-cardboard-exit:hover {
+  background: rgba(14, 34, 84, 0.95);
+}
+
+/* When cardboard mode is on, mirror the scene button classes are disabled */
+.vrx-viewer-shell.vrx-cardboard-active .vrx-caption {
+  left: 50%;
+  transform: translateX(-50%);
+  width: 44%;
+  text-align: center;
+}
+
+/* ── Scene switcher with icons ───────────────────────────────────── */
+
+.vrx-scene-btn {
+  width: 100%;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+}
+
+.vrx-scene-btn .fas {
+  font-size: 0.82rem;
+  color: #a5c4ff;
+  flex-shrink: 0;
+}
+
+.vrx-scene-btn.is-active .fas {
+  color: #f0d596;
+}
+
+/* ── Mobile VR tips bar ──────────────────────────────────────────── */
+
+.vrx-mobile-tips {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 10px;
+  margin-top: 16px;
+  padding: 14px 16px;
+  border: 1px solid rgba(124, 157, 235, 0.28);
+  background: linear-gradient(180deg, rgba(8, 21, 55, 0.7), rgba(7, 18, 46, 0.7));
+  border-radius: 10px;
+}
+
+.vrx-tip {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 7px;
+  text-align: center;
+}
+
+.vrx-tip .fas {
+  font-size: 1.1rem;
+  color: #dfc88f;
+}
+
+.vrx-tip span {
+  font-size: 0.72rem;
+  color: #c8d8f8;
+  line-height: 1.35;
+}
+
+/* ── Footer row: back link + license note ────────────────────────── */
+
+.vrx-footer-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin-top: 14px;
+}
+
+.vrx-back-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  font-size: 0.78rem;
+  font-weight: 600;
+  color: #a5c4ff;
+  text-decoration: none;
+  letter-spacing: 0.04em;
+  transition: color 0.2s ease;
+}
+
+.vrx-back-link:hover {
+  color: #dfc88f;
+}
+
+.vrx-back-link .fas {
+  font-size: 0.7rem;
+}
+
+.vrx-note {
+  margin: 0;
+  color: #8aa3d8;
+  font-size: 0.76rem;
+  line-height: 1.5;
+}
+
+/* ── VR era card highlight on tour landing page ──────────────────── */
+
+.tour-era-card--vr .tour-era-chip {
+  color: #a5c4ff;
+  border-color: rgba(111, 143, 217, 0.55);
+  background: rgba(111, 143, 217, 0.1);
+}
+
+.tour-era-card--vr:hover {
+  border-color: rgba(111, 143, 217, 0.7) !important;
+}
+
+/* ── Responsive ──────────────────────────────────────────────────── */
+
+@media (max-width: 860px) {
+  .vrx-mobile-tips {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (max-width: 640px) {
+  .vrx-mobile-tips {
+    grid-template-columns: repeat(2, 1fr);
+    padding: 12px;
+  }
+
+  .vrx-footer-row {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .vrx-scenes {
+    grid-template-columns: 1fr;
+  }
+}
