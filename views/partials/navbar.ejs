@@ -4,18 +4,18 @@
       <div class="container nav-top-inner">
         <div class="nav-title"><%= t.siteTitle %></div>
         <div class="nav-top-actions">
-          <button class="nav-toggle" id="nav-toggle" type="button" aria-expanded="false" aria-controls="nav-links" aria-label="Open menu">
+          <button class="nav-toggle" id="nav-toggle" type="button" aria-expanded="false" aria-controls="nav-links" aria-label="<%= t.nav.menu %>">
             <i class="nav-icon fas fa-bars"></i>
             <span class="nav-toggle-text"><%= t.nav.menu %></span>
           </button>
           <div class="nav-top-links">
             <%- authSectionHtml %>
             <div class="lang-switch">
-              <a href="/lang/en" class="nav-link">EN</a>
+              <a href="/lang/en?returnTo=<%= encodeURIComponent(currentPathWithQuery || '/') %>" class="nav-link">EN</a>
               <span>|</span>
-              <a href="/lang/ar" class="nav-link">AR</a>
+              <a href="/lang/ar?returnTo=<%= encodeURIComponent(currentPathWithQuery || '/') %>" class="nav-link">AR</a>
             </div>
-            <button class="nav-link theme-toggle" id="theme-toggle" type="button"><i class="nav-icon fas fa-moon"></i><%= t.nav.theme %></button>
+            <button class="nav-link theme-toggle" id="theme-toggle" type="button" data-theme-label="<%= t.nav.theme %>"><i class="nav-icon fas fa-moon"></i><%= t.nav.theme %></button>
           </div>
         </div>
       </div>

@@ -16,6 +16,9 @@
       <a class="admin-nav-link" href="/admin/settings"><i class="fas fa-gear"></i><%= language === 'ar' ? 'الإعدادات' : 'Settings' %></a>
     </nav>
     <div class="admin-nav-footer">
+      <% const nextLanguage = language === 'ar' ? 'en' : 'ar'; %>
+      <% const languageToggleLabel = language === 'ar' ? 'English' : 'العربية'; %>
+      <a class="admin-nav-link" href="/lang/<%= nextLanguage %>?returnTo=<%= encodeURIComponent(currentPathWithQuery || '/admin/dashboard') %>"><i class="fas fa-language"></i><%= languageToggleLabel %></a>
       <a class="admin-nav-link" href="/"><i class="fas fa-arrow-left"></i><%= language === 'ar' ? 'العودة إلى الموقع' : 'Back to site' %></a>
     </div>
   </aside>

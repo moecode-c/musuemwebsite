@@ -1,15 +1,17 @@
 document.addEventListener("DOMContentLoaded", () => {
   const toggles = document.querySelectorAll(".theme-toggle");
   const savedTheme = localStorage.getItem("museum-theme");
+  const resolveThemeLabel = (toggle) => toggle.dataset.themeLabel || "Theme";
 
   const applyToggleMarkup = (isLight) => {
     toggles.forEach((toggle) => {
       if (toggle.dataset.compact === "true") {
         toggle.innerHTML = isLight ? '<i class="fas fa-sun"></i>' : '<i class="fas fa-moon"></i>';
       } else {
+        const themeLabel = resolveThemeLabel(toggle);
         toggle.innerHTML = isLight
-          ? '<i class="nav-icon fas fa-sun"></i>Theme'
-          : '<i class="nav-icon fas fa-moon"></i>Theme';
+          ? `<i class="nav-icon fas fa-sun"></i>${themeLabel}`
+          : `<i class="nav-icon fas fa-moon"></i>${themeLabel}`;
       }
     });
   };

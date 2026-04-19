@@ -84,8 +84,19 @@ app.use(
   })
 );
 
+const resolveSafeReturnTo = (rawPath) => {
+  if (typeof rawPath !== "string") return "/";
+
+  const trimmed = rawPath.trim();
+  if (!trimmed.startsWith("/")) return "/";
+  if (trimmed.startsWith("//") || trimmed.startsWith("/\\")) return "/";
+
+  return trimmed;
+};
+
 app.get("/lang/:lang", (req, res) => {
   const lang = req.params.lang === "ar" ? "ar" : "en";
+  const returnTo = resolveSafeReturnTo(req.query.returnTo || req.get("Referrer") || "/");
 
   res.cookie("lang", lang, {
     maxAge: 1000 * 60 * 60 * 24 * 365,
@@ -99,7 +110,7 @@ app.get("/lang/:lang", (req, res) => {
     sameSite: "lax"
   });
 
-  res.redirect("back");
+  res.redirect(returnTo);
 });
 
 
