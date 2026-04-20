@@ -281,6 +281,34 @@
 	margin: 8px 0 0;
 }
 
+.admin-list-toolbar {
+	display: grid;
+	gap: 8px;
+	margin-bottom: 12px;
+}
+
+.admin-list-toolbar label {
+	font-size: 13px;
+	font-weight: 600;
+	color: #5f523f;
+}
+
+.admin-list-toolbar-row {
+	display: grid;
+	grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+	gap: 10px;
+}
+
+.admin-list-toolbar input,
+.admin-list-toolbar select {
+	background: #fff;
+	color: #2b2236;
+	border: 1px solid #e2d2b8;
+	border-radius: 10px;
+	padding: 10px 12px;
+	font: inherit;
+}
+
 .admin-exhibit-map {
 	max-width: 520px;
 	margin: 8px 0 0;
@@ -326,6 +354,27 @@
 .admin-item-meta {
 	font-size: 12px;
 	color: #6e5b3a;
+}
+
+.admin-exhibit-route {
+	font-family: "Courier New", Courier, monospace;
+	font-size: 12px;
+	color: #4f3f27;
+}
+
+.admin-category-badge.is-pharaoh {
+	background: #efe1be;
+	color: #7a5718;
+}
+
+.admin-category-badge.is-islamic {
+	background: #dff1e8;
+	color: #1f6a3d;
+}
+
+.admin-category-badge.is-christian {
+	background: #e5e9f8;
+	color: #3a4d8a;
 }
 
 .admin-badge {

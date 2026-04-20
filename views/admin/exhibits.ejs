@@ -13,7 +13,13 @@
       <label><%= language === 'ar' ? 'العنوان' : 'Title' %></label>
       <input type="text" name="title" autocomplete="off" required />
       <label><%= language === 'ar' ? 'الفئة' : 'Category' %></label>
-      <input type="text" name="category" autocomplete="off" required />
+      <select name="category" required>
+        <option value=""><%= language === 'ar' ? 'اختر نوع المعرض' : 'Select exhibit type' %></option>
+        <option value="Pharaoh"><%= language === 'ar' ? 'فرعوني' : 'Pharaonic (Pharaoh)' %></option>
+        <option value="Islamic"><%= language === 'ar' ? 'إسلامي' : 'Islamic' %></option>
+        <option value="Christian"><%= language === 'ar' ? 'مسيحي' : 'Christian' %></option>
+      </select>
+      <p class="admin-map-note"><%= language === 'ar' ? 'اختيار النوع يحدد الصفحة التي سيظهر فيها المعروض: فرعوني أو إسلامي أو مسيحي.' : 'The selected type decides which collection page this exhibit appears in: Pharaoh, Islamic, or Christian.' %></p>
       <label><%= language === 'ar' ? 'الوصف' : 'Description' %></label>
       <textarea name="description" autocomplete="off" required></textarea>
       <label><%= language === 'ar' ? 'الحقبة' : 'Era' %></label>
@@ -44,6 +50,24 @@
     </form>
     <div>
       <h3><%= language === 'ar' ? 'قائمة المعروضات' : 'Exhibit List' %></h3>
+      <div class="admin-list-toolbar" id="admin-exhibit-toolbar">
+        <label for="admin-exhibit-filter-category"><%= language === 'ar' ? 'تصفية حسب النوع' : 'Filter by type' %></label>
+        <div class="admin-list-toolbar-row">
+          <select id="admin-exhibit-filter-category" aria-label="<%= language === 'ar' ? 'تصفية نوع المعرض' : 'Filter exhibit type' %>">
+            <option value=""><%= language === 'ar' ? 'كل الأنواع' : 'All exhibit types' %></option>
+            <option value="Pharaoh"><%= language === 'ar' ? 'فرعوني' : 'Pharaonic (Pharaoh)' %></option>
+            <option value="Islamic"><%= language === 'ar' ? 'إسلامي' : 'Islamic' %></option>
+            <option value="Christian"><%= language === 'ar' ? 'مسيحي' : 'Christian' %></option>
+          </select>
+          <input
+            type="search"
+            id="admin-exhibit-filter-search"
+            autocomplete="off"
+            placeholder="<%= language === 'ar' ? 'ابحث باسم المعرض أو الحقبة' : 'Search by exhibit title or era' %>"
+            aria-label="<%= language === 'ar' ? 'بحث المعروضات' : 'Search exhibits' %>"
+          />
+        </div>
+      </div>
       <div id="admin-exhibit-list" class="admin-list"></div>
     </div>
   </div>

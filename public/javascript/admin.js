@@ -57,6 +57,39 @@ const parseApiError = async (response, fallbackMessage) => {
   return fallbackMessage;
 };
 
+const EXHIBIT_CATEGORY_META = {
+  Pharaoh: {
+    value: "Pharaoh",
+    badgeClass: "is-pharaoh",
+    route: "/exhibits/pharaoh"
+  },
+  Islamic: {
+    value: "Islamic",
+    badgeClass: "is-islamic",
+    route: "/exhibits/islamic"
+  },
+  Christian: {
+    value: "Christian",
+    badgeClass: "is-christian",
+    route: "/exhibits/christian"
+  }
+};
+
+const EXHIBIT_CATEGORY_ALIASES = {
+  pharaoh: "Pharaoh",
+  pharaonic: "Pharaoh",
+  islamic: "Islamic",
+  christian: "Christian",
+  coptic: "Christian"
+};
+
+const normalizeExhibitCategory = (value) => {
+  if (typeof value !== "string") return "";
+  const normalized = value.trim().toLowerCase();
+  if (!normalized) return "";
+  return EXHIBIT_CATEGORY_ALIASES[normalized] || value.trim();
+};
+
 const initEditableForm = (form, submitLabel) => {
   if (!form) return {};
   const submitBtn = form.querySelector(".admin-submit");
@@ -86,8 +119,11 @@ const initEditableForm = (form, submitLabel) => {
 };
 
 document.addEventListener("DOMContentLoaded", () => {
+  const isArabic = document.documentElement.lang === "ar";
   const exhibitForm = document.getElementById("admin-exhibit-form");
   const exhibitList = document.getElementById("admin-exhibit-list");
+  const exhibitFilterCategory = document.getElementById("admin-exhibit-filter-category");
+  const exhibitFilterSearch = document.getElementById("admin-exhibit-filter-search");
   const exhibitMap = document.getElementById("admin-exhibit-map");
   const exhibitPin = document.getElementById("admin-exhibit-pin");
   const setExhibitPin = (x, y) => {
@@ -118,26 +154,65 @@ document.addEventListener("DOMContentLoaded", () => {
     });
   }
   if (exhibitForm) {
+    const exhibitText = isArabic
+      ? {
+        typeLabel: "النوع",
+        pageLabel: "صفحة العرض",
+        eraLabel: "الحقبة",
+        filterError: "تعذر تحميل قائمة المعروضات",
+        unknownType: "غير محدد"
+      }
+      : {
+        typeLabel: "Type",
+        pageLabel: "Appears on",
+        eraLabel: "Era",
+        filterError: "Unable to load exhibits",
+        unknownType: "Unknown"
+      };
+
     const { setEditing } = initEditableForm(exhibitForm, "Update Exhibit");
     const imageInput = exhibitForm.querySelector("input[name='image']");
     const modelInput = exhibitForm.querySelector("input[name='model']");
+    const messageEl = document.getElementById("admin-exhibit-message");
     const setExhibitFileRequirements = (isEditing) => {
       if (imageInput) imageInput.required = !isEditing;
       if (modelInput) modelInput.required = !isEditing;
     };
 
-    setExhibitFileRequirements(false);
+    const getCategoryMeta = (categoryValue) => {
+      const normalized = normalizeExhibitCategory(categoryValue);
+      const canonical = EXHIBIT_CATEGORY_META[normalized] ? normalized : "";
+      const meta = canonical
+        ? EXHIBIT_CATEGORY_META[canonical]
+        : {
+          value: normalized || exhibitText.unknownType,
+          badgeClass: "",
+          route: "/exhibits"
+        };
 
-    const exhibitCancel = exhibitForm.querySelector(".admin-cancel");
-    if (exhibitCancel) {
-      exhibitCancel.addEventListener("click", () => {
-        setExhibitPin("", "");
-        setExhibitFileRequirements(false);
-      });
-    }
-    adminFetchList("/api/exhibits", exhibitList, "title", (item) => {
+      const label = isArabic
+        ? canonical === "Pharaoh"
+          ? "فرعوني"
+          : canonical === "Islamic"
+            ? "إسلامي"
+            : canonical === "Christian"
+              ? "مسيحي"
+              : meta.value
+        : canonical === "Pharaoh"
+          ? "Pharaonic"
+          : canonical || meta.value;
+
+      return {
+        ...meta,
+        canonical,
+        label
+      };
+    };
+
+    const populateExhibitForm = (item) => {
+      const categoryMeta = getCategoryMeta(item.category);
       exhibitForm.title.value = item.title || "";
-      exhibitForm.category.value = item.category || "";
+      exhibitForm.category.value = categoryMeta.canonical || "";
       exhibitForm.description.value = item.description || "";
       exhibitForm.era.value = item.era || "";
       exhibitForm.period.value = item.period || "";
@@ -148,7 +223,81 @@ document.addEventListener("DOMContentLoaded", () => {
       setEditing(true, "Update Exhibit");
       setExhibitFileRequirements(true);
       setExhibitPin(item.x, item.y);
-    });
+    };
+
+    const exhibitLabel = (item) => {
+      const categoryMeta = getCategoryMeta(item.category);
+      return `
+        <div><strong>${item.title || "Untitled Exhibit"}</strong></div>
+        <div class="admin-item-meta">${exhibitText.typeLabel}: <span class="admin-badge admin-category-badge ${categoryMeta.badgeClass}">${categoryMeta.label}</span></div>
+        <div class="admin-item-meta">${exhibitText.pageLabel}: <span class="admin-exhibit-route">${categoryMeta.route}</span></div>
+        ${item.era ? `<div class="admin-item-meta">${exhibitText.eraLabel}: ${item.era}</div>` : ""}
+      `;
+    };
+
+    const buildExhibitListEndpoint = () => {
+      const params = new URLSearchParams();
+      if (exhibitFilterCategory?.value) {
+        params.set("category", exhibitFilterCategory.value);
+      }
+      const searchValue = (exhibitFilterSearch?.value || "").trim();
+      if (searchValue) {
+        params.set("q", searchValue);
+      }
+      const query = params.toString();
+      return query ? `/api/exhibits?${query}` : "/api/exhibits";
+    };
+
+    const loadExhibits = async () => {
+      try {
+        const response = await fetch(buildExhibitListEndpoint());
+        const items = await response.json();
+        renderAdminList(
+          exhibitList,
+          items,
+          exhibitLabel,
+          async (id) => {
+            await fetch(`/api/exhibits/${id}`, { method: "DELETE" });
+            await loadExhibits();
+          },
+          (item) => populateExhibitForm(item)
+        );
+      } catch (error) {
+        if (messageEl) messageEl.textContent = exhibitText.filterError;
+      }
+    };
+
+    let exhibitFilterTimer = null;
+
+    setExhibitFileRequirements(false);
+
+    const exhibitCancel = exhibitForm.querySelector(".admin-cancel");
+    if (exhibitCancel) {
+      exhibitCancel.addEventListener("click", () => {
+        setExhibitPin("", "");
+        setExhibitFileRequirements(false);
+      });
+    }
+
+    if (exhibitFilterCategory) {
+      exhibitFilterCategory.addEventListener("change", () => {
+        loadExhibits();
+      });
+    }
+
+    if (exhibitFilterSearch) {
+      exhibitFilterSearch.addEventListener("input", () => {
+        if (exhibitFilterTimer) {
+          window.clearTimeout(exhibitFilterTimer);
+        }
+        exhibitFilterTimer = window.setTimeout(() => {
+          loadExhibits();
+        }, 250);
+      });
+    }
+
+    loadExhibits();
+
     exhibitForm.addEventListener("submit", async (event) => {
       event.preventDefault();
       const formData = new FormData(exhibitForm);
@@ -159,8 +308,6 @@ document.addEventListener("DOMContentLoaded", () => {
         method: editId ? "PUT" : "POST",
         body: formData
       });
-
-      const messageEl = document.getElementById("admin-exhibit-message");
 
       if (!response.ok) {
         messageEl.textContent = await parseApiError(response, "Error saving exhibit");
@@ -174,25 +321,14 @@ document.addEventListener("DOMContentLoaded", () => {
       if (editId) {
         setEditing(false);
         setExhibitFileRequirements(false);
+        setExhibitPin("", "");
       } else {
         exhibitForm.reset();
         setExhibitFileRequirements(false);
+        setExhibitPin("", "");
       }
 
-      adminFetchList("/api/exhibits", exhibitList, "title", (item) => {
-        exhibitForm.title.value = item.title || "";
-        exhibitForm.category.value = item.category || "";
-        exhibitForm.description.value = item.description || "";
-        exhibitForm.era.value = item.era || "";
-        exhibitForm.period.value = item.period || "";
-        exhibitForm.location.value = item.location || "";
-        exhibitForm.x.value = item.x ?? "";
-        exhibitForm.y.value = item.y ?? "";
-        exhibitForm.dataset.editId = item._id;
-        setEditing(true, "Update Exhibit");
-        setExhibitFileRequirements(true);
-        setExhibitPin(item.x, item.y);
-      });
+      await loadExhibits();
     });
   }
 
@@ -366,7 +502,6 @@ document.addEventListener("DOMContentLoaded", () => {
 
   const isDashboardPage = window.location.pathname === "/admin/dashboard";
   if (isDashboardPage) {
-    const isArabic = document.documentElement.lang === "ar";
     const dashboardText = isArabic
       ? {
         visitor: "زائر",

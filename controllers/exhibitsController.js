@@ -2,6 +2,23 @@ const Exhibit = require("../models/Exhibit");
 const { asyncHandler } = require("../utils/asyncHandler");
 const { uploadBuffer } = require("../utils/cloudinaryUpload");
 
+const EXHIBIT_CATEGORY_ALIASES = {
+  pharaoh: "Pharaoh",
+  pharaonic: "Pharaoh",
+  islamic: "Islamic",
+  christian: "Christian",
+  coptic: "Christian"
+};
+
+const normalizeExhibitCategory = (value) => {
+  if (typeof value !== "string") return "";
+  const normalized = value.trim().toLowerCase();
+  if (!normalized) return "";
+  return EXHIBIT_CATEGORY_ALIASES[normalized] || value.trim();
+};
+
+const escapeRegex = (value) => value.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
+
 const parseCoordinate = (value) => {
   if (value === undefined || value === null || value === "") return undefined;
   const numeric = Number(value);
@@ -9,12 +26,32 @@ const parseCoordinate = (value) => {
 };
 
 const list = asyncHandler(async (req, res) => {
-  const items = await Exhibit.find();
+  const category = normalizeExhibitCategory(req.query.category);
+  const queryText = typeof req.query.q === "string" ? req.query.q.trim() : "";
+  const filter = {};
+
+  if (category) {
+    filter.category = new RegExp(`^${escapeRegex(category)}$`, "i");
+  }
+
+  if (queryText) {
+    const searchRegex = new RegExp(escapeRegex(queryText), "i");
+    filter.$or = [
+      { title: searchRegex },
+      { description: searchRegex },
+      { era: searchRegex },
+      { period: searchRegex },
+      { location: searchRegex }
+    ];
+  }
+
+  const items = await Exhibit.find(filter).sort({ createdAt: -1 });
   res.json(items);
 });
 
 const create = asyncHandler(async (req, res) => {
   const { title, category, description, era, period, location } = req.body;
+  const normalizedCategory = normalizeExhibitCategory(category) || category;
   let imageUrl = req.body.imageUrl || "";
   const modelUrl = req.body.modelUrl || "";
 
@@ -34,12 +71,24 @@ const create = asyncHandler(async (req, res) => {
 
   const x = parseCoordinate(req.body.x);
   const y = parseCoordinate(req.body.y);
-  const exhibit = await Exhibit.create({ title, category, description, era, period, location, imageUrl, modelUrl, x, y });
+  const exhibit = await Exhibit.create({
+    title,
+    category: normalizedCategory,
+    description,
+    era,
+    period,
+    location,
+    imageUrl,
+    modelUrl,
+    x,
+    y
+  });
   res.status(201).json(exhibit);
 });
 
 const createWithFiles = asyncHandler(async (req, res) => {
   const { title, category, description, era, period, location } = req.body;
+  const normalizedCategory = normalizeExhibitCategory(category) || category;
   const imageFile = req.files?.image?.[0];
   const modelFile = req.files?.model?.[0];
   const imageUpload = imageFile
@@ -68,15 +117,34 @@ const createWithFiles = asyncHandler(async (req, res) => {
 
   const x = parseCoordinate(req.body.x);
   const y = parseCoordinate(req.body.y);
-  const exhibit = await Exhibit.create({ title, category, description, era, period, location, imageUrl, modelUrl, x, y });
+  const exhibit = await Exhibit.create({
+    title,
+    category: normalizedCategory,
+    description,
+    era,
+    period,
+    location,
+    imageUrl,
+    modelUrl,
+    x,
+    y
+  });
   res.status(201).json(exhibit);
 });
 
 const update = asyncHandler(async (req, res) => {
   const { title, category, description, era, period, location } = req.body;
+  const normalizedCategory = normalizeExhibitCategory(category) || category;
   const imageFile = req.files?.image?.[0];
   const modelFile = req.files?.model?.[0];
-  const updates = { title, category, description, era, period, location };
+  const updates = {
+    title,
+    category: normalizedCategory,
+    description,
+    era,
+    period,
+    location
+  };
   const x = parseCoordinate(req.body.x);
   const y = parseCoordinate(req.body.y);
   if (x !== undefined) updates.x = x;

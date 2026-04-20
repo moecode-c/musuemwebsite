@@ -12,6 +12,23 @@ const allowedRoles = [
   "educator_guide"
 ];
 
+const allowedExhibitCategories = ["Pharaoh", "Islamic", "Christian"];
+
+const exhibitCategoryAliases = {
+  pharaoh: "Pharaoh",
+  pharaonic: "Pharaoh",
+  islamic: "Islamic",
+  christian: "Christian",
+  coptic: "Christian"
+};
+
+const normalizeExhibitCategory = (value) => {
+  if (typeof value !== "string") return "";
+  const normalized = value.trim().toLowerCase();
+  if (!normalized) return "";
+  return exhibitCategoryAliases[normalized] || value.trim();
+};
+
 const handleValidation = (req, res, next) => {
   const errors = validationResult(req);
   if (!errors.isEmpty()) {
@@ -34,7 +51,10 @@ const loginValidation = [
 
 const exhibitValidation = [
   body("title").trim().isLength({ min: 2 }).withMessage("Title required"),
-  body("category").trim().isLength({ min: 2 }).withMessage("Category required"),
+  body("category")
+    .customSanitizer((value) => normalizeExhibitCategory(value))
+    .isIn(allowedExhibitCategories)
+    .withMessage("Category must be Pharaoh, Islamic, or Christian"),
   body("description").trim().isLength({ min: 10 }).withMessage("Description required")
 ];
 
