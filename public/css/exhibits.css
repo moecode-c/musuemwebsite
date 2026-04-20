@@ -63,6 +63,35 @@
 	background: radial-gradient(circle at 50% 0%, color-mix(in srgb, var(--accent) 10%, transparent), transparent 60%);
 }
 
+.exhibits-timeline-section::after {
+	content: "";
+	position: absolute;
+	inset: 0;
+	pointer-events: none;
+	background-image: var(--timeline-bg-image, none);
+	background-size: cover;
+	background-position: center;
+	opacity: 0.2;
+	filter: saturate(1.06) contrast(1.04);
+}
+
+.exhibits-timeline-section .container {
+	position: relative;
+	z-index: 1;
+}
+
+.exhibits-timeline-section.collection-pharaoh {
+	--timeline-bg-image: url("/assets/pharaohtimeline/Late Period of Egypt.png");
+}
+
+.exhibits-timeline-section.collection-islamic {
+	--timeline-bg-image: url("/assets/islamictimeline/islamic bg.jpg");
+}
+
+.exhibits-timeline-section.collection-christian {
+	--timeline-bg-image: url("/assets/christiantimeline/Christian bg.jpg");
+}
+
 .timeline-heading {
 	text-align: center;
 	margin-bottom: 38px;

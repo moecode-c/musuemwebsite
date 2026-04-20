@@ -471,6 +471,261 @@ const categoryConfig = {
   christian: { categoryValue: "Christian" }
 };
 
+const pharaohTimelineCuratedItems = [
+  {
+    title: "Predynastic Egypt",
+    era: "Predynastic Period",
+    period: "c. 6000-3150 BCE",
+    location: "Nile Valley",
+    description: "Regional cultures formed along the Nile before political unification, laying foundations for kingship and sacred symbolism.",
+    imageUrl: "/assets/pharaohtimeline/Predynastic Period.png"
+  },
+  {
+    title: "Early Royal Traditions",
+    era: "Early Dynastic Period",
+    period: "c. 3150-2686 BCE",
+    location: "Upper and Lower Egypt",
+    description: "After unification, royal iconography and temple-centered authority became central to state identity.",
+    imageUrl: "/assets/pharaohtimeline/g1.jpg"
+  },
+  {
+    title: "Old Kingdom Peak",
+    era: "Old Kingdom",
+    period: "c. 2686-2181 BCE",
+    location: "Memphis Region",
+    description: "The pyramid age defined monumental stone architecture and highly structured royal workshop production.",
+    imageUrl: "/assets/pharaohtimeline/Old Kingdom of Egypt.png"
+  },
+  {
+    title: "Classic Court Sculpture",
+    era: "Old Kingdom Legacy",
+    period: "3rd Millennium BCE",
+    location: "Royal Necropolis",
+    description: "Royal and elite statuary emphasized divine kingship, ritual permanence, and idealized proportions.",
+    imageUrl: "/assets/pharaohtimeline/item4.jpg"
+  },
+  {
+    title: "Political Fragmentation",
+    era: "First Intermediate Period",
+    period: "c. 2181-2055 BCE",
+    location: "Multiple Regional Centers",
+    description: "Competing local powers reshaped administration and visual culture before later reunification.",
+    imageUrl: "/assets/pharaohtimeline/First Intermediate Period of Egypt.png"
+  },
+  {
+    title: "Reunified State",
+    era: "Middle Kingdom",
+    period: "c. 2055-1650 BCE",
+    location: "Thebes and Itjtawy",
+    description: "Administrative reform and renewed temple patronage fostered strong literary and artistic production.",
+    imageUrl: "/assets/pharaohtimeline/Middle Kingdom of Egypt.png"
+  },
+  {
+    title: "Hyksos and Transition",
+    era: "Second Intermediate Period",
+    period: "c. 1650-1550 BCE",
+    location: "Delta and Upper Egypt",
+    description: "External and regional rule transitions set the stage for New Kingdom military and imperial expansion.",
+    imageUrl: "/assets/pharaohtimeline/Second Intermediate Period of Egypt.png"
+  },
+  {
+    title: "Imperial Expansion",
+    era: "New Kingdom",
+    period: "c. 1550-1070 BCE",
+    location: "Egyptian Empire",
+    description: "Egypt projected power deep into the Levant and Nubia, linking diplomacy, warfare, and monumental propaganda.",
+    imageUrl: "/assets/pharaohtimeline/Egyptian_Empire,_B.C._1450_(2710782990).jpg"
+  },
+  {
+    title: "Late Dynastic Revival",
+    era: "Late Period",
+    period: "c. 664-332 BCE",
+    location: "Nile Delta and Thebes",
+    description: "Dynasties revived traditional forms while absorbing wider Mediterranean political and artistic influences.",
+    imageUrl: "/assets/pharaohtimeline/Late Period of Egypt.png"
+  },
+  {
+    title: "Ptolemaic Egypt",
+    era: "Ptolemaic Dynasty",
+    period: "332-30 BCE",
+    location: "Alexandria and Nile Temples",
+    description: "Greek and Egyptian institutions coexisted, producing bilingual administration and hybrid religious imagery.",
+    imageUrl: "/assets/pharaohtimeline/Egypt under the Ptolemaic Dynasty.png"
+  },
+  {
+    title: "Enduring Pharaoh Legacy",
+    era: "Pharaonic Memory",
+    period: "Long-duration reception",
+    location: "Museum Collections",
+    description: "Pharaonic symbols and craftsmanship continued to shape later visual culture and modern historical imagination.",
+    imageUrl: "/assets/pharaohtimeline/image4.jpeg"
+  }
+];
+
+const islamicTimelineCuratedItems = [
+  {
+    title: "Pre-Islamic Arabian Context",
+    era: "Late Antique Arabia",
+    period: "Before 7th Century CE",
+    location: "Arabian Peninsula",
+    description: "Trade routes and tribal networks formed the social landscape that preceded Islam's emergence.",
+    imageUrl: "/assets/islamictimeline/islamic2.jpg"
+  },
+  {
+    title: "Rise of Islam",
+    era: "Prophetic Period",
+    period: "7th Century CE",
+    location: "Mecca and Medina",
+    description: "The earliest Muslim community established core religious and ethical foundations of Islamic civilization.",
+    imageUrl: "/assets/islamictimeline/islamic1.jpg"
+  },
+  {
+    title: "Early Caliphates",
+    era: "Rashidun and Umayyad",
+    period: "7th-8th Century CE",
+    location: "Arabia, Levant, and Egypt",
+    description: "Rapid political expansion connected regions and accelerated exchange of language, law, and knowledge.",
+    imageUrl: "/assets/islamictimeline/islamic3.jpg"
+  },
+  {
+    title: "Abbasid Knowledge Era",
+    era: "Classical Islamic Scholarship",
+    period: "8th-13th Century CE",
+    location: "Baghdad and Cairo",
+    description: "Scientific, mathematical, and literary traditions flourished through libraries, scholars, and translation movements.",
+    imageUrl: "/assets/islamictimeline/islamic 9.jpg"
+  },
+  {
+    title: "Cairo's Islamic Urban Growth",
+    era: "Fatimid and Ayyubid",
+    period: "10th-13th Century CE",
+    location: "Historic Cairo",
+    description: "Mosques, madrasas, and civic institutions reshaped urban life and artistic production in Egypt.",
+    imageUrl: "/assets/islamictimeline/islamic4.jpg"
+  },
+  {
+    title: "Mamluk Architectural Splendor",
+    era: "Mamluk Period",
+    period: "13th-16th Century CE",
+    location: "Cairo",
+    description: "Monumental architecture and decorative programs defined one of Cairo's most celebrated visual eras.",
+    imageUrl: "/assets/islamictimeline/islamic5.jpg"
+  },
+  {
+    title: "Islamic Decorative Arts",
+    era: "Court and Workshop Traditions",
+    period: "Medieval to Early Modern",
+    location: "Museum Collections",
+    description: "Metalwork, instruments, and calligraphy objects display refined craftsmanship and scholarly patronage.",
+    imageUrl: "/assets/islamictimeline/isalmic5.jpg"
+  },
+  {
+    title: "Ottoman-Era Continuity",
+    era: "Ottoman Period",
+    period: "16th-19th Century CE",
+    location: "Egypt and the Eastern Mediterranean",
+    description: "Ottoman architectural forms merged with local Egyptian traditions in religious and civic spaces.",
+    imageUrl: "/assets/islamictimeline/islamic6.webp"
+  },
+  {
+    title: "Global Islamic Heritage",
+    era: "Interregional Artistic Exchange",
+    period: "Early Modern to Modern",
+    location: "Wider Islamic World",
+    description: "Courtyard, tile, and geometric design languages circulated across regions and sustained shared aesthetics.",
+    imageUrl: "/assets/islamictimeline/islamic7.jpg"
+  },
+  {
+    title: "Living Islamic Memory",
+    era: "Contemporary Preservation",
+    period: "Modern Era",
+    location: "Museums and Heritage Districts",
+    description: "Conservation work today protects manuscripts, architecture, and ritual objects for future generations.",
+    imageUrl: "/assets/islamictimeline/islamic 8.jpg"
+  }
+];
+
+const christianTimelineCuratedItems = [
+  {
+    title: "Christian Beginnings in Egypt",
+    era: "Early Christian Era",
+    period: "1st-3rd Century CE",
+    location: "Alexandria and Nile Settlements",
+    description: "Early communities established worship traditions and theological schools that shaped Christian thought.",
+    imageUrl: "/assets/christiantimeline/Christian 1.jpg"
+  },
+  {
+    title: "Formation of Church Life",
+    era: "Patristic Age",
+    period: "3rd-4th Century CE",
+    location: "Urban and Rural Churches",
+    description: "Liturgical structures, church offices, and script traditions expanded through organized communities.",
+    imageUrl: "/assets/christiantimeline/Christian 2.jpg"
+  },
+  {
+    title: "Monastic Expansion",
+    era: "Desert Monasticism",
+    period: "4th-6th Century CE",
+    location: "Egyptian Desert Monasteries",
+    description: "Monastic centers became key places for devotion, manuscript production, and spiritual teaching.",
+    imageUrl: "/assets/christiantimeline/Christian 3.jpg"
+  },
+  {
+    title: "Coptic Artistic Identity",
+    era: "Byzantine-Coptic Traditions",
+    period: "5th-8th Century CE",
+    location: "Church and Monastery Networks",
+    description: "Icons, metalwork, and liturgical objects expressed distinct Coptic forms while engaging wider traditions.",
+    imageUrl: "/assets/christiantimeline/Christian 4.jpg"
+  },
+  {
+    title: "Scripture and Worship",
+    era: "Medieval Christian Scholarship",
+    period: "8th-13th Century CE",
+    location: "Monastic Libraries",
+    description: "Biblical manuscripts and commentaries preserved theology, language, and ritual memory across generations.",
+    imageUrl: "/assets/christiantimeline/Christian 5.jpg"
+  },
+  {
+    title: "Ritual and Devotional Continuity",
+    era: "Late Medieval to Early Modern",
+    period: "13th-18th Century CE",
+    location: "Local Church Communities",
+    description: "Liturgy, icon veneration, and communal festivals sustained long-standing Christian practice.",
+    imageUrl: "/assets/christiantimeline/Christian 6.jpg"
+  },
+  {
+    title: "Church Architecture Through Time",
+    era: "Historic Christian Spaces",
+    period: "Early to Modern Eras",
+    location: "Egypt and Regional Diaspora",
+    description: "Architectural forms adapted over centuries while preserving symbolic and liturgical continuity.",
+    imageUrl: "/assets/christiantimeline/Christian 7.jpg"
+  },
+  {
+    title: "Christian Witness and Symbolism",
+    era: "Cross-Centered Tradition",
+    period: "Multi-era",
+    location: "Sacred Art and Public Memory",
+    description: "The cross remained a central sign in theology, devotion, and artistic representation.",
+    imageUrl: "/assets/christiantimeline/Christian 8.jpg"
+  },
+  {
+    title: "Enduring Coptic Heritage",
+    era: "Modern Preservation",
+    period: "19th Century to Present",
+    location: "Museums and Living Churches",
+    description: "Conservation and living worship together protect Christian heritage for contemporary audiences.",
+    imageUrl: "/assets/christiantimeline/Christian 9.jpg"
+  }
+];
+
+const curatedTimelineByCategory = {
+  pharaoh: pharaohTimelineCuratedItems,
+  islamic: islamicTimelineCuratedItems,
+  christian: christianTimelineCuratedItems
+};
+
 const renderExhibitsPage = async (req, res, categoryKey, basePath) => {
   const t = res.locals.t;
   const page = parseInt(req.query.page || "1", 10);
@@ -504,7 +759,10 @@ const renderExhibitsPage = async (req, res, categoryKey, basePath) => {
 
   const returnTo = req.originalUrl || basePath || "/exhibits";
   const artifactItems = cardSourceItems.map((item) => buildArtifactCardModel(item, basePath, returnTo));
-  const timelineItems = timelineSourceItems.map((item) => buildTimelineCardModel(item, returnTo));
+  const curatedTimelineItems = curatedTimelineByCategory[categoryKey];
+  const timelineItems = curatedTimelineItems
+    ? curatedTimelineItems.map((item) => buildTimelineCardModel(item, returnTo))
+    : timelineSourceItems.map((item) => buildTimelineCardModel(item, returnTo));
   const { heroTitle, heroSubtitle } = getCategoryTitles(t, categoryKey);
 
   res.render("exhibits/exhibits", {
