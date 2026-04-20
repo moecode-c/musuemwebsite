@@ -1,23 +1,35 @@
 <%- include('../partials/header') %>
 <%- include('../partials/navbar') %>
+<% const isArabic = language === 'ar'; %>
 
 <section class="page-hero exhibits-hero--immersive collection-<%= collectionKey || 'all' %>">
   <div class="container">
     <% const heroDisplayByCollection = {
-      pharaoh: { kicker: 'PRIMARY ERA ARCHIVE', titleHtml: 'THE<br>PHARAONIC<br>AGE' },
-      islamic: { kicker: 'PRIMARY ERA ARCHIVE', titleHtml: 'THE<br>ISLAMIC<br>ERA' },
-      christian: { kicker: 'PRIMARY ERA ARCHIVE', titleHtml: 'THE<br>CHRISTIAN<br>ERA' }
+      pharaoh: {
+        kicker: isArabic ? 'أرشيف العصر الأساسي' : 'PRIMARY ERA ARCHIVE',
+        titleHtml: isArabic ? 'العصر<br>الفرعوني' : 'THE<br>PHARAONIC<br>AGE'
+      },
+      islamic: {
+        kicker: isArabic ? 'أرشيف العصر الأساسي' : 'PRIMARY ERA ARCHIVE',
+        titleHtml: isArabic ? 'العصر<br>الإسلامي' : 'THE<br>ISLAMIC<br>ERA'
+      },
+      christian: {
+        kicker: isArabic ? 'أرشيف العصر الأساسي' : 'PRIMARY ERA ARCHIVE',
+        titleHtml: isArabic ? 'العصر<br>المسيحي' : 'THE<br>CHRISTIAN<br>ERA'
+      }
     }; %>
     <% const heroDisplay = heroDisplayByCollection[collectionKey]; %>
-    <p class="exhibits-hero-kicker"><%= heroDisplay ? heroDisplay.kicker : (heroTitle || "Exhibits").toUpperCase() %></p>
-    <h1><%- heroDisplay ? heroDisplay.titleHtml : (heroTitle || "Exhibits") %></h1>
+    <p class="exhibits-hero-kicker"><%= heroDisplay ? heroDisplay.kicker : (isArabic ? (heroTitle || "المعروضات") : (heroTitle || "Exhibits").toUpperCase()) %></p>
+    <h1><%- heroDisplay ? heroDisplay.titleHtml : (heroTitle || (isArabic ? "المعروضات" : "Exhibits")) %></h1>
     <p>
       <%= collectionKey === 'pharaoh'
-        ? 'A JOURNEY THROUGH THREE MILLENNIA OF DIVINE KINGSHIP AND ETERNAL MONUMENTS.'
-        : (heroSubtitle || 'Discover Pharaoh, Islamic, and Christian galleries.') %>
+        ? (isArabic
+          ? 'رحلة عبر ثلاثة آلاف عام من الملكية المقدسة والآثار الخالدة.'
+          : 'A JOURNEY THROUGH THREE MILLENNIA OF DIVINE KINGSHIP AND ETERNAL MONUMENTS.')
+        : (heroSubtitle || (isArabic ? 'اكتشف معارض الحقب الفرعونية والإسلامية والمسيحية.' : 'Discover Pharaoh, Islamic, and Christian galleries.')) %>
     </p>
     <a class="btn exhibits-hero-btn" href="#collection-timeline">
-      <span>Start Exploring</span>
+      <span><%= isArabic ? 'ابدأ الاستكشاف' : 'Start Exploring' %></span>
       <i class="fa-solid fa-arrow-down" style="margin-left:8px; transition: transform 0.3s ease;"></i>
     </a>
   </div>
@@ -26,21 +38,29 @@
 <section class="section exhibits-timeline-section collection-<%= collectionKey || 'all' %>" id="collection-timeline">
   <div class="container">
     <div class="timeline-heading">
-      <h2><%= collectionKey === 'pharaoh' ? 'Pharaonic Legacy Timeline' : `${heroTitle || 'Collection'} Timeline` %></h2>
+      <h2>
+        <%= collectionKey === 'pharaoh'
+          ? (isArabic ? 'الخط الزمني للإرث الفرعوني' : 'Pharaonic Legacy Timeline')
+          : (isArabic ? `الخط الزمني لـ ${heroTitle || 'المجموعة'}` : `${heroTitle || 'Collection'} Timeline`) %>
+      </h2>
       <p>
         <%= collectionKey === 'pharaoh'
-          ? 'A dynamic arc of continuity, innovation, and monumental structure across ancient Egypt.'
-          : 'Walk through defining pieces from this collection in a curated visual chronology.' %>
+          ? (isArabic
+            ? 'قوس زمني حي يجمع الاستمرارية والابتكار وروعة البناء الضخم عبر مصر القديمة.'
+            : 'A dynamic arc of continuity, innovation, and monumental structure across ancient Egypt.')
+          : (isArabic
+            ? 'تجول بين القطع الأبرز في هذه المجموعة ضمن تسلسل بصري منسق.'
+            : 'Walk through defining pieces from this collection in a curated visual chronology.') %>
       </p>
     </div>
 
     <% if ((timelineItems || []).length === 0) { %>
     <div class="timeline-empty">
-      <h3>Timeline coming soon</h3>
-      <p>New artifacts are being curated now. Check back soon for a complete historical journey.</p>
+      <h3><%= isArabic ? 'الخط الزمني قريبا' : 'Timeline coming soon' %></h3>
+      <p><%= isArabic ? 'يتم الآن تجهيز قطع جديدة. عد قريبا لاكتشاف الرحلة التاريخية الكاملة.' : 'New artifacts are being curated now. Check back soon for a complete historical journey.' %></p>
     </div>
     <% } else { %>
-    <div class="timeline" aria-label="Collection timeline">
+    <div class="timeline" aria-label="<%= isArabic ? 'الخط الزمني للمجموعة' : 'Collection timeline' %>">
       <% (timelineItems || []).forEach((timeline, index) => { %>
       <%- include('../partials/timelineCard', { timeline, index, collectionKey }) %>
       <% }) %>
@@ -53,11 +73,17 @@
   <div class="container">
     <% if ((artifactItems || []).length === 0) { %>
     <div class="timeline-empty grid-empty">
-      <h3>No exhibits found yet</h3>
-      <p>When exhibits are added, they will appear here with full details and timeline placement.</p>
+      <h3><%= isArabic ? 'لا توجد معروضات بعد' : 'No exhibits found yet' %></h3>
+      <p><%= isArabic ? 'عند إضافة المعروضات ستظهر هنا مع التفاصيل الكاملة ومكانها على الخط الزمني.' : 'When exhibits are added, they will appear here with full details and timeline placement.' %></p>
     </div>
     <% } else { %>
-    <div class="artifact-showcase-title"><span><%= (heroTitle || "Exhibits").toUpperCase() %> ARTIFACTS</span></div>
+    <div class="artifact-showcase-title">
+      <span>
+        <%= isArabic
+          ? `${heroTitle || 'المعروضات'} ${t.exhibitCollection.artifacts}`
+          : `${(heroTitle || 'Exhibits').toUpperCase()} ARTIFACTS` %>
+      </span>
+    </div>
     <div class="artifact-grid">
       <% artifactItems.forEach((card) => { %>
       <%- include('../partials/artifactCard', { card }) %>

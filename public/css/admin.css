@@ -504,6 +504,50 @@
 	font-weight: 700;
 }
 
+.admin-toast-stack {
+	position: fixed;
+	top: 18px;
+	right: 22px;
+	z-index: 3000;
+	display: grid;
+	gap: 10px;
+	pointer-events: none;
+}
+
+.admin-toast {
+	min-width: 280px;
+	max-width: 340px;
+	padding: 12px 14px;
+	border-radius: 12px;
+	background: #2b2236;
+	color: #fffaf3;
+	border: 1px solid #c79a41;
+	box-shadow: 0 14px 28px rgba(0, 0, 0, 0.28);
+	opacity: 0;
+	transform: translateY(-8px);
+	transition: opacity 0.2s ease, transform 0.2s ease;
+	font-size: 13px;
+	line-height: 1.4;
+}
+
+.admin-toast.is-visible {
+	opacity: 1;
+	transform: translateY(0);
+}
+
+.admin-toast strong {
+	display: block;
+	margin-bottom: 4px;
+	font-size: 13px;
+	letter-spacing: 0.02em;
+	color: #f4c76e;
+}
+
+.admin-toast span {
+	display: block;
+	color: #f7f1e6;
+}
+
 @media (max-width: 900px) {
 	.admin-layout {
 		flex-direction: column;
@@ -527,5 +571,16 @@
 
 	.admin-table-row {
 		grid-template-columns: 1fr;
+	}
+
+	.admin-toast-stack {
+		top: 12px;
+		left: 12px;
+		right: 12px;
+	}
+
+	.admin-toast {
+		min-width: 0;
+		max-width: 100%;
 	}
 }

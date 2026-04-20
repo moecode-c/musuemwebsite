@@ -22,7 +22,8 @@ const create = asyncHandler(async (req, res) => {
     const imageUpload = await uploadBuffer(req.file.buffer, {
       folder: "exhibits/images",
       resource_type: "image",
-      originalFilename: req.file.originalname
+      originalFilename: req.file.originalname,
+      requireCloudinary: true
     });
     imageUrl = imageUpload.secure_url;
   }
@@ -45,14 +46,16 @@ const createWithFiles = asyncHandler(async (req, res) => {
     ? await uploadBuffer(imageFile.buffer, {
       folder: "exhibits/images",
       resource_type: "image",
-      originalFilename: imageFile.originalname
+      originalFilename: imageFile.originalname,
+      requireCloudinary: true
     })
     : null;
   const modelUpload = modelFile
     ? await uploadBuffer(modelFile.buffer, {
       folder: "exhibits/models",
       resource_type: "raw",
-      originalFilename: modelFile.originalname
+      originalFilename: modelFile.originalname,
+      requireCloudinary: true
     })
     : null;
 
@@ -82,7 +85,8 @@ const update = asyncHandler(async (req, res) => {
     const imageUpload = await uploadBuffer(imageFile.buffer, {
       folder: "exhibits/images",
       resource_type: "image",
-      originalFilename: imageFile.originalname
+      originalFilename: imageFile.originalname,
+      requireCloudinary: true
     });
     updates.imageUrl = imageUpload.secure_url;
   }
@@ -91,7 +95,8 @@ const update = asyncHandler(async (req, res) => {
     const modelUpload = await uploadBuffer(modelFile.buffer, {
       folder: "exhibits/models",
       resource_type: "raw",
-      originalFilename: modelFile.originalname
+      originalFilename: modelFile.originalname,
+      requireCloudinary: true
     });
     updates.modelUrl = modelUpload.secure_url;
   }

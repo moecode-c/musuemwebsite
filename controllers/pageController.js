@@ -576,21 +576,33 @@ const exhibitDetails = asyncHandler(async (req, res) => {
   res.render("exhibits/artifactDetails", { pageTitle: exhibit.title, pageCss: "exhibits", exhibit, backHref, eraInfo, eraExtras, detailImageUrl });
 });
 
-const virtualTour = (req, res) => res.render("virtual-tour/index", { pageTitle: "Virtual Tour", pageCss: "virtual-tour" });
-const virtualTourIslamic = (req, res) =>
-  res.render("virtual-tour/islamic", { pageTitle: "Islamic Virtual Tour", pageCss: "virtual-tour" });
-const virtualTourPharaoh = (req, res) =>
-  res.render("virtual-tour/pharaoh", { pageTitle: "Pharaohs Virtual Tour", pageCss: "virtual-tour" });
-const virtualTourChristian = (req, res) =>
-  res.render("virtual-tour/christian", { pageTitle: "Christian Virtual Tour", pageCss: "virtual-tour" });
-const vrExperience = (req, res) =>
-  res.render("virtual-tour/vr-experience", { pageTitle: "VR Experience", pageCss: "vr-experience" });
+const virtualTour = (req, res) => {
+  const t = res.locals.t || {};
+  res.render("virtual-tour/index", { pageTitle: t.nav?.virtualTour || "Virtual Tour", pageCss: "virtual-tour" });
+};
+const virtualTourIslamic = (req, res) => {
+  const t = res.locals.t || {};
+  res.render("virtual-tour/islamic", { pageTitle: t.virtualTour?.islamicTitle || "Islamic Virtual Tour", pageCss: "virtual-tour" });
+};
+const virtualTourPharaoh = (req, res) => {
+  const t = res.locals.t || {};
+  res.render("virtual-tour/pharaoh", { pageTitle: t.virtualTour?.pharaohTitle || "Pharaohs Virtual Tour", pageCss: "virtual-tour" });
+};
+const virtualTourChristian = (req, res) => {
+  const t = res.locals.t || {};
+  res.render("virtual-tour/christian", { pageTitle: t.virtualTour?.christianTitle || "Christian Virtual Tour", pageCss: "virtual-tour" });
+};
+const vrExperience = (req, res) => {
+  const t = res.locals.t || {};
+  res.render("virtual-tour/vr-experience", { pageTitle: t.nav?.vrExperience || "VR Experience", pageCss: "vr-experience" });
+};
 const games = (req, res) => res.render("games/index", { pageTitle: "Games" });
 const gameQuiz = (req, res) => res.render("games/quiz", { pageTitle: "Quiz Game" });
 const gameExplorer = (req, res) => res.render("games/explorer", { pageTitle: "Explorer Game", pageCss: "pyramid-builder" });
 const gamePyramid = (req, res) => res.render("games/pyramid", { pageTitle: "Pyramid Builder", pageCss: "pyramid-builder" });
 
 const shop = asyncHandler(async (req, res) => {
+  const t = res.locals.t || {};
   const requestedType = (req.query.type || "").toLowerCase();
   const activeType = shopTypeConfig[requestedType] ? requestedType : "";
   const heroContent = activeType
@@ -610,7 +622,7 @@ const shop = asyncHandler(async (req, res) => {
   const shopBasePath = activeType ? `/shop?type=${activeType}` : "/shop";
 
   res.render("shop/index", {
-    pageTitle: "Shop",
+    pageTitle: t.nav?.shop || "Shop",
     pageCss: "shop",
     activeType,
     activeTypeLabel: activeType ? shopTypeConfig[activeType].label : "All Collections",

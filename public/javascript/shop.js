@@ -2,6 +2,56 @@ document.addEventListener("DOMContentLoaded", () => {
   const grid = document.querySelector("[data-shop-grid]");
   if (!grid) return;
 
+  const defaultI18n = {
+    upToEgp: "Up to EGP",
+    searchChipPrefix: "Search:",
+    inStock: "In stock",
+    lowStock: "Low stock",
+    newLabel: "New",
+    premium: "Premium",
+    removeLabelPrefix: "Remove",
+    noResultsForPrefix: "No results for",
+    noResultsSuffix: "Try different keywords.",
+    adjustFiltersText: "Adjust filters or search terms to see more of the collection.",
+    nationwide: "nationwide",
+    cairo: "Cairo",
+    gizaAlex: "Giza/Alex",
+    delta: "Delta",
+    upperEgypt: "Upper Egypt",
+    etaInStockDefault: "3-5 days",
+    etaPreorderDefault: "Ships when restocked",
+    etaCairo: "1-2 days",
+    etaGizaAlex: "2-3 days",
+    etaDelta: "2-4 days",
+    etaUpperEgypt: "3-5 days",
+    shipsOnRelease: "Ships on release",
+    shipsWhenRestocked: "Ships when restocked",
+    soon: "soon",
+    orderWithinPrefix: "Order within",
+    orderWithinSuffix: "for dispatch today",
+    preorderSizesHint: "Preorder allocations by size",
+    leftSuffix: "left",
+    preorderText: "Preorder",
+    preorderShipsPrefix: "Preorder - ships",
+    deliveryToPrefix: "Delivery to",
+    enterZipPrompt: "Enter ZIP to see delivery window.",
+    orderBeforePrefix: "Order before",
+    orderBeforeSuffix: "for fastest dispatch",
+    inStockCountSuffix: "in stock",
+    unavailable: "Unavailable",
+    soldOut: "Sold out",
+    addToCart: "Add to Cart",
+    preorderAction: "Preorder",
+    itemFallback: "Item",
+    addedToCartSuffix: "added to cart",
+    couldNotAddToCart: "Could not add to cart",
+    networkIssue: "Network issue. Please try again.",
+    miniAddToCart: "Add to Cart",
+    addZipPrompt: "Add a ZIP to check delivery."
+  };
+  const i18n = { ...defaultI18n, ...(window.SHOP_I18N || {}) };
+  const locale = document.documentElement.lang === "ar" ? "ar-EG" : "en-US";
+
   const searchInput = document.getElementById("shop-search");
   const sortSelect = document.getElementById("shop-sort");
   const toggles = Array.from(document.querySelectorAll(".pill-toggle"));
@@ -12,6 +62,7 @@ document.addEventListener("DOMContentLoaded", () => {
   const activeFiltersBox = document.querySelector("[data-active-filters]");
   const featuredRow = document.querySelector("[data-featured-row]");
   const recentRow = document.querySelector("[data-recent-row]");
+  const recentSection = document.querySelector("[data-recent-section]");
   const zipInput = document.getElementById("zip-check");
   const zipButton = document.getElementById("zip-check-btn");
   const zipResult = document.getElementById("zip-result");
@@ -52,7 +103,7 @@ document.addEventListener("DOMContentLoaded", () => {
     priceRange.value = priceRange.max;
   }
 
-  const formatPriceLabel = (value) => `Up to EGP ${Number(value).toLocaleString()}`;
+  const formatPriceLabel = (value) => `${i18n.upToEgp} ${Number(value).toLocaleString(locale)}`;
   if (priceLabel && priceRange) priceLabel.textContent = formatPriceLabel(priceRange.value);
 
   const isNewItem = (card) => {
@@ -63,20 +114,22 @@ document.addEventListener("DOMContentLoaded", () => {
   const summarizeFilters = (term, priceCap, activeFilters) => {
     if (!activeFiltersBox) return;
     const chips = [];
-    if (term) chips.push({ label: `Search: ${term}`, key: "search" });
-    if (priceCap && priceCap !== Infinity && priceRange) chips.push({ label: `≤ EGP ${Number(priceCap).toLocaleString()}`, key: "price" });
+    if (term) chips.push({ label: `${i18n.searchChipPrefix} ${term}`, key: "search" });
+    if (priceCap && priceCap !== Infinity && priceRange) {
+      chips.push({ label: `≤ EGP ${Number(priceCap).toLocaleString(locale)}`, key: "price" });
+    }
     activeFilters.forEach((filter) => {
-      if (filter === "available") chips.push({ label: "In stock", key: "available" });
-      if (filter === "low") chips.push({ label: "Low stock", key: "low" });
-      if (filter === "new") chips.push({ label: "New", key: "new" });
-      if (filter === "premium") chips.push({ label: "Premium", key: "premium" });
+      if (filter === "available") chips.push({ label: i18n.inStock, key: "available" });
+      if (filter === "low") chips.push({ label: i18n.lowStock, key: "low" });
+      if (filter === "new") chips.push({ label: i18n.newLabel, key: "new" });
+      if (filter === "premium") chips.push({ label: i18n.premium, key: "premium" });
     });
     activeFiltersBox.innerHTML = chips
       .map(
         (chip) => `
         <span class="chip" data-chip="${chip.key}">
           ${chip.label}
-          <button type="button" aria-label="Remove ${chip.label}" data-chip-remove="${chip.key}">×</button>
+          <button type="button" aria-label="${i18n.removeLabelPrefix} ${chip.label}" data-chip-remove="${chip.key}">×</button>
         </span>
       `
       )
@@ -167,8 +220,11 @@ document.addEventListener("DOMContentLoaded", () => {
     if (emptyState) {
       emptyState.style.display = filtered.length ? "none" : "grid";
       const copy = emptyState.querySelector("[data-empty-copy]");
-      if (copy)
-        copy.textContent = term ? `No results for "${term}". Try different keywords.` : "Adjust filters or search terms to see more of the collection.";
+      if (copy) {
+        copy.textContent = term
+          ? `${i18n.noResultsForPrefix} "${term}". ${i18n.noResultsSuffix}`
+          : i18n.adjustFiltersText;
+      }
     }
 
     summarizeFilters(term, priceCap, activeFilters);
@@ -220,21 +276,33 @@ document.addEventListener("DOMContentLoaded", () => {
   };
 
   const resolveZone = (zip) => {
-    if (!zip) return { label: "nationwide", etaInStock: "3-5 days", etaPreorder: "Ships when restocked", cutoffHour: 17 };
+    if (!zip) {
+      return {
+        label: i18n.nationwide,
+        etaInStock: i18n.etaInStockDefault,
+        etaPreorder: i18n.etaPreorderDefault,
+        cutoffHour: 17
+      };
+    }
     const zones = [
-      { pattern: /^11/, label: "Cairo", etaInStock: "1-2 days", etaPreorder: "Ships on release", cutoffHour: 17 },
-      { pattern: /^12|^13/, label: "Giza/Alex", etaInStock: "2-3 days", etaPreorder: "Ships on release", cutoffHour: 17 },
-      { pattern: /^2/, label: "Delta", etaInStock: "2-4 days", etaPreorder: "Ships on release", cutoffHour: 16 },
-      { pattern: /^4|^5|^6/, label: "Upper Egypt", etaInStock: "3-5 days", etaPreorder: "Ships on release", cutoffHour: 15 }
+      { pattern: /^11/, label: i18n.cairo, etaInStock: i18n.etaCairo, etaPreorder: i18n.shipsOnRelease, cutoffHour: 17 },
+      { pattern: /^12|^13/, label: i18n.gizaAlex, etaInStock: i18n.etaGizaAlex, etaPreorder: i18n.shipsOnRelease, cutoffHour: 17 },
+      { pattern: /^2/, label: i18n.delta, etaInStock: i18n.etaDelta, etaPreorder: i18n.shipsOnRelease, cutoffHour: 16 },
+      { pattern: /^4|^5|^6/, label: i18n.upperEgypt, etaInStock: i18n.etaUpperEgypt, etaPreorder: i18n.shipsOnRelease, cutoffHour: 15 }
     ];
     const match = zones.find((z) => z.pattern.test(zip));
-    return match || { label: "nationwide", etaInStock: "3-5 days", etaPreorder: "Ships when restocked", cutoffHour: 17 };
+    return match || {
+      label: i18n.nationwide,
+      etaInStock: i18n.etaInStockDefault,
+      etaPreorder: i18n.shipsWhenRestocked,
+      cutoffHour: 17
+    };
   };
 
   const formatDate = (date) =>
     date instanceof Date && !Number.isNaN(date)
-      ? date.toLocaleDateString("en-US", { month: "short", day: "numeric" })
-      : "soon";
+      ? date.toLocaleDateString(locale, { month: "short", day: "numeric" })
+      : i18n.soon;
 
   const updateCutoffTimer = () => {
     if (!cutoffTimer) return;
@@ -245,7 +313,7 @@ document.addEventListener("DOMContentLoaded", () => {
     const diff = target.getTime() - now.getTime();
     const hours = Math.floor(diff / (1000 * 60 * 60));
     const minutes = Math.floor((diff / (1000 * 60)) % 60);
-    cutoffTimer.textContent = `Order within ${String(hours).padStart(2, "0")}:${String(minutes).padStart(2, "0")} for dispatch today`;
+    cutoffTimer.textContent = `${i18n.orderWithinPrefix} ${String(hours).padStart(2, "0")}:${String(minutes).padStart(2, "0")} ${i18n.orderWithinSuffix}`;
   };
 
   if (cutoffTimer) {
@@ -256,13 +324,13 @@ document.addEventListener("DOMContentLoaded", () => {
   const renderSizes = (sizes, isPreorder) => {
     if (!quickViewSizes) return;
     if (!sizes || !sizes.length) {
-      quickViewSizes.innerHTML = isPreorder ? "<p class=\"muted small\">Preorder allocations by size</p>" : "";
+      quickViewSizes.innerHTML = isPreorder ? `<p class="muted small">${i18n.preorderSizesHint}</p>` : "";
       return;
     }
     quickViewSizes.innerHTML = sizes
       .map((s) => {
         const low = s.qty > 0 && s.qty < 3;
-        const label = s.qty > 0 ? `${s.qty} left` : "Preorder";
+        const label = s.qty > 0 ? `${s.qty} ${i18n.leftSuffix}` : i18n.preorderText;
         return `<span class="size-pill ${low ? "is-low" : ""}">${s.size} · ${label}</span>`;
       })
       .join("");
@@ -271,13 +339,13 @@ document.addEventListener("DOMContentLoaded", () => {
   const updateEtaDisplays = (stock, preorderDate) => {
     const zip = (zipInput?.value || currentZip || "").trim();
     const zone = resolveZone(zip);
-    const preorderText = preorderDate ? `Preorder · ships ${formatDate(preorderDate)}` : null;
-    const etaText = preorderText || `Delivery to ${zone.label}: ${stock > 0 ? zone.etaInStock : zone.etaPreorder}`;
-    if (zipResult) zipResult.textContent = zip ? etaText : "Enter ZIP to see delivery window.";
+    const preorderText = preorderDate ? `${i18n.preorderShipsPrefix} ${formatDate(preorderDate)}` : null;
+    const etaText = preorderText || `${i18n.deliveryToPrefix} ${zone.label}: ${stock > 0 ? zone.etaInStock : zone.etaPreorder}`;
+    if (zipResult) zipResult.textContent = zip ? etaText : i18n.enterZipPrompt;
     if (quickViewEta) quickViewEta.textContent = etaText;
     if (quickViewCutoff && !preorderDate) {
       const cutoffHour = zone.cutoffHour || 17;
-      quickViewCutoff.textContent = `Order before ${cutoffHour}:00 for fastest dispatch`;
+      quickViewCutoff.textContent = `${i18n.orderBeforePrefix} ${cutoffHour}:00 ${i18n.orderBeforeSuffix}`;
     }
     if (quickViewCutoff && preorderDate) {
       quickViewCutoff.textContent = preorderText;
@@ -305,19 +373,19 @@ document.addEventListener("DOMContentLoaded", () => {
     if (quickViewImage) quickViewImage.alt = name;
     if (quickViewTitle) quickViewTitle.textContent = name;
     if (quickViewPrice) quickViewPrice.textContent = `EGP ${price.toFixed(2)}`;
-    if (quickViewStock) quickViewStock.textContent = stock > 0 ? `${stock} in stock` : "Unavailable";
+    if (quickViewStock) quickViewStock.textContent = stock > 0 ? `${stock} ${i18n.inStockCountSuffix}` : i18n.unavailable;
     if (quickViewDesc) quickViewDesc.textContent = descFull;
     renderSizes(sizes, Boolean(preorderDate));
     updateEtaDisplays(stock, preorderDate);
 
     if (quickViewBadge) {
-      quickViewBadge.textContent = preorderDate ? "Preorder" : stock <= 0 ? "Sold out" : stock < 5 ? "Low stock" : "In stock";
+      quickViewBadge.textContent = preorderDate ? i18n.preorderText : stock <= 0 ? i18n.soldOut : stock < 5 ? i18n.lowStock : i18n.inStock;
       quickViewBadge.className = `status-badge ${preorderDate ? "is-preorder" : stock <= 0 ? "is-soldout" : stock < 5 ? "is-low" : "is-available"}`;
     }
 
     if (quickViewAdd) {
       quickViewAdd.disabled = preorderDate ? false : stock <= 0;
-      quickViewAdd.textContent = preorderDate ? "Preorder" : "Add to Cart";
+      quickViewAdd.textContent = preorderDate ? i18n.preorderAction : i18n.addToCart;
       quickViewAdd.dataset.id = card.querySelector(".add-to-cart")?.dataset.id || "";
       quickViewAdd.dataset.name = name;
     }
@@ -385,7 +453,7 @@ document.addEventListener("DOMContentLoaded", () => {
   if (quickViewAdd) {
     quickViewAdd.addEventListener("click", async () => {
       const productId = quickViewAdd.dataset.id;
-      const productName = quickViewAdd.dataset.name || "Item";
+      const productName = quickViewAdd.dataset.name || i18n.itemFallback;
       if (!productId) return;
       const response = await fetch("/cart/add", {
         method: "POST",
@@ -395,7 +463,7 @@ document.addEventListener("DOMContentLoaded", () => {
       if (response.ok) {
         const cart = await response.json();
         updateCartUI(cart);
-        showCartToast(`${productName} added to cart`);
+        showCartToast(`${productName} ${i18n.addedToCartSuffix}`);
         closeModal();
       }
     });
@@ -450,15 +518,15 @@ document.addEventListener("DOMContentLoaded", () => {
         body: JSON.stringify({ productId })
       });
       if (!response.ok) {
-        const message = (await response.json().catch(() => null))?.message || "Could not add to cart";
+        const message = (await response.json().catch(() => null))?.message || i18n.couldNotAddToCart;
         showCartToast(message);
         return;
       }
       const cart = await response.json();
       updateCartUI(cart);
-      showCartToast(`${productName || "Item"} added to cart`);
+      showCartToast(`${productName || i18n.itemFallback} ${i18n.addedToCartSuffix}`);
     } catch (err) {
-      showCartToast("Network issue. Please try again.");
+      showCartToast(i18n.networkIssue);
     } finally {
       if (button) button.disabled = false;
     }
@@ -478,7 +546,7 @@ document.addEventListener("DOMContentLoaded", () => {
             <p class="eyebrow">EGP ${price}
             </p>
             <h4>${name}</h4>
-            <button class="btn add-to-cart mini-add" type="button" data-id="${id}" data-name="${name}">Add to Cart</button>
+            <button class="btn add-to-cart mini-add" type="button" data-id="${id}" data-name="${name}">${i18n.miniAddToCart}</button>
           </div>
         `;
       })
@@ -511,8 +579,13 @@ document.addEventListener("DOMContentLoaded", () => {
       .filter(Boolean)
       .reverse();
     if (!matched.length) {
-      recentRow.innerHTML = '<div class="muted">Browse an item to see it appear here.</div>';
+      if (recentSection) {
+        recentSection.hidden = true;
+      }
       return;
+    }
+    if (recentSection) {
+      recentSection.hidden = false;
     }
     renderRowCards(recentRow, matched);
   };
@@ -544,7 +617,7 @@ document.addEventListener("DOMContentLoaded", () => {
     zipButton.addEventListener("click", () => {
       const zip = (zipInput?.value || "").trim();
       if (!zip) {
-        if (zipResult) zipResult.textContent = "Add a ZIP to check delivery.";
+        if (zipResult) zipResult.textContent = i18n.addZipPrompt;
         return;
       }
       currentZip = zip;

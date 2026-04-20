@@ -1,19 +1,77 @@
 <%- include('../partials/header') %>
   <%- include('../partials/navbar') %>
+    <%
+      const isArabic = language === 'ar';
+      const shopLabels = isArabic
+        ? {
+          allCollections: 'كل المجموعات',
+          categories: {
+            books: 'كتب ومواد',
+            souvenirs: 'تذكارات',
+            replicas: 'نسخ مقلدة',
+            decor: 'ديكور منزلي'
+          }
+        }
+        : {
+          allCollections: 'All Collections',
+          categories: {
+            books: 'Books & Materials',
+            souvenirs: 'Souvenirs',
+            replicas: 'Replicas',
+            decor: 'Home Decor'
+          }
+        };
+
+      const localizedActiveTypeLabel = activeType ? (shopLabels.categories[activeType] || activeTypeLabel) : shopLabels.allCollections;
+
+      const heroByTypeAr = {
+        books: {
+          heroTitle: 'حكايات مطبوعة وحكمة في كل صفحة.',
+          heroSubtitle: 'تصفح كتالوجات علمية وأدلة مصورة ومنشورات متحفية مميزة.',
+          heroTags: ['ملاحظات منسقة مرفقة', 'طباعة عالية الجودة', 'مثالي للباحثين']
+        },
+        souvenirs: {
+          heroTitle: 'ذكريات يمكنك الاحتفاظ بها وإهداؤها.',
+          heroSubtitle: 'خذ معك تذكارات ذات معنى مستوحاة من أشهر المعروضات والقاعات.',
+          heroTags: ['تغليف جاهز للهدايا', 'إصدارات حرفية محدودة', 'شحن خلال 48 ساعة']
+        },
+        replicas: {
+          heroTitle: 'أشكال أيقونية بإعادة إنتاج دقيقة.',
+          heroSubtitle: 'اكتشف نسخا متقنة مستوحاة من قطع متحفية مميزة.',
+          heroTags: ['تصميم مستوحى من القاعات', 'جودة لهواة الاقتناء', 'شهادة مرفقة']
+        },
+        decor: {
+          heroTitle: 'حوّل منزلك إلى ركن متحفي.',
+          heroSubtitle: 'قطع ديكور أنيقة تمزج الذوق المعاصر بجماليات التاريخ القديم.',
+          heroTags: ['تصاميم عصرية', 'تشطيبات يدوية', 'لوحة ألوان متحفية']
+        }
+      };
+
+      const defaultHeroAr = {
+        heroTitle: 'مقتنيات مختارة وتذكارات مصممة بعناية.',
+        heroSubtitle: 'خذ إلى منزلك نسخا فنية وقطع ديكور حرفية وتذكارات حصرية مستوحاة من القاعات.',
+        heroTags: ['جودة معتمدة من المتحف', 'إصدارات حرفية محدودة', 'شحن خلال 48 ساعة']
+      };
+
+      const heroOverride = isArabic ? (activeType ? heroByTypeAr[activeType] : defaultHeroAr) : null;
+      const displayHeroTitle = heroOverride ? heroOverride.heroTitle : heroTitle;
+      const displayHeroSubtitle = heroOverride ? heroOverride.heroSubtitle : heroSubtitle;
+      const displayHeroTags = heroOverride ? heroOverride.heroTags : heroTags;
+    %>
 
     <main class="shop-page">
       <section class="page-hero shop-hero">
         <div class="container hero-shell">
           <div class="hero-copy">
-            <p class="eyebrow">Museum Shop · <%= activeTypeLabel %></p>
-            <h1><%= heroTitle %></h1>
-            <p><%= heroSubtitle %></p>
+            <p class="eyebrow"><%= isArabic ? 'متجر المتحف' : 'Museum Shop' %> · <%= localizedActiveTypeLabel %></p>
+            <h1><%= displayHeroTitle %></h1>
+            <p><%= displayHeroSubtitle %></p>
             <div class="hero-cta">
-              <a class="shop-btn" href="#shop-grid">Browse collection</a>
-              <a class="shop-btn ghost" href="/plan-trip">Plan a museum visit</a>
+              <a class="shop-btn" href="#shop-grid"><%= isArabic ? 'تصفح المجموعة' : 'Browse collection' %></a>
+              <a class="shop-btn ghost" href="/plan-trip"><%= isArabic ? 'خطط لزيارة المتحف' : 'Plan a museum visit' %></a>
             </div>
             <div class="hero-tags">
-              <% (heroTags || []).forEach((tag) => { %>
+              <% (displayHeroTags || []).forEach((tag) => { %>
                 <span class="pill"><%= tag %></span>
               <% }) %>
             </div>
@@ -25,18 +83,18 @@
         <div class="container highlight-grid">
           <article class="highlight-card">
             <div class="highlight-badge">01</div>
-            <h3>Story-led pieces</h3>
-            <p>Every item includes curatorial notes so the stories travel with you.</p>
+            <h3><%= isArabic ? 'قطع تحمل قصة' : 'Story-led pieces' %></h3>
+            <p><%= isArabic ? 'كل منتج يتضمن ملاحظات تنسيقية لترافقك القصة أينما ذهبت.' : 'Every item includes curatorial notes so the stories travel with you.' %></p>
           </article>
           <article class="highlight-card">
             <div class="highlight-badge">02</div>
-            <h3>Crafted responsibly</h3>
-            <p>We partner with local makers and sustainable workshops for each run.</p>
+            <h3><%= isArabic ? 'صناعة مسؤولة' : 'Crafted responsibly' %></h3>
+            <p><%= isArabic ? 'نتعاون مع صناع محليين وورش مستدامة في كل إصدار.' : 'We partner with local makers and sustainable workshops for each run.' %></p>
           </article>
           <article class="highlight-card">
             <div class="highlight-badge">03</div>
-            <h3>Ready to gift</h3>
-            <p>Premium packaging and optional handwritten notes at checkout.</p>
+            <h3><%= isArabic ? 'جاهز للإهداء' : 'Ready to gift' %></h3>
+            <p><%= isArabic ? 'تغليف فاخر مع إمكانية إضافة ملاحظة مكتوبة بخط اليد عند الدفع.' : 'Premium packaging and optional handwritten notes at checkout.' %></p>
           </article>
         </div>
       </section>
@@ -44,10 +102,10 @@
       <section class="section shop-rows">
         <div class="container">
           <header class="section-heading">
-            <p class="eyebrow">Featured picks</p>
+            <p class="eyebrow"><%= isArabic ? 'مختارات مميزة' : 'Featured picks' %></p>
             <div>
-              <h2>Curated spotlight</h2>
-              <p class="muted">Top selections highlighted for the week.</p>
+              <h2><%= isArabic ? 'واجهة مختارة' : 'Curated spotlight' %></h2>
+              <p class="muted"><%= isArabic ? 'أفضل الاختيارات المميزة لهذا الأسبوع.' : 'Top selections highlighted for the week.' %></p>
             </div>
           </header>
           <div class="row-cards" data-featured-row></div>
@@ -57,36 +115,36 @@
       <section class="section shop-grid" id="shop-grid">
         <div class="container">
           <header class="section-heading">
-            <p class="eyebrow">New arrivals</p>
+            <p class="eyebrow"><%= isArabic ? 'وصل حديثا' : 'New arrivals' %></p>
             <div>
-              <h2><%= activeType ? activeTypeLabel + ' Collection' : 'Curated for the month' %></h2>
-              <p class="muted"><%= activeType ? 'Filtered picks for ' + activeTypeLabel + '.' : 'Handpicked drops you will only find through the museum shop.' %></p>
+              <h2><%= activeType ? (isArabic ? `مجموعة ${localizedActiveTypeLabel}` : `${localizedActiveTypeLabel} Collection`) : (isArabic ? 'مختارات الشهر' : 'Curated for the month') %></h2>
+              <p class="muted"><%= activeType ? (isArabic ? `مختارات مفلترة لفئة ${localizedActiveTypeLabel}.` : `Filtered picks for ${localizedActiveTypeLabel}.`) : (isArabic ? 'إصدارات منتقاة بعناية لن تجدها إلا في متجر المتحف.' : 'Handpicked drops you will only find through the museum shop.') %></p>
             </div>
           </header>
           
           <div class="shop-layout-split">
             <!-- New Sidebar Navigation -->
             <aside class="shop-sidebar">
-              <nav class="category-nav" aria-label="Shop Categories">
+              <nav class="category-nav" aria-label="<%= isArabic ? 'فئات المتجر' : 'Shop Categories' %>">
                 <a href="/shop?type=books" class="cat-link <%= activeType === 'books' ? 'is-active' : '' %>">
                   <i class="fa-solid fa-book"></i>
-                  <span>Books & Materials</span>
+                  <span><%= shopLabels.categories.books %></span>
                 </a>
                 <a href="/shop?type=souvenirs" class="cat-link <%= activeType === 'souvenirs' ? 'is-active' : '' %>">
                   <i class="fa-solid fa-gift"></i>
-                  <span>Souvenirs</span>
+                  <span><%= shopLabels.categories.souvenirs %></span>
                 </a>
                 <a href="/shop?type=replicas" class="cat-link <%= activeType === 'replicas' ? 'is-active' : '' %>">
                   <i class="fa-solid fa-gem"></i>
-                  <span>Replicas</span>
+                  <span><%= shopLabels.categories.replicas %></span>
                 </a>
                 <a href="/shop?type=decor" class="cat-link <%= activeType === 'decor' ? 'is-active' : '' %>">
                   <i class="fa-solid fa-palette"></i>
-                  <span>Home Decor</span>
+                  <span><%= shopLabels.categories.decor %></span>
                 </a>
                 <a href="/shop" class="cat-link <%= !activeType ? 'is-active' : '' %>">
                   <i class="fa-solid fa-layer-group"></i>
-                  <span>All Collections</span>
+                  <span><%= shopLabels.allCollections %></span>
                 </a>
               </nav>
             </aside>
@@ -94,58 +152,58 @@
             <div class="shop-main-content">
           <div class="cutoff-banner" aria-live="polite">
             <i class="fa fa-clock"></i>
-            <span data-cutoff-timer>Order within 05:00 for dispatch today</span>
+            <span data-cutoff-timer><%= isArabic ? 'اطلب خلال 05:00 ليتم الشحن اليوم' : 'Order within 05:00 for dispatch today' %></span>
           </div>
-          <p class="muted" style="margin: 0.2rem 0 0.9rem;">Showing: <strong><%= activeTypeLabel %></strong></p>
+          <p class="muted" style="margin: 0.2rem 0 0.9rem;"><%= isArabic ? 'المعروض:' : 'Showing:' %> <strong><%= localizedActiveTypeLabel %></strong></p>
           <div class="shop-controls">
             <div class="control search">
-              <label for="shop-search">Search</label>
+              <label for="shop-search"><%= isArabic ? 'بحث' : 'Search' %></label>
               <div class="input-shell">
                 <i class="fa fa-search"></i>
-                <input id="shop-search" type="search" placeholder="Search artifacts, decor, books"
-                  aria-label="Search products" />
+                <input id="shop-search" type="search" placeholder="<%= isArabic ? 'ابحث عن قطع أثرية أو ديكور أو كتب' : 'Search artifacts, decor, books' %>"
+                  aria-label="<%= isArabic ? 'ابحث عن المنتجات' : 'Search products' %>" />
               </div>
             </div>
             <div class="control select">
-              <label for="shop-sort">Sort</label>
-              <select id="shop-sort" aria-label="Sort products">
-                <option value="featured">Featured</option>
-                <option value="price-asc">Price: Low to High</option>
-                <option value="price-desc">Price: High to Low</option>
-                <option value="newest">Newest</option>
-                <option value="stock">Availability</option>
+              <label for="shop-sort"><%= isArabic ? 'ترتيب' : 'Sort' %></label>
+              <select id="shop-sort" aria-label="<%= isArabic ? 'ترتيب المنتجات' : 'Sort products' %>">
+                <option value="featured"><%= isArabic ? 'مميز' : 'Featured' %></option>
+                <option value="price-asc"><%= isArabic ? 'السعر: من الأقل إلى الأعلى' : 'Price: Low to High' %></option>
+                <option value="price-desc"><%= isArabic ? 'السعر: من الأعلى إلى الأقل' : 'Price: High to Low' %></option>
+                <option value="newest"><%= isArabic ? 'الأحدث' : 'Newest' %></option>
+                <option value="stock"><%= isArabic ? 'التوفر' : 'Availability' %></option>
               </select>
             </div>
             <div class="control range">
-              <label for="price-max">Price cap</label>
+              <label for="price-max"><%= isArabic ? 'الحد الأقصى للسعر' : 'Price cap' %></label>
               <div class="range-shell">
                 <input type="range" id="price-max" min="0" max="2000" value="2000" step="50"
-                  aria-label="Maximum price" />
-                <span class="range-value" id="price-max-value">Up to EGP 2000</span>
+                  aria-label="<%= isArabic ? 'الحد الأقصى للسعر' : 'Maximum price' %>" />
+                <span class="range-value" id="price-max-value"><%= isArabic ? 'حتى 2000 جنيه' : 'Up to EGP 2000' %></span>
               </div>
             </div>
             <div class="control toggles">
-              <label>Filters</label>
-              <div class="pill-toggle" data-filter="available">In stock</div>
-              <div class="pill-toggle" data-filter="low">Low stock</div>
-              <div class="pill-toggle" data-filter="new">New</div>
+              <label><%= isArabic ? 'الفلاتر' : 'Filters' %></label>
+              <div class="pill-toggle" data-filter="available"><%= isArabic ? 'متوفر' : 'In stock' %></div>
+              <div class="pill-toggle" data-filter="low"><%= isArabic ? 'مخزون منخفض' : 'Low stock' %></div>
+              <div class="pill-toggle" data-filter="new"><%= isArabic ? 'جديد' : 'New' %></div>
             </div>
           </div>
           <div class="active-filters" data-active-filters></div>
           <div class="shop-controls secondary">
             <div class="control delivery">
-              <label for="zip-check">Delivery to</label>
+              <label for="zip-check"><%= isArabic ? 'التوصيل إلى' : 'Delivery to' %></label>
               <div class="input-shell inline">
                 <i class="fa fa-location-dot"></i>
-                <input id="zip-check" type="text" inputmode="numeric" placeholder="Enter ZIP"
-                  aria-label="Enter ZIP for ETA" maxlength="6" />
-                <button class="shop-btn ghost" type="button" id="zip-check-btn">Check ETA</button>
+                <input id="zip-check" type="text" inputmode="numeric" placeholder="<%= isArabic ? 'أدخل الرمز البريدي' : 'Enter ZIP' %>"
+                  aria-label="<%= isArabic ? 'أدخل الرمز البريدي لمعرفة وقت التوصيل' : 'Enter ZIP for ETA' %>" maxlength="6" />
+                <button class="shop-btn ghost" type="button" id="zip-check-btn"><%= isArabic ? 'تحقق من وقت الوصول' : 'Check ETA' %></button>
               </div>
-              <p class="muted small" id="zip-result" aria-live="polite">Enter ZIP to see delivery window.</p>
+              <p class="muted small" id="zip-result" aria-live="polite"><%= isArabic ? 'أدخل الرمز البريدي لمعرفة نافذة التوصيل.' : 'Enter ZIP to see delivery window.' %></p>
             </div>
             <div class="control delivery-note">
-              <label>Preorders</label>
-              <p class="muted small">Items marked preorder ship on their stated date. We hold your spot automatically.
+              <label><%= isArabic ? 'الطلبات المسبقة' : 'Preorders' %></label>
+              <p class="muted small"><%= isArabic ? 'العناصر المعلّمة كطلب مسبق تُشحن في تاريخها المحدد. نحجز مكانك تلقائيا.' : 'Items marked preorder ship on their stated date. We hold your spot automatically.' %>
               </p>
             </div>
           </div>
@@ -154,9 +212,9 @@
           </div>
           <div class="empty-state" data-empty-state>
             <div class="empty-card">
-              <h3>No items found</h3>
-              <p data-empty-copy>Adjust filters or search terms to see more of the collection.</p>
-              <button class="shop-btn ghost" type="button" id="reset-filters">Reset filters</button>
+              <h3><%= isArabic ? 'لم يتم العثور على منتجات' : 'No items found' %></h3>
+              <p data-empty-copy><%= isArabic ? 'عدّل الفلاتر أو كلمات البحث لرؤية المزيد من المجموعة.' : 'Adjust filters or search terms to see more of the collection.' %></p>
+              <button class="shop-btn ghost" type="button" id="reset-filters"><%= isArabic ? 'إعادة تعيين الفلاتر' : 'Reset filters' %></button>
             </div>
           </div>
           <div class="pagination-shell">
@@ -168,17 +226,17 @@
         </div>
       </section>
 
-      <section class="section shop-rows" aria-live="polite">
+      <section class="section shop-rows" data-recent-section aria-live="polite">
         <div class="container">
           <header class="section-heading">
-            <p class="eyebrow">Recently viewed</p>
+            <p class="eyebrow"><%= isArabic ? 'شوهدت مؤخرا' : 'Recently viewed' %></p>
             <div>
-              <h2>Pick up where you left</h2>
-              <p class="muted">Quick access to items you opened recently.</p>
+              <h2><%= isArabic ? 'أكمل من حيث توقفت' : 'Pick up where you left' %></h2>
+              <p class="muted"><%= isArabic ? 'وصول سريع للعناصر التي فتحتها مؤخرا.' : 'Quick access to items you opened recently.' %></p>
             </div>
           </header>
           <div class="row-cards" data-recent-row>
-            <div class="muted">Browse an item to see it appear here.</div>
+            <div class="muted"><%= isArabic ? 'تصفح عنصرا ليظهر هنا.' : 'Browse an item to see it appear here.' %></div>
           </div>
         </div>
       </section>
@@ -188,9 +246,9 @@
       <div class="modal" id="quickview-modal" aria-hidden="true">
         <div class="modal-backdrop" data-modal-close></div>
         <div class="modal-dialog" role="dialog" aria-modal="true" aria-labelledby="quickview-title">
-          <button class="modal-close" type="button" data-modal-close aria-label="Close"></button>
+          <button class="modal-close" type="button" data-modal-close aria-label="<%= isArabic ? 'إغلاق' : 'Close' %>"></button>
           <div class="modal-media">
-            <img id="quickview-image" alt="Product image">
+            <img id="quickview-image" alt="<%= isArabic ? 'صورة المنتج' : 'Product image' %>">
             <span class="status-badge" id="quickview-badge"></span>
           </div>
           <div class="modal-body">
@@ -200,12 +258,12 @@
             <div class="size-grid" id="quickview-sizes" aria-live="polite"></div>
             <p id="quickview-desc"></p>
             <p class="meta" id="quickview-eta"></p>
-            <p class="muted small" id="quickview-cutoff">Ships in 48h · Free returns in 14 days · Secure checkout</p>
+            <p class="muted small" id="quickview-cutoff"><%= isArabic ? 'يشحن خلال 48 ساعة · إرجاع مجاني خلال 14 يوما · دفع آمن' : 'Ships in 48h · Free returns in 14 days · Secure checkout' %></p>
             <div class="modal-actions">
-              <button class="btn add-to-cart" id="quickview-add" type="button">Add to Cart</button>
-              <button class="shop-btn ghost" type="button" data-modal-close>Close</button>
+              <button class="btn add-to-cart" id="quickview-add" type="button"><%= isArabic ? 'أضف إلى السلة' : 'Add to Cart' %></button>
+              <button class="shop-btn ghost" type="button" data-modal-close><%= isArabic ? 'إغلاق' : 'Close' %></button>
             </div>
-            <div class="payment-icons" aria-label="Payment methods">
+            <div class="payment-icons" aria-label="<%= isArabic ? 'وسائل الدفع' : 'Payment methods' %>">
               <span class="pill">Visa</span>
               <span class="pill">Mastercard</span>
               <span class="pill">Amex</span>
@@ -215,5 +273,107 @@
         </div>
       </div>
     </main>
+
+    <script>
+      window.SHOP_I18N = <%- JSON.stringify(
+        isArabic
+          ? {
+            upToEgp: 'حتى EGP',
+            searchChipPrefix: 'بحث:',
+            inStock: 'متوفر',
+            lowStock: 'مخزون منخفض',
+            newLabel: 'جديد',
+            premium: 'مميز',
+            removeLabelPrefix: 'إزالة',
+            noResultsForPrefix: 'لا توجد نتائج لـ',
+            noResultsSuffix: 'جرب كلمات بحث مختلفة.',
+            adjustFiltersText: 'عدّل الفلاتر أو كلمات البحث لرؤية المزيد من المجموعة.',
+            nationwide: 'جميع المحافظات',
+            cairo: 'القاهرة',
+            gizaAlex: 'الجيزة/الإسكندرية',
+            delta: 'الدلتا',
+            upperEgypt: 'صعيد مصر',
+            etaInStockDefault: '3-5 أيام',
+            etaPreorderDefault: 'يُشحن عند التوفر',
+            etaCairo: '1-2 يوم',
+            etaGizaAlex: '2-3 أيام',
+            etaDelta: '2-4 أيام',
+            etaUpperEgypt: '3-5 أيام',
+            shipsOnRelease: 'يُشحن عند الإطلاق',
+            shipsWhenRestocked: 'يُشحن عند إعادة التوفر',
+            soon: 'قريبا',
+            orderWithinPrefix: 'اطلب خلال',
+            orderWithinSuffix: 'ليتم الشحن اليوم',
+            preorderSizesHint: 'مخصصات الطلب المسبق حسب المقاس',
+            leftSuffix: 'متبقي',
+            preorderText: 'طلب مسبق',
+            preorderShipsPrefix: 'طلب مسبق - يشحن',
+            deliveryToPrefix: 'التوصيل إلى',
+            enterZipPrompt: 'أدخل الرمز البريدي لمعرفة نافذة التوصيل.',
+            orderBeforePrefix: 'اطلب قبل',
+            orderBeforeSuffix: 'لأسرع شحن',
+            inStockCountSuffix: 'متوفر',
+            unavailable: 'غير متاح',
+            soldOut: 'نفدت الكمية',
+            addToCart: 'أضف إلى السلة',
+            preorderAction: 'طلب مسبق',
+            itemFallback: 'منتج',
+            addedToCartSuffix: 'تمت إضافته إلى السلة',
+            couldNotAddToCart: 'تعذر الإضافة إلى السلة',
+            networkIssue: 'مشكلة في الشبكة. حاول مرة أخرى.',
+            miniAddToCart: 'أضف إلى السلة',
+            addZipPrompt: 'أضف رمزا بريديا لمعرفة التوصيل.',
+            preordersBySizeSeparator: '·'
+          }
+          : {
+            upToEgp: 'Up to EGP',
+            searchChipPrefix: 'Search:',
+            inStock: 'In stock',
+            lowStock: 'Low stock',
+            newLabel: 'New',
+            premium: 'Premium',
+            removeLabelPrefix: 'Remove',
+            noResultsForPrefix: 'No results for',
+            noResultsSuffix: 'Try different keywords.',
+            adjustFiltersText: 'Adjust filters or search terms to see more of the collection.',
+            nationwide: 'nationwide',
+            cairo: 'Cairo',
+            gizaAlex: 'Giza/Alex',
+            delta: 'Delta',
+            upperEgypt: 'Upper Egypt',
+            etaInStockDefault: '3-5 days',
+            etaPreorderDefault: 'Ships when restocked',
+            etaCairo: '1-2 days',
+            etaGizaAlex: '2-3 days',
+            etaDelta: '2-4 days',
+            etaUpperEgypt: '3-5 days',
+            shipsOnRelease: 'Ships on release',
+            shipsWhenRestocked: 'Ships when restocked',
+            soon: 'soon',
+            orderWithinPrefix: 'Order within',
+            orderWithinSuffix: 'for dispatch today',
+            preorderSizesHint: 'Preorder allocations by size',
+            leftSuffix: 'left',
+            preorderText: 'Preorder',
+            preorderShipsPrefix: 'Preorder - ships',
+            deliveryToPrefix: 'Delivery to',
+            enterZipPrompt: 'Enter ZIP to see delivery window.',
+            orderBeforePrefix: 'Order before',
+            orderBeforeSuffix: 'for fastest dispatch',
+            inStockCountSuffix: 'in stock',
+            unavailable: 'Unavailable',
+            soldOut: 'Sold out',
+            addToCart: 'Add to Cart',
+            preorderAction: 'Preorder',
+            itemFallback: 'Item',
+            addedToCartSuffix: 'added to cart',
+            couldNotAddToCart: 'Could not add to cart',
+            networkIssue: 'Network issue. Please try again.',
+            miniAddToCart: 'Add to Cart',
+            addZipPrompt: 'Add a ZIP to check delivery.',
+            preordersBySizeSeparator: '·'
+          }
+      ) %>;
+    </script>
 
     <%- include('../partials/footer') %>

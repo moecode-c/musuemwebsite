@@ -42,7 +42,7 @@
             </div>
           </div>
 
-          <form class="trip-form" id="trip-form" autocomplete="on">
+          <form class="trip-form" id="trip-form" autocomplete="on" data-validate="true" data-client-only="true" novalidate>
             <div class="trip-field-group">
               <label for="trip-name"><%= t.planTrip.form.fullName %></label>
               <input id="trip-name" type="text" name="name" autocomplete="name" required />
@@ -59,7 +59,7 @@
                 <option value="" disabled selected><%= t.planTrip.form.selectTicket %></option>
                 <% if (tickets && tickets.length) { %>
                   <% tickets.forEach((ticket) => { %>
-                    <option value="<%= ticket._id %>">
+                    <option value="<%= ticket._id %>" data-group="<%= ticket.group %>" data-audience="<%= ticket.audience %>">
                       <%= (ticket.group || "").toUpperCase() %> - <%= ticket.audience || "" %>
                       (EGP <%= Number(ticket.price || 0).toFixed(2) %>)
                     </option>
@@ -74,6 +74,7 @@
             </div>
 
             <button class="btn trip-submit" type="submit"><%= t.planTrip.form.submit %></button>
+            <p class="form-message trip-form-message" id="trip-message" role="status" aria-live="polite"></p>
           </form>
         </section>
       </div>

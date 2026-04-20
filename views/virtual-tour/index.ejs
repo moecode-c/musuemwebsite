@@ -1,56 +1,59 @@
 <%- include('../partials/header') %>
 <%- include('../partials/navbar') %>
+<% const isArabic = language === 'ar'; %>
 
 <section class="page-hero tour-landing-hero">
   <div class="container">
-    <p class="tour-kicker">Immersive Museum Navigator</p>
+    <p class="tour-kicker"><%= isArabic ? 'دليل المتحف الغامر' : 'Immersive Museum Navigator' %></p>
     <h1><%= t.virtualTour.title %></h1>
     <p><%= t.virtualTour.subtitle %></p>
     <div class="tour-hero-actions">
-      <a class="btn tour-hero-btn-primary" href="/virtual-tour/pharaoh">Start With Pharaoh Era</a>
-      <a class="btn tour-hero-btn-ghost" href="#tour-preview">Watch Intro Preview</a>
+      <a class="btn tour-hero-btn-primary" href="/virtual-tour/pharaoh"><%= isArabic ? 'ابدأ بالعصر الفرعوني' : 'Start With Pharaoh Era' %></a>
+      <a class="btn tour-hero-btn-ghost" href="#tour-preview"><%= isArabic ? 'شاهد المعاينة التمهيدية' : 'Watch Intro Preview' %></a>
     </div>
   </div>
 </section>
 
 <section class="section tour-landing-section" id="tour-preview">
   <div class="container tour-landing-grid">
-    <article class="tour-video-panel" aria-label="Virtual tour preview video">
+    <article class="tour-video-panel" aria-label="<%= isArabic ? 'فيديو معاينة الجولة الافتراضية' : 'Virtual tour preview video' %>">
       <header class="tour-panel-header">
-        <h2>Preview The Experience</h2>
-        <p>Step into a guided 360 walkthrough before choosing your historical route.</p>
+        <h2><%= isArabic ? 'معاينة التجربة' : 'Preview The Experience' %></h2>
+        <p><%= isArabic ? 'ادخل في جولة إرشادية 360 قبل اختيار مسارك التاريخي.' : 'Step into a guided 360 walkthrough before choosing your historical route.' %></p>
       </header>
       <div class="video-frame">
-        <iframe
-          src="https://www.youtube.com/embed/1d1mYyPpG0k"
-          title="Virtual Tour"
-          allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-          allowfullscreen>
-        </iframe>
+        <video
+          src="/assets/videos/homepagevid.mp4"
+          title="<%= isArabic ? 'جولة افتراضية' : 'Virtual Tour' %>"
+          controls
+          playsinline
+          preload="metadata"
+          poster="/assets/images/bg2.png">
+        </video>
       </div>
     </article>
 
-    <aside class="tour-era-panel" aria-label="Choose virtual tour era">
-      <h2>Choose Your Era</h2>
+    <aside class="tour-era-panel" aria-label="<%= isArabic ? 'اختر عصر الجولة الافتراضية' : 'Choose virtual tour era' %>">
+      <h2><%= isArabic ? 'اختر عصرك' : 'Choose Your Era' %></h2>
       <a class="tour-era-card" href="/virtual-tour/pharaoh">
-        <span class="tour-era-chip">Ancient</span>
-        <strong>Pharaoh Era</strong>
-        <p>Monuments, dynasties, and divine kingship.</p>
+        <span class="tour-era-chip"><%= isArabic ? 'قديم' : 'Ancient' %></span>
+        <strong><%= isArabic ? 'العصر الفرعوني' : 'Pharaoh Era' %></strong>
+        <p><%= isArabic ? 'آثار مهيبة وسلالات ملكية ومفهوم الملكية المقدسة.' : 'Monuments, dynasties, and divine kingship.' %></p>
       </a>
       <a class="tour-era-card" href="/virtual-tour/islamic">
-        <span class="tour-era-chip">Medieval</span>
-        <strong>Islamic Era</strong>
-        <p>Calligraphy, architecture, and crafted geometry.</p>
+        <span class="tour-era-chip"><%= isArabic ? 'وسيط' : 'Medieval' %></span>
+        <strong><%= isArabic ? 'العصر الإسلامي' : 'Islamic Era' %></strong>
+        <p><%= isArabic ? 'فن الخط والعمارة والهندسة الزخرفية المتقنة.' : 'Calligraphy, architecture, and crafted geometry.' %></p>
       </a>
       <a class="tour-era-card" href="/virtual-tour/christian">
-        <span class="tour-era-chip">Heritage</span>
-        <strong>Christian Era</strong>
-        <p>Icons, liturgy, and the Coptic legacy.</p>
+        <span class="tour-era-chip"><%= isArabic ? 'تراث' : 'Heritage' %></span>
+        <strong><%= isArabic ? 'العصر المسيحي' : 'Christian Era' %></strong>
+        <p><%= isArabic ? 'أيقونات وطقوس وإرث قبطي ممتد.' : 'Icons, liturgy, and the Coptic legacy.' %></p>
       </a>
       <a class="tour-era-card tour-era-card--vr" href="/vr-experience">
         <span class="tour-era-chip">360° VR</span>
-        <strong>VR Experience</strong>
-        <p>Immersive 360° panoramas with gyroscope &amp; Google Cardboard support.</p>
+        <strong><%= isArabic ? 'تجربة الواقع الافتراضي' : 'VR Experience' %></strong>
+        <p><%= isArabic ? 'مشاهد بانورامية 360° غامرة مع دعم الجيروسكوب وGoogle Cardboard.' : 'Immersive 360° panoramas with gyroscope &amp; Google Cardboard support.' %></p>
       </a>
     </aside>
   </div>
@@ -59,11 +62,11 @@
 <section class="section tour-landing-tips">
   <div class="container">
     <div class="tour-tips-card">
-      <h3>Tips For Best Experience</h3>
+      <h3><%= isArabic ? 'نصائح لأفضل تجربة' : 'Tips For Best Experience' %></h3>
       <ul class="tour-tips-list">
-        <li>Use fullscreen mode for more immersive exploration.</li>
-        <li>Enable the audio guide while navigating each location.</li>
-        <li>Download the brochure for highlights and route notes.</li>
+        <li><%= isArabic ? 'استخدم وضع ملء الشاشة لتجربة أكثر اندماجا.' : 'Use fullscreen mode for more immersive exploration.' %></li>
+        <li><%= isArabic ? 'فعّل الدليل الصوتي أثناء التنقل بين المواقع.' : 'Enable the audio guide while navigating each location.' %></li>
+        <li><%= isArabic ? 'حمّل الكتيب للاطلاع على أبرز النقاط وملاحظات المسار.' : 'Download the brochure for highlights and route notes.' %></li>
       </ul>
     </div>
   </div>

@@ -219,26 +219,29 @@ document.addEventListener("DOMContentLoaded", () => {
         body: formData
       });
       const messageEl = document.getElementById("admin-product-message");
-      messageEl.textContent = response.ok
-        ? editId
-          ? "Product updated"
-          : "Product created"
-        : "Error saving product";
-      if (response.ok) {
-        if (editId) {
-          setEditing(false);
-        } else {
-          productForm.reset();
-        }
-        adminFetchList("/api/products", productList, "name", (item) => {
-          productForm.name.value = item.name || "";
-          productForm.description.value = item.description || "";
-          productForm.price.value = item.price || 0;
-          productForm.stock.value = item.stock || 0;
-          productForm.dataset.editId = item._id;
-          setEditing(true, "Update Product");
-        });
+      if (!response.ok) {
+        messageEl.textContent = await parseApiError(response, "Error saving product");
+        return;
       }
+
+      messageEl.textContent = editId
+        ? "Product updated"
+        : "Product created";
+
+      if (editId) {
+        setEditing(false);
+      } else {
+        productForm.reset();
+      }
+
+      adminFetchList("/api/products", productList, "name", (item) => {
+        productForm.name.value = item.name || "";
+        productForm.description.value = item.description || "";
+        productForm.price.value = item.price || 0;
+        productForm.stock.value = item.stock || 0;
+        productForm.dataset.editId = item._id;
+        setEditing(true, "Update Product");
+      });
     });
   }
 
@@ -359,5 +362,79 @@ document.addEventListener("DOMContentLoaded", () => {
         });
       }
     });
+  }
+
+  const isDashboardPage = window.location.pathname === "/admin/dashboard";
+  if (isDashboardPage) {
+    const isArabic = document.documentElement.lang === "ar";
+    const dashboardText = isArabic
+      ? {
+        visitor: "زائر",
+        toastTitle: "التذكرة جاهزة",
+        newRequestSuffix: "أرسل طلب تذكرة جديدا."
+      }
+      : {
+        visitor: "Visitor",
+        toastTitle: "Ticket ready",
+        newRequestSuffix: "submitted a new ticket request."
+      };
+
+    const toastStack = document.createElement("div");
+    toastStack.className = "admin-toast-stack";
+    document.body.appendChild(toastStack);
+
+    const showAdminToast = (title, message) => {
+      const toast = document.createElement("div");
+      toast.className = "admin-toast";
+      toast.innerHTML = `<strong>${title}</strong><span>${message}</span>`;
+      toastStack.appendChild(toast);
+
+      requestAnimationFrame(() => {
+        toast.classList.add("is-visible");
+      });
+
+      window.setTimeout(() => {
+        toast.classList.remove("is-visible");
+        window.setTimeout(() => toast.remove(), 250);
+      }, 5000);
+    };
+
+    let hasInitialSnapshot = false;
+    let lastKnownCount = 0;
+    let lastKnownLatestId = "";
+
+    const pollTicketRequestSummary = async () => {
+      try {
+        const response = await fetch("/api/ticket-requests/summary", {
+          headers: { Accept: "application/json" }
+        });
+        if (!response.ok) return;
+
+        const snapshot = await response.json();
+        const count = Number(snapshot?.count || 0);
+        const latestId = snapshot?.latest?._id || "";
+        const latestName = snapshot?.latest?.name || dashboardText.visitor;
+
+        if (!hasInitialSnapshot) {
+          hasInitialSnapshot = true;
+          lastKnownCount = count;
+          lastKnownLatestId = latestId;
+          return;
+        }
+
+        const hasNewRequest = Boolean(latestId) && latestId !== lastKnownLatestId && count >= lastKnownCount;
+        if (hasNewRequest) {
+          showAdminToast(dashboardText.toastTitle, `${latestName} ${dashboardText.newRequestSuffix}`);
+        }
+
+        lastKnownCount = count;
+        lastKnownLatestId = latestId;
+      } catch (error) {
+        // Ignore polling failures and retry on next interval.
+      }
+    };
+
+    pollTicketRequestSummary();
+    window.setInterval(pollTicketRequestSummary, 15000);
   }
 });

@@ -10,45 +10,63 @@
 
 <section class="section">
   <div class="container">
-    <div class="quiz-card" id="quiz-card"
-      data-label-question="<%= t.quiz.question %>"
-      data-label-of="<%= t.quiz.of %>"
-      data-label-score="<%= t.quiz.score %>"
-      data-label-start="<%= t.quiz.start %>"
-      data-label-next="<%= t.quiz.next %>"
-      data-label-finish="<%= t.quiz.finish %>"
-      data-label-intro="<%= t.quiz.intro %>"
-      data-label-select="<%= t.quiz.selectAnswer %>"
-      data-label-correct="<%= t.quiz.correct %>"
-      data-label-incorrect="<%= t.quiz.incorrect %>"
-      data-label-result-title="<%= t.quiz.resultTitle %>"
-      data-label-scored="<%= t.quiz.scored %>"
-      data-label-out-of="<%= t.quiz.outOf %>"
-      data-label-msg-excellent="<%= t.quiz.msgExcellent %>"
-      data-label-msg-great="<%= t.quiz.msgGreat %>"
-      data-label-msg-nice="<%= t.quiz.msgNice %>"
-      data-label-correct-answer="<%= t.quiz.correctAnswer %>"
-      data-label-restart="<%= t.quiz.restart %>"
-      data-label-learn-title="<%= t.quiz.learnTitle %>"
-      data-label-learn-text="<%= t.quiz.learnText %>"
-    >
-      <div class="quiz-header">
-        <h2 class="quiz-title"><%= t.quiz.learnTitle %></h2>
-        <p class="quiz-subtitle"><%= t.quiz.learnText %></p>
+    <div class="quiz-shell">
+      <div class="quiz-card" id="quiz-card"
+        data-label-question="<%= t.quiz.question %>"
+        data-label-of="<%= t.quiz.of %>"
+        data-label-score="<%= t.quiz.score %>"
+        data-label-start="<%= t.quiz.start %>"
+        data-label-next="<%= t.quiz.next %>"
+        data-label-finish="<%= t.quiz.finish %>"
+        data-label-intro="<%= t.quiz.intro %>"
+        data-label-select="<%= t.quiz.selectAnswer %>"
+        data-label-correct="<%= t.quiz.correct %>"
+        data-label-incorrect="<%= t.quiz.incorrect %>"
+        data-label-result-title="<%= t.quiz.resultTitle %>"
+        data-label-scored="<%= t.quiz.scored %>"
+        data-label-out-of="<%= t.quiz.outOf %>"
+        data-label-msg-excellent="<%= t.quiz.msgExcellent %>"
+        data-label-msg-great="<%= t.quiz.msgGreat %>"
+        data-label-msg-nice="<%= t.quiz.msgNice %>"
+        data-label-correct-answer="<%= t.quiz.correctAnswer %>"
+        data-label-restart="<%= t.quiz.restart %>"
+        data-label-learn-title="<%= t.quiz.learnTitle %>"
+        data-label-learn-text="<%= t.quiz.learnText %>"
+      >
+        <div class="quiz-header">
+          <p class="quiz-eyebrow"><%= t.quiz.title %></p>
+          <h2 class="quiz-title"><%= t.quiz.learnTitle %></h2>
+          <p class="quiz-subtitle"><%= t.quiz.learnText %></p>
+        </div>
+
+        <div class="quiz-meta" id="quiz-meta">
+          <div class="quiz-meta-item">
+            <span class="quiz-meta-label"><%= t.quiz.question %></span>
+            <span class="quiz-progress" id="quiz-progress"><%= t.quiz.question %> 1 <%= t.quiz.of %> 15</span>
+          </div>
+          <div class="quiz-meta-item quiz-meta-item--score">
+            <span class="quiz-meta-label"><%= t.quiz.score %></span>
+            <span class="quiz-score" id="quiz-score"><%= t.quiz.score %>: 0</span>
+          </div>
+        </div>
+
+        <div class="quiz-progress-track" aria-hidden="true">
+          <span class="quiz-progress-fill" id="quiz-progress-fill"></span>
+        </div>
+
+        <div class="quiz-body" id="quiz-body">
+          <p class="quiz-intro"><%= t.quiz.intro %></p>
+          <button class="btn quiz-start" id="quiz-start" type="button"><%= t.quiz.start %></button>
+        </div>
+
+        <div class="quiz-footer" id="quiz-footer">
+          <button class="btn quiz-next" id="quiz-next" type="button" disabled><%= t.quiz.next %></button>
+        </div>
       </div>
 
-      <div class="quiz-meta" id="quiz-meta">
-        <span class="quiz-progress" id="quiz-progress"><%= t.quiz.question %> 1 <%= t.quiz.of %> 15</span>
-        <span class="quiz-score" id="quiz-score"><%= t.quiz.score %>: 0</span>
-      </div>
-
-      <div class="quiz-body" id="quiz-body">
-        <p class="quiz-intro"><%= t.quiz.intro %></p>
-        <button class="btn quiz-start" id="quiz-start" type="button"><%= t.quiz.start %></button>
-      </div>
-
-      <div class="quiz-footer" id="quiz-footer">
-        <button class="btn quiz-next" id="quiz-next" type="button" disabled><%= t.quiz.next %></button>
+      <div class="quiz-support-note" role="note">
+        <strong><%= t.quiz.learnTitle %></strong>
+        <p><%= t.quiz.selectAnswer %></p>
       </div>
     </div>
   </div>
@@ -57,7 +75,7 @@
       <span class="quiz-tag" id="quiz-tag"></span>
       <h3 class="quiz-question-text" id="quiz-question-text"></h3>
       <div class="quiz-options" id="quiz-options"></div>
-      <div class="quiz-feedback" id="quiz-feedback"></div>
+      <div class="quiz-feedback" id="quiz-feedback" role="status" aria-live="polite"></div>
     </div>
   </template>
 

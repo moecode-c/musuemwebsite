@@ -1,3 +1,20 @@
+const cartLocale = document.documentElement.lang === "ar" ? "ar" : "en";
+const cartI18n = cartLocale === "ar"
+  ? {
+    qty: "الكمية",
+    couldNotAdd: "تعذر الإضافة إلى السلة",
+    itemFallback: "منتج",
+    addedToCart: "تمت إضافته إلى السلة",
+    networkIssue: "مشكلة في الشبكة. حاول مرة أخرى."
+  }
+  : {
+    qty: "Qty",
+    couldNotAdd: "Could not add to cart",
+    itemFallback: "Item",
+    addedToCart: "added to cart",
+    networkIssue: "Network issue. Please try again."
+  };
+
 const updateCartUI = (cart) => {
   const totalEl = document.getElementById("cart-total");
   if (totalEl) {
@@ -11,7 +28,7 @@ const updateCartUI = (cart) => {
         <div class="cart-item">
           <span>${item.name}</span>
           <span>EGP ${item.price.toFixed(2)}</span>
-          <span>Qty: ${item.quantity}</span>
+          <span>${cartI18n.qty}: ${item.quantity}</span>
         </div>
       `
       )
@@ -46,16 +63,16 @@ document.addEventListener("DOMContentLoaded", () => {
           body: JSON.stringify({ productId })
         });
         if (!response.ok) {
-          const message = (await response.json().catch(() => null))?.message || "Could not add to cart";
+          const message = (await response.json().catch(() => null))?.message || cartI18n.couldNotAdd;
           showCartToast(message);
           return;
         }
         const cart = await response.json();
         updateCartUI(cart);
-        const productName = btn.dataset.name || "Item";
-        showCartToast(`${productName} added to cart`);
+        const productName = btn.dataset.name || cartI18n.itemFallback;
+        showCartToast(`${productName} ${cartI18n.addedToCart}`);
       } catch (err) {
-        showCartToast("Network issue. Please try again.");
+        showCartToast(cartI18n.networkIssue);
       } finally {
         btn.disabled = false;
       }

@@ -1,15 +1,16 @@
 <%- include('../partials/header') %>
 <%- include('../partials/navbar') %>
+<% const isArabic = language === 'ar'; %>
 
 <section class="tour-hero tour-hero--pharaoh" id="tourinfo">
   <div class="container">
     <article class="tour-hero-card">
-      <p class="tour-kicker">360 Immersive Route</p>
+      <p class="tour-kicker"><%= isArabic ? 'مسار 360° غامر' : '360 Immersive Route' %></p>
       <h1 class="tour-title"><%= t.virtualTour.pharaohTitle %></h1>
       <p class="tour-subtitle"><%= t.virtualTour.heroSubtitle %></p>
       <div class="tour-hero-actions">
-        <a class="btn tour-hero-btn-primary" href="#tour-map">Enter Live Tour</a>
-        <a class="btn tour-hero-btn-ghost" href="#tour-notes">Read Notes</a>
+        <a class="btn tour-hero-btn-primary" href="#tour-map"><%= isArabic ? 'ادخل الجولة الحية' : 'Enter Live Tour' %></a>
+        <a class="btn tour-hero-btn-ghost" href="#tour-notes"><%= isArabic ? 'اقرأ الملاحظات' : 'Read Notes' %></a>
       </div>
     </article>
   </div>
@@ -25,8 +26,8 @@
 <section class="tour-map" id="tour-map">
   <div class="container">
     <header class="tour-map-heading">
-      <h3>Interactive Route</h3>
-      <p>Navigate the selected site in real time, then switch to fullscreen for a museum-like viewing mode.</p>
+      <h3><%= isArabic ? 'مسار تفاعلي' : 'Interactive Route' %></h3>
+      <p><%= isArabic ? 'تنقل داخل الموقع المحدد في الوقت الفعلي، ثم انتقل إلى وضع ملء الشاشة لمشاهدة أقرب إلى المتحف.' : 'Navigate the selected site in real time, then switch to fullscreen for a museum-like viewing mode.' %></p>
     </header>
 
     <div class="map-frame">
@@ -48,7 +49,7 @@
       <a class="btn tour-btn" href="/assets/Afterlife-museum-brochure.pdf" download="Afterlife-museum-brochure.pdf">
         <i class="fas fa-file-arrow-down"></i><%= t.virtualTour.downloadBrochure %>
       </a>
-      <button class="btn tour-btn" id="tour-audio-btn" type="button" aria-label="Toggle audio guide"><i class="fas fa-volume-up"></i><%= t.virtualTour.audioGuide %></button>
+      <button class="btn tour-btn" id="tour-audio-btn" type="button" aria-label="<%= isArabic ? 'تبديل الدليل الصوتي' : 'Toggle audio guide' %>"><i class="fas fa-volume-up"></i><%= t.virtualTour.audioGuide %></button>
     </div>
   </div>
 </section>

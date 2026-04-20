@@ -7,6 +7,25 @@ const list = asyncHandler(async (req, res) => {
   res.json(requests);
 });
 
+const summary = asyncHandler(async (req, res) => {
+  const [count, latest] = await Promise.all([
+    TicketRequest.countDocuments(),
+    TicketRequest.findOne().sort({ createdAt: -1 })
+  ]);
+
+  res.json({
+    count,
+    latest: latest
+      ? {
+        _id: latest._id,
+        name: latest.name,
+        date: latest.date,
+        createdAt: latest.createdAt
+      }
+      : null
+  });
+});
+
 const create = asyncHandler(async (req, res) => {
   const { name, age, email, nationality, phone, category, audience, quantity, date, timeSlot } = req.body;
   const request = await TicketRequest.create({
@@ -52,4 +71,4 @@ const convertToTask = asyncHandler(async (req, res) => {
   return res.status(201).json({ task, message: "Ticket request converted to task" });
 });
 
-module.exports = { list, create, convertToTask };
+module.exports = { list, summary, create, convertToTask };

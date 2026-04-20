@@ -1,3 +1,78 @@
+const getHomeI18n = () => {
+  const fallback = {
+    destinations: [
+      {
+        name: "Pyramids of Giza",
+        title: "PYRAMIDS",
+        eyebrow: "Old Kingdom - 2580 BC",
+        desc: "Rising from the desert sands of Giza, the Great Pyramid stood as the tallest human-made structure for nearly 4,000 years. A monumental tomb of Pharaoh Khufu, it remains the last surviving wonder of the ancient world.",
+        img: "/assets/images/pyramidsbg.png"
+      },
+      {
+        name: "Tutankhamun's Mask",
+        title: "TUT'S MASK",
+        eyebrow: "New Kingdom - 1323 BC",
+        desc: "Crafted from 11kg of solid gold and inlaid with lapis lazuli, the funerary mask of the boy king is one of the most iconic artifacts of antiquity. Discovered by Howard Carter in 1922, it now rests in the Egyptian Museum.",
+        img: "/assets/images/tut1.png"
+      },
+      {
+        name: "Great Sphinx",
+        title: "SPHINX",
+        eyebrow: "Old Kingdom - 2500 BC",
+        desc: "A colossal limestone guardian with the body of a lion and the face of a pharaoh. The Great Sphinx of Giza watches eternally over the Nile, holding secrets that have puzzled archaeologists for millennia.",
+        img: "/assets/images/sph1.png"
+      },
+      {
+        name: "Karnak Temple",
+        title: "KARNAK",
+        eyebrow: "Middle Kingdom - 2000 BC",
+        desc: "The vast religious complex at Karnak is a city of temples dedicated to Amun-Ra. Its Hypostyle Hall - a forest of 134 towering stone columns - remains one of the most awe-inspiring spaces ever built by human hands.",
+        img: "/assets/images/karnak.png"
+      },
+      {
+        name: "Abu Simbel",
+        title: "ABU SIMBEL",
+        eyebrow: "New Kingdom - 1264 BC",
+        desc: "Carved directly into a sandstone cliff, the twin temples of Ramesses II were relocated stone by stone in the 1960s to escape rising waters. Four colossal statues guard their entrance to this day.",
+        img: "/assets/images/abu1.png"
+      },
+      {
+        name: "Valley of the Kings",
+        title: "THE VALLEY",
+        eyebrow: "New Kingdom - 1500 BC",
+        desc: "Hidden in the cliffs of Luxor's west bank lie the royal tombs of Egypt's most powerful pharaohs. Sixty-three chambers carved into living rock - painted with vivid scenes of the journey to the afterlife.",
+        img: "/assets/images/valley.png"
+      }
+    ],
+    viewLabelPrefix: "View",
+    goToLabelPrefix: "Go to",
+    galleryPageLabel: "Go to gallery page",
+    readMore: "Read more",
+    readLess: "Read less",
+    pauseHintDefault: "Click to pause - Click again to resume",
+    pauseHintPaused: "Paused - Click to resume"
+  };
+
+  let source = window.HOME_PAGE_I18N || {};
+  if (!Object.keys(source).length) {
+    const jsonNode = document.getElementById("home-page-i18n");
+    const rawJson = jsonNode?.textContent?.trim();
+    if (rawJson) {
+      try {
+        source = JSON.parse(rawJson);
+      } catch (error) {
+        source = {};
+      }
+    }
+  }
+
+  return {
+    ...fallback,
+    ...source,
+    destinations: Array.isArray(source.destinations) && source.destinations.length ? source.destinations : fallback.destinations
+  };
+};
+
 document.addEventListener("DOMContentLoaded", () => {
   const bgStage = document.getElementById("bgStage");
   const cardsWrap = document.getElementById("cardsWrap");
@@ -5,50 +80,8 @@ document.addEventListener("DOMContentLoaded", () => {
 
   if (!bgStage || !cardsWrap || !timeline) return;
 
-  const DESTINATIONS = [
-    {
-      name: "Pyramids of Giza",
-      title: "PYRAMIDS",
-      eyebrow: "Old Kingdom - 2580 BC",
-      desc: "Rising from the desert sands of Giza, the Great Pyramid stood as the tallest human-made structure for nearly 4,000 years. A monumental tomb of Pharaoh Khufu, it remains the last surviving wonder of the ancient world.",
-      img: "/assets/images/pyramidsbg.png"
-    },
-    {
-      name: "Tutankhamun's Mask",
-      title: "TUT'S MASK",
-      eyebrow: "New Kingdom - 1323 BC",
-      desc: "Crafted from 11kg of solid gold and inlaid with lapis lazuli, the funerary mask of the boy king is one of the most iconic artifacts of antiquity. Discovered by Howard Carter in 1922, it now rests in the Egyptian Museum.",
-      img: "/assets/images/tut1.png"
-    },
-    {
-      name: "Great Sphinx",
-      title: "SPHINX",
-      eyebrow: "Old Kingdom - 2500 BC",
-      desc: "A colossal limestone guardian with the body of a lion and the face of a pharaoh. The Great Sphinx of Giza watches eternally over the Nile, holding secrets that have puzzled archaeologists for millennia.",
-      img: "/assets/images/sph1.png"
-    },
-    {
-      name: "Karnak Temple",
-      title: "KARNAK",
-      eyebrow: "Middle Kingdom - 2000 BC",
-      desc: "The vast religious complex at Karnak is a city of temples dedicated to Amun-Ra. Its Hypostyle Hall - a forest of 134 towering stone columns - remains one of the most awe-inspiring spaces ever built by human hands.",
-      img: "/assets/images/karnak.png"
-    },
-    {
-      name: "Abu Simbel",
-      title: "ABU SIMBEL",
-      eyebrow: "New Kingdom - 1264 BC",
-      desc: "Carved directly into a sandstone cliff, the twin temples of Ramesses II were relocated stone by stone in the 1960s to escape rising waters. Four colossal statues guard their entrance to this day.",
-      img: "/assets/images/abu1.png"
-    },
-    {
-      name: "Valley of the Kings",
-      title: "THE VALLEY",
-      eyebrow: "New Kingdom - 1500 BC",
-      desc: "Hidden in the cliffs of Luxor's west bank lie the royal tombs of Egypt's most powerful pharaohs. Sixty-three chambers carved into living rock - painted with vivid scenes of the journey to the afterlife.",
-      img: "/assets/images/valley.png"
-    }
-  ];
+  const homeI18n = getHomeI18n();
+  const DESTINATIONS = homeI18n.destinations;
 
   let activeIndex = 0;
   let isAnimating = false;
@@ -68,7 +101,7 @@ document.addEventListener("DOMContentLoaded", () => {
     card.dataset.index = String(index);
     card.setAttribute("tabindex", "0");
     card.setAttribute("role", "button");
-    card.setAttribute("aria-label", `View ${item.name}`);
+    card.setAttribute("aria-label", `${homeI18n.viewLabelPrefix} ${item.name}`);
     card.innerHTML = `
       <div class="card-img" style="background-image:url('${item.img}')"></div>
       <div class="card-shade"></div>
@@ -93,7 +126,7 @@ document.addEventListener("DOMContentLoaded", () => {
     dot.dataset.index = String(index);
     dot.setAttribute("tabindex", "0");
     dot.setAttribute("role", "button");
-    dot.setAttribute("aria-label", `Go to ${item.name}`);
+    dot.setAttribute("aria-label", `${homeI18n.goToLabelPrefix} ${item.name}`);
     dot.addEventListener("click", () => goTo(index));
     dot.addEventListener("keydown", (event) => {
       if (event.key === "Enter" || event.key === " ") {
@@ -219,7 +252,7 @@ document.addEventListener("DOMContentLoaded", () => {
     for (let i = 0; i < pageCount; i += 1) {
       const dot = document.createElement("button");
       dot.className = `gallery-dot${i === 0 ? " active" : ""}`;
-      dot.setAttribute("aria-label", `Go to gallery page ${i + 1}`);
+      dot.setAttribute("aria-label", `${homeI18n.galleryPageLabel} ${i + 1}`);
       dot.setAttribute("role", "tab");
       dot.setAttribute("aria-selected", i === 0 ? "true" : "false");
       dot.addEventListener("click", () => slideGalleryTo(i));
@@ -266,7 +299,7 @@ document.addEventListener("DOMContentLoaded", () => {
       btn.addEventListener("click", (event) => {
         event.stopPropagation();
         const isExpanded = card.classList.toggle("expanded");
-        btn.textContent = isExpanded ? "Read less" : "Read more";
+        btn.textContent = isExpanded ? homeI18n.readLess : homeI18n.readMore;
         btn.setAttribute("aria-expanded", String(isExpanded));
       });
     });
@@ -277,7 +310,7 @@ document.addEventListener("DOMContentLoaded", () => {
       isPaused = !isPaused;
       reviewsSlider.classList.toggle("paused", isPaused);
       if (pauseHint) {
-        pauseHint.textContent = isPaused ? "Paused - Click to resume" : "Click to pause - Click again to resume";
+        pauseHint.textContent = isPaused ? homeI18n.pauseHintPaused : homeI18n.pauseHintDefault;
       }
     });
 

@@ -209,6 +209,7 @@ const translations = {
         islamic: "Islamic Tour",
         christian: "Christian Tour"
       },
+      vrExperience: "VR Experience",
       gamesMenu: {
         quiz: "Quiz Game",
         explorer: "Explorer Game",
@@ -239,6 +240,8 @@ const translations = {
       featuredExhibits: "Featured Exhibits",
       virtualTours: "Virtual Tours",
       museumShop: "Museum Shop",
+      games: "Games",
+      contact: "Contact",
       planTrip: "Plan Your Trip",
       connect: "Connect",
       email: "Email",
@@ -247,7 +250,8 @@ const translations = {
       copyright: "© 2026 Egyptian Museum. All rights reserved.",
       about: "About",
       accessibility: "Accessibility",
-      newsletter: "Newsletter"
+      newsletter: "Newsletter",
+      faqs: "FAQs"
     },
 
     about: {
@@ -771,6 +775,7 @@ featured: [
         islamic: "جولة إسلامية",
         christian: "جولة قبطية"
       },
+      vrExperience: "تجربة الواقع الافتراضي",
       gamesMenu: {
         quiz: "لعبة الاختبار",
         explorer: "لعبة المستكشف",
@@ -801,6 +806,8 @@ featured: [
       featuredExhibits: "أبرز المعارض",
       virtualTours: "الجولات الافتراضية",
       museumShop: "متجر المتحف",
+      games: "الألعاب",
+      contact: "تواصل معنا",
       planTrip: "خطط زيارتك",
       connect: "تواصل",
       email: "البريد الإلكتروني",
@@ -809,7 +816,8 @@ featured: [
       copyright: "© 2026 المتحف المصري. جميع الحقوق محفوظة.",
       about: "عن المتحف",
       accessibility: "إمكانية الوصول",
-      newsletter: "النشرة البريدية"
+      newsletter: "النشرة البريدية",
+      faqs: "الأسئلة الشائعة"
     },
 
     about: {

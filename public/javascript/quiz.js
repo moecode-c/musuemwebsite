@@ -228,6 +228,7 @@ const quizCard = document.getElementById("quiz-card");
 const quizBody = document.getElementById("quiz-body");
 const quizProgress = document.getElementById("quiz-progress");
 const quizScore = document.getElementById("quiz-score");
+const quizProgressFill = document.getElementById("quiz-progress-fill");
 const startButton = document.getElementById("quiz-start");
 const nextButton = document.getElementById("quiz-next");
 const questionTemplate = document.getElementById("quiz-question-template");
@@ -258,6 +259,12 @@ const updateMeta = () => {
   if (!quizProgress || !quizScore) return;
   quizProgress.textContent = `${L.question} ${Math.min(state.currentIndex + 1, quizData.length)} ${L.of} ${quizData.length}`;
   quizScore.textContent = `${L.score}: ${state.score}`;
+
+  if (quizProgressFill) {
+    const answeredCount = Math.min(state.answers.length, quizData.length);
+    const ratio = quizData.length ? answeredCount / quizData.length : 0;
+    quizProgressFill.style.width = `${Math.round(ratio * 100)}%`;
+  }
 };
 
 const resetQuiz = () => {
@@ -281,6 +288,8 @@ const resetQuiz = () => {
 const renderQuestion = () => {
   if (!quizBody || !questionTemplate) return;
   const question = quizData[state.currentIndex];
+  if (quizCard) quizCard.classList.remove("has-answer");
+
   quizBody.innerHTML = "";
   const fragment = questionTemplate.content.cloneNode(true);
   const tagEl = fragment.querySelector("#quiz-tag");
@@ -296,13 +305,16 @@ const renderQuestion = () => {
       const button = document.createElement("button");
       button.className = "quiz-option";
       button.type = "button";
-      button.textContent = option;
+      const optionLetter = String.fromCharCode(65 + index);
+      button.setAttribute("aria-label", `${optionLetter}. ${option}`);
+      button.innerHTML = `<span class="quiz-option-index" aria-hidden="true">${optionLetter}</span><span class="quiz-option-copy">${option}</span>`;
       button.addEventListener("click", () => handleAnswer(index, button, optionsEl, feedbackEl));
       optionsEl.appendChild(button);
     });
   }
 
   if (feedbackEl) {
+    feedbackEl.classList.remove("is-correct", "is-incorrect");
     feedbackEl.textContent = L.selectAnswer;
   }
 
@@ -319,8 +331,11 @@ const handleAnswer = (selectedIndex, selectedButton, optionsEl, feedbackEl) => {
   const question = quizData[state.currentIndex];
   const isCorrect = selectedIndex === question.answer;
 
+  if (quizCard) quizCard.classList.add("has-answer");
+
   Array.from(optionsEl.children).forEach((btn, idx) => {
     btn.disabled = true;
+    btn.classList.remove("correct", "incorrect");
     if (idx === question.answer) {
       btn.classList.add("correct");
     } else if (idx === selectedIndex) {
@@ -341,12 +356,15 @@ const handleAnswer = (selectedIndex, selectedButton, optionsEl, feedbackEl) => {
   });
 
   if (feedbackEl) {
-    feedbackEl.innerHTML = `${isCorrect ? L.correct : L.incorrect} ${question.explanation}`;
+    feedbackEl.classList.remove("is-correct", "is-incorrect");
+    feedbackEl.classList.add(isCorrect ? "is-correct" : "is-incorrect");
+    feedbackEl.innerHTML = `<strong class="quiz-feedback-title">${isCorrect ? L.correct : L.incorrect}</strong><span>${question.explanation}</span>`;
   }
 
   updateMeta();
   if (nextButton) {
     nextButton.disabled = false;
+    nextButton.focus({ preventScroll: true });
   }
 };
 
@@ -378,13 +396,29 @@ const renderResults = () => {
 
   if (summaryEl) {
     state.answers.forEach((answer, index) => {
-      const item = document.createElement("div");
-      item.className = "quiz-summary-item";
-      item.innerHTML = `
-        <strong>Q${index + 1}:</strong> ${answer.question}<br />
-        <span>${L.correctAnswer} ${answer.correct}</span><br />
-        <em>${answer.explanation}</em>
-      `;
+      const item = document.createElement("article");
+      item.className = `quiz-summary-item ${answer.isCorrect ? "is-correct" : "is-incorrect"}`;
+
+      const questionLine = document.createElement("p");
+      questionLine.className = "quiz-summary-question";
+      questionLine.textContent = `Q${index + 1}. ${answer.question}`;
+
+      const statusLine = document.createElement("p");
+      statusLine.className = "quiz-summary-status";
+      statusLine.textContent = answer.isCorrect ? L.correct : L.incorrect;
+
+      const answerLine = document.createElement("p");
+      answerLine.className = "quiz-summary-answer";
+      answerLine.innerHTML = `<strong>${L.correctAnswer}</strong> ${answer.correct}`;
+
+      const noteLine = document.createElement("p");
+      noteLine.className = "quiz-summary-note";
+      noteLine.textContent = answer.explanation;
+
+      item.appendChild(questionLine);
+      item.appendChild(statusLine);
+      item.appendChild(answerLine);
+      item.appendChild(noteLine);
       summaryEl.appendChild(item);
     });
   }
@@ -405,8 +439,14 @@ const handleNext = () => {
   if (state.currentIndex < quizData.length - 1) {
     state.currentIndex += 1;
     renderQuestion();
+    if (quizCard) {
+      quizCard.scrollIntoView({ behavior: "smooth", block: "start" });
+    }
   } else {
     renderResults();
+    if (quizProgressFill) {
+      quizProgressFill.style.width = "100%";
+    }
   }
 };
 

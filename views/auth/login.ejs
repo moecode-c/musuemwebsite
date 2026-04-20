@@ -28,7 +28,7 @@
         <h2><%= language === 'ar' ? 'تسجيل الدخول' : 'Sign in' %></h2>
         <p><%= language === 'ar' ? 'استخدم بريدك الإلكتروني وكلمة المرور للمتابعة.' : 'Use your email and password to continue.' %></p>
       </div>
-      <form class="auth-form" id="login-form" autocomplete="on">
+      <form class="auth-form" id="login-form" autocomplete="on" data-validate="true" novalidate>
         <div class="input-group">
           <label for="login-email"><%= language === 'ar' ? 'البريد الإلكتروني' : 'Email' %></label>
           <div class="input-field">

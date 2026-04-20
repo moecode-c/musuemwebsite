@@ -1,10 +1,11 @@
 <%- include('../partials/header') %>
 <%- include('../partials/navbar') %>
+<% const isArabic = language === 'ar'; %>
 
 <section class="page-hero">
   <div class="container">
-    <h1>Request Your Ticket</h1>
-    <p>Choose a date, time slot, and ticket category.</p>
+    <h1><%= isArabic ? 'اطلب تذكرتك' : 'Request Your Ticket' %></h1>
+    <p><%= isArabic ? 'اختر التاريخ والوقت وفئة التذكرة.' : 'Choose a date, time slot, and ticket category.' %></p>
   </div>
 </section>
 
@@ -17,16 +18,16 @@
       <span class="step">4</span>
     </div>
     <fieldset class="semantic-fieldset">
-      <legend class="ticket-section-title semantic-legend">Select Date</legend>
+      <legend class="ticket-section-title semantic-legend"><%= isArabic ? 'اختر التاريخ' : 'Select Date' %></legend>
       <div class="ticket-calendar">
         <input type="date" id="ticket-date" name="date" form="ticket-request-form" autocomplete="off" required />
-        <p class="ticket-hint">Unavailable dates have reached capacity.</p>
+        <p class="ticket-hint"><%= isArabic ? 'التواريخ غير المتاحة وصلت إلى السعة القصوى.' : 'Unavailable dates have reached capacity.' %></p>
       </div>
     </fieldset>
 
     <fieldset class="semantic-fieldset">
-      <legend class="ticket-section-title semantic-legend">Select Entry Time Slot</legend>
-      <div class="ticket-slots" role="group" aria-label="Time slots">
+      <legend class="ticket-section-title semantic-legend"><%= isArabic ? 'اختر فترة الدخول' : 'Select Entry Time Slot' %></legend>
+      <div class="ticket-slots" role="group" aria-label="<%= isArabic ? 'الفترات الزمنية' : 'Time slots' %>">
         <label class="ticket-slot">
           <input type="radio" name="timeSlot" value="08:30 - 11:00" form="ticket-request-form" autocomplete="off" required />
           <span>08:30 - 11:00</span>
@@ -43,10 +44,14 @@
     </fieldset>
 
     <fieldset class="semantic-fieldset">
-      <legend class="ticket-section-title semantic-legend">Select Tickets</legend>
+      <legend class="ticket-section-title semantic-legend"><%= isArabic ? 'اختر التذاكر' : 'Select Tickets' %></legend>
       <div class="ticket-groups">
-        <% const groupLabels = { egyptian: "Egyptians", arab: "Arabs or Other Nationalities", foreigner: "Expatriates" }; %>
-        <% const audienceLabels = { adult: "Adult", student: "Student", child: "Child", senior: "Senior" }; %>
+        <% const groupLabels = isArabic
+          ? { egyptian: "المصريون", arab: "العرب أو الجنسيات الأخرى", foreigner: "الأجانب المقيمون" }
+          : { egyptian: "Egyptians", arab: "Arabs or Other Nationalities", foreigner: "Expatriates" }; %>
+        <% const audienceLabels = isArabic
+          ? { adult: "بالغ", student: "طالب", child: "طفل", senior: "كبير سن" }
+          : { adult: "Adult", student: "Student", child: "Child", senior: "Senior" }; %>
         <% Object.keys(groupLabels).forEach((groupKey) => { %>
           <details class="ticket-group">
             <summary><%= groupLabels[groupKey] %></summary>
@@ -75,19 +80,19 @@
     <form class="form ticket-form" id="ticket-request-form" autocomplete="on">
       <input type="hidden" name="category" id="ticket-category" autocomplete="off" required />
       <input type="hidden" name="audience" id="ticket-audience" autocomplete="off" required />
-      <label>Full Name</label>
+      <label><%= isArabic ? 'الاسم الكامل' : 'Full Name' %></label>
       <input type="text" name="name" autocomplete="name" required />
-      <label>Age</label>
+      <label><%= isArabic ? 'العمر' : 'Age' %></label>
       <input type="number" name="age" autocomplete="off" min="1" required />
-      <label>Email</label>
+      <label><%= isArabic ? 'البريد الإلكتروني' : 'Email' %></label>
       <input type="email" name="email" autocomplete="email" required />
-      <label>Nationality</label>
+      <label><%= isArabic ? 'الجنسية' : 'Nationality' %></label>
       <input type="text" name="nationality" autocomplete="country-name" required />
-      <label>Phone Number</label>
+      <label><%= isArabic ? 'رقم الهاتف' : 'Phone Number' %></label>
       <input type="text" name="phone" autocomplete="tel" required />
-      <label>Tickets Quantity</label>
+      <label><%= isArabic ? 'عدد التذاكر' : 'Tickets Quantity' %></label>
       <input type="number" name="quantity" autocomplete="off" min="1" value="1" required />
-      <button class="btn" type="submit">Submit Ticket Request</button>
+      <button class="btn" type="submit"><%= isArabic ? 'إرسال طلب التذكرة' : 'Submit Ticket Request' %></button>
       <p class="form-message" id="ticket-request-message"></p>
     </form>
   </div>

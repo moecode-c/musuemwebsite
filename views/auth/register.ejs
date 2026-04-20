@@ -28,7 +28,7 @@
         <h2><%= language === 'ar' ? 'التسجيل' : 'Register' %></h2>
         <p><%= language === 'ar' ? 'أدخل بياناتك للبدء.' : 'Fill in the details below to get started.' %></p>
       </div>
-      <form class="auth-form" id="register-form" autocomplete="on">
+      <form class="auth-form" id="register-form" autocomplete="on" data-validate="true" novalidate>
         <div class="input-group">
           <label for="register-name"><%= language === 'ar' ? 'الاسم' : 'Name' %></label>
           <div class="input-field">

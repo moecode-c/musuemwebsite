@@ -58,15 +58,25 @@ const uploadBuffer = async (buffer, options = {}) => {
     throw new Error("Upload buffer is required.");
   }
 
+  const requireCloudinary = Boolean(options.requireCloudinary);
+  const uploadOptions = { ...options };
+  delete uploadOptions.requireCloudinary;
+
   if (!cloudinaryConfigured) {
-    return uploadBufferToLocal(buffer, options);
+    if (requireCloudinary) {
+      throw new Error("Cloudinary is not configured. Please set CLOUDINARY_CLOUD_NAME, CLOUDINARY_API_KEY, and CLOUDINARY_API_SECRET.");
+    }
+    return uploadBufferToLocal(buffer, uploadOptions);
   }
 
   try {
-    return await uploadBufferToCloudinary(buffer, options);
+    return await uploadBufferToCloudinary(buffer, uploadOptions);
   } catch (error) {
+    if (requireCloudinary) {
+      throw new Error(`Cloudinary upload failed: ${error.message}`);
+    }
     console.warn("Cloudinary upload failed, using local upload fallback:", error.message);
-    return uploadBufferToLocal(buffer, options);
+    return uploadBufferToLocal(buffer, uploadOptions);
   }
 };
 

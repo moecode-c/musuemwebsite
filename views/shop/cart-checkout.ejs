@@ -1,18 +1,19 @@
 <%- include('../partials/header') %>
 <%- include('../partials/navbar') %>
+<% const isArabic = language === 'ar'; %>
 
 <main class="checkout-page">
   <section class="page-hero">
     <div class="container">
-      <h1>Checkout</h1>
-      <p>Review your order and enter delivery details.</p>
+      <h1><%= isArabic ? 'إتمام الطلب' : 'Checkout' %></h1>
+      <p><%= isArabic ? 'راجع طلبك وأدخل تفاصيل التوصيل.' : 'Review your order and enter delivery details.' %></p>
     </div>
   </section>
 
   <section class="section">
     <div class="container checkout-shell">
       <div class="checkout-summary">
-        <h2>Your Items</h2>
+        <h2><%= isArabic ? 'العناصر الخاصة بك' : 'Your Items' %></h2>
         <% if (items && items.length) { %>
           <ul class="summary-list">
             <% items.forEach((item) => { %>
@@ -25,27 +26,27 @@
               </li>
             <% }) %>
           </ul>
-          <div class="summary-total">Total: EGP <%= total %></div>
+          <div class="summary-total"><%= isArabic ? 'الإجمالي:' : 'Total:' %> EGP <%= total %></div>
         <% } else { %>
-          <p class="muted">Your cart is empty.</p>
+          <p class="muted"><%= isArabic ? 'سلة التسوق فارغة.' : 'Your cart is empty.' %></p>
         <% } %>
       </div>
       <div class="checkout-form">
-        <h2>Shipping & Payment</h2>
+        <h2><%= isArabic ? 'الشحن والدفع' : 'Shipping & Payment' %></h2>
         <form class="form" id="product-checkout-form">
-          <label>Full Name</label>
+          <label><%= isArabic ? 'الاسم الكامل' : 'Full Name' %></label>
           <input type="text" name="name" required />
-          <label>Email</label>
+          <label><%= isArabic ? 'البريد الإلكتروني' : 'Email' %></label>
           <input type="email" name="email" required />
-          <label>Phone</label>
+          <label><%= isArabic ? 'الهاتف' : 'Phone' %></label>
           <input type="text" name="phone" required />
-          <label>Address</label>
+          <label><%= isArabic ? 'العنوان' : 'Address' %></label>
           <input type="text" name="address" required />
-          <label>City</label>
+          <label><%= isArabic ? 'المدينة' : 'City' %></label>
           <input type="text" name="city" required />
-          <label>Notes (optional)</label>
-          <textarea name="notes" rows="3" placeholder="Any delivery notes"></textarea>
-          <button class="btn" type="submit">Place Order</button>
+          <label><%= isArabic ? 'ملاحظات (اختياري)' : 'Notes (optional)' %></label>
+          <textarea name="notes" rows="3" placeholder="<%= isArabic ? 'أي ملاحظات للتوصيل' : 'Any delivery notes' %>"></textarea>
+          <button class="btn" type="submit"><%= isArabic ? 'تأكيد الطلب' : 'Place Order' %></button>
           <p class="form-message" id="checkout-message"></p>
         </form>
       </div>

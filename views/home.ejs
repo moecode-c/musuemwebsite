@@ -1,3 +1,61 @@
+<%
+  const isArabic = language === "ar";
+  const homePageI18n = isArabic
+    ? {
+      viewLabelPrefix: "عرض",
+      goToLabelPrefix: "اذهب إلى",
+      galleryPageLabel: "اذهب إلى صفحة المعرض",
+      readMore: "اقرأ المزيد",
+      readLess: "عرض أقل",
+      pauseHintDefault: "انقر للإيقاف المؤقت ثم انقر مرة أخرى للاستئناف",
+      pauseHintPaused: "متوقف مؤقتا - انقر للاستئناف",
+      destinations: [
+        {
+          name: "أهرامات الجيزة",
+          title: "الأهرامات",
+          eyebrow: "الدولة القديمة - 2580 ق.م",
+          desc: "تنهض من رمال صحراء الجيزة، وقد ظلت الهرم الأكبر أعلى بناء صنعه الإنسان لما يقارب 4,000 عام. إنه المقبرة الملكية للفرعون خوفو وآخر عجائب العالم القديم الباقية حتى اليوم.",
+          img: "/assets/images/pyramidsbg.png"
+        },
+        {
+          name: "قناع توت عنخ آمون",
+          title: "قناع توت",
+          eyebrow: "الدولة الحديثة - 1323 ق.م",
+          desc: "صنع من 11 كجم من الذهب الخالص ومطعم بحجر اللازورد، ويعد القناع الجنائزي للملك الصغير أحد أشهر آثار العصور القديمة. اكتشفه هوارد كارتر عام 1922 ويعرض اليوم في المتحف المصري.",
+          img: "/assets/images/tut1.png"
+        },
+        {
+          name: "أبو الهول العظيم",
+          title: "أبو الهول",
+          eyebrow: "الدولة القديمة - 2500 ق.م",
+          desc: "حارس هائل من الحجر الجيري بجسد أسد ووجه فرعون. يطل أبو الهول على النيل منذ آلاف السنين حاملا أسرارا لا تزال تحير علماء الآثار.",
+          img: "/assets/images/sph1.png"
+        },
+        {
+          name: "معبد الكرنك",
+          title: "الكرنك",
+          eyebrow: "الدولة الوسطى - 2000 ق.م",
+          desc: "مجمع ديني ضخم مكرس للإله آمون رع. وتظل قاعة الأعمدة الكبرى - بغابتها المكونة من 134 عمودا حجريا شاهقا - من أكثر المساحات المعمارية إدهاشا في التاريخ.",
+          img: "/assets/images/karnak.png"
+        },
+        {
+          name: "أبو سمبل",
+          title: "أبو سمبل",
+          eyebrow: "الدولة الحديثة - 1264 ق.م",
+          desc: "نحت المعبدان التوأمان لرمسيس الثاني مباشرة في جرف رملي، ثم أعيد نقلهما حجرا حجرا في ستينيات القرن الماضي لإنقاذهما من مياه الفيضان. ولا تزال التماثيل الأربعة العملاقة تحرس المدخل حتى اليوم.",
+          img: "/assets/images/abu1.png"
+        },
+        {
+          name: "وادي الملوك",
+          title: "الوادي",
+          eyebrow: "الدولة الحديثة - 1500 ق.م",
+          desc: "في منحدرات الضفة الغربية للأقصر تختبئ مقابر أقوى فراعنة مصر. ثلاث وستون حجرة منحوتة في الصخر، مزينة بمشاهد زاهية لرحلة ما بعد الحياة.",
+          img: "/assets/images/valley.png"
+        }
+      ]
+    }
+    : {};
+%>
 <%- include('partials/header') %>
 <%- include('partials/navbar') %>
 
@@ -5,16 +63,16 @@
   <div class="bg-stage" id="bgStage"></div>
   <div class="bg-overlay"></div>
 
-  <div class="brand">The <span>Afterlife</span> Museum</div>
+  <div class="brand"><%= isArabic ? "متحف" : "The" %> <span><%= isArabic ? "الحياة الأخرى" : "Afterlife" %></span> <%= isArabic ? "" : "Museum" %></div>
   <div class="timeline" id="timeline"></div>
 
   <div class="frame">
     <div class="content" id="content">
-      <div class="eyebrow" id="eyebrow">Egyptian Museum - Cairo</div>
-      <h1 class="title" id="title">PYRAMIDS</h1>
-      <p class="desc" id="desc">Loading...</p>
-      <button class="explore-btn" aria-label="Explore this exhibit">
-        Explore <span class="arrow" aria-hidden="true">→</span>
+      <div class="eyebrow" id="eyebrow"><%= isArabic ? "المتحف المصري - القاهرة" : "Egyptian Museum - Cairo" %></div>
+      <h1 class="title" id="title"><%= isArabic ? "الأهرامات" : "PYRAMIDS" %></h1>
+      <p class="desc" id="desc"><%= isArabic ? "جار التحميل..." : "Loading..." %></p>
+      <button class="explore-btn" aria-label="<%= isArabic ? 'استكشف هذا المعروض' : 'Explore this exhibit' %>">
+        <%= isArabic ? "استكشف" : "Explore" %> <span class="arrow" aria-hidden="true">→</span>
       </button>
     </div>
     <div class="cards-wrap" id="cardsWrap"></div>
@@ -22,8 +80,8 @@
 
   <div class="corner"><span id="counterCur">01</span> / <span id="counterTotal">06</span></div>
   <div class="controls">
-    <button class="ctrl" id="prevBtn" aria-label="Previous exhibit">‹</button>
-    <button class="ctrl" id="nextBtn" aria-label="Next exhibit">›</button>
+    <button class="ctrl" id="prevBtn" aria-label="<%= isArabic ? 'المعروض السابق' : 'Previous exhibit' %>">‹</button>
+    <button class="ctrl" id="nextBtn" aria-label="<%= isArabic ? 'المعروض التالي' : 'Next exhibit' %>">›</button>
   </div>
 </section>
 
@@ -40,32 +98,34 @@
       ></video>
     </div>
     <div class="about-text">
-      <div class="about-eyebrow">The Afterlife Museum - Cairo</div>
-      <h2 class="about-heading">Guardians of an Eternal Legacy</h2>
+      <div class="about-eyebrow"><%= isArabic ? "متحف الحياة الأخرى - القاهرة" : "The Afterlife Museum - Cairo" %></div>
+      <h2 class="about-heading"><%= isArabic ? "حراس إرث خالد" : "Guardians of an Eternal Legacy" %></h2>
       <p class="about-desc">
-        Step inside a world where pharaohs still whisper through stone and gold.
-        Our museum holds the largest collection of Egyptian antiquities — from
-        the boy king's golden mask to the colossal statues of the New Kingdom.
-        Every artifact is a doorway to a civilization that shaped the world.
+        <%= isArabic
+          ? "ادخل إلى عالم ما زالت فيه همسات الفراعنة تتردد عبر الحجر والذهب. يضم متحفنا أكبر مجموعة من الآثار المصرية، من القناع الذهبي للملك الصغير إلى التماثيل العملاقة لعصر الدولة الحديثة. كل قطعة أثرية هي بوابة إلى حضارة شكلت العالم."
+          : "Step inside a world where pharaohs still whisper through stone and gold. Our museum holds the largest collection of Egyptian antiquities — from the boy king's golden mask to the colossal statues of the New Kingdom. Every artifact is a doorway to a civilization that shaped the world."
+        %>
       </p>
       <div class="about-mini-photos">
         <div class="about-mini-photo" style="background-image:url('/assets/images/tut1.png')" role="img" aria-label="Tutankhamun exhibit"></div>
         <div class="about-mini-photo" style="background-image:url('/assets/images/sph1.png')" role="img" aria-label="Great Sphinx exhibit"></div>
       </div>
-      <button class="about-cta" aria-label="Discover more about the museum">Discover More</button>
+      <button class="about-cta" aria-label="<%= isArabic ? 'اكتشف المزيد عن المتحف' : 'Discover more about the museum' %>"><%= isArabic ? "اكتشف المزيد" : "Discover More" %></button>
     </div>
   </div>
 </section>
 
 <section class="spotlight-wrap">
   <div class="spotlight-section">
-    <div class="spotlight-kicker">The Afterlife Museum - Cairo</div>
-    <h2 class="spotlight-title">Virtual Odyssey</h2>
+    <div class="spotlight-kicker"><%= isArabic ? "متحف الحياة الأخرى - القاهرة" : "The Afterlife Museum - Cairo" %></div>
+    <h2 class="spotlight-title"><%= isArabic ? "أوديسة افتراضية" : "Virtual Odyssey" %></h2>
     <p class="spotlight-text">
-      Take a guided virtual tour through the galleries. Zoom into artifacts,
-      explore 360-degree halls, and walk the museum from anywhere in the world.
+      <%= isArabic
+        ? "انطلق في جولة افتراضية إرشادية عبر القاعات. قرّب المعروضات، واستكشف قاعات 360 درجة، وتجول في المتحف من أي مكان في العالم."
+        : "Take a guided virtual tour through the galleries. Zoom into artifacts, explore 360-degree halls, and walk the museum from anywhere in the world."
+      %>
     </p>
-    <button class="spotlight-btn" aria-label="Start virtual tour">Discover More</button>
+    <button class="spotlight-btn" aria-label="<%= isArabic ? 'ابدأ الجولة الافتراضية' : 'Start virtual tour' %>"><%= isArabic ? "اكتشف المزيد" : "Discover More" %></button>
   </div>
 </section>
 
@@ -85,31 +145,33 @@
     </div>
 
     <div class="shop-content">
-      <h2 class="shop-title">Museum Shop</h2>
+      <h2 class="shop-title"><%= isArabic ? "متجر المتحف" : "Museum Shop" %></h2>
       <p class="shop-text">
-        Curated replicas, artisan jewelry, and modern prints inspired by
-        ancient motifs. Bring a piece of the story home.
+        <%= isArabic
+          ? "نسخ مختارة بعناية، ومجوهرات حرفية، ومطبوعات عصرية مستوحاة من الزخارف القديمة. خذ معك قطعة من الحكاية إلى منزلك."
+          : "Curated replicas, artisan jewelry, and modern prints inspired by ancient motifs. Bring a piece of the story home."
+        %>
       </p>
-      <button class="shop-btn" aria-label="Visit the museum shop">Visit Shop</button>
+      <button class="shop-btn" aria-label="<%= isArabic ? 'زر متجر المتحف' : 'Visit the museum shop' %>"><%= isArabic ? "زيارة المتجر" : "Visit Shop" %></button>
     </div>
   </div>
 </section>
 
 <section class="gallery-wrap">
   <div class="gallery-section">
-    <h2 class="gallery-title">Photo Gallery</h2>
+    <h2 class="gallery-title"><%= isArabic ? "معرض الصور" : "Photo Gallery" %></h2>
     <div class="gallery-block">
       <div class="gallery-slider" aria-label="Photo gallery slider" role="region">
         <div class="slider-track" id="sliderTrack">
           <div class="slider-page" role="group" aria-label="Gallery page 1">
-            <div class="slide-tile gallery-item-1" style="background-image:url('https://tse4.mm.bing.net/th/id/OIP.h56HHeX38QjU6uL3XDm8-gHaEK?rs=1&pid=ImgDetMain&o=7&rm=3')" role="img" aria-label="Pyramids at sunset"></div>
-            <div class="slide-tile gallery-item-2" style="background-image:url('https://tse4.mm.bing.net/th/id/OIP.NZA4wX7LxAnDXQLOEv2-mAHaEK?rs=1&pid=ImgDetMain&o=7&rm=3')" role="img" aria-label="Egyptian landscape"></div>
-            <div class="slide-tile gallery-item-3" style="background-image:url('https://tse3.mm.bing.net/th/id/OIP.AJFH_EIaaJw7hEDnLe6eqAHaE9?rs=1&pid=ImgDetMain&o=7&rm=3')" role="img" aria-label="Temple columns"></div>
-            <div class="slide-tile gallery-item-4" style="background-image:url('https://www.egypttoursportal.com/images/2025/04/Nile-River-Egypt-Tours-Portal.jpg')" role="img" aria-label="Nile River"></div>
-            <div class="slide-tile gallery-item-5" style="background-image:url('https://greekreporter.com/wp-content/uploads/2021/12/Saint_Catherines_-Monastery_credit_patano_wikimedia_commons-1024x542.jpg')" role="img" aria-label="Saint Catherine's Monastery"></div>
-            <div class="slide-tile gallery-item-6" style="background-image:url('https://ucarecdn.com/613c264d-f5af-481a-af0a-9d6a2f0b6efc/-/crop/680x357/0,2/-/preview/-/resize/x400/')" role="img" aria-label="Egypt landscape"></div>
-            <div class="slide-tile gallery-item-7" style="background-image:url('https://i.pinimg.com/originals/d2/8a/9d/d28a9d33a3a095fdd51751e6cc4e2964.jpg')" role="img" aria-label="Desert dunes"></div>
-            <div class="slide-tile gallery-item-8" style="background-image:url('https://tse3.mm.bing.net/th/id/OIP.CGFs9K-P6RsS4IUwP_q_kAHaG6?rs=1&pid=ImgDetMain&o=7&rm=3')" role="img" aria-label="Ancient ruins"></div>
+            <div class="slide-tile gallery-item-1" style="background-image:url('/assets/images/pyramidsbg.png')" role="img" aria-label="Pyramids at sunset"></div>
+            <div class="slide-tile gallery-item-2" style="background-image:url('/assets/images/bg1.jpeg')" role="img" aria-label="Egyptian landscape"></div>
+            <div class="slide-tile gallery-item-3" style="background-image:url('/assets/images/karnak.png')" role="img" aria-label="Temple columns"></div>
+            <div class="slide-tile gallery-item-4" style="background-image:url('/assets/images/valley.png')" role="img" aria-label="Nile River"></div>
+            <div class="slide-tile gallery-item-5" style="background-image:url('/assets/images/Christian%209.jpg')" role="img" aria-label="Saint Catherine's Monastery"></div>
+            <div class="slide-tile gallery-item-6" style="background-image:url('/assets/images/bg2.jpeg')" role="img" aria-label="Egypt landscape"></div>
+            <div class="slide-tile gallery-item-7" style="background-image:url('/assets/images/desertmap.png')" role="img" aria-label="Desert dunes"></div>
+            <div class="slide-tile gallery-item-8" style="background-image:url('/assets/images/image11.jpg')" role="img" aria-label="Ancient ruins"></div>
           </div>
 
           <div class="slider-page" role="group" aria-label="Gallery page 2">
@@ -136,10 +198,10 @@
         </div>
 
         <div class="slider-controls">
-          <button class="slider-btn" type="button" id="sliderPrev" aria-label="Previous gallery page">‹</button>
-          <button class="slider-btn" type="button" id="sliderNext" aria-label="Next gallery page">›</button>
+          <button class="slider-btn" type="button" id="sliderPrev" aria-label="<%= isArabic ? 'صفحة المعرض السابقة' : 'Previous gallery page' %>">‹</button>
+          <button class="slider-btn" type="button" id="sliderNext" aria-label="<%= isArabic ? 'صفحة المعرض التالية' : 'Next gallery page' %>">›</button>
         </div>
-        <div class="gallery-dots" id="galleryDots" role="tablist" aria-label="Gallery pages"></div>
+        <div class="gallery-dots" id="galleryDots" role="tablist" aria-label="<%= isArabic ? 'صفحات المعرض' : 'Gallery pages' %>"></div>
       </div>
     </div>
   </div>
@@ -150,7 +212,7 @@
 <section class="reviews-section">
   <div class="reviews-stage">
     <header class="reviews-header">
-      <div class="reviews-title">What Visitors Say</div>
+      <div class="reviews-title"><%= isArabic ? "ماذا يقول الزوار" : "What Visitors Say" %></div>
       <div class="reviews-title-line"></div>
     </header>
 
@@ -158,9 +220,9 @@
       <div class="reviews-track" id="reviewsTrack">
         <article class="reviews-slide">
           <div class="review-card">
-            <div class="review-photo-banner" style="background-image:url('https://images.unsplash.com/photo-1568515387631-8b650bbcdb90?q=80&w=800&auto=format&fit=crop')" role="img" aria-label="Cairo skyline"></div>
+            <div class="review-photo-banner" style="background-image:url('/assets/images/bg2.png')" role="img" aria-label="Cairo skyline"></div>
             <div class="review-avatar-wrap">
-              <div class="review-avatar" style="background-image:url('https://images.unsplash.com/photo-1500530855697-b586d89ba3ee?q=80&w=200&auto=format&fit=crop')" role="img" aria-label="Isabella's photo"></div>
+              <div class="review-avatar" style="background-image:url('/assets/images/image1.jpeg')" role="img" aria-label="Isabella's photo"></div>
             </div>
             <div class="review-body">
               <div class="review-name">Isabella</div>
@@ -168,18 +230,21 @@
               <div class="review-stars" aria-label="5 stars">★★★★★</div>
               <div class="review-divider"></div>
               <p class="review-text">
-                Really nice, relaxing and impressive. Would recommend to everyone who is interested in ancient history and Egyptian culture. The colors and textures of every exhibit were so incredibly interesting — unlike anything I have ever experienced.
+                <%= isArabic
+                  ? "كانت التجربة رائعة ومريحة ومبهرة. أنصح بها كل من يهتم بالتاريخ القديم والثقافة المصرية. ألوان كل معروض وتفاصيله كانت مدهشة بشكل لا يوصف ولم أشاهد مثلها من قبل."
+                  : "Really nice, relaxing and impressive. Would recommend to everyone who is interested in ancient history and Egyptian culture. The colors and textures of every exhibit were so incredibly interesting — unlike anything I have ever experienced."
+                %>
               </p>
-              <button class="review-link" type="button" aria-expanded="false">Read more</button>
+              <button class="review-link" type="button" aria-expanded="false"><%= isArabic ? "اقرأ المزيد" : "Read more" %></button>
             </div>
           </div>
         </article>
 
         <article class="reviews-slide">
           <div class="review-card">
-            <div class="review-photo-banner" style="background-image:url('https://images.unsplash.com/photo-1539768942893-daf4b5b4e0c8?q=80&w=800&auto=format&fit=crop')" role="img" aria-label="Pyramids view"></div>
+            <div class="review-photo-banner" style="background-image:url('/assets/images/pillarsbg.png')" role="img" aria-label="Pyramids view"></div>
             <div class="review-avatar-wrap">
-              <div class="review-avatar" style="background-image:url('https://images.unsplash.com/photo-1500534314209-a25ddb2bd429?q=80&w=200&auto=format&fit=crop')" role="img" aria-label="Mara's photo"></div>
+              <div class="review-avatar" style="background-image:url('/assets/images/image3.jpeg')" role="img" aria-label="Mara's photo"></div>
             </div>
             <div class="review-body">
               <div class="review-name">Mara</div>
@@ -187,18 +252,21 @@
               <div class="review-stars" aria-label="5 stars">★★★★★</div>
               <div class="review-divider"></div>
               <p class="review-text">
-                The scenery was breathtaking. Every gallery felt like entering a new painting. Quiet, peaceful, unforgettable. The curators have done an extraordinary job making ancient history feel alive and immediate.
+                <%= isArabic
+                  ? "المناظر كانت تخطف الأنفاس. كل قاعة شعرت كأنها لوحة جديدة. هدوء وسكينة وتجربة لا تنسى. قام القيمون على المتحف بعمل استثنائي جعل التاريخ القديم حيا وقريبا جدا."
+                  : "The scenery was breathtaking. Every gallery felt like entering a new painting. Quiet, peaceful, unforgettable. The curators have done an extraordinary job making ancient history feel alive and immediate."
+                %>
               </p>
-              <button class="review-link" type="button" aria-expanded="false">Read more</button>
+              <button class="review-link" type="button" aria-expanded="false"><%= isArabic ? "اقرأ المزيد" : "Read more" %></button>
             </div>
           </div>
         </article>
 
         <article class="reviews-slide">
           <div class="review-card">
-            <div class="review-photo-banner" style="background-image:url('https://images.unsplash.com/photo-1588416936097-41850ab3d86d?q=80&w=800&auto=format&fit=crop')" role="img" aria-label="Egypt monument"></div>
+            <div class="review-photo-banner" style="background-image:url('/assets/images/islamic%20bg.jpg')" role="img" aria-label="Egypt monument"></div>
             <div class="review-avatar-wrap">
-              <div class="review-avatar" style="background-image:url('https://images.unsplash.com/photo-1469474968028-56623f02e42e?q=80&w=200&auto=format&fit=crop')" role="img" aria-label="Elena's photo"></div>
+              <div class="review-avatar" style="background-image:url('/assets/images/image4.jpeg')" role="img" aria-label="Elena's photo"></div>
             </div>
             <div class="review-body">
               <div class="review-name">Elena</div>
@@ -206,18 +274,21 @@
               <div class="review-stars" aria-label="5 stars">★★★★★</div>
               <div class="review-divider"></div>
               <p class="review-text">
-                Perfectly paced, and the guided tour was absolutely amazing. We felt safe and thrilled the entire time. The staff's knowledge is deep and their passion for Egyptian history is genuinely contagious.
+                <%= isArabic
+                  ? "إيقاع الجولة كان مثاليا، والجولة الإرشادية كانت مذهلة بحق. شعرنا بالأمان والحماس طوال الوقت. معرفة الفريق عميقة وشغفهم بتاريخ مصر ينتقل إليك مباشرة."
+                  : "Perfectly paced, and the guided tour was absolutely amazing. We felt safe and thrilled the entire time. The staff's knowledge is deep and their passion for Egyptian history is genuinely contagious."
+                %>
               </p>
-              <button class="review-link" type="button" aria-expanded="false">Read more</button>
+              <button class="review-link" type="button" aria-expanded="false"><%= isArabic ? "اقرأ المزيد" : "Read more" %></button>
             </div>
           </div>
         </article>
 
         <article class="reviews-slide">
           <div class="review-card">
-            <div class="review-photo-banner" style="background-image:url('https://images.unsplash.com/photo-1553913861-c0fddf2619ee?q=80&w=800&auto=format&fit=crop')" role="img" aria-label="Ancient hieroglyphs"></div>
+            <div class="review-photo-banner" style="background-image:url('/assets/images/Christian%20bg.jpg')" role="img" aria-label="Ancient hieroglyphs"></div>
             <div class="review-avatar-wrap">
-              <div class="review-avatar" style="background-image:url('https://images.unsplash.com/photo-1521119989659-a83eee488004?q=80&w=200&auto=format&fit=crop')" role="img" aria-label="Omar's photo"></div>
+              <div class="review-avatar" style="background-image:url('/assets/images/image7.jpg')" role="img" aria-label="Omar's photo"></div>
             </div>
             <div class="review-body">
               <div class="review-name">Omar</div>
@@ -225,20 +296,25 @@
               <div class="review-stars" aria-label="5 stars">★★★★★</div>
               <div class="review-divider"></div>
               <p class="review-text">
-                As an Egyptian myself, I was moved to see our history presented with such care and reverence. World-class presentation, impeccable lighting, and a journey through time I will never forget.
+                <%= isArabic
+                  ? "بصفتي مصريا، تأثرت كثيرا برؤية تاريخنا يقدم بكل هذا الاهتمام والتقدير. عرض بمستوى عالمي، وإضاءة متقنة، ورحلة عبر الزمن لن أنساها أبدا."
+                  : "As an Egyptian myself, I was moved to see our history presented with such care and reverence. World-class presentation, impeccable lighting, and a journey through time I will never forget."
+                %>
               </p>
-              <button class="review-link" type="button" aria-expanded="false">Read more</button>
+              <button class="review-link" type="button" aria-expanded="false"><%= isArabic ? "اقرأ المزيد" : "Read more" %></button>
             </div>
           </div>
         </article>
       </div>
     </div>
-    <p class="reviews-pause-hint" id="pauseHint">Click to pause - Click again to resume</p>
+    <p class="reviews-pause-hint" id="pauseHint"><%= isArabic ? "انقر للإيقاف المؤقت ثم انقر مرة أخرى للاستئناف" : "Click to pause - Click again to resume" %></p>
   </div>
 </section>
 
+<script type="application/json" id="home-page-i18n"><%- JSON.stringify(homePageI18n) %></script>
+
 <script src="/javascript/home.js"></script>
 
-<script type="module" src="https://unpkg.com/@google/model-viewer/dist/model-viewer.min.js"></script>
+<script type="module" src="/vendor/model-viewer/model-viewer.min.js"></script>
 
 <%- include('partials/footer') %>

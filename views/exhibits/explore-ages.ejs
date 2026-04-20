@@ -1,24 +1,27 @@
 <%- include('../partials/header') %>
 <%- include('../partials/navbar') %>
+<% const isArabic = language === 'ar'; %>
 
 <main class="ages-page">
   <section class="ages-hero" aria-labelledby="explore-ages-title">
     <div class="ages-hero-fog" aria-hidden="true"></div>
     <div class="container ages-hero-inner">
-      <p class="ages-kicker">Curating Eternity</p>
-      <h1 id="explore-ages-title">Explore the Ages</h1>
+      <p class="ages-kicker"><%= isArabic ? 'تنسيق الخلود' : 'Curating Eternity' %></p>
+      <h1 id="explore-ages-title"><%= isArabic ? 'استكشف العصور' : 'Explore the Ages' %></h1>
       <p class="ages-intro">
-        Step across the threshold of time. From the celestial monuments of the Pharaohs to the
-        intricate geometries of the Islamic Golden Age.
+        <%= isArabic
+          ? 'اعبر بوابة الزمن، من المعالم المهيبة لعصر الفراعنة إلى هندسات العصر الإسلامي الذهبي الدقيقة.'
+          : 'Step across the threshold of time. From the celestial monuments of the Pharaohs to the intricate geometries of the Islamic Golden Age.'
+        %>
       </p>
-      <a class="ages-cta" href="#primary-eras">Begin Journey</a>
+      <a class="ages-cta" href="#primary-eras"><%= isArabic ? 'ابدأ الرحلة' : 'Begin Journey' %></a>
     </div>
   </section>
 
   <section class="ages-section ages-section-eras" id="primary-eras" aria-labelledby="primary-eras-title">
     <div class="container">
-      <h2 id="primary-eras-title">Primary Eras</h2>
-      <p class="ages-section-kicker">Select a portal to begin</p>
+      <h2 id="primary-eras-title"><%= isArabic ? 'العصور الأساسية' : 'Primary Eras' %></h2>
+      <p class="ages-section-kicker"><%= isArabic ? 'اختر بوابتك للبداية' : 'Select a portal to begin' %></p>
 
       <div class="era-grid" role="list">
         <article class="era-card era-card--pharaonic reveal" role="listitem">
@@ -26,12 +29,12 @@
           <div class="era-card-body">
             <div class="era-icon"><i class="fa-solid fa-eye"></i></div>
             <h3>
-              <span class="era-prefix">The</span>
-              <span class="era-main">Pharaonic</span>
-              <span class="era-suffix">Era</span>
+              <span class="era-prefix"><%= isArabic ? '' : 'The' %></span>
+              <span class="era-main"><%= isArabic ? 'الفرعوني' : 'Pharaonic' %></span>
+              <span class="era-suffix"><%= isArabic ? 'العصر' : 'Era' %></span>
             </h3>
             <a class="era-enter" href="/exhibits/pharaoh">
-              <span>Enter Era</span>
+              <span><%= isArabic ? 'ادخل العصر' : 'Enter Era' %></span>
               <i class="fa-solid fa-arrow-right-long"></i>
             </a>
           </div>
@@ -43,12 +46,12 @@
           <div class="era-card-body">
             <div class="era-icon"><i class="fa-solid fa-mosque"></i></div>
             <h3>
-              <span class="era-prefix">The</span>
-              <span class="era-main">Islamic</span>
-              <span class="era-suffix">Era</span>
+              <span class="era-prefix"><%= isArabic ? '' : 'The' %></span>
+              <span class="era-main"><%= isArabic ? 'الإسلامي' : 'Islamic' %></span>
+              <span class="era-suffix"><%= isArabic ? 'العصر' : 'Era' %></span>
             </h3>
             <a class="era-enter" href="/exhibits/islamic">
-              <span>Enter Era</span>
+              <span><%= isArabic ? 'ادخل العصر' : 'Enter Era' %></span>
               <i class="fa-solid fa-arrow-right-long"></i>
             </a>
           </div>
@@ -60,12 +63,12 @@
           <div class="era-card-body">
             <div class="era-icon"><i class="fa-solid fa-cross"></i></div>
             <h3>
-              <span class="era-prefix">The</span>
-              <span class="era-main">Coptic</span>
-              <span class="era-suffix">Era</span>
+              <span class="era-prefix"><%= isArabic ? '' : 'The' %></span>
+              <span class="era-main"><%= isArabic ? 'القبطي' : 'Coptic' %></span>
+              <span class="era-suffix"><%= isArabic ? 'العصر' : 'Era' %></span>
             </h3>
             <a class="era-enter" href="/exhibits/christian">
-              <span>Enter Era</span>
+              <span><%= isArabic ? 'ادخل العصر' : 'Enter Era' %></span>
               <i class="fa-solid fa-arrow-right-long"></i>
             </a>
           </div>
@@ -76,10 +79,12 @@
 
   <section class="ages-section ages-section-wonders" aria-labelledby="curated-wonders-title">
     <div class="container">
-      <h2 id="curated-wonders-title">Curated Wonders</h2>
+      <h2 id="curated-wonders-title"><%= isArabic ? 'روائع منتقاة' : 'Curated Wonders' %></h2>
       <p class="ages-section-subtitle">
-        Each piece in our archive has been meticulously digitized and high-fidelity spatial scanning,
-        allowing you to examine every grain of history.
+        <%= isArabic
+          ? 'كل قطعة في أرشيفنا خضعت لرقمنة دقيقة ومسح مكاني عالي الدقة، لتتمكن من تأمل كل تفصيلة من التاريخ.'
+          : 'Each piece in our archive has been meticulously digitized and high-fidelity spatial scanning, allowing you to examine every grain of history.'
+        %>
       </p>
 
       <div class="wonders-grid">

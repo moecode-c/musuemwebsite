@@ -10,6 +10,7 @@ const {
 
 const router = express.Router();
 
+router.get("/summary", requireAdmin, ticketRequestsController.summary);
 router.get("/", requireAdmin, ticketRequestsController.list);
 router.post("/", ticketRequestValidation, handleValidation, ticketRequestsController.create);
 router.post(

@@ -2,6 +2,17 @@ document.addEventListener("DOMContentLoaded", () => {
   const form = document.getElementById("ticket-request-form");
   if (!form) return;
 
+  const isArabic = document.documentElement.lang === "ar";
+  const text = isArabic
+    ? {
+      success: "تم إرسال طلب التذكرة.",
+      failure: "تعذر إرسال طلب التذكرة."
+    }
+    : {
+      success: "Ticket request submitted.",
+      failure: "Unable to submit ticket request."
+    };
+
   const messageEl = document.getElementById("ticket-request-message");
   const categoryInput = document.getElementById("ticket-category");
   const audienceInput = document.getElementById("ticket-audience");
@@ -22,7 +33,7 @@ document.addEventListener("DOMContentLoaded", () => {
       body: JSON.stringify(payload)
     });
     if (messageEl) {
-      messageEl.textContent = response.ok ? "Ticket request submitted." : "Unable to submit ticket request.";
+      messageEl.textContent = response.ok ? text.success : text.failure;
     }
     if (response.ok) {
       form.reset();
