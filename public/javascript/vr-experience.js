@@ -1,3 +1,5 @@
+import * as THREE from "/vendor/three/build/three.module.js";
+
 document.addEventListener("DOMContentLoaded", () => {
   const viewerTarget = document.getElementById("vrx-viewer");
   const hotspotLayer = document.getElementById("vrx-hotspot-layer");
@@ -652,11 +654,6 @@ document.addEventListener("DOMContentLoaded", () => {
 
     enterViewerFullscreen();
   };
-
-  if (typeof window.THREE === "undefined") {
-    showViewerError("Unable to load 3D engine. Refresh and try again.");
-    return;
-  }
 
   viewerTarget.innerHTML = "";
   renderer = new THREE.WebGLRenderer({ antialias: true });
