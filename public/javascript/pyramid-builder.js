@@ -1,6 +1,6 @@
 import * as THREE from 'three'; // Import the main Three.js library for 3D rendering
 import { PointerLockControls } from 'three/examples/jsm/controls/PointerLockControls.js'; // Import controls for first-person movement
-import { mergeBufferGeometries } from 'three/examples/jsm/utils/BufferGeometryUtils.js'; // Import utility for merging geometries
+import { mergeGeometries } from 'three/examples/jsm/utils/BufferGeometryUtils.js'; // Import utility for merging geometries (renamed from mergeBufferGeometries in three r144+)
 
 let scene, camera, renderer, controls; // Declare global variables for the scene, camera, renderer, and controls
 const raycaster = new THREE.Raycaster(); // Create a raycaster for detecting intersections
@@ -104,7 +104,7 @@ function init() {
   document.body.appendChild(renderer.domElement); // Add the renderer to the document
 
   controls = new PointerLockControls(camera, renderer.domElement); // Create first-person controls
-  scene.add(controls.getObject()); // Add the controls object to the scene
+  scene.add(controls.object); // Add the controlled camera to the scene (getObject() was removed in three r163+; controls.object is the camera)
 
   const gameFrame = document.getElementById('pyramid-frame');
   const lockTarget = gameFrame || renderer.domElement;
@@ -134,6 +134,7 @@ function init() {
   scene.add(new THREE.AmbientLight(0xffffff, 0.6)); // Add ambient light to the scene
   let sun = new THREE.PointLight(0xffffff, 0.8); // Create a point light to simulate the sun
   sun.position.set(10, 10, 10); // Set the sun position
+  sun.decay = 0; // three r155+ uses physically-correct lighting (inverse-square falloff); decay=0 restores legacy flat falloff so this light reaches the whole scene
   sun.castShadow = false; // Disable shadow casting for performance
   scene.add(sun); // Add the sun to the scene
 
@@ -307,7 +308,7 @@ function animate(time) {
   prevTime = now;
 
   if (controls.isLocked) {
-    const player = controls.getObject();
+    const player = controls.object;
     const prevPos = player.position.clone();
     direction.set(0, 0, 0);
     if (moveForward) direction.z += 1;
@@ -343,7 +344,7 @@ function onClick(event) {
     const intersects = raycaster.intersectObjects(blocks.concat(floorBlocks), false);
     if (intersects.length > 0) {
       const placement = getPlacementPosition(intersects[0]);
-      const playerPos = controls.getObject().position;
+      const playerPos = controls.object.position;
       // Prevent placing a block where the player is standing
       if (
         Math.abs(placement.x - playerPos.x) < 0.8 &&
@@ -453,7 +454,7 @@ function createStairsGeometry() {
     if (!merged) {
       merged = step;
     } else {
-      merged = mergeBufferGeometries([merged, step]);
+      merged = mergeGeometries([merged, step]);
     }
   }
   return merged;
