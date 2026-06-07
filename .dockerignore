@@ -1,0 +1,29 @@
+# Dependencies (reinstalled inside the image)
+node_modules
+npm-debug.log*
+
+# Version control & editor
+.git
+.gitignore
+.vscode
+.idea
+.DS_Store
+
+# Secrets & local config (injected at runtime via env_file, not baked in)
+.env
+.env.*
+
+# Local HTTPS certs (container serves HTTP; mount these only if you enable HTTPS)
+certs
+
+# Logs & local runtime
+*.log
+.expo
+
+# Docker & docs (not needed inside the image)
+Dockerfile
+docker-compose.yml
+.dockerignore
+README.md
+plan.md
+copilotinstructions.txt

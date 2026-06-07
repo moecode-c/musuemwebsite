@@ -1,0 +1,97 @@
+<%- include('../partials/header') %>
+<%- include('../partials/navbar') %>
+<% const isArabic = language === 'ar'; %>
+
+<main class="dashboard-page">
+  <section class="page-hero">
+    <div class="container">
+      <h1><%= isArabic ? 'لوحتي' : 'My Dashboard' %></h1>
+      <p><%= isArabic
+        ? `مرحباً ${user && user.name ? user.name : ''}، تابع تذاكرك وطلباتك من هنا.`
+        : `Welcome${user && user.name ? ', ' + user.name : ''}. Track your tickets and orders here.` %></p>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="container">
+
+      <div class="dash-section-head">
+        <h2><i class="fas fa-ticket" style="margin-right:10px;"></i><%= isArabic ? 'تذاكري' : 'My Tickets' %></h2>
+        <a class="btn btn-ghost" href="/plan-trip"><%= isArabic ? 'احجز تذكرة' : 'Book a ticket' %></a>
+      </div>
+
+      <% if (!tickets.length) { %>
+        <div class="dash-empty">
+          <p><%= isArabic ? 'لا توجد تذاكر بعد.' : 'You have no tickets yet.' %></p>
+          <a class="btn" href="/plan-trip"><%= isArabic ? 'خطط لزيارتك' : 'Plan your visit' %></a>
+        </div>
+      <% } else { %>
+        <div class="ticket-grid">
+          <% tickets.forEach(({ ticket, qr }) => { %>
+            <article class="museum-ticket">
+              <div class="ticket-main">
+                <div class="ticket-brand">
+                  <span class="ticket-kicker"><%= isArabic ? 'تذكرة دخول' : 'ADMISSION TICKET' %></span>
+                  <h3><%= t.siteTitle %></h3>
+                </div>
+                <div class="ticket-rows">
+                  <div><span><%= isArabic ? 'الزائر' : 'Visitor' %></span><strong><%= ticket.name %></strong></div>
+                  <div><span><%= isArabic ? 'التاريخ' : 'Date' %></span><strong><%= ticket.date %></strong></div>
+                  <div><span><%= isArabic ? 'الفترة' : 'Time' %></span><strong><%= ticket.timeSlot %></strong></div>
+                  <div><span><%= isArabic ? 'الفئة' : 'Category' %></span><strong><%= ticket.category %> · <%= ticket.audience %></strong></div>
+                  <div><span><%= isArabic ? 'الكمية' : 'Qty' %></span><strong><%= ticket.quantity || 1 %></strong></div>
+                </div>
+                <span class="dash-status is-<%= ticket.status %>"><%= ticket.status %></span>
+              </div>
+              <div class="ticket-stub">
+                <% if (qr) { %>
+                  <img class="ticket-qr" src="<%= qr %>" alt="<%= isArabic ? 'رمز التذكرة' : 'Ticket QR code' %>" />
+                <% } else { %>
+                  <div class="ticket-qr ticket-qr-missing"><%= isArabic ? 'الرمز غير متاح' : 'QR unavailable' %></div>
+                <% } %>
+                <p class="ticket-stub-note"><%= isArabic ? 'اعرض هذا الرمز عند الأمن للدخول' : 'Show this QR at security to enter' %></p>
+                <p class="ticket-id">#<%= ticket._id.toString().slice(-8).toUpperCase() %></p>
+              </div>
+            </article>
+          <% }) %>
+        </div>
+      <% } %>
+
+      <div class="dash-section-head dash-section-head--spaced">
+        <h2><i class="fas fa-bag-shopping" style="margin-right:10px;"></i><%= isArabic ? 'طلباتي' : 'My Orders' %></h2>
+        <a class="btn btn-ghost" href="/shop"><%= isArabic ? 'تسوق' : 'Shop' %></a>
+      </div>
+
+      <% if (!orders.length) { %>
+        <div class="dash-empty">
+          <p><%= isArabic ? 'لا توجد طلبات بعد.' : 'You have no orders yet.' %></p>
+          <a class="btn" href="/shop"><%= isArabic ? 'تصفح المتجر' : 'Browse the shop' %></a>
+        </div>
+      <% } else { %>
+        <div class="order-list">
+          <% orders.forEach((order) => { %>
+            <article class="dash-order-card">
+              <div class="dash-order-head">
+                <strong>#<%= order._id.toString().slice(-6).toUpperCase() %></strong>
+                <span class="dash-order-date"><%= new Date(order.createdAt).toLocaleDateString() %></span>
+                <span class="dash-status is-<%= order.status %>"><%= order.status %></span>
+              </div>
+              <ul class="dash-order-items">
+                <% order.items.forEach((it) => { %>
+                  <li><span><%= it.name %> &times; <%= it.quantity %></span><span>EGP <%= (it.price * it.quantity).toFixed(2) %></span></li>
+                <% }) %>
+              </ul>
+              <div class="dash-order-foot">
+                <span><%= isArabic ? 'الإجمالي' : 'Total' %>: <strong>EGP <%= (order.total || 0).toFixed(2) %></strong></span>
+                <span class="muted"><%= order.payment.method %> · <%= order.delivery.option %></span>
+              </div>
+            </article>
+          <% }) %>
+        </div>
+      <% } %>
+
+    </div>
+  </section>
+</main>
+
+<%- include('../partials/footer') %>

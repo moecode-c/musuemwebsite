@@ -7,6 +7,8 @@ const router = express.Router();
 router.get("/dashboard", requireAdmin, adminController.dashboard);
 router.get("/exhibits", requireAdmin, adminController.adminExhibits);
 router.get("/products", requireAdmin, adminController.adminProducts);
+router.get("/orders", requireAdmin, adminController.adminOrders);
+router.get("/assistance", requireAdmin, adminController.adminAssistance);
 router.get("/map", requireAdmin, adminController.adminMap);
 router.get("/tickets", requireAdmin, adminController.adminTickets);
 router.get("/ticket-requests", requireAdmin, adminController.adminTicketRequests);

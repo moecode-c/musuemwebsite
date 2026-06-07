@@ -1,0 +1,95 @@
+<%- include('../partials/adminLayoutStart') %>
+
+<%
+  const pendingCount = orders.filter((o) => o.status === 'pending').length;
+  const confirmedCount = orders.filter((o) => o.status === 'confirmed').length;
+  const revenue = orders
+    .filter((o) => o.status !== 'cancelled')
+    .reduce((sum, o) => sum + (o.total || 0), 0);
+  const statusLabel = (status) => {
+    if (language === 'ar') {
+      return { pending: 'قيد الانتظار', confirmed: 'مؤكد', fulfilled: 'تم التنفيذ', cancelled: 'ملغي' }[status] || status;
+    }
+    return status.charAt(0).toUpperCase() + status.slice(1);
+  };
+%>
+
+<section class="admin-page-header">
+  <div>
+    <h1><%= language === 'ar' ? 'الطلبات' : 'Orders' %></h1>
+    <p><%= language === 'ar' ? 'مراجعة طلبات المتجر وتأكيدها.' : 'Review shop orders and confirm them.' %></p>
+  </div>
+</section>
+
+<section class="admin-section">
+  <div class="admin-grid admin-stats">
+    <div class="admin-stat"><%= language === 'ar' ? 'إجمالي الطلبات' : 'Total Orders' %> <strong><%= orders.length %></strong></div>
+    <div class="admin-stat"><%= language === 'ar' ? 'قيد الانتظار' : 'Pending' %> <strong><%= pendingCount %></strong></div>
+    <div class="admin-stat"><%= language === 'ar' ? 'مؤكدة' : 'Confirmed' %> <strong><%= confirmedCount %></strong></div>
+    <div class="admin-stat"><%= language === 'ar' ? 'الإيرادات' : 'Revenue' %> <strong>EGP <%= revenue.toFixed(2) %></strong></div>
+  </div>
+</section>
+
+<section class="admin-section">
+  <div class="admin-section-title">
+    <h2><%= language === 'ar' ? 'جميع الطلبات' : 'All Orders' %></h2>
+  </div>
+  <p class="form-message" id="admin-order-message"></p>
+  <div class="admin-orders">
+    <% if (!orders.length) { %>
+      <p><%= language === 'ar' ? 'لا توجد طلبات بعد.' : 'No orders yet.' %></p>
+    <% } %>
+    <% orders.forEach((order) => { %>
+      <article class="admin-order-card" data-id="<%= order._id %>">
+        <div class="admin-order-head">
+          <div>
+            <strong>#<%= order._id.toString().slice(-6).toUpperCase() %></strong>
+            <span class="admin-order-date"><%= new Date(order.createdAt).toLocaleString() %></span>
+          </div>
+          <span class="admin-status-badge is-<%= order.status %>"><%= statusLabel(order.status) %></span>
+        </div>
+
+        <div class="admin-order-body">
+          <div class="admin-order-customer">
+            <p><strong><%= order.customer.name || (language === 'ar' ? 'زائر' : 'Guest') %></strong></p>
+            <% if (order.customer.email || order.customer.phone) { %>
+              <p class="muted"><%= order.customer.email %><%= order.customer.phone ? ' · ' + order.customer.phone : '' %></p>
+            <% } %>
+            <% const addressLine = [order.customer.address, order.customer.city].filter(Boolean).join(', '); %>
+            <% if (addressLine) { %>
+              <p class="muted"><%= addressLine %></p>
+            <% } %>
+            <p class="muted">
+              <%= language === 'ar' ? 'الدفع' : 'Payment' %>: <%= order.payment.method %>
+              · <%= language === 'ar' ? 'التوصيل' : 'Delivery' %>: <%= order.delivery.option %>
+            </p>
+            <% if (order.customer.notes) { %>
+              <p class="muted"><%= language === 'ar' ? 'ملاحظات' : 'Notes' %>: <%= order.customer.notes %></p>
+            <% } %>
+          </div>
+
+          <div class="admin-order-items">
+            <ul>
+              <% order.items.forEach((it) => { %>
+                <li>
+                  <span><%= it.name %> &times; <%= it.quantity %></span>
+                  <span>EGP <%= (it.price * it.quantity).toFixed(2) %></span>
+                </li>
+              <% }) %>
+            </ul>
+            <div class="admin-order-total"><%= language === 'ar' ? 'الإجمالي' : 'Total' %>: <strong>EGP <%= (order.total || 0).toFixed(2) %></strong></div>
+          </div>
+        </div>
+
+        <div class="admin-order-actions">
+          <button class="btn" data-order-action="confirmed" data-id="<%= order._id %>" <%= order.status === 'confirmed' ? 'disabled' : '' %>><%= language === 'ar' ? 'تأكيد' : 'Confirm' %></button>
+          <button class="btn btn-secondary" data-order-action="fulfilled" data-id="<%= order._id %>" <%= order.status === 'fulfilled' ? 'disabled' : '' %>><%= language === 'ar' ? 'تم التنفيذ' : 'Mark Fulfilled' %></button>
+          <button class="btn btn-secondary" data-order-action="cancelled" data-id="<%= order._id %>" <%= order.status === 'cancelled' ? 'disabled' : '' %>><%= language === 'ar' ? 'إلغاء' : 'Cancel' %></button>
+          <button class="btn btn-danger" data-order-action="delete" data-id="<%= order._id %>"><%= language === 'ar' ? 'حذف' : 'Delete' %></button>
+        </div>
+      </article>
+    <% }) %>
+  </div>
+</section>
+
+<%- include('../partials/adminLayoutEnd') %>

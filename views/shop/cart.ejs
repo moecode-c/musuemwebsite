@@ -16,7 +16,28 @@
         <p class="muted"><%= language === 'ar' ? 'راجع الكميات وعدّلها قبل إتمام الطلب' : 'Review and update quantities' %></p>
       </div>
       <div id="cart-items">
-        <%- cartItemsHtml %>
+        <% if (items && items.length) { %>
+          <% items.forEach((item) => { %>
+            <div class="cart-item" data-id="<%= item.id %>">
+              <div class="cart-item__info">
+                <span class="cart-item__name"><%= item.name %></span>
+                <span class="cart-item__price">EGP <%= item.price.toFixed(2) %> <%= language === 'ar' ? 'للقطعة' : 'each' %></span>
+              </div>
+              <div class="cart-item__qty">
+                <button type="button" class="qty-btn" data-cart-action="dec" data-id="<%= item.id %>" data-qty="<%= item.quantity %>" aria-label="<%= language === 'ar' ? 'إنقاص' : 'Decrease quantity' %>">&minus;</button>
+                <span class="qty-value"><%= item.quantity %></span>
+                <button type="button" class="qty-btn" data-cart-action="inc" data-id="<%= item.id %>" data-qty="<%= item.quantity %>" aria-label="<%= language === 'ar' ? 'زيادة' : 'Increase quantity' %>">+</button>
+              </div>
+              <span class="cart-item__subtotal">EGP <%= (item.price * item.quantity).toFixed(2) %></span>
+              <button type="button" class="cart-item__remove" data-cart-action="remove" data-id="<%= item.id %>" aria-label="<%= language === 'ar' ? 'إزالة' : 'Remove item' %>">&times;</button>
+            </div>
+          <% }) %>
+        <% } else { %>
+          <div class="cart-empty">
+            <p><%= language === 'ar' ? 'سلة التسوق فارغة.' : 'Your cart is empty.' %></p>
+            <a class="link subtle" href="/shop"><%= language === 'ar' ? 'تصفح المتجر' : 'Browse the shop' %></a>
+          </div>
+        <% } %>
       </div>
     </div>
 
@@ -27,7 +48,11 @@
         <span class="cart-total-amount">EGP <span id="cart-total"><%= total %></span></span>
       </div>
       <p class="muted small"><%= language === 'ar' ? 'يمكنك اختيار الشحن أو الاستلام أثناء إتمام الطلب.' : 'Shipping and delivery choices are selected at checkout.' %></p>
-      <a class="btn btn-primary btn-block" href="/cart/checkout"><%= t.cart.checkout %></a>
+      <% if (items && items.length) { %>
+        <a class="btn btn-primary btn-block" href="/cart/checkout"><%= t.cart.checkout %></a>
+      <% } else { %>
+        <button class="btn btn-primary btn-block" type="button" disabled><%= t.cart.checkout %></button>
+      <% } %>
       <a class="link subtle" href="/shop"><%= language === 'ar' ? 'متابعة التسوق' : 'Continue shopping' %></a>
     </aside>
   </div>

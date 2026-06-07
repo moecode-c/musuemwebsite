@@ -38,7 +38,8 @@ const create = asyncHandler(async (req, res) => {
     audience,
     quantity,
     date,
-    timeSlot
+    timeSlot,
+    user: req.session.user ? req.session.user.id : null
   });
   res.status(201).json(request);
 });

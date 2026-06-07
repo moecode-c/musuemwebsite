@@ -275,29 +275,13 @@ document.addEventListener("DOMContentLoaded", () => {
     quickViewModal.setAttribute("aria-hidden", "true");
   };
 
-  const resolveZone = (zip) => {
-    if (!zip) {
-      return {
-        label: i18n.nationwide,
-        etaInStock: i18n.etaInStockDefault,
-        etaPreorder: i18n.etaPreorderDefault,
-        cutoffHour: 17
-      };
-    }
-    const zones = [
-      { pattern: /^11/, label: i18n.cairo, etaInStock: i18n.etaCairo, etaPreorder: i18n.shipsOnRelease, cutoffHour: 17 },
-      { pattern: /^12|^13/, label: i18n.gizaAlex, etaInStock: i18n.etaGizaAlex, etaPreorder: i18n.shipsOnRelease, cutoffHour: 17 },
-      { pattern: /^2/, label: i18n.delta, etaInStock: i18n.etaDelta, etaPreorder: i18n.shipsOnRelease, cutoffHour: 16 },
-      { pattern: /^4|^5|^6/, label: i18n.upperEgypt, etaInStock: i18n.etaUpperEgypt, etaPreorder: i18n.shipsOnRelease, cutoffHour: 15 }
-    ];
-    const match = zones.find((z) => z.pattern.test(zip));
-    return match || {
-      label: i18n.nationwide,
-      etaInStock: i18n.etaInStockDefault,
-      etaPreorder: i18n.shipsWhenRestocked,
-      cutoffHour: 17
-    };
-  };
+  // We deliver to Cairo only — every ZIP resolves to the Cairo delivery zone.
+  const resolveZone = () => ({
+    label: i18n.cairo,
+    etaInStock: i18n.etaCairo,
+    etaPreorder: i18n.shipsOnRelease,
+    cutoffHour: 17
+  });
 
   const formatDate = (date) =>
     date instanceof Date && !Number.isNaN(date)
@@ -460,6 +444,10 @@ document.addEventListener("DOMContentLoaded", () => {
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ productId })
       });
+      if (response.status === 401) {
+        window.location.href = "/login";
+        return;
+      }
       if (response.ok) {
         const cart = await response.json();
         updateCartUI(cart);
@@ -517,6 +505,10 @@ document.addEventListener("DOMContentLoaded", () => {
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ productId })
       });
+      if (response.status === 401) {
+        window.location.href = "/login";
+        return;
+      }
       if (!response.ok) {
         const message = (await response.json().catch(() => null))?.message || i18n.couldNotAddToCart;
         showCartToast(message);

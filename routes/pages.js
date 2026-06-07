@@ -35,6 +35,8 @@ router.get("/cart", pageController.cart);
 router.get("/checkout", pageController.checkout);
 router.get("/testimonials", pageController.testimonials);
 router.get("/plan-trip", pageController.planTrip);
+router.get("/dashboard", requireAuth, pageController.userDashboard);
+router.get("/tickets/verify/:id", pageController.ticketVerify);
 router.get("/employee/dashboard", requireAuth, requirePermission("dashboard:role"), pageController.employeeDashboard);
 router.get(
   "/employee/manager/tasks",

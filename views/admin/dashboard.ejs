@@ -9,33 +9,75 @@
     stats.testimonialCount,
     stats.ticketRequestCount,
     stats.taskCount,
-    stats.cleaningZoneCount
+    stats.cleaningZoneCount,
+    stats.orderCount,
+    stats.assistanceCount
   ) || 1;
 %>
 
 <section class="admin-page-header">
   <div>
-    <h1><%= language === 'ar' ? 'نظرة عامة' : 'Overview' %></h1>
+    <h1><i class="fas fa-gauge-high" style="color:#9a6f1f;margin-right:10px;"></i><%= language === 'ar' ? 'نظرة عامة' : 'Overview' %></h1>
     <p><%= language === 'ar' ? 'إدارة محتوى المتحف والعمليات.' : 'Manage museum content and operations.' %></p>
   </div>
 </section>
 
 <section class="admin-section">
   <div class="admin-grid admin-stats">
-    <div class="admin-stat"><%= language === 'ar' ? 'المعروضات' : 'Exhibits' %> <strong><%= stats.exhibitCount %></strong></div>
-    <div class="admin-stat"><%= language === 'ar' ? 'المنتجات' : 'Products' %> <strong><%= stats.productCount %></strong></div>
-    <div class="admin-stat"><%= language === 'ar' ? 'المستخدمون' : 'Users' %> <strong><%= stats.userCount %></strong></div>
-    <div class="admin-stat"><%= language === 'ar' ? 'التذاكر' : 'Tickets' %> <strong><%= stats.ticketCount %></strong></div>
-    <div class="admin-stat"><%= language === 'ar' ? 'الشهادات' : 'Testimonials' %> <strong><%= stats.testimonialCount %></strong></div>
-    <div class="admin-stat"><%= language === 'ar' ? 'طلبات التذاكر' : 'Ticket Requests' %> <strong><%= stats.ticketRequestCount %></strong></div>
-    <div class="admin-stat"><%= language === 'ar' ? 'المهام' : 'Tasks' %> <strong><%= stats.taskCount %></strong></div>
-    <div class="admin-stat"><%= language === 'ar' ? 'مناطق التنظيف' : 'Cleaning Zones' %> <strong><%= stats.cleaningZoneCount %></strong></div>
+    <div class="admin-stat">
+      <span class="admin-stat-icon is-gold"><i class="fas fa-palette"></i></span>
+      <div class="admin-stat-meta"><span class="admin-stat-label"><%= language === 'ar' ? 'المعروضات' : 'Exhibits' %></span><strong class="admin-stat-value"><%= stats.exhibitCount %></strong></div>
+    </div>
+    <div class="admin-stat">
+      <span class="admin-stat-icon is-orange"><i class="fas fa-store"></i></span>
+      <div class="admin-stat-meta"><span class="admin-stat-label"><%= language === 'ar' ? 'المنتجات' : 'Products' %></span><strong class="admin-stat-value"><%= stats.productCount %></strong></div>
+    </div>
+    <div class="admin-stat">
+      <span class="admin-stat-icon is-blue"><i class="fas fa-bag-shopping"></i></span>
+      <div class="admin-stat-meta"><span class="admin-stat-label"><%= language === 'ar' ? 'الطلبات' : 'Orders' %></span><strong class="admin-stat-value"><%= stats.orderCount %></strong></div>
+    </div>
+    <div class="admin-stat">
+      <span class="admin-stat-icon is-rose"><i class="fas fa-hourglass-half"></i></span>
+      <div class="admin-stat-meta"><span class="admin-stat-label"><%= language === 'ar' ? 'طلبات قيد الانتظار' : 'Pending Orders' %></span><strong class="admin-stat-value"><%= stats.pendingOrderCount %></strong></div>
+    </div>
+    <div class="admin-stat">
+      <span class="admin-stat-icon is-teal"><i class="fas fa-wheelchair"></i></span>
+      <div class="admin-stat-meta"><span class="admin-stat-label"><%= language === 'ar' ? 'طلبات المساعدة' : 'Assistance' %></span><strong class="admin-stat-value"><%= stats.assistanceCount %></strong></div>
+    </div>
+    <div class="admin-stat">
+      <span class="admin-stat-icon is-rose"><i class="fas fa-bell"></i></span>
+      <div class="admin-stat-meta"><span class="admin-stat-label"><%= language === 'ar' ? 'مساعدة جديدة' : 'New Assistance' %></span><strong class="admin-stat-value"><%= stats.newAssistanceCount %></strong></div>
+    </div>
+    <div class="admin-stat">
+      <span class="admin-stat-icon is-purple"><i class="fas fa-users"></i></span>
+      <div class="admin-stat-meta"><span class="admin-stat-label"><%= language === 'ar' ? 'المستخدمون' : 'Users' %></span><strong class="admin-stat-value"><%= stats.userCount %></strong></div>
+    </div>
+    <div class="admin-stat">
+      <span class="admin-stat-icon is-green"><i class="fas fa-ticket"></i></span>
+      <div class="admin-stat-meta"><span class="admin-stat-label"><%= language === 'ar' ? 'التذاكر' : 'Tickets' %></span><strong class="admin-stat-value"><%= stats.ticketCount %></strong></div>
+    </div>
+    <div class="admin-stat">
+      <span class="admin-stat-icon is-purple"><i class="fas fa-comments"></i></span>
+      <div class="admin-stat-meta"><span class="admin-stat-label"><%= language === 'ar' ? 'الشهادات' : 'Testimonials' %></span><strong class="admin-stat-value"><%= stats.testimonialCount %></strong></div>
+    </div>
+    <div class="admin-stat">
+      <span class="admin-stat-icon is-blue"><i class="fas fa-clipboard-list"></i></span>
+      <div class="admin-stat-meta"><span class="admin-stat-label"><%= language === 'ar' ? 'طلبات التذاكر' : 'Ticket Requests' %></span><strong class="admin-stat-value"><%= stats.ticketRequestCount %></strong></div>
+    </div>
+    <div class="admin-stat">
+      <span class="admin-stat-icon is-teal"><i class="fas fa-list-check"></i></span>
+      <div class="admin-stat-meta"><span class="admin-stat-label"><%= language === 'ar' ? 'المهام' : 'Tasks' %></span><strong class="admin-stat-value"><%= stats.taskCount %></strong></div>
+    </div>
+    <div class="admin-stat">
+      <span class="admin-stat-icon is-green"><i class="fas fa-broom"></i></span>
+      <div class="admin-stat-meta"><span class="admin-stat-label"><%= language === 'ar' ? 'مناطق التنظيف' : 'Cleaning Zones' %></span><strong class="admin-stat-value"><%= stats.cleaningZoneCount %></strong></div>
+    </div>
   </div>
 </section>
 
 <section class="admin-section">
   <div class="admin-section-title">
-    <h2><%= language === 'ar' ? 'الإحصائيات' : 'Statistics' %></h2>
+    <h2><i class="fas fa-chart-simple" style="color:#9a6f1f;margin-right:10px;"></i><%= language === 'ar' ? 'الإحصائيات' : 'Statistics' %></h2>
   </div>
   <div class="admin-chart">
     <div class="admin-chart-row">
@@ -47,6 +89,16 @@
       <span><%= language === 'ar' ? 'المنتجات' : 'Products' %></span>
       <div class="admin-chart-bar"><span style="width: <%= (stats.productCount / maxStat) * 100 %>%"></span></div>
       <strong><%= stats.productCount %></strong>
+    </div>
+    <div class="admin-chart-row">
+      <span><%= language === 'ar' ? 'الطلبات' : 'Orders' %></span>
+      <div class="admin-chart-bar"><span style="width: <%= (stats.orderCount / maxStat) * 100 %>%"></span></div>
+      <strong><%= stats.orderCount %></strong>
+    </div>
+    <div class="admin-chart-row">
+      <span><%= language === 'ar' ? 'طلبات المساعدة' : 'Assistance' %></span>
+      <div class="admin-chart-bar"><span style="width: <%= (stats.assistanceCount / maxStat) * 100 %>%"></span></div>
+      <strong><%= stats.assistanceCount %></strong>
     </div>
     <div class="admin-chart-row">
       <span><%= language === 'ar' ? 'المستخدمون' : 'Users' %></span>
@@ -83,40 +135,59 @@
 
 <section class="admin-section">
   <div class="admin-section-title">
-    <h2><%= language === 'ar' ? 'تعديلات سريعة' : 'Quick Edits' %></h2>
+    <h2><i class="fas fa-bolt" style="color:#9a6f1f;margin-right:10px;"></i><%= language === 'ar' ? 'تعديلات سريعة' : 'Quick Edits' %></h2>
   </div>
   <div class="admin-grid">
     <div class="admin-card">
+      <div class="admin-card-icon is-gold"><i class="fas fa-palette"></i></div>
       <h3><%= language === 'ar' ? 'المعروضات' : 'Exhibits' %></h3>
       <p><%= language === 'ar' ? 'إنشاء وتحديث وتنظيم المعروضات.' : 'Create, update, and organize exhibits.' %></p>
       <a class="btn" href="/admin/exhibits"><%= language === 'ar' ? 'إدارة المعروضات' : 'Manage Exhibits' %></a>
     </div>
     <div class="admin-card">
+      <div class="admin-card-icon is-orange"><i class="fas fa-store"></i></div>
       <h3><%= language === 'ar' ? 'المنتجات' : 'Products' %></h3>
       <p><%= language === 'ar' ? 'تعديل منتجات المتجر والأسعار والمخزون.' : 'Edit shop products, pricing, and inventory.' %></p>
       <a class="btn" href="/admin/products"><%= language === 'ar' ? 'إدارة المنتجات' : 'Manage Products' %></a>
     </div>
     <div class="admin-card">
+      <div class="admin-card-icon is-blue"><i class="fas fa-bag-shopping"></i></div>
+      <h3><%= language === 'ar' ? 'الطلبات' : 'Orders' %></h3>
+      <p><%= language === 'ar' ? 'مراجعة طلبات المتجر وتأكيدها أو إلغاؤها.' : 'Review shop orders and confirm or cancel them.' %></p>
+      <a class="btn" href="/admin/orders"><%= language === 'ar' ? 'إدارة الطلبات' : 'Manage Orders' %></a>
+    </div>
+    <div class="admin-card">
+      <div class="admin-card-icon is-teal"><i class="fas fa-wheelchair"></i></div>
+      <h3><%= language === 'ar' ? 'طلبات المساعدة' : 'Assistance' %></h3>
+      <p><%= language === 'ar' ? 'مراجعة طلبات إمكانية الوصول من الزوار.' : 'Review visitor accessibility assistance requests.' %></p>
+      <a class="btn" href="/admin/assistance"><%= language === 'ar' ? 'عرض الطلبات' : 'View Requests' %></a>
+    </div>
+    <div class="admin-card">
+      <div class="admin-card-icon is-green"><i class="fas fa-map-location-dot"></i></div>
       <h3><%= language === 'ar' ? 'دبابيس الخريطة' : 'Map Pins' %></h3>
       <p><%= language === 'ar' ? 'تحديث دبابيس خريطة المتحف ومناطق التنظيف.' : 'Update museum map pins and cleaning zones.' %></p>
       <a class="btn" href="/admin/map"><%= language === 'ar' ? 'إدارة الخريطة' : 'Manage Map' %></a>
     </div>
     <div class="admin-card">
+      <div class="admin-card-icon is-green"><i class="fas fa-ticket"></i></div>
       <h3><%= language === 'ar' ? 'التذاكر' : 'Tickets' %></h3>
       <p><%= language === 'ar' ? 'ضبط أنواع التذاكر والتوفر.' : 'Adjust ticket types and availability.' %></p>
       <a class="btn" href="/admin/tickets"><%= language === 'ar' ? 'إدارة التذاكر' : 'Manage Tickets' %></a>
     </div>
     <div class="admin-card">
+      <div class="admin-card-icon is-blue"><i class="fas fa-clipboard-list"></i></div>
       <h3><%= language === 'ar' ? 'نظرة عامة على التذاكر' : 'Ticket Overview' %></h3>
       <p><%= language === 'ar' ? 'عرض جميع طلبات التذاكر والدول الأكثر طلباً.' : 'View all ticket requests and top countries.' %></p>
       <a class="btn" href="/admin/ticket-requests"><%= language === 'ar' ? 'عرض الطلبات' : 'View Requests' %></a>
     </div>
     <div class="admin-card">
+      <div class="admin-card-icon is-purple"><i class="fas fa-users"></i></div>
       <h3><%= language === 'ar' ? 'المستخدمون' : 'Users' %></h3>
       <p><%= language === 'ar' ? 'مراجعة وإدارة حسابات المستخدمين.' : 'Review and manage user accounts.' %></p>
       <a class="btn" href="/admin/users"><%= language === 'ar' ? 'إدارة المستخدمين' : 'Manage Users' %></a>
     </div>
     <div class="admin-card">
+      <div class="admin-card-icon is-gold"><i class="fas fa-gear"></i></div>
       <h3><%= language === 'ar' ? 'الإعدادات' : 'Settings' %></h3>
       <p><%= language === 'ar' ? 'ضبط تفضيلات الموقع العامة.' : 'Configure site-wide preferences.' %></p>
       <a class="btn" href="/admin/settings"><%= language === 'ar' ? 'فتح الإعدادات' : 'Open Settings' %></a>

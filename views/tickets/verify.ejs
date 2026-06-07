@@ -1,0 +1,33 @@
+<%- include('../partials/header') %>
+<%- include('../partials/navbar') %>
+<% const isArabic = language === 'ar'; %>
+
+<main class="dashboard-page">
+  <section class="section">
+    <div class="container verify-shell">
+      <% if (ticket) { %>
+        <div class="verify-card is-valid">
+          <div class="verify-icon"><i class="fas fa-circle-check"></i></div>
+          <h1><%= isArabic ? 'تذكرة صالحة' : 'Valid Ticket' %></h1>
+          <div class="verify-rows">
+            <div><span><%= isArabic ? 'الزائر' : 'Visitor' %></span><strong><%= ticket.name %></strong></div>
+            <div><span><%= isArabic ? 'التاريخ' : 'Date' %></span><strong><%= ticket.date %></strong></div>
+            <div><span><%= isArabic ? 'الفترة' : 'Time' %></span><strong><%= ticket.timeSlot %></strong></div>
+            <div><span><%= isArabic ? 'الفئة' : 'Category' %></span><strong><%= ticket.category %> · <%= ticket.audience %></strong></div>
+            <div><span><%= isArabic ? 'الكمية' : 'Qty' %></span><strong><%= ticket.quantity || 1 %></strong></div>
+            <div><span><%= isArabic ? 'الحالة' : 'Status' %></span><strong><%= ticket.status %></strong></div>
+          </div>
+          <p class="ticket-id">#<%= ticket._id.toString().slice(-8).toUpperCase() %></p>
+        </div>
+      <% } else { %>
+        <div class="verify-card is-invalid">
+          <div class="verify-icon"><i class="fas fa-circle-xmark"></i></div>
+          <h1><%= isArabic ? 'تذكرة غير صالحة' : 'Invalid Ticket' %></h1>
+          <p><%= isArabic ? 'لم يتم العثور على هذه التذكرة.' : 'This ticket could not be found.' %></p>
+        </div>
+      <% } %>
+    </div>
+  </section>
+</main>
+
+<%- include('../partials/footer') %>

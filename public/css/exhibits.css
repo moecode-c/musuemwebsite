@@ -166,6 +166,30 @@
 	padding-left: calc(50% + 24px);
 }
 
+/* Collapse the alternating timeline to a single column on mobile */
+@media (max-width: 760px) {
+	.timeline::before { left: 18px; }
+	.timeline-item.left,
+	.timeline-item.right {
+		justify-content: flex-start;
+		padding-left: 42px;
+		padding-right: 0;
+	}
+	.timeline-node { left: 18px; }
+	.timeline-card { width: 100%; }
+	.timeline-date {
+		position: static;
+		display: block;
+		margin: 0 0 8px 42px;
+		font-size: clamp(1rem, 5vw, 1.35rem);
+	}
+	.timeline-item.left .timeline-date,
+	.timeline-item.right .timeline-date {
+		left: auto;
+		right: auto;
+	}
+}
+
 .timeline-node {
 	position: absolute;
 	top: 24px;

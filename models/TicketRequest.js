@@ -22,7 +22,8 @@ const ticketRequestSchema = new mongoose.Schema(
     quantity: { type: Number, default: 1 },
     date: { type: String, required: true },
     timeSlot: { type: String, required: true },
-    status: { type: String, default: "pending" }
+    status: { type: String, default: "pending" },
+    user: { type: mongoose.Schema.Types.ObjectId, ref: "User", default: null }
   },
   { timestamps: true }
 );

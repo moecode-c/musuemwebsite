@@ -1,7 +1,7 @@
 const express = require("express");
 const ticketRequestsController = require("../controllers/ticketRequestsController");
 const { requireAdmin, requirePermission } = require("../middleware/roles");
-const { requireAuth } = require("../middleware/auth");
+const { requireAuth, requireAuthApi } = require("../middleware/auth");
 const {
 	ticketRequestValidation,
 	ticketRequestToTaskValidation,
@@ -12,7 +12,7 @@ const router = express.Router();
 
 router.get("/summary", requireAdmin, ticketRequestsController.summary);
 router.get("/", requireAdmin, ticketRequestsController.list);
-router.post("/", ticketRequestValidation, handleValidation, ticketRequestsController.create);
+router.post("/", requireAuthApi, ticketRequestValidation, handleValidation, ticketRequestsController.create);
 router.post(
 	"/:id/convert-task",
 	requireAuth,

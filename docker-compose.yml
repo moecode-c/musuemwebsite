@@ -1,0 +1,16 @@
+services:
+  web:
+    build: .
+    image: museum-website
+    container_name: museum-website
+    restart: unless-stopped
+    ports:
+      - "3000:3000"
+    # Loads MONGODB_URI, CLOUDINARY_*, SESSION_SECRET, etc. from .env at runtime
+    # (kept out of the image — see .dockerignore).
+    env_file:
+      - .env
+    environment:
+      - NODE_ENV=production
+      - PORT=3000
+      - HOST=0.0.0.0

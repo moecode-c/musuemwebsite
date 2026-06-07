@@ -62,6 +62,10 @@ document.addEventListener("DOMContentLoaded", () => {
           headers: { "Content-Type": "application/json" },
           body: JSON.stringify({ productId })
         });
+        if (response.status === 401) {
+          window.location.href = "/login";
+          return;
+        }
         if (!response.ok) {
           const message = (await response.json().catch(() => null))?.message || cartI18n.couldNotAdd;
           showCartToast(message);
@@ -79,13 +83,36 @@ document.addEventListener("DOMContentLoaded", () => {
     });
   });
 
-  const checkoutForm = document.getElementById("product-checkout-form");
-  if (checkoutForm) {
-    checkoutForm.addEventListener("submit", (e) => {
-      e.preventDefault();
-    window.location.href = "/cart/payment";
+  // Cart page: quantity steppers and remove buttons (use /cart/update and /cart/remove).
+  document.querySelectorAll("#cart-items [data-cart-action]").forEach((btn) => {
+    btn.addEventListener("click", async () => {
+      const action = btn.dataset.cartAction; // inc | dec | remove
+      const productId = btn.dataset.id;
+      const currentQty = Number(btn.dataset.qty || 1);
+      if (!productId) return;
+      btn.disabled = true;
+      try {
+        if (action === "remove") {
+          await fetch("/cart/remove", {
+            method: "DELETE",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({ productId })
+          });
+        } else {
+          const quantity = action === "inc" ? currentQty + 1 : Math.max(1, currentQty - 1);
+          await fetch("/cart/update", {
+            method: "PUT",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({ productId, quantity })
+          });
+        }
+        window.location.reload();
+      } catch (err) {
+        btn.disabled = false;
+        showCartToast(cartI18n.networkIssue);
+      }
     });
-  }
+  });
 
   const paymentForm = document.getElementById("payment-delivery-form");
   if (paymentForm) {

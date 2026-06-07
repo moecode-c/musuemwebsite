@@ -16,7 +16,7 @@ const VALIDATION_TEXT = isArabicLang
 		visitDatePast: "تاريخ الزيارة لا يمكن أن يكون في الماضي.",
 		selectValidTicket: "يرجى اختيار نوع تذكرة صحيح.",
 		submitFailed: "تعذر إرسال طلب الرحلة حاليا.",
-		submitSuccess: "تم إرسال طلب الرحلة وهو متاح الآن في لوحة تحكم الإدارة.",
+		submitSuccess: "تم إرسال التذكرة! تابعها الآن من لوحة التحكم الخاصة بك.",
 		networkIssue: "مشكلة في الشبكة. حاول مرة أخرى.",
 		clientOnlySuccess: "ممتاز. تفاصيل رحلتك جاهزة."
 	}
@@ -31,7 +31,7 @@ const VALIDATION_TEXT = isArabicLang
 		visitDatePast: "Visit Date cannot be in the past.",
 		selectValidTicket: "Please select a valid ticket type.",
 		submitFailed: "Unable to submit your trip request right now.",
-		submitSuccess: "Trip request submitted. It is now available in the admin dashboard.",
+		submitSuccess: "Ticket submitted! Track it now in your dashboard.",
 		networkIssue: "Network issue. Please try again.",
 		clientOnlySuccess: "Looks good. Your trip details are ready."
 	};
@@ -290,6 +290,7 @@ const submitPlanTripRequest = async (form) => {
 		});
 
 		if (!response.ok) {
+			if (response.status === 401) { window.location.href = "/login"; return false; }
 			const message = await parseApiErrorMessage(response, VALIDATION_TEXT.submitFailed);
 			setFormMessage(form, message);
 			return false;
@@ -302,6 +303,7 @@ const submitPlanTripRequest = async (form) => {
 			tripDateInput.min = new Date().toISOString().split("T")[0];
 		}
 		setFormMessage(form, VALIDATION_TEXT.submitSuccess, false);
+		window.setTimeout(() => { window.location.href = "/dashboard"; }, 1200);
 		return true;
 	} catch (error) {
 		setFormMessage(form, VALIDATION_TEXT.networkIssue);

@@ -1,5 +1,9 @@
 const Product = require("../models/Product");
+const Order = require("../models/Order");
 const { asyncHandler } = require("../utils/asyncHandler");
+
+const formatTotal = (cart) =>
+  cart.total?.toFixed ? cart.total.toFixed(2) : Number(cart.total || 0).toFixed(2);
 
 const getCart = (req, res) => {
   const cart = req.session.cart || { items: [], total: 0 };
@@ -13,8 +17,46 @@ const renderCheckout = (req, res) => {
     pageCss: "checkout",
     cart,
     items: cart.items || [],
-    total: cart.total?.toFixed ? cart.total.toFixed(2) : Number(cart.total || 0).toFixed(2)
+    total: formatTotal(cart),
+    details: req.session.checkout || {},
+    error: req.query.error === "1"
   });
+};
+
+// Step 1 of checkout: capture the customer's delivery/contact details, then
+// move on to payment. Previously this step was done only on the client and the
+// details were thrown away — now they are validated and stored on the session.
+const submitCheckoutDetails = (req, res) => {
+  const cart = req.session.cart || { items: [], total: 0 };
+  if (!cart.items || cart.items.length === 0) {
+    return res.redirect("/cart");
+  }
+
+  const {
+    name = "",
+    email = "",
+    phone = "",
+    address = "",
+    city = "",
+    notes = ""
+  } = req.body || {};
+
+  // Backend validation (the form also enforces these client-side).
+  const emailLooksValid = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email.trim());
+  if (!name.trim() || !emailLooksValid || !address.trim()) {
+    return res.redirect("/cart/checkout?error=1");
+  }
+
+  req.session.checkout = {
+    name: name.trim(),
+    email: email.trim(),
+    phone: phone.trim(),
+    address: address.trim(),
+    city: city.trim(),
+    notes: notes.trim()
+  };
+
+  return res.redirect("/cart/payment");
 };
 
 const renderPayment = (req, res) => {
@@ -24,55 +66,82 @@ const renderPayment = (req, res) => {
     pageCss: "checkout",
     cart,
     items: cart.items || [],
-    total: cart.total?.toFixed ? cart.total.toFixed(2) : Number(cart.total || 0).toFixed(2)
+    total: formatTotal(cart)
   });
 };
 
-const processPayment = (req, res) => {
+// Step 2 of checkout: record payment/delivery choices, persist the order to the
+// database (so it appears in the admin dashboard), then clear the cart.
+const processPayment = asyncHandler(async (req, res) => {
   const cart = req.session.cart || { items: [], total: 0 };
   if (!cart.items || cart.items.length === 0) {
     return res.redirect("/cart/checkout");
   }
 
+  const checkout = req.session.checkout || {};
   const {
     paymentMethod = "card",
     deliveryOption = "delivery",
     deliveryDate = "",
     deliveryWindow = "",
     pickupSpot = "",
-    notes = "",
-    cardName = "",
-    cardNumber = "",
-    expiry = "",
-    cvc = ""
+    notes = ""
   } = req.body || {};
 
-  const order = {
-    id: Date.now().toString(),
-    items: cart.items || [],
+  const items = cart.items.map((item) => ({
+    productId: item.id,
+    name: item.name,
+    price: item.price,
+    quantity: item.quantity
+  }));
+
+  const order = await Order.create({
+    items,
     total: cart.total || 0,
-    paymentMethod,
-    deliveryOption,
-    deliveryDate,
-    deliveryWindow,
-    pickupSpot,
-    notes,
-    cardName,
-    cardNumber,
-    expiry,
-    cvc,
-    createdAt: new Date()
+    customer: {
+      name: checkout.name || "",
+      email: checkout.email || "",
+      phone: checkout.phone || "",
+      address: checkout.address || "",
+      city: checkout.city || "",
+      notes: checkout.notes || ""
+    },
+    payment: { method: paymentMethod },
+    delivery: {
+      option: deliveryOption,
+      date: deliveryDate,
+      window: deliveryWindow,
+      pickupSpot,
+      notes
+    },
+    status: "pending",
+    user: req.session.user ? req.session.user.id : null
+  });
+
+  // Flat snapshot for the confirmation page (keeps that view unchanged).
+  req.session.lastOrder = {
+    id: order._id.toString(),
+    items: order.items.map((item) => ({
+      name: item.name,
+      price: item.price,
+      quantity: item.quantity
+    })),
+    total: order.total,
+    paymentMethod: order.payment.method,
+    deliveryOption: order.delivery.option,
+    deliveryDate: order.delivery.date,
+    deliveryWindow: order.delivery.window,
+    pickupSpot: order.delivery.pickupSpot,
+    notes: order.delivery.notes,
+    createdAt: order.createdAt
   };
 
-  req.session.orders = req.session.orders || [];
-  req.session.orders.push(order);
-  req.session.lastOrder = order;
-
-  // Clear cart after storing the order
+  // Clear the cart and the saved checkout details after a successful order.
   req.session.cart = { items: [], total: 0 };
+  req.session.checkout = null;
 
   return res.redirect("/cart/confirmation");
-};
+});
 
 const renderConfirmation = (req, res) => {
   const order = req.session.lastOrder;
@@ -132,6 +201,7 @@ module.exports = {
   updateCart,
   removeFromCart,
   renderCheckout,
+  submitCheckoutDetails,
   renderPayment,
   processPayment,
   renderConfirmation

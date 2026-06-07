@@ -1,0 +1,76 @@
+<%- include('../partials/adminLayoutStart') %>
+
+<%
+  const TYPE_LABELS = language === 'ar'
+    ? { wheelchair: 'دعم الكرسي المتحرك', listening: 'أجهزة استماع', visual: 'مساعدة بصرية', sensory: 'زيارة حسية', other: 'أخرى' }
+    : { wheelchair: 'Wheelchair support', listening: 'Assistive listening', visual: 'Visual assistance', sensory: 'Sensory-friendly', other: 'Other' };
+  const statusLabel = (s) => {
+    if (language === 'ar') return ({ new: 'جديد', in_progress: 'قيد المعالجة', resolved: 'تم الحل' })[s] || s;
+    return ({ new: 'New', in_progress: 'In progress', resolved: 'Resolved' })[s] || s;
+  };
+  const newCount = requests.filter((r) => r.status === 'new').length;
+  const inProgressCount = requests.filter((r) => r.status === 'in_progress').length;
+%>
+
+<section class="admin-page-header">
+  <div>
+    <h1><%= language === 'ar' ? 'طلبات المساعدة' : 'Assistance Requests' %></h1>
+    <p><%= language === 'ar' ? 'طلبات إمكانية الوصول المرسلة من صفحة إمكانية الوصول.' : 'Accessibility assistance requests submitted by visitors.' %></p>
+  </div>
+</section>
+
+<section class="admin-section">
+  <div class="admin-grid admin-stats">
+    <div class="admin-stat"><%= language === 'ar' ? 'الإجمالي' : 'Total' %> <strong><%= requests.length %></strong></div>
+    <div class="admin-stat"><%= language === 'ar' ? 'جديدة' : 'New' %> <strong><%= newCount %></strong></div>
+    <div class="admin-stat"><%= language === 'ar' ? 'قيد المعالجة' : 'In progress' %> <strong><%= inProgressCount %></strong></div>
+  </div>
+</section>
+
+<section class="admin-section">
+  <div class="admin-section-title">
+    <h2><%= language === 'ar' ? 'جميع الطلبات' : 'All Requests' %></h2>
+  </div>
+  <p class="form-message" id="admin-assist-message"></p>
+  <div class="admin-orders">
+    <% if (!requests.length) { %>
+      <p><%= language === 'ar' ? 'لا توجد طلبات بعد.' : 'No requests yet.' %></p>
+    <% } %>
+    <% requests.forEach((r) => { %>
+      <article class="admin-order-card" data-id="<%= r._id %>">
+        <div class="admin-order-head">
+          <div>
+            <strong><%= r.name %></strong>
+            <span class="admin-order-date"><%= new Date(r.createdAt).toLocaleString() %></span>
+          </div>
+          <span class="admin-status-badge is-<%= r.status %>"><%= statusLabel(r.status) %></span>
+        </div>
+
+        <div class="admin-order-body">
+          <div class="admin-order-customer">
+            <p class="muted"><%= r.email %><%= r.phone ? ' · ' + r.phone : '' %></p>
+            <p class="muted"><%= language === 'ar' ? 'نوع المساعدة' : 'Assistance' %>: <strong><%= TYPE_LABELS[r.type] || r.type %></strong></p>
+            <% if (r.date) { %>
+              <p class="muted"><%= language === 'ar' ? 'تاريخ الزيارة' : 'Visit date' %>: <%= r.date %></p>
+            <% } %>
+          </div>
+          <div class="admin-order-customer">
+            <% if (r.notes) { %>
+              <p class="muted"><%= language === 'ar' ? 'ملاحظات' : 'Notes' %>: <%= r.notes %></p>
+            <% } else { %>
+              <p class="muted"><%= language === 'ar' ? 'لا توجد ملاحظات' : 'No notes' %></p>
+            <% } %>
+          </div>
+        </div>
+
+        <div class="admin-order-actions">
+          <button class="btn" data-assist-action="in_progress" data-id="<%= r._id %>" <%= r.status === 'in_progress' ? 'disabled' : '' %>><%= language === 'ar' ? 'قيد المعالجة' : 'Mark In Progress' %></button>
+          <button class="btn btn-secondary" data-assist-action="resolved" data-id="<%= r._id %>" <%= r.status === 'resolved' ? 'disabled' : '' %>><%= language === 'ar' ? 'تم الحل' : 'Mark Resolved' %></button>
+          <button class="btn btn-danger" data-assist-action="delete" data-id="<%= r._id %>"><%= language === 'ar' ? 'حذف' : 'Delete' %></button>
+        </div>
+      </article>
+    <% }) %>
+  </div>
+</section>
+
+<%- include('../partials/adminLayoutEnd') %>

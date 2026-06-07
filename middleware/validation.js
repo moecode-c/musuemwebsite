@@ -171,6 +171,15 @@ const ticketRequestToTaskValidation = [
   body("dueAt").optional({ values: "falsy" }).isISO8601().withMessage("Invalid due date")
 ];
 
+const assistanceValidation = [
+  body("name").trim().isLength({ min: 2 }).withMessage("Name is required"),
+  body("email").isEmail().withMessage("Valid email required"),
+  body("phone").optional({ values: "falsy" }).trim().isLength({ min: 4 }).withMessage("Valid phone required"),
+  body("type").optional({ values: "falsy" }).isIn(["wheelchair", "listening", "visual", "sensory", "other"]).withMessage("Invalid assistance type"),
+  body("date").optional({ values: "falsy" }).trim().isString(),
+  body("notes").optional({ values: "falsy" }).isString()
+];
+
 module.exports = {
   handleValidation,
   userValidation,
@@ -186,5 +195,6 @@ module.exports = {
   taskStatusValidation,
   cleaningZoneValidation,
   cleaningZoneAssignValidation,
-  ticketRequestToTaskValidation
+  ticketRequestToTaskValidation,
+  assistanceValidation
 };

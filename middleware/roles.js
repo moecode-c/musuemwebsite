@@ -51,7 +51,7 @@ const dashboardPathByRole = {
   [ROLES.MAINTENANCE_TECHNICIAN]: "/employee/dashboard",
   [ROLES.JANITOR]: "/employee/dashboard",
   [ROLES.EDUCATOR_GUIDE]: "/employee/dashboard",
-  [ROLES.USER]: "/"
+  [ROLES.USER]: "/dashboard"
 };
 
 const deny = (res) => res.status(403).render("404", { pageTitle: "Forbidden", message: "Access denied." });

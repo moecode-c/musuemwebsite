@@ -118,6 +118,27 @@ const initEditableForm = (form, submitLabel) => {
   return { setEditing };
 };
 
+// Guard a form's submit handler against rapid double-clicks: ignore re-entrant
+// submits, disable the submit button while the request is in flight, then keep
+// it disabled for a short cooldown so a fast second click can't create a
+// duplicate record (fixes admin "Add" buttons inserting many copies).
+const SUBMIT_COOLDOWN_MS = 1200;
+const withSubmitGuard = (form, handler) => async (event) => {
+  event.preventDefault();
+  if (form.dataset.submitting === "true") return;
+  form.dataset.submitting = "true";
+  const submitBtn = form.querySelector(".admin-submit");
+  if (submitBtn) submitBtn.disabled = true;
+  try {
+    await handler(event);
+  } finally {
+    window.setTimeout(() => {
+      form.dataset.submitting = "false";
+      if (submitBtn) submitBtn.disabled = false;
+    }, SUBMIT_COOLDOWN_MS);
+  }
+};
+
 document.addEventListener("DOMContentLoaded", () => {
   const isArabic = document.documentElement.lang === "ar";
   const exhibitForm = document.getElementById("admin-exhibit-form");
@@ -298,7 +319,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
     loadExhibits();
 
-    exhibitForm.addEventListener("submit", async (event) => {
+    exhibitForm.addEventListener("submit", withSubmitGuard(exhibitForm, async (event) => {
       event.preventDefault();
       const formData = new FormData(exhibitForm);
       if (imageInput && imageInput.files.length === 0) formData.delete("image");
@@ -329,7 +350,7 @@ document.addEventListener("DOMContentLoaded", () => {
       }
 
       await loadExhibits();
-    });
+    }));
   }
 
   const productForm = document.getElementById("admin-product-form");
@@ -344,7 +365,7 @@ document.addEventListener("DOMContentLoaded", () => {
       productForm.dataset.editId = item._id;
       setEditing(true, "Update Product");
     });
-    productForm.addEventListener("submit", async (event) => {
+    productForm.addEventListener("submit", withSubmitGuard(productForm, async (event) => {
       event.preventDefault();
       const formData = new FormData(productForm);
       const imageInput = productForm.querySelector("input[name='image']");
@@ -378,7 +399,7 @@ document.addEventListener("DOMContentLoaded", () => {
         productForm.dataset.editId = item._id;
         setEditing(true, "Update Product");
       });
-    });
+    }));
   }
 
   const ticketForm = document.getElementById("admin-ticket-form");
@@ -402,7 +423,7 @@ document.addEventListener("DOMContentLoaded", () => {
       ticketForm.dataset.editId = item._id;
       setEditing(true, "Update Ticket");
     });
-    ticketForm.addEventListener("submit", async (event) => {
+    ticketForm.addEventListener("submit", withSubmitGuard(ticketForm, async (event) => {
       event.preventDefault();
       const payload = Object.fromEntries(new FormData(ticketForm));
       const editId = ticketForm.dataset.editId;
@@ -432,7 +453,7 @@ document.addEventListener("DOMContentLoaded", () => {
           setEditing(true, "Update Ticket");
         });
       }
-    });
+    }));
   }
 
   const userForm = document.getElementById("admin-user-form");
@@ -447,7 +468,7 @@ document.addEventListener("DOMContentLoaded", () => {
       userForm.dataset.editId = item._id;
       setEditing(true, "Update User");
     });
-    userForm.addEventListener("submit", async (event) => {
+    userForm.addEventListener("submit", withSubmitGuard(userForm, async (event) => {
       event.preventDefault();
       const payload = Object.fromEntries(new FormData(userForm));
       if (!payload.password) {
@@ -497,7 +518,7 @@ document.addEventListener("DOMContentLoaded", () => {
           setEditing(true, "Update User");
         });
       }
-    });
+    }));
   }
 
   const isDashboardPage = window.location.pathname === "/admin/dashboard";

@@ -1,0 +1,324 @@
+/* Visitor dashboard: tickets (with QR) + orders. Uses global theme vars so it
+   adapts to light/dark automatically. */
+
+.dashboard-page {
+	min-height: 70vh;
+}
+
+.dash-section-head {
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+	gap: 16px;
+	margin-bottom: 18px;
+}
+
+.dash-section-head--spaced {
+	margin-top: 44px;
+}
+
+.dash-section-head h2 {
+	margin: 0;
+	font-family: "Cinzel", serif;
+	letter-spacing: 0.05em;
+	color: var(--text);
+}
+
+.btn-ghost {
+	background: transparent;
+	border: 1px solid var(--border);
+	color: var(--text);
+}
+
+.btn-ghost:hover {
+	border-color: var(--accent);
+	color: var(--accent);
+}
+
+.dash-empty {
+	background: var(--surface);
+	border: 1px dashed var(--border);
+	border-radius: 14px;
+	padding: 28px;
+	text-align: center;
+	color: var(--text-muted);
+	display: grid;
+	gap: 12px;
+	justify-items: center;
+}
+
+/* ---- Tickets ---- */
+.ticket-grid {
+	display: grid;
+	grid-template-columns: repeat(auto-fill, minmax(340px, 1fr));
+	gap: 20px;
+}
+
+.museum-ticket {
+	display: grid;
+	grid-template-columns: 1fr 200px;
+	background: var(--surface);
+	border: 1px solid var(--border);
+	border-radius: 16px;
+	overflow: hidden;
+	box-shadow: 0 12px 28px rgba(0, 0, 0, 0.18);
+}
+
+.ticket-main {
+	position: relative;
+	padding: 20px;
+}
+
+.ticket-kicker {
+	font-size: 11px;
+	letter-spacing: 3px;
+	text-transform: uppercase;
+	color: var(--accent);
+	font-weight: 700;
+}
+
+.ticket-brand h3 {
+	margin: 4px 0 14px;
+	font-family: "Cinzel", serif;
+	color: var(--text);
+	font-size: 1.05rem;
+}
+
+.ticket-rows {
+	display: grid;
+	gap: 8px;
+}
+
+.ticket-rows > div {
+	display: flex;
+	justify-content: space-between;
+	gap: 12px;
+	font-size: 0.9rem;
+	border-bottom: 1px dashed var(--border);
+	padding-bottom: 6px;
+}
+
+.ticket-rows span {
+	color: var(--text-muted);
+}
+
+.ticket-rows strong {
+	color: var(--text);
+	text-align: right;
+}
+
+.ticket-stub {
+	border-left: 2px dashed var(--border);
+	padding: 18px 14px;
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	justify-content: center;
+	gap: 8px;
+	text-align: center;
+	background: color-mix(in srgb, var(--surface) 80%, var(--accent) 6%);
+}
+
+.ticket-qr {
+	width: 150px;
+	height: 150px;
+	border-radius: 8px;
+	background: #fff;
+	padding: 6px;
+}
+
+.ticket-qr-missing {
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	font-size: 0.75rem;
+	color: var(--text-muted);
+	border: 1px dashed var(--border);
+}
+
+.ticket-stub-note {
+	font-size: 0.72rem;
+	color: var(--text-muted);
+	margin: 0;
+	line-height: 1.35;
+}
+
+.ticket-id {
+	font-family: "Courier New", monospace;
+	font-size: 0.78rem;
+	letter-spacing: 1px;
+	color: var(--accent);
+	margin: 0;
+}
+
+/* ---- Orders ---- */
+.order-list {
+	display: grid;
+	gap: 14px;
+}
+
+.dash-order-card {
+	background: var(--surface);
+	border: 1px solid var(--border);
+	border-radius: 14px;
+	padding: 16px 18px;
+	display: grid;
+	gap: 10px;
+}
+
+.dash-order-head {
+	display: flex;
+	align-items: center;
+	gap: 12px;
+}
+
+.dash-order-head strong {
+	color: var(--text);
+}
+
+.dash-order-date {
+	color: var(--text-muted);
+	font-size: 0.85rem;
+	margin-right: auto;
+}
+
+.dash-order-items {
+	list-style: none;
+	margin: 0;
+	padding: 0;
+	display: grid;
+	gap: 4px;
+}
+
+.dash-order-items li {
+	display: flex;
+	justify-content: space-between;
+	gap: 10px;
+	font-size: 0.88rem;
+	color: var(--text-muted);
+}
+
+.dash-order-foot {
+	display: flex;
+	justify-content: space-between;
+	gap: 12px;
+	border-top: 1px solid var(--border);
+	padding-top: 10px;
+	font-size: 0.9rem;
+	color: var(--text);
+}
+
+/* ---- Status badges ---- */
+.dash-status {
+	display: inline-flex;
+	align-items: center;
+	padding: 3px 12px;
+	border-radius: 999px;
+	font-size: 11px;
+	font-weight: 700;
+	text-transform: capitalize;
+	border: 1px solid transparent;
+}
+
+.dash-status.is-pending,
+.dash-status.is-new {
+	background: #fff4df;
+	color: #8a6113;
+	border-color: #f0d6a2;
+}
+
+.dash-status.is-processing,
+.dash-status.is-confirmed,
+.dash-status.is-in_progress {
+	background: #e2ecff;
+	color: #274a86;
+	border-color: #bdd1ff;
+}
+
+.dash-status.is-fulfilled,
+.dash-status.is-resolved {
+	background: #def2e5;
+	color: #1f6a3d;
+	border-color: #b7dec4;
+}
+
+.dash-status.is-cancelled {
+	background: #fde2e2;
+	color: #992323;
+	border-color: #efbbbb;
+}
+
+/* ---- Verify page ---- */
+.verify-shell {
+	display: grid;
+	place-items: center;
+	padding: 30px 0;
+}
+
+.verify-card {
+	background: var(--surface);
+	border: 1px solid var(--border);
+	border-radius: 18px;
+	padding: 30px;
+	max-width: 460px;
+	width: 100%;
+	text-align: center;
+	box-shadow: 0 14px 30px rgba(0, 0, 0, 0.18);
+}
+
+.verify-icon {
+	font-size: 56px;
+	margin-bottom: 8px;
+}
+
+.verify-card.is-valid .verify-icon {
+	color: #2f9e57;
+}
+
+.verify-card.is-invalid .verify-icon {
+	color: #c0392b;
+}
+
+.verify-card h1 {
+	font-family: "Cinzel", serif;
+	color: var(--text);
+	margin-bottom: 16px;
+}
+
+.verify-rows {
+	display: grid;
+	gap: 8px;
+	text-align: left;
+	margin-bottom: 14px;
+}
+
+.verify-rows > div {
+	display: flex;
+	justify-content: space-between;
+	gap: 12px;
+	border-bottom: 1px dashed var(--border);
+	padding-bottom: 6px;
+}
+
+.verify-rows span {
+	color: var(--text-muted);
+}
+
+.verify-rows strong {
+	color: var(--text);
+}
+
+@media (max-width: 560px) {
+	.museum-ticket {
+		grid-template-columns: 1fr;
+	}
+
+	.ticket-stub {
+		border-left: none;
+		border-top: 2px dashed var(--border);
+	}
+
+	.ticket-grid {
+		grid-template-columns: 1fr;
+	}
+}

@@ -162,6 +162,7 @@
             <label for="assist-notes"><%= language === 'ar' ? 'ملاحظات' : 'Notes' %></label>
             <textarea id="assist-notes" name="notes" autocomplete="off" rows="4" placeholder="<%= language === 'ar' ? 'أخبرنا كيف يمكننا المساعدة' : 'Tell us how we can help' %>"></textarea>
             <button class="btn" type="submit"><%= language === 'ar' ? 'إرسال الطلب' : 'Send Request' %></button>
+            <p class="form-message" id="assistance-message" role="status" aria-live="polite"></p>
           </form>
 
           <aside class="assistance-contact">
@@ -213,6 +214,50 @@
       assistancePanel.hidden = isOpen;
       if (!isOpen) {
         assistancePanel.scrollIntoView({ behavior: "smooth", block: "start" });
+      }
+    });
+  }
+
+  // Submit the assistance request to the admin backend.
+  const assistanceForm = document.getElementById("assistance-form");
+  if (assistanceForm) {
+    const assistMsg = document.getElementById("assistance-message");
+    const assistIsArabic = document.documentElement.lang === "ar";
+    const setAssistMsg = (text, ok) => {
+      if (!assistMsg) return;
+      assistMsg.textContent = text || "";
+      assistMsg.style.color = text ? (ok ? "#2f7f4f" : "#d13f3f") : "";
+    };
+    assistanceForm.addEventListener("submit", async (event) => {
+      event.preventDefault();
+      const submitBtn = assistanceForm.querySelector("button[type='submit']");
+      if (submitBtn) submitBtn.disabled = true;
+      setAssistMsg("", true);
+      try {
+        const payload = Object.fromEntries(new FormData(assistanceForm));
+        const response = await fetch("/api/assistance", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify(payload)
+        });
+        const data = await response.json().catch(() => ({}));
+        if (!response.ok) {
+          const msg = (data.errors && data.errors[0] && data.errors[0].msg) || data.message ||
+            (assistIsArabic ? "تعذر إرسال الطلب." : "Could not submit the request.");
+          setAssistMsg(msg, false);
+          return;
+        }
+        assistanceForm.reset();
+        setAssistMsg(
+          assistIsArabic
+            ? "تم إرسال طلبك. سيتواصل معك مكتب إمكانية الوصول خلال يوم عمل."
+            : "Your request has been sent. Our accessibility desk will reach out within 1 business day.",
+          true
+        );
+      } catch (error) {
+        setAssistMsg(assistIsArabic ? "مشكلة في الشبكة. حاول مرة أخرى." : "Network issue. Please try again.", false);
+      } finally {
+        if (submitBtn) submitBtn.disabled = false;
       }
     });
   }

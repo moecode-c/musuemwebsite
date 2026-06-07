@@ -220,7 +220,7 @@
 	--checkout-shadow: 0 18px 38px -24px rgba(0, 0, 0, 0.8);
 }
 
-body.theme-light {
+.theme-light {
 	--checkout-bg: #f9f5ed;
 	--checkout-surface: #ffffff;
 	--checkout-border: rgba(198, 156, 109, 0.3);

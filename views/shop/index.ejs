@@ -150,10 +150,6 @@
             </aside>
             
             <div class="shop-main-content">
-          <div class="cutoff-banner" aria-live="polite">
-            <i class="fa fa-clock"></i>
-            <span data-cutoff-timer><%= isArabic ? 'اطلب خلال 05:00 ليتم الشحن اليوم' : 'Order within 05:00 for dispatch today' %></span>
-          </div>
           <p class="muted" style="margin: 0.2rem 0 0.9rem;"><%= isArabic ? 'المعروض:' : 'Showing:' %> <strong><%= localizedActiveTypeLabel %></strong></p>
           <div class="shop-controls">
             <div class="control search">
@@ -182,24 +178,18 @@
                 <span class="range-value" id="price-max-value"><%= isArabic ? 'حتى 2000 جنيه' : 'Up to EGP 2000' %></span>
               </div>
             </div>
-            <div class="control toggles">
-              <label><%= isArabic ? 'الفلاتر' : 'Filters' %></label>
-              <div class="pill-toggle" data-filter="available"><%= isArabic ? 'متوفر' : 'In stock' %></div>
-              <div class="pill-toggle" data-filter="low"><%= isArabic ? 'مخزون منخفض' : 'Low stock' %></div>
-              <div class="pill-toggle" data-filter="new"><%= isArabic ? 'جديد' : 'New' %></div>
-            </div>
           </div>
           <div class="active-filters" data-active-filters></div>
           <div class="shop-controls secondary">
             <div class="control delivery">
-              <label for="zip-check"><%= isArabic ? 'التوصيل إلى' : 'Delivery to' %></label>
+              <label for="zip-check"><%= isArabic ? 'التوصيل (القاهرة فقط)' : 'Delivery (Cairo only)' %></label>
               <div class="input-shell inline">
                 <i class="fa fa-location-dot"></i>
                 <input id="zip-check" type="text" inputmode="numeric" placeholder="<%= isArabic ? 'أدخل الرمز البريدي' : 'Enter ZIP' %>"
                   aria-label="<%= isArabic ? 'أدخل الرمز البريدي لمعرفة وقت التوصيل' : 'Enter ZIP for ETA' %>" maxlength="6" />
                 <button class="shop-btn ghost" type="button" id="zip-check-btn"><%= isArabic ? 'تحقق من وقت الوصول' : 'Check ETA' %></button>
               </div>
-              <p class="muted small" id="zip-result" aria-live="polite"><%= isArabic ? 'أدخل الرمز البريدي لمعرفة نافذة التوصيل.' : 'Enter ZIP to see delivery window.' %></p>
+              <p class="muted small" id="zip-result" aria-live="polite"><%= isArabic ? 'نوصّل داخل القاهرة فقط. أدخل الرمز البريدي لمعرفة موعد التوصيل.' : 'We deliver to Cairo only. Enter your Cairo ZIP for the delivery window.' %></p>
             </div>
             <div class="control delivery-note">
               <label><%= isArabic ? 'الطلبات المسبقة' : 'Preorders' %></label>
@@ -309,7 +299,7 @@
             preorderText: 'طلب مسبق',
             preorderShipsPrefix: 'طلب مسبق - يشحن',
             deliveryToPrefix: 'التوصيل إلى',
-            enterZipPrompt: 'أدخل الرمز البريدي لمعرفة نافذة التوصيل.',
+            enterZipPrompt: 'نوصّل داخل القاهرة فقط. أدخل الرمز البريدي لمعرفة موعد التوصيل.',
             orderBeforePrefix: 'اطلب قبل',
             orderBeforeSuffix: 'لأسرع شحن',
             inStockCountSuffix: 'متوفر',
@@ -357,7 +347,7 @@
             preorderText: 'Preorder',
             preorderShipsPrefix: 'Preorder - ships',
             deliveryToPrefix: 'Delivery to',
-            enterZipPrompt: 'Enter ZIP to see delivery window.',
+            enterZipPrompt: 'We deliver to Cairo only. Enter your Cairo ZIP for the delivery window.',
             orderBeforePrefix: 'Order before',
             orderBeforeSuffix: 'for fastest dispatch',
             inStockCountSuffix: 'in stock',

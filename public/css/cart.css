@@ -11,7 +11,7 @@
 	--cart-shadow: 0 8px 24px rgba(15, 28, 48, 0.8);
 }
 
-body.theme-light {
+.theme-light {
 	--cart-surface: #fdfaf6;
 	--cart-panel: #ffffff;
 	--cart-border: rgba(198, 156, 109, 0.3);
@@ -132,5 +132,113 @@ body.theme-light {
 
 	.cart-summary {
 		order: -1;
+	}
+}
+
+/* Cart line items */
+#cart-items {
+	display: flex;
+	flex-direction: column;
+	gap: 12px;
+	margin-top: 8px;
+}
+
+#cart-items .cart-item {
+	display: grid;
+	grid-template-columns: 1fr auto auto auto;
+	align-items: center;
+	gap: 16px;
+	margin: 0;
+	padding: 14px 16px;
+	background: color-mix(in srgb, var(--cart-panel) 90%, var(--cart-accent) 10%);
+	border: 1px solid var(--cart-border);
+	border-radius: 10px;
+	color: var(--cart-ink);
+}
+
+.cart-item__info {
+	display: flex;
+	flex-direction: column;
+	gap: 4px;
+	min-width: 0;
+}
+
+.cart-item__name {
+	font-weight: 600;
+	color: var(--cart-ink);
+}
+
+.cart-item__price {
+	font-size: 0.9rem;
+	color: var(--cart-muted);
+}
+
+.cart-item__qty {
+	display: inline-flex;
+	align-items: center;
+	gap: 10px;
+}
+
+.cart-item__qty .qty-btn {
+	width: 28px;
+	height: 28px;
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+	border: 1px solid var(--cart-border);
+	border-radius: 6px;
+	background: transparent;
+	color: var(--cart-ink);
+	font-size: 1rem;
+	line-height: 1;
+	cursor: pointer;
+	transition: border-color 0.2s ease, color 0.2s ease;
+}
+
+.cart-item__qty .qty-btn:hover {
+	border-color: var(--cart-accent);
+	color: var(--cart-accent);
+}
+
+.cart-item__qty .qty-value {
+	min-width: 22px;
+	text-align: center;
+	font-weight: 600;
+}
+
+.cart-item__subtotal {
+	font-weight: 700;
+	color: var(--cart-accent);
+	white-space: nowrap;
+}
+
+.cart-item__remove {
+	border: none;
+	background: transparent;
+	color: var(--cart-muted);
+	font-size: 1.35rem;
+	line-height: 1;
+	padding: 0 4px;
+	cursor: pointer;
+	transition: color 0.2s ease;
+}
+
+.cart-item__remove:hover {
+	color: #e06a6a;
+}
+
+@media (max-width: 560px) {
+	#cart-items .cart-item {
+		grid-template-columns: 1fr auto;
+		row-gap: 10px;
+	}
+
+	.cart-item__subtotal {
+		grid-column: 1;
+	}
+
+	.cart-item__remove {
+		grid-column: 2;
+		justify-self: end;
 	}
 }

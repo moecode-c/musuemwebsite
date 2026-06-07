@@ -7,10 +7,12 @@ const Testimonial = require("../models/Testimonial");
 const TicketRequest = require("../models/TicketRequest");
 const Task = require("../models/Task");
 const CleaningZone = require("../models/CleaningZone");
+const Order = require("../models/Order");
+const AssistanceRequest = require("../models/AssistanceRequest");
 const { asyncHandler } = require("../utils/asyncHandler");
 
 const dashboard = asyncHandler(async (req, res) => {
-  const [exhibitCount, productCount, userCount, ticketCount, testimonialCount, ticketRequestCount, taskCount, cleaningZoneCount] = await Promise.all([
+  const [exhibitCount, productCount, userCount, ticketCount, testimonialCount, ticketRequestCount, taskCount, cleaningZoneCount, orderCount, pendingOrderCount, assistanceCount, newAssistanceCount] = await Promise.all([
     Exhibit.countDocuments(),
     Product.countDocuments(),
     User.countDocuments(),
@@ -18,7 +20,11 @@ const dashboard = asyncHandler(async (req, res) => {
     Testimonial.countDocuments(),
     TicketRequest.countDocuments(),
     Task.countDocuments(),
-    CleaningZone.countDocuments()
+    CleaningZone.countDocuments(),
+    Order.countDocuments(),
+    Order.countDocuments({ status: "pending" }),
+    AssistanceRequest.countDocuments(),
+    AssistanceRequest.countDocuments({ status: "new" })
   ]);
 
   res.render("admin/dashboard", {
@@ -32,7 +38,11 @@ const dashboard = asyncHandler(async (req, res) => {
       testimonialCount,
       ticketRequestCount,
       taskCount,
-      cleaningZoneCount
+      cleaningZoneCount,
+      orderCount,
+      pendingOrderCount,
+      assistanceCount,
+      newAssistanceCount
     }
   });
 });
@@ -73,6 +83,24 @@ const adminTicketRequests = asyncHandler(async (req, res) => {
   });
 });
 
+const adminOrders = asyncHandler(async (req, res) => {
+  const orders = await Order.find().sort({ createdAt: -1 });
+  res.render("admin/orders", {
+    pageTitle: "Orders",
+    pageCss: "admin",
+    orders
+  });
+});
+
+const adminAssistance = asyncHandler(async (req, res) => {
+  const requests = await AssistanceRequest.find().sort({ createdAt: -1 });
+  res.render("admin/assistance", {
+    pageTitle: "Assistance Requests",
+    pageCss: "admin",
+    requests
+  });
+});
+
 module.exports = {
   dashboard,
   adminExhibits,
@@ -81,5 +109,7 @@ module.exports = {
   adminTickets,
   adminUsers,
   adminSettings,
-  adminTicketRequests
+  adminTicketRequests,
+  adminOrders,
+  adminAssistance
 };

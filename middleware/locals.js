@@ -59,7 +59,7 @@ const attachLocals = (req, res, next) => {
   const registerLoginLabel = `${registerLabel}/${loginLabel}`;
 
   const dashboardPath = req.session.user ? getDashboardPathByRole(req.session.user.role) : "/";
-  const showDashboardLink = req.session.user && (isAdminRole(req.session.user.role) || isEmployeeRole(req.session.user.role));
+  const showDashboardLink = Boolean(req.session.user);
   res.locals.authSectionHtml = req.session.user
     ? `
       <div class="nav-item">

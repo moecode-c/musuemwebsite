@@ -19,7 +19,7 @@
             <a href="/cart" class="nav-link cart-chip" aria-label="<%= t.nav.shopMenu.cart %>">
               <i class="nav-icon fas fa-cart-shopping"></i>
               <%= t.nav.shopMenu.cart %>
-              <span class="cart-count" id="cart-count">0</span>
+              <span class="cart-count" id="cart-count"><%= (cart && cart.items) ? cart.items.reduce((sum, item) => sum + (Number(item.quantity) || 0), 0) : 0 %></span>
             </a>
           </div>
         </div>

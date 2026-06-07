@@ -3,6 +3,9 @@ const Product = require("../models/Product");
 const Testimonial = require("../models/Testimonial");
 const Ticket = require("../models/Ticket");
 const MapPin = require("../models/MapPin");
+const Order = require("../models/Order");
+const TicketRequest = require("../models/TicketRequest");
+const QRCode = require("qrcode");
 const fs = require("fs");
 const path = require("path");
 const { asyncHandler } = require("../utils/asyncHandler");
@@ -894,19 +897,57 @@ const shop = asyncHandler(async (req, res) => {
 
 const cart = (req, res) => {
   const cartState = req.session.cart || { items: [], total: 0 };
-  const itemsHtml = cartState.items
-    .map(
-      (item) => `
-      <div class="cart-item">
-        <span>${item.name}</span>
-        <span>EGP ${item.price.toFixed(2)}</span>
-        <span>Qty: ${item.quantity}</span>
-      </div>
-    `
-    )
-    .join("");
-  res.render("shop/cart", { pageTitle: "Cart", cartItemsHtml: itemsHtml, total: cartState.total.toFixed(2) });
+  res.render("shop/cart", {
+    pageTitle: "Cart",
+    items: cartState.items || [],
+    total: Number(cartState.total || 0).toFixed(2)
+  });
 };
+
+// Logged-in visitor dashboard: their tickets (with scannable QR) and their orders.
+const userDashboard = asyncHandler(async (req, res) => {
+  const userId = req.session.user.id;
+  const [tickets, orders] = await Promise.all([
+    TicketRequest.find({ user: userId }).sort({ createdAt: -1 }),
+    Order.find({ user: userId }).sort({ createdAt: -1 })
+  ]);
+
+  const baseUrl = `${req.protocol}://${req.get("host")}`;
+  const ticketCards = await Promise.all(
+    tickets.map(async (ticket) => {
+      const verifyUrl = `${baseUrl}/tickets/verify/${ticket._id}`;
+      let qr = "";
+      try {
+        qr = await QRCode.toDataURL(verifyUrl, { margin: 1, width: 220 });
+      } catch (err) {
+        qr = "";
+      }
+      return { ticket, qr, verifyUrl };
+    })
+  );
+
+  res.render("dashboard/index", {
+    pageTitle: "My Dashboard",
+    pageCss: "dashboard",
+    tickets: ticketCards,
+    orders
+  });
+});
+
+// Public ticket verification (the QR points here so security can scan it).
+const ticketVerify = asyncHandler(async (req, res) => {
+  let ticket = null;
+  try {
+    ticket = await TicketRequest.findById(req.params.id);
+  } catch (err) {
+    ticket = null;
+  }
+  res.status(ticket ? 200 : 404).render("tickets/verify", {
+    pageTitle: "Ticket Verification",
+    pageCss: "dashboard",
+    ticket
+  });
+});
 
 const checkout = asyncHandler(async (req, res) => {
   const tickets = await Ticket.find();
@@ -1039,6 +1080,8 @@ module.exports = {
   membership,
   faqs,
   planTrip,
+  userDashboard,
+  ticketVerify,
   employeeDashboard,
   managerTasksDashboard,
   managerZonesDashboard
