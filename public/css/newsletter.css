@@ -1,10 +1,10 @@
 /* Newsletter page styles */
 .newsletter-page {
 	background:
-		radial-gradient(circle at 14% 10%, rgba(118, 166, 238, 0.18), transparent 38%),
+		radial-gradient(circle at 14% 10%, rgba(201, 166, 255, 0.18), transparent 38%),
 		radial-gradient(circle at 86% 16%, rgba(216, 178, 104, 0.14), transparent 42%),
-		linear-gradient(180deg, rgba(2, 13, 34, 0.84), rgba(2, 12, 30, 0.9)),
-		url("/assets/images/item10.jpg") center/cover fixed no-repeat;
+		linear-gradient(180deg, rgba(18, 15, 28, 0.84), rgba(17, 12, 29, 0.9)),
+		url("/assets/images/item10.jpg") center/cover no-repeat;
 	min-height: 100vh;
 }
 
@@ -21,7 +21,7 @@
 		radial-gradient(circle at 10% 8%, rgba(146, 176, 223, 0.2), transparent 38%),
 		radial-gradient(circle at 90% 16%, rgba(194, 156, 86, 0.2), transparent 42%),
 		linear-gradient(180deg, rgba(250, 242, 229, 0.62), rgba(244, 233, 214, 0.58)),
-		url("/assets/images/item10.jpg") center/cover fixed no-repeat;
+		url("/assets/images/item10.jpg") center/cover no-repeat;
 }
 
 
@@ -44,7 +44,7 @@
 .newsletter-hero::before {
 	width: 380px;
 	height: 380px;
-	background: radial-gradient(circle, rgba(118, 166, 238, 0.36), transparent 70%);
+	background: radial-gradient(circle, rgba(201, 166, 255, 0.36), transparent 70%);
 	top: -160px;
 	left: -140px;
 	animation-delay: -2s;
@@ -64,9 +64,9 @@
 	margin: 0 auto;
 	padding: 34px 28px;
 	border-radius: 26px;
-	border: 1px solid rgba(170, 202, 241, 0.28);
+	border: 1px solid rgba(180, 140, 255, 0.28);
 	background: transparent;
-	backdrop-filter: blur(5px);
+	backdrop-filter: blur(4px);
 	box-shadow: 0 12px 24px rgba(2, 11, 27, 0.22);
 	transition: transform 0.25s ease, box-shadow 0.25s ease, border-color 0.25s ease;
 	position: relative;
@@ -165,7 +165,7 @@
 	gap: 8px;
 	padding: 10px 14px;
 	border-radius: 999px;
-	border: 1px solid rgba(170, 202, 241, 0.3);
+	border: 1px solid rgba(180, 140, 255, 0.3);
 	background: rgba(4, 24, 56, 0.44);
 	color: color-mix(in srgb, var(--text) 92%, white 8%);
 	font-size: 0.78rem;
@@ -210,10 +210,10 @@
 
 .newsletter-benefits {
 	background: transparent;
-	border: 1px solid rgba(170, 202, 241, 0.24);
+	border: 1px solid rgba(180, 140, 255, 0.24);
 	border-radius: 20px;
 	padding: 30px 28px;
-	backdrop-filter: blur(6px);
+	backdrop-filter: blur(4px);
 	box-shadow: 0 18px 32px rgba(0, 0, 0, 0.3);
 	transition: transform 0.25s ease, box-shadow 0.25s ease, border-color 0.25s ease;
 }
@@ -275,7 +275,7 @@
 .frequency-note {
 	margin-top: 24px;
 	padding-top: 18px;
-	border-top: 1px solid rgba(170, 202, 241, 0.2);
+	border-top: 1px solid rgba(180, 140, 255, 0.2);
 }
 
 .theme-light .frequency-note {
@@ -305,9 +305,9 @@
 	max-width: none;
 	padding: 44px clamp(22px, 3vw, 46px);
 	border-radius: 22px;
-	border: 1px solid rgba(170, 202, 241, 0.26);
+	border: 1px solid rgba(180, 140, 255, 0.26);
 	text-align: center;
-	backdrop-filter: blur(7px);
+	backdrop-filter: blur(4px);
 	box-shadow: 0 24px 42px rgba(0, 0, 0, 0.34);
 	transition: transform 0.25s ease, box-shadow 0.25s ease, border-color 0.25s ease;
 }
@@ -335,11 +335,11 @@
 	display: inline-flex;
 	align-items: center;
 	gap: 10px;
-	background: rgba(4, 23, 52, 0.56);
+	background: rgba(27, 20, 43, 0.56);
 	padding: 6px 15px;
 	border-radius: 8px;
 	margin-bottom: 25px;
-	border: 1px solid rgba(170, 202, 241, 0.24);
+	border: 1px solid rgba(180, 140, 255, 0.24);
 	transition: transform 0.2s ease, border-color 0.2s ease, box-shadow 0.2s ease;
 }
 
@@ -410,8 +410,8 @@
 
 .subscribe-input {
 	width: 100%;
-	background: rgba(2, 14, 35, 0.78);
-	border: 1px solid rgba(170, 202, 241, 0.24);
+	background: rgba(18, 12, 28, 0.78);
+	border: 1px solid rgba(180, 140, 255, 0.24);
 	border-radius: 10px;
 	padding: 13px 14px;
 	color: var(--text);
@@ -620,5 +620,21 @@
 	.btn-subscribe,
 	.subscribe-input {
 		transition: none;
+	}
+
+	.hero-content-inner:hover,
+	.hero-content-inner:focus-within,
+	.meta-chip:hover,
+	.meta-chip:focus-within,
+	.newsletter-benefits:hover,
+	.newsletter-benefits:focus-within,
+	.newsletter-card:hover,
+	.newsletter-card:focus-within,
+	.btn-subscribe:hover {
+		transform: none;
+	}
+
+	.newsletter-page {
+		background-attachment: scroll;
 	}
 }

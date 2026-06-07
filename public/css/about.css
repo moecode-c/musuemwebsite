@@ -1,15 +1,15 @@
-/* About page redesign: deep blue editorial style with polished motion. */
+/* About page redesign: deep purple editorial style with polished motion. */
 .page-about {
-  --about-bg-950: #020d22;
-  --about-bg-900: #051835;
-  --about-bg-850: #0a2750;
-  --about-surface: rgba(7, 34, 70, 0.88);
-  --about-surface-soft: rgba(8, 30, 62, 0.7);
-  --about-border: rgba(147, 181, 235, 0.28);
-  --about-gold: #d8ae63;
-  --about-gold-soft: #f2d8a0;
-  --about-text: #ecf3ff;
-  --about-muted: #b9cbe6;
+  --about-bg-950: #120f1c;
+  --about-bg-900: #161123;
+  --about-bg-850: #1b142b;
+  --about-surface: rgba(27, 20, 43, 0.88);
+  --about-surface-soft: rgba(20, 15, 32, 0.7);
+  --about-border: rgba(180, 140, 255, 0.28);
+  --about-gold: #c9a6ff;
+  --about-gold-soft: #e0d2ff;
+  --about-text: #e7ddf5;
+  --about-muted: #b8aad0;
 }
 
 .theme-light .page-about {
@@ -27,7 +27,7 @@
 
 .theme-light .page-about .about-page-shell {
   background:
-    radial-gradient(circle at 8% 6%, rgba(145, 178, 232, 0.24), transparent 40%),
+    radial-gradient(circle at 8% 6%, rgba(196, 171, 255, 0.2), transparent 40%),
     radial-gradient(circle at 92% 18%, rgba(195, 149, 77, 0.2), transparent 42%),
     linear-gradient(180deg, rgba(251, 245, 232, 0.62) 0%, rgba(245, 236, 220, 0.54) 48%, rgba(239, 229, 212, 0.6) 100%),
     url("/assets/images/g7.jpg") center/cover no-repeat;
@@ -38,9 +38,9 @@
   isolation: isolate;
   overflow: hidden;
   background:
-    radial-gradient(circle at 10% 0%, rgba(74, 122, 196, 0.18), transparent 48%),
+    radial-gradient(circle at 10% 0%, rgba(201, 166, 255, 0.18), transparent 48%),
     radial-gradient(circle at 90% 20%, rgba(216, 174, 99, 0.12), transparent 42%),
-    linear-gradient(180deg, rgba(5, 24, 53, 0.58) 0%, rgba(2, 13, 34, 0.66) 45%, rgba(5, 24, 53, 0.58) 100%),
+    linear-gradient(180deg, rgba(18, 15, 28, 0.58) 0%, rgba(17, 12, 29, 0.66) 45%, rgba(18, 15, 28, 0.58) 100%),
     url("/assets/images/g7.jpg") center/cover no-repeat;
   color: var(--about-text);
 }
@@ -52,7 +52,7 @@
   width: 100%;
   height: 3px;
   z-index: 260;
-  background: rgba(7, 24, 52, 0.32);
+  background: rgba(24, 18, 39, 0.32);
   pointer-events: none;
 }
 
@@ -62,8 +62,8 @@
   height: 100%;
   transform: scaleX(0);
   transform-origin: left center;
-  background: linear-gradient(90deg, rgba(231, 194, 118, 0.95), rgba(120, 165, 242, 0.95));
-  box-shadow: 0 0 14px rgba(220, 186, 112, 0.55);
+  background: linear-gradient(90deg, rgba(201, 166, 255, 0.95), rgba(123, 74, 226, 0.95));
+  box-shadow: 0 0 14px rgba(201, 166, 255, 0.55);
 }
 
 .page-about .section {
@@ -80,10 +80,10 @@
   padding: 136px 0 88px;
   background-position: center, center, calc(50% + var(--hero-parallax-x, 0px)) calc(50% + var(--hero-parallax-y, 0px));
   background:
-    linear-gradient(122deg, rgba(4, 20, 44, 0.82), rgba(5, 22, 49, 0.54) 52%, rgba(9, 31, 65, 0.8)),
-    linear-gradient(180deg, rgba(2, 11, 28, 0.14), rgba(2, 11, 28, 0.72)),
+    linear-gradient(122deg, rgba(20, 14, 33, 0.82), rgba(27, 18, 45, 0.54) 52%, rgba(38, 24, 63, 0.8)),
+    linear-gradient(180deg, rgba(18, 12, 28, 0.14), rgba(18, 12, 28, 0.72)),
     url("/assets/images/g7.jpg") center/cover no-repeat;
-  border-bottom: 1px solid rgba(210, 174, 103, 0.34);
+  border-bottom: 1px solid rgba(180, 140, 255, 0.34);
 }
 
 .page-about .about-hero::before,

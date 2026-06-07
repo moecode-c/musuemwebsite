@@ -2,17 +2,17 @@
 
 .mission-page {
   background:
-    radial-gradient(circle at 14% 12%, rgba(115, 163, 236, 0.2), transparent 40%),
+    radial-gradient(circle at 14% 12%, rgba(201, 166, 255, 0.2), transparent 40%),
     radial-gradient(circle at 86% 18%, rgba(214, 175, 99, 0.16), transparent 38%),
-    linear-gradient(180deg, rgba(2, 13, 34, 0.92), rgba(2, 12, 30, 0.95)),
-    url("/assets/images/g7.jpg") center/cover fixed no-repeat;
+    linear-gradient(180deg, rgba(18, 15, 28, 0.92), rgba(17, 12, 29, 0.95)),
+    url("/assets/images/g7.jpg") center/cover no-repeat;
 }
 
 .mission-hero {
   padding: 66px 0 58px;
   background:
-    linear-gradient(128deg, rgba(4, 22, 50, 0.9), rgba(7, 30, 63, 0.62) 54%, rgba(9, 36, 73, 0.88)),
-    linear-gradient(180deg, rgba(3, 14, 35, 0.2), rgba(2, 13, 33, 0.75)),
+    linear-gradient(128deg, rgba(20, 14, 33, 0.9), rgba(27, 18, 45, 0.62) 54%, rgba(38, 24, 63, 0.88)),
+    linear-gradient(180deg, rgba(18, 12, 28, 0.2), rgba(18, 12, 28, 0.75)),
     url("/assets/images/bg5.png") center/cover no-repeat;
   border-bottom: 1px solid var(--border);
   position: relative;
@@ -32,7 +32,7 @@
 .mission-hero::before {
   width: 320px;
   height: 320px;
-  background: radial-gradient(circle, rgba(115, 163, 236, 0.38), transparent 70%);
+  background: radial-gradient(circle, rgba(201, 166, 255, 0.38), transparent 70%);
   top: -140px;
   left: -120px;
   animation-delay: -3s;
@@ -56,9 +56,9 @@
   margin: 0 auto;
   padding: 34px 30px;
   border-radius: 24px;
-  border: 1px solid rgba(170, 202, 241, 0.24);
-  background: rgba(4, 21, 49, 0.68);
-  backdrop-filter: blur(7px);
+  border: 1px solid rgba(180, 140, 255, 0.24);
+  background: rgba(27, 20, 43, 0.68);
+  backdrop-filter: blur(4px);
   box-shadow: 0 20px 34px rgba(2, 11, 27, 0.4);
   position: relative;
   z-index: 1;
@@ -339,6 +339,18 @@
   }
 }
 
+/* Use smaller background images on narrow viewports to reduce download and repaint cost */
+@media (max-width: 900px) {
+  .mission-page {
+    background-image:
+      radial-gradient(circle at 14% 12%, rgba(201, 166, 255, 0.2), transparent 40%),
+      radial-gradient(circle at 86% 18%, rgba(214, 175, 99, 0.16), transparent 38%),
+      linear-gradient(180deg, rgba(18, 15, 28, 0.92), rgba(17, 12, 29, 0.95));
+    background-repeat: no-repeat;
+    background-size: cover;
+  }
+}
+
 /* Mission goals layout overrides */
 
 .mission-page .text-gradient-gold {
@@ -446,7 +458,7 @@
   border: 1px solid rgba(166, 199, 240, 0.22);
   background: rgba(5, 24, 53, 0.64);
   padding: 22px 14px;
-  backdrop-filter: blur(6px);
+  backdrop-filter: blur(4px);
   transition: transform 0.28s ease, border-color 0.28s ease, box-shadow 0.28s ease;
   box-shadow: 0 10px 20px rgba(2, 11, 27, 0.24);
 }
@@ -729,7 +741,7 @@
 .mission-page .timeline-section {
   padding: 96px 0;
   position: relative;
-  background: linear-gradient(180deg, rgba(2, 13, 33, 0.34), rgba(4, 17, 43, 0.46));
+  background: linear-gradient(180deg, rgba(18, 12, 28, 0.34), rgba(27, 18, 45, 0.46));
 }
 
 .mission-page .timeline-wrapper {
@@ -750,7 +762,7 @@
 .mission-page .timeline-line-inner {
   width: 100%;
   height: 0;
-  background: linear-gradient(to bottom, rgba(214, 175, 99, 0.66), rgba(115, 163, 236, 0.44), transparent);
+  background: linear-gradient(to bottom, rgba(201, 166, 255, 0.66), rgba(123, 74, 226, 0.44), transparent);
   animation: drawLine 2s ease-out forwards;
 }
 
@@ -786,7 +798,7 @@
   border-radius: 16px;
   border: 1px solid rgba(166, 198, 239, 0.28);
   background: rgba(6, 25, 54, 0.74);
-  backdrop-filter: blur(8px);
+  backdrop-filter: blur(4px);
   transition: border-color 0.5s, transform 0.3s ease, box-shadow 0.3s ease;
   position: relative;
   overflow: hidden;
@@ -955,10 +967,10 @@
 
 .theme-light .mission-page {
   background:
-    radial-gradient(circle at 10% 8%, rgba(146, 175, 221, 0.24), transparent 40%),
+    radial-gradient(circle at 10% 8%, rgba(201, 166, 255, 0.24), transparent 40%),
     radial-gradient(circle at 90% 16%, rgba(196, 157, 86, 0.22), transparent 38%),
     linear-gradient(180deg, rgba(250, 242, 229, 0.66), rgba(244, 233, 214, 0.62)),
-    url("/assets/images/g2.jpg") center/cover fixed no-repeat;
+    url("/assets/images/g2.jpg") center/cover no-repeat;
 }
 
 .theme-light .mission-hero {
@@ -996,7 +1008,7 @@
 }
 
 .theme-light .mission-page .mission-lead {
-  color: #a77828;
+  color: #5a6f8d;
 }
 
 .theme-light .mission-page .mission-subtitle,
@@ -1068,7 +1080,7 @@
 
 
 .theme-light .mission-page .timeline-line-inner {
-  background: linear-gradient(to bottom, rgba(197, 148, 58, 0.62), rgba(109, 147, 210, 0.4), transparent);
+  background: linear-gradient(to bottom, rgba(197, 148, 58, 0.62), rgba(173, 141, 232, 0.4), transparent);
 }
 
 .theme-light .mission-page .timeline-card {
@@ -1089,6 +1101,42 @@
 .theme-light .mission-page .timeline-dot {
   border-color: rgba(252, 244, 230, 0.96);
   box-shadow: 0 0 12px rgba(197, 148, 58, 0.28);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .mission-hero::before,
+  .mission-hero::after,
+  .mission-page .text-gradient-gold,
+  .mission-page .animate-fade-up,
+  .mission-page .animate-scale-in,
+  .mission-page .timeline-line-inner,
+  .mission-page .timeline-dot {
+    animation: none;
+  }
+
+  .mission-page,
+  .theme-light .mission-page,
+  .mission-hero,
+  .theme-light .mission-hero,
+  .mission-page .pillars-section,
+  .theme-light .mission-page .pillars-section {
+    background-attachment: scroll;
+  }
+
+  .mission-hero-content,
+  .pillar-card,
+  .mission-page .stat-item,
+  .mission-page .timeline-card {
+    transition: none;
+  }
+
+  .mission-hero-content:hover,
+  .mission-hero-content:focus-within,
+  .pillar-card:hover,
+  .mission-page .stat-item:hover,
+  .mission-page .timeline-card:hover {
+    transform: none;
+  }
 }
 
 @keyframes shimmer-gold {

@@ -6,9 +6,9 @@
 	position: relative;
 	overflow: hidden;
 	background:
-		linear-gradient(130deg, rgba(4, 22, 50, 0.62), rgba(7, 30, 63, 0.34) 56%, rgba(9, 36, 73, 0.54)),
-		linear-gradient(180deg, rgba(3, 14, 35, 0.06), rgba(2, 13, 33, 0.42)),
-		url("/assets/images/image11.jpg") center/cover fixed no-repeat;
+		linear-gradient(130deg, rgba(20, 14, 33, 0.62), rgba(27, 18, 45, 0.34) 56%, rgba(38, 24, 63, 0.54)),
+		linear-gradient(180deg, rgba(18, 12, 28, 0.06), rgba(18, 12, 28, 0.42)),
+		url("/assets/images/image11.jpg") center/cover no-repeat;
 }
 
 .page-hero::before,
@@ -24,7 +24,7 @@
 .page-hero::before {
 	width: 360px;
 	height: 360px;
-	background: radial-gradient(circle, rgba(118, 166, 238, 0.34), transparent 70%);
+	background: radial-gradient(circle, rgba(201, 166, 255, 0.34), transparent 70%);
 	top: -140px;
 	left: -110px;
 	animation-delay: -2s;
@@ -66,7 +66,7 @@
 	position: relative;
 	background:
 		linear-gradient(180deg, rgba(2, 13, 34, 0.74), rgba(2, 12, 30, 0.78)),
-		url("/assets/images/image11.jpg") center/cover fixed no-repeat;
+		url("/assets/images/image11.jpg") center/cover no-repeat;
 }
 
 .section::before {
@@ -74,7 +74,7 @@
 	position: absolute;
 	inset: 0;
 	background:
-		radial-gradient(circle at 10% 8%, rgba(118, 166, 238, 0.1), transparent 40%),
+		radial-gradient(circle at 10% 8%, rgba(201, 166, 255, 0.1), transparent 40%),
 		radial-gradient(circle at 90% 88%, rgba(216, 178, 104, 0.08), transparent 36%);
 	pointer-events: none;
 }
@@ -106,10 +106,10 @@
 	margin: 0;
 	padding: 12px;
 	border-radius: 22px;
-	border: 1px solid rgba(170, 202, 241, 0.28);
-	background: rgba(5, 24, 53, 0.58);
+	border: 1px solid rgba(180, 140, 255, 0.28);
+	background: rgba(27, 20, 43, 0.58);
 	box-shadow: 0 20px 36px rgba(0, 0, 0, 0.34);
-	backdrop-filter: blur(6px);
+	backdrop-filter: blur(4px);
 	transition: transform 0.25s ease, box-shadow 0.25s ease, border-color 0.25s ease;
 }
 
@@ -130,12 +130,12 @@
 }
 
 .info-card {
-	background: rgba(6, 28, 61, 0.62);
-	border: 1px solid rgba(170, 202, 241, 0.24);
+	background: rgba(27, 20, 43, 0.62);
+	border: 1px solid rgba(180, 140, 255, 0.24);
 	border-radius: 18px;
 	padding: 22px;
 	box-shadow: 0 16px 30px rgba(0, 0, 0, 0.3);
-	backdrop-filter: blur(6px);
+	backdrop-filter: blur(4px);
 	transition: transform 0.25s ease, box-shadow 0.25s ease, border-color 0.25s ease;
 }
 
@@ -175,8 +175,8 @@
 
 .map-tooltip {
 	margin-top: 0;
-	background: rgba(6, 28, 61, 0.62);
-	border: 1px solid rgba(170, 202, 241, 0.24);
+	background: rgba(27, 20, 43, 0.62);
+	border: 1px solid rgba(180, 140, 255, 0.24);
 	border-radius: 14px;
 	padding: 12px 14px;
 	color: color-mix(in srgb, var(--text-muted) 90%, white 10%);
@@ -193,12 +193,12 @@
 }
 
 .common-pins {
-	background: rgba(5, 24, 53, 0.58);
-	border: 1px solid rgba(170, 202, 241, 0.24);
+	background: rgba(27, 20, 43, 0.58);
+	border: 1px solid rgba(180, 140, 255, 0.24);
 	border-radius: 20px;
 	padding: 22px;
 	box-shadow: 0 18px 32px rgba(0, 0, 0, 0.3);
-	backdrop-filter: blur(6px);
+	backdrop-filter: blur(4px);
 	display: grid;
 	gap: 14px;
 	align-self: start;
@@ -227,8 +227,8 @@
 
 .common-pin-item,
 .common-pin-empty {
-	background: rgba(6, 28, 61, 0.56);
-	border: 1px solid rgba(170, 202, 241, 0.22);
+	background: rgba(27, 20, 43, 0.56);
+	border: 1px solid rgba(180, 140, 255, 0.22);
 	border-radius: 12px;
 	padding: 12px 14px;
 	display: grid;
@@ -288,7 +288,7 @@
 	background:
 		linear-gradient(130deg, rgba(251, 241, 224, 0.5), rgba(246, 232, 207, 0.24) 56%, rgba(239, 220, 186, 0.42)),
 		linear-gradient(180deg, rgba(255, 246, 230, 0.04), rgba(246, 231, 204, 0.22)),
-		url("/assets/images/image8.jpg") center/cover fixed no-repeat;
+		url("/assets/images/image8.jpg") center/cover no-repeat;
 	box-shadow: inset 0 -64px 92px rgba(238, 220, 189, 0.14);
 }
 
@@ -317,7 +317,7 @@
 .theme-light .section {
 	background:
 		linear-gradient(180deg, rgba(250, 242, 229, 0.6), rgba(244, 233, 214, 0.58)),
-		url("/assets/images/image8.jpg") center/cover fixed no-repeat;
+		url("/assets/images/image8.jpg") center/cover no-repeat;
 }
 
 .theme-light .section::before {
@@ -439,11 +439,27 @@
 @media (prefers-reduced-motion: reduce) {
 	.page-hero::before,
 	.page-hero::after,
+	.section::before,
 	.common-pin-item,
 	.location-top .map-wrapper,
-	.info-card {
+	.info-card,
+	.common-pins,
+	.map-tooltip {
 		animation: none;
 		transition: none;
+	}
+
+	.page-hero,
+	.section {
+		background-attachment: scroll;
+	}
+
+	.location-top .map-wrapper:hover,
+	.info-card:hover,
+	.common-pins:hover,
+	.common-pin-item:hover,
+	.map-tooltip:hover {
+		transform: none;
 	}
 }
 

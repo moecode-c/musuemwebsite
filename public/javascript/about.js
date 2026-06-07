@@ -24,6 +24,31 @@ import * as THREE from "/javascript/vendor/three.module.min.js";
     node.textContent = `${numberFormatter.format(value)}${suffix}`;
   };
 
+  const throttlePointerMove = (update) => {
+    let frameId = 0;
+    let lastEvent = null;
+
+    return (event) => {
+      if (event.pointerType === "touch") {
+        return;
+      }
+
+      lastEvent = event;
+
+      if (frameId) {
+        return;
+      }
+
+      frameId = window.requestAnimationFrame(() => {
+        frameId = 0;
+
+        if (lastEvent) {
+          update(lastEvent);
+        }
+      });
+    };
+  };
+
   const initThreeScene = () => {
     if (!threeStage) {
       return;
@@ -38,7 +63,7 @@ import * as THREE from "/javascript/vendor/three.module.min.js";
         antialias: true,
         alpha: true
       });
-      renderer.setPixelRatio(Math.min(window.devicePixelRatio || 1, 2));
+      renderer.setPixelRatio(Math.min(window.devicePixelRatio || 1, 1.5));
       renderer.setClearColor(0x000000, 0);
       renderer.outputColorSpace = THREE.SRGBColorSpace;
       renderer.domElement.className = "about-three-canvas";
@@ -238,17 +263,16 @@ import * as THREE from "/javascript/vendor/three.module.min.js";
       let targetRotX = 0;
       let targetRotY = 0;
 
-      threeStage.addEventListener("pointermove", (event) => {
-        if (event.pointerType === "touch") {
-          return;
-        }
-
-        const rect = threeStage.getBoundingClientRect();
-        const x = ((event.clientX - rect.left) / rect.width) * 2 - 1;
-        const y = ((event.clientY - rect.top) / rect.height) * 2 - 1;
-        targetRotY = x * 0.48;
-        targetRotX = -y * 0.28;
-      });
+      threeStage.addEventListener(
+        "pointermove",
+        throttlePointerMove((event) => {
+          const rect = threeStage.getBoundingClientRect();
+          const x = ((event.clientX - rect.left) / rect.width) * 2 - 1;
+          const y = ((event.clientY - rect.top) / rect.height) * 2 - 1;
+          targetRotY = x * 0.48;
+          targetRotX = -y * 0.28;
+        })
+      );
 
       threeStage.addEventListener("pointerleave", () => {
         targetRotX = 0;
@@ -386,22 +410,21 @@ import * as THREE from "/javascript/vendor/three.module.min.js";
   counterItems.forEach((item) => counterObserver.observe(item));
 
   interactiveItems.forEach((card) => {
-    card.addEventListener("pointermove", (event) => {
-      if (event.pointerType === "touch") {
-        return;
-      }
+    card.addEventListener(
+      "pointermove",
+      throttlePointerMove((event) => {
+        const rect = card.getBoundingClientRect();
+        const x = ((event.clientX - rect.left) / rect.width) * 100;
+        const y = ((event.clientY - rect.top) / rect.height) * 100;
+        const tiltY = ((event.clientX - rect.left) / rect.width - 0.5) * 8;
+        const tiltX = -((event.clientY - rect.top) / rect.height - 0.5) * 8;
 
-      const rect = card.getBoundingClientRect();
-      const x = ((event.clientX - rect.left) / rect.width) * 100;
-      const y = ((event.clientY - rect.top) / rect.height) * 100;
-      const tiltY = ((event.clientX - rect.left) / rect.width - 0.5) * 8;
-      const tiltX = -((event.clientY - rect.top) / rect.height - 0.5) * 8;
-
-      card.style.setProperty("--pointer-x", `${x}%`);
-      card.style.setProperty("--pointer-y", `${y}%`);
-      card.style.setProperty("--tilt-x", `${tiltX.toFixed(2)}deg`);
-      card.style.setProperty("--tilt-y", `${tiltY.toFixed(2)}deg`);
-    });
+        card.style.setProperty("--pointer-x", `${x}%`);
+        card.style.setProperty("--pointer-y", `${y}%`);
+        card.style.setProperty("--tilt-x", `${tiltX.toFixed(2)}deg`);
+        card.style.setProperty("--tilt-y", `${tiltY.toFixed(2)}deg`);
+      })
+    );
 
     card.addEventListener("pointerleave", () => {
       card.style.removeProperty("--pointer-x");
@@ -412,16 +435,19 @@ import * as THREE from "/javascript/vendor/three.module.min.js";
   });
 
   if (hero) {
-    window.addEventListener("pointermove", (event) => {
-      if (event.pointerType === "touch" || window.innerWidth < 900) {
-        return;
-      }
+    hero.addEventListener(
+      "pointermove",
+      throttlePointerMove((event) => {
+        if (window.innerWidth < 900) {
+          return;
+        }
 
-      const xShift = (event.clientX / window.innerWidth - 0.5) * 16;
-      const yShift = (event.clientY / window.innerHeight - 0.5) * 12;
+        const xShift = (event.clientX / window.innerWidth - 0.5) * 16;
+        const yShift = (event.clientY / window.innerHeight - 0.5) * 12;
 
-      hero.style.setProperty("--hero-parallax-x", `${xShift.toFixed(2)}px`);
-      hero.style.setProperty("--hero-parallax-y", `${yShift.toFixed(2)}px`);
-    });
+        hero.style.setProperty("--hero-parallax-x", `${xShift.toFixed(2)}px`);
+        hero.style.setProperty("--hero-parallax-y", `${yShift.toFixed(2)}px`);
+      })
+    );
   }
 })();
