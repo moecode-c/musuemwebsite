@@ -50,4 +50,19 @@ document.addEventListener("DOMContentLoaded", () => {
       }
     });
   });
+
+  // Orders search + status filter
+  const orderSearch = document.getElementById("order-search");
+  const orderStatusFilter = document.getElementById("order-status-filter");
+  const applyOrderFilter = () => {
+    const q = ((orderSearch && orderSearch.value) || "").trim().toLowerCase();
+    const status = (orderStatusFilter && orderStatusFilter.value) || "";
+    document.querySelectorAll("#admin-order-list .admin-order-card").forEach((card) => {
+      const matchesText = !q || card.textContent.toLowerCase().includes(q);
+      const matchesStatus = !status || card.dataset.status === status;
+      card.style.display = matchesText && matchesStatus ? "" : "none";
+    });
+  };
+  if (orderSearch) orderSearch.addEventListener("input", applyOrderFilter);
+  if (orderStatusFilter) orderStatusFilter.addEventListener("change", applyOrderFilter);
 });

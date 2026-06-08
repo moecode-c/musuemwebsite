@@ -26,6 +26,9 @@
     </form>
     <div>
       <h3><%= language === 'ar' ? 'قائمة المنتجات' : 'Product List' %></h3>
+      <div class="admin-toolbar">
+        <input type="search" class="admin-search-input" placeholder="<%= language === 'ar' ? 'ابحث عن منتج...' : 'Search products...' %>" data-search-target="#admin-product-list" data-search-item=".admin-item" />
+      </div>
       <div id="admin-product-list" class="admin-list"></div>
     </div>
   </div>

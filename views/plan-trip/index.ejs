@@ -54,6 +54,11 @@
             </div>
 
             <div class="trip-field-group">
+              <label for="trip-nationality"><%= language === 'ar' ? 'الجنسية' : 'Nationality' %></label>
+              <input id="trip-nationality" type="text" name="nationality" autocomplete="country-name" placeholder="<%= language === 'ar' ? 'مثال: مصري' : 'e.g. Egyptian' %>" required />
+            </div>
+
+            <div class="trip-field-group">
               <label for="trip-ticket"><%= t.planTrip.form.ticketType %></label>
               <select id="trip-ticket" name="ticketId" required>
                 <option value="" disabled selected><%= t.planTrip.form.selectTicket %></option>

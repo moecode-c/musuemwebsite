@@ -72,4 +72,17 @@ const convertToTask = asyncHandler(async (req, res) => {
   return res.status(201).json({ task, message: "Ticket request converted to task" });
 });
 
-module.exports = { list, summary, create, convertToTask };
+const updateStatus = asyncHandler(async (req, res) => {
+  const allowed = ["pending", "accepted", "rejected", "processing"];
+  const { status } = req.body;
+  if (!allowed.includes(status)) {
+    return res.status(422).json({ message: "Invalid status" });
+  }
+  const request = await TicketRequest.findByIdAndUpdate(req.params.id, { status }, { new: true });
+  if (!request) {
+    return res.status(404).json({ message: "Ticket request not found" });
+  }
+  res.json(request);
+});
+
+module.exports = { list, summary, create, convertToTask, updateStatus };

@@ -5,7 +5,20 @@
   <article class="card">
     <h3><i class="fas fa-user-shield"></i> <%= language === 'ar' ? 'مهام الدوريات والحوادث' : 'Patrol & Incident Tasks' %></h3>
     <p><%= language === 'ar' ? 'اعرض مهام نقاط التفتيش والدوريات ومتابعة الحوادث مع مواعيد الاستحقاق.' : 'See checkpoint, patrol, and incident follow-up tasks with due times.' %></p>
+    <div class="map-wrapper admin-map" data-employee-zone-map>
+      <img src="/assets/map/map.png" alt="<%= language === 'ar' ? 'خريطة المتحف' : 'Museum map' %>" class="map-image" />
+      <div class="map-layer"></div>
+    </div>
     <div class="admin-list" data-employee-task-list></div>
+  </article>
+  <article class="card">
+    <h3><i class="fas fa-map-location-dot"></i> <%= language === 'ar' ? 'مناطقي المعينة' : 'My Assigned Zones' %></h3>
+    <p><%= language === 'ar' ? 'المناطق المخصصة لك في المتحف.' : 'Zones assigned to you across the museum.' %></p>
+    <div class="map-wrapper admin-map" data-employee-zone-map>
+      <img src="/assets/map/map.png" alt="<%= language === 'ar' ? 'خريطة المتحف' : 'Museum map' %>" class="map-image" />
+      <div class="map-layer"></div>
+    </div>
+    <div class="admin-list" data-employee-zone-list></div>
   </article>
 </section>
 <%- include('../partials/employeeLayoutEnd') %>

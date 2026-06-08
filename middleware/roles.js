@@ -33,12 +33,12 @@ const permissionsByRole = {
     "zone:manage",
     "zone:view_assigned"
   ],
-  [ROLES.CURATOR]: ["dashboard:role", "task:view_own", "task:update_own_status"],
-  [ROLES.FRONT_DESK]: ["dashboard:role", "task:view_own", "task:update_own_status"],
-  [ROLES.SECURITY_OFFICER]: ["dashboard:role", "task:view_own", "task:update_own_status"],
-  [ROLES.MAINTENANCE_TECHNICIAN]: ["dashboard:role", "task:view_own", "task:update_own_status"],
+  [ROLES.CURATOR]: ["dashboard:role", "task:view_own", "task:update_own_status", "zone:view_assigned"],
+  [ROLES.FRONT_DESK]: ["dashboard:role", "task:view_own", "task:update_own_status", "zone:view_assigned"],
+  [ROLES.SECURITY_OFFICER]: ["dashboard:role", "task:view_own", "task:update_own_status", "zone:view_assigned"],
+  [ROLES.MAINTENANCE_TECHNICIAN]: ["dashboard:role", "task:view_own", "task:update_own_status", "zone:view_assigned"],
   [ROLES.JANITOR]: ["dashboard:role", "task:view_own", "task:update_own_status", "zone:view_assigned"],
-  [ROLES.EDUCATOR_GUIDE]: ["dashboard:role", "task:view_own", "task:update_own_status"],
+  [ROLES.EDUCATOR_GUIDE]: ["dashboard:role", "task:view_own", "task:update_own_status", "zone:view_assigned"],
   [ROLES.USER]: []
 };
 

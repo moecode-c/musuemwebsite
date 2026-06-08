@@ -46,6 +46,16 @@
         <input type="text" name="floor" autocomplete="off" value="<%= language === 'ar' ? 'الطابق الأرضي' : 'Ground' %>" required />
         <label><%= language === 'ar' ? 'الوصف' : 'Description' %></label>
         <textarea name="description" autocomplete="off"></textarea>
+        <label><%= language === 'ar' ? 'نوع المنطقة / الدور' : 'Zone Role / Type' %></label>
+        <select name="roleTarget">
+          <option value=""><%= language === 'ar' ? 'عام' : 'General' %></option>
+          <option value="janitor"><%= language === 'ar' ? 'تنظيف (عامل نظافة)' : 'Cleaning (Janitor)' %></option>
+          <option value="security_officer"><%= language === 'ar' ? 'أمن' : 'Security' %></option>
+          <option value="maintenance_technician"><%= language === 'ar' ? 'صيانة' : 'Maintenance' %></option>
+          <option value="curator"><%= language === 'ar' ? 'أمين معرض' : 'Curator' %></option>
+          <option value="front_desk"><%= language === 'ar' ? 'استقبال' : 'Front Desk' %></option>
+          <option value="educator_guide"><%= language === 'ar' ? 'مرشد تعليمي' : 'Educator' %></option>
+        </select>
         <input type="hidden" name="polygon" autocomplete="off" />
         <div class="admin-actions">
           <button class="btn" type="submit"><%= language === 'ar' ? 'إنشاء منطقة' : 'Create Zone' %></button>
@@ -54,7 +64,7 @@
         <p class="form-message" id="admin-zone-message"></p>
       </form>
 
-      <label><%= language === 'ar' ? 'تعيين عامل نظافة' : 'Assign Janitor' %></label>
+      <label><%= language === 'ar' ? 'تعيين موظف' : 'Assign To Employee' %></label>
       <select id="admin-zone-assign-user"></select>
 
       <div class="admin-map-lists">

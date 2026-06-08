@@ -13,6 +13,7 @@ const cleaningZoneSchema = new mongoose.Schema(
     zoneName: { type: String, required: true, trim: true },
     description: { type: String, trim: true, default: "" },
     floor: { type: String, trim: true, default: "Ground" },
+    roleTarget: { type: String, trim: true, default: "" },
     color: {
       type: String,
       trim: true,

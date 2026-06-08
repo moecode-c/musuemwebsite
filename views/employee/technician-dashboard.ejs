@@ -5,7 +5,20 @@
   <article class="card">
     <h3><i class="fas fa-toolbox"></i> <%= t.technician.maintenanceTasks %></h3>
     <p><%= t.technician.viewTasks %></p>
+    <div class="map-wrapper admin-map" data-employee-zone-map>
+      <img src="/assets/map/map.png" alt="<%= language === 'ar' ? 'خريطة المتحف' : 'Museum map' %>" class="map-image" />
+      <div class="map-layer"></div>
+    </div>
     <div class="admin-list" data-employee-task-list></div>
+  </article>
+  <article class="card">
+    <h3><i class="fas fa-map-location-dot"></i> <%= language === 'ar' ? 'مناطقي المعينة' : 'My Assigned Zones' %></h3>
+    <p><%= language === 'ar' ? 'المناطق المخصصة لك في المتحف.' : 'Zones assigned to you across the museum.' %></p>
+    <div class="map-wrapper admin-map" data-employee-zone-map>
+      <img src="/assets/map/map.png" alt="<%= language === 'ar' ? 'خريطة المتحف' : 'Museum map' %>" class="map-image" />
+      <div class="map-layer"></div>
+    </div>
+    <div class="admin-list" data-employee-zone-list></div>
   </article>
 </section>
 <%- include('../partials/employeeLayoutEnd') %>

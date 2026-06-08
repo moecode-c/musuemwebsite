@@ -210,11 +210,28 @@ document.addEventListener("DOMContentLoaded", () => {
         adminLayer.innerHTML = items
           .map(
             (pin) => `
-            <div class="map-pin" data-x="${pin.x}" data-y="${pin.y}" data-label="${pin.label}" data-description="${pin.description}"></div>
+            <div class="map-pin" data-id="${pin._id}" data-x="${pin.x}" data-y="${pin.y}" data-label="${pin.label}" data-description="${pin.description}"></div>
           `
           )
           .join("");
-        adminLayer.querySelectorAll(".map-pin").forEach((pin) => setPinPosition(pin));
+        adminLayer.querySelectorAll(".map-pin").forEach((pinEl) => {
+          setPinPosition(pinEl);
+          // Click a pin on the map to load its full details into the form for editing.
+          pinEl.addEventListener("click", (event) => {
+            event.stopPropagation();
+            const pin = items.find((entry) => entry._id === pinEl.dataset.id);
+            if (!pin) return;
+            adminForm.label.value = pin.label || "";
+            adminForm.description.value = pin.description || "";
+            adminForm.x.value = pin.x ?? "";
+            adminForm.y.value = pin.y ?? "";
+            adminForm.isCommon.checked = Boolean(pin.isCommon);
+            adminForm.dataset.editId = pin._id;
+            setEditing(true);
+            const messageEl = document.getElementById("admin-map-message");
+            if (messageEl) messageEl.textContent = `Editing pin: ${pin.label}`;
+          });
+        });
       }
     };
 
@@ -235,13 +252,18 @@ document.addEventListener("DOMContentLoaded", () => {
       zoneSvg.appendChild(preview);
     };
 
+    const formatRole = (role) =>
+      String(role || "")
+        .split("_")
+        .map((part) => (part ? part.charAt(0).toUpperCase() + part.slice(1) : part))
+        .join(" ");
+
     const loadUsers = async () => {
       if (!adminZoneAssignUser) return;
-      const response = await fetch("/api/users");
+      const response = await fetch("/api/users/assignable");
       const users = await response.json();
-      const janitors = users.filter((user) => user.role === "janitor");
-      adminZoneAssignUser.innerHTML = `<option value="">Select janitor</option>${janitors
-        .map((user) => `<option value="${user._id}">${user.name}</option>`)
+      adminZoneAssignUser.innerHTML = `<option value="">Select employee</option>${users
+        .map((user) => `<option value="${user._id}">${user.name} (${formatRole(user.role)})</option>`)
         .join("")}`;
     };
 
@@ -260,7 +282,8 @@ document.addEventListener("DOMContentLoaded", () => {
               <div class="admin-item-content">
                 <strong>${zone.zoneName}</strong>
                 <span class="admin-item-meta">Floor: ${zone.floor || "Ground"}</span>
-                <span class="admin-item-meta">Assigned: ${zone.assignedTo?.name || "Unassigned"}</span>
+                ${zone.roleTarget ? `<span class="admin-item-meta">Type: ${formatRole(zone.roleTarget)}</span>` : ""}
+                <span class="admin-item-meta">Assigned: ${zone.assignedTo ? `${zone.assignedTo.name} (${formatRole(zone.assignedTo.role)})` : "Unassigned"}</span>
               </div>
               <div class="admin-actions">
                 <button class="btn btn-secondary" data-zone-action="assign" data-zone-id="${zone._id}">Assign</button>
@@ -284,7 +307,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
           if (action === "assign") {
             if (!adminZoneAssignUser || !adminZoneAssignUser.value) {
-              if (adminZoneMessage) adminZoneMessage.textContent = "Select a janitor first.";
+              if (adminZoneMessage) adminZoneMessage.textContent = "Select an employee first.";
               return;
             }
             await fetch(`/api/cleaning-zones/${zoneId}/assign`, {

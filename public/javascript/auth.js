@@ -56,4 +56,17 @@ const handleAuthForm = (formId, endpoint, messageId) => {
 document.addEventListener("DOMContentLoaded", () => {
   handleAuthForm("register-form", "/auth/register", "register-message");
   handleAuthForm("login-form", "/auth/login", "login-message");
+
+  // Show/hide password toggle (login + register)
+  document.querySelectorAll("[data-password-toggle]").forEach((btn) => {
+    btn.addEventListener("click", () => {
+      const field = btn.closest(".input-field");
+      const input = field && field.querySelector("input");
+      if (!input) return;
+      const showing = input.type === "text";
+      input.type = showing ? "password" : "text";
+      const icon = btn.querySelector("i");
+      if (icon) icon.className = showing ? "fa-solid fa-eye" : "fa-solid fa-eye-slash";
+    });
+  });
 });

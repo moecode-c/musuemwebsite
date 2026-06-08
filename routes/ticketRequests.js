@@ -13,6 +13,7 @@ const router = express.Router();
 router.get("/summary", requireAdmin, ticketRequestsController.summary);
 router.get("/", requireAdmin, ticketRequestsController.list);
 router.post("/", requireAuthApi, ticketRequestValidation, handleValidation, ticketRequestsController.create);
+router.put("/:id/status", requireAdmin, ticketRequestsController.updateStatus);
 router.post(
 	"/:id/convert-task",
 	requireAuth,

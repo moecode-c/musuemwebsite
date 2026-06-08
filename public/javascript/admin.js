@@ -141,6 +141,20 @@ const withSubmitGuard = (form, handler) => async (event) => {
 
 document.addEventListener("DOMContentLoaded", () => {
   const isArabic = document.documentElement.lang === "ar";
+
+  // Generic admin list search: filters items inside a target container by text.
+  document.querySelectorAll("[data-search-target]").forEach((input) => {
+    input.addEventListener("input", () => {
+      const target = document.querySelector(input.dataset.searchTarget);
+      if (!target) return;
+      const itemSel = input.dataset.searchItem || ".admin-item";
+      const q = input.value.trim().toLowerCase();
+      target.querySelectorAll(itemSel).forEach((item) => {
+        item.style.display = !q || item.textContent.toLowerCase().includes(q) ? "" : "none";
+      });
+    });
+  });
+
   const exhibitForm = document.getElementById("admin-exhibit-form");
   const exhibitList = document.getElementById("admin-exhibit-list");
   const exhibitFilterCategory = document.getElementById("admin-exhibit-filter-category");

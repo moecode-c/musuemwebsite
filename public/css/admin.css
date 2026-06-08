@@ -834,10 +834,44 @@
 	border-color: #bdd1ff;
 }
 
-.admin-status-badge.is-resolved {
+.admin-status-badge.is-resolved,
+.admin-status-badge.is-accepted {
 	background: #def2e5;
 	color: #1f6a3d;
 	border-color: #b7dec4;
+}
+
+.admin-status-badge.is-rejected {
+	background: #fde2e2;
+	color: #992323;
+	border-color: #efbbbb;
+}
+
+/* Admin search / filter toolbar */
+.admin-toolbar {
+	display: flex;
+	flex-wrap: wrap;
+	gap: 10px;
+	margin-bottom: 14px;
+}
+
+.admin-search-input,
+.admin-filter-select {
+	padding: 10px 14px;
+	border-radius: 10px;
+	border: 1px solid #e2d2b8;
+	background: #fff;
+	color: #2b2236;
+	font: inherit;
+}
+
+.admin-search-input {
+	flex: 1 1 240px;
+	max-width: 380px;
+}
+
+.admin-filter-select {
+	flex: 0 0 auto;
 }
 
 @media (max-width: 700px) {

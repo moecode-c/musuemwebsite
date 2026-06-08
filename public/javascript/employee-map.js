@@ -17,6 +17,12 @@ document.addEventListener("DOMContentLoaded", () => {
 
   const pointsToString = (points) => points.map((point) => `${point.x},${point.y}`).join(" ");
 
+  const formatRole = (role) =>
+    String(role || "")
+      .split("_")
+      .map((part) => (part ? part.charAt(0).toUpperCase() + part.slice(1) : part))
+      .join(" ");
+
   const zoneColorPalette = ["#b7842a", "#6c8a2b", "#2c6fb7", "#8a3bb7", "#b75a2c", "#2c9c8f", "#d56f2a"];
 
   const getZoneColor = (zone, index = 0) => {
@@ -300,6 +306,7 @@ document.addEventListener("DOMContentLoaded", () => {
         zoneForm.zoneName.value = zone.zoneName || "";
         zoneForm.floor.value = zone.floor || "Ground";
         zoneForm.description.value = zone.description || "";
+        if (zoneForm.roleTarget) zoneForm.roleTarget.value = zone.roleTarget || "";
         zoneForm.color.value = /^#([0-9a-fA-F]{6})$/.test(zone.color || "") ? zone.color : "#b7842a";
         currentPoints = Array.isArray(zone.polygon) ? [...zone.polygon] : [];
         zoneForm.polygon.value = JSON.stringify(currentPoints);
@@ -308,9 +315,8 @@ document.addEventListener("DOMContentLoaded", () => {
 
       const refreshZoneAssignSelect = () => {
         if (!zoneAssignSelect) return;
-        zoneAssignSelect.innerHTML = `<option value="">Select janitor</option>${usersCache
-          .filter((user) => user.role === "janitor")
-          .map((user) => `<option value="${user._id}">${user.name}</option>`)
+        zoneAssignSelect.innerHTML = `<option value="">Select employee</option>${usersCache
+          .map((user) => `<option value="${user._id}">${user.name} (${formatRole(user.role)})</option>`)
           .join("")}`;
       };
 
@@ -365,12 +371,13 @@ document.addEventListener("DOMContentLoaded", () => {
                 <div class="admin-item-content">
                   <strong><span class="zone-color-dot" style="background:${zoneColor}"></span>${zone.zoneName}</strong>
                   <span class="admin-item-meta">Floor: ${zone.floor}</span>
+                  ${zone.roleTarget ? `<span class="admin-item-meta">Type: ${formatRole(zone.roleTarget)}</span>` : ""}
                   ${zone.description ? `<span class="admin-item-meta">Description: ${zone.description}</span>` : ""}
-                  <span class="admin-item-meta">Assigned: ${zone.assignedTo ? zone.assignedTo.name : "Unassigned"}</span>
+                  <span class="admin-item-meta">Assigned: ${zone.assignedTo ? `${zone.assignedTo.name} (${formatRole(zone.assignedTo.role)})` : "Unassigned"}</span>
                 </div>
                 <div class="admin-actions">
                   <button class="btn btn-secondary" data-action="edit" data-id="${zone._id}">Edit</button>
-                  <button class="btn btn-secondary" data-action="assign" data-id="${zone._id}">Assign Janitor</button>
+                  <button class="btn btn-secondary" data-action="assign" data-id="${zone._id}">Assign</button>
                   <button class="btn" data-action="delete" data-id="${zone._id}">Delete</button>
                 </div>
               </div>
@@ -402,7 +409,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
               if (button.dataset.action === "assign") {
                 if (!zoneAssignSelect || !zoneAssignSelect.value) {
-                  zoneMessage.textContent = "Select a janitor first.";
+                  zoneMessage.textContent = "Select an employee first.";
                   return;
                 }
 
@@ -645,6 +652,45 @@ document.addEventListener("DOMContentLoaded", () => {
     loadEmployeeTasks()
       .catch((error) => {
         genericTaskContainer.innerHTML = `<div class="admin-item"><div class="admin-item-content">${error.message}</div></div>`;
+      });
+  }
+
+  // Generic "My Assigned Zones" (list + map) for any employee dashboard (not manager/janitor).
+  const genericZoneContainer = document.querySelector("[data-employee-zone-list]");
+  const genericZoneMaps = document.querySelectorAll("[data-employee-zone-map]");
+  if ((genericZoneContainer || genericZoneMaps.length) && !managerTasksPage && !managerZonesPage && !janitorDashboard) {
+    const renderGenericZones = (zones) => {
+      if (genericZoneContainer) {
+        genericZoneContainer.innerHTML = zones.length
+          ? zones
+              .map((zone, index) => {
+                const zoneColor = getZoneColor(zone, index);
+                return `
+            <div class="admin-item">
+              <div class="admin-item-content">
+                <strong><span class="zone-color-dot" style="background:${zoneColor}"></span>${zone.zoneName}</strong>
+                <span class="admin-item-meta">Floor: ${zone.floor}</span>
+                ${zone.description ? `<span class="admin-item-meta">Description: ${zone.description}</span>` : ""}
+              </div>
+            </div>
+          `;
+              })
+              .join("")
+          : `<div class="admin-item"><div class="admin-item-content">No zones assigned to you yet.</div></div>`;
+      }
+      // Draw the assigned zone polygons on every map on the page.
+      genericZoneMaps.forEach((mapEl) => {
+        const svg = createZoneSvg(mapEl);
+        drawZones(svg, zones);
+      });
+    };
+
+    fetchJson("/api/cleaning-zones?mine=true")
+      .then(renderGenericZones)
+      .catch((error) => {
+        if (genericZoneContainer) {
+          genericZoneContainer.innerHTML = `<div class="admin-item"><div class="admin-item-content">${error.message}</div></div>`;
+        }
       });
   }
 });

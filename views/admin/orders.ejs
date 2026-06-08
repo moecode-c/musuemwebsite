@@ -4,7 +4,6 @@
   const pendingCount = orders.filter((o) => o.status === 'pending').length;
   const confirmedCount = orders.filter((o) => o.status === 'confirmed').length;
   const revenue = orders
-    .filter((o) => o.status !== 'cancelled')
     .reduce((sum, o) => sum + (o.total || 0), 0);
   const statusLabel = (status) => {
     if (language === 'ar') {
@@ -35,12 +34,22 @@
     <h2><%= language === 'ar' ? 'جميع الطلبات' : 'All Orders' %></h2>
   </div>
   <p class="form-message" id="admin-order-message"></p>
-  <div class="admin-orders">
+  <div class="admin-toolbar">
+    <input type="search" class="admin-search-input" id="order-search" placeholder="<%= language === 'ar' ? 'ابحث بالرقم أو الاسم أو المنتج...' : 'Search by id, name, product...' %>" />
+    <select class="admin-filter-select" id="order-status-filter">
+      <option value=""><%= language === 'ar' ? 'كل الحالات' : 'All statuses' %></option>
+      <option value="pending"><%= language === 'ar' ? 'قيد الانتظار' : 'Pending' %></option>
+      <option value="confirmed"><%= language === 'ar' ? 'مؤكد' : 'Confirmed' %></option>
+      <option value="fulfilled"><%= language === 'ar' ? 'تم التنفيذ' : 'Fulfilled' %></option>
+      <option value="cancelled"><%= language === 'ar' ? 'ملغي' : 'Cancelled' %></option>
+    </select>
+  </div>
+  <div class="admin-orders" id="admin-order-list">
     <% if (!orders.length) { %>
       <p><%= language === 'ar' ? 'لا توجد طلبات بعد.' : 'No orders yet.' %></p>
     <% } %>
     <% orders.forEach((order) => { %>
-      <article class="admin-order-card" data-id="<%= order._id %>">
+      <article class="admin-order-card" data-id="<%= order._id %>" data-status="<%= order.status %>">
         <div class="admin-order-head">
           <div>
             <strong>#<%= order._id.toString().slice(-6).toUpperCase() %></strong>

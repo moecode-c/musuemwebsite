@@ -3,7 +3,7 @@
   <header class="admin-page-header">
     <div>
       <h1><i class="fas fa-map-location-dot"></i> <%= language === 'ar' ? 'إدارة مناطق المدير' : 'Manager Zone Management' %></h1>
-      <p><%= language === 'ar' ? 'أنشئ مناطق تنظيف من الخريطة وعيّن عمال النظافة في صفحة مخصصة.' : 'Create cleaning zones from the map and assign janitors in a dedicated page.' %></p>
+      <p><%= language === 'ar' ? 'أنشئ مناطق من الخريطة وعيّنها لأي موظف.' : 'Create zones from the map and assign them to any staff member.' %></p>
     </div>
   </header>
   <div class="admin-split">
@@ -29,6 +29,16 @@
         <input type="color" name="color" autocomplete="off" value="#b7842a" />
         <label><%= language === 'ar' ? 'الوصف' : 'Description' %></label>
         <textarea name="description" autocomplete="off"></textarea>
+        <label><%= language === 'ar' ? 'نوع المنطقة / الدور' : 'Zone Role / Type' %></label>
+        <select name="roleTarget">
+          <option value=""><%= language === 'ar' ? 'عام' : 'General' %></option>
+          <option value="janitor"><%= language === 'ar' ? 'تنظيف (عامل نظافة)' : 'Cleaning (Janitor)' %></option>
+          <option value="security_officer"><%= language === 'ar' ? 'أمن' : 'Security' %></option>
+          <option value="maintenance_technician"><%= language === 'ar' ? 'صيانة' : 'Maintenance' %></option>
+          <option value="curator"><%= language === 'ar' ? 'أمين معرض' : 'Curator' %></option>
+          <option value="front_desk"><%= language === 'ar' ? 'استقبال' : 'Front Desk' %></option>
+          <option value="educator_guide"><%= language === 'ar' ? 'مرشد تعليمي' : 'Educator' %></option>
+        </select>
         <input type="hidden" name="polygon" autocomplete="off" />
         <div class="admin-actions">
           <button class="btn" type="submit" id="manager-zone-submit"><%= language === 'ar' ? 'إنشاء منطقة' : 'Create Zone' %></button>
@@ -37,7 +47,7 @@
         </div>
         <p class="form-message" id="manager-zone-message"></p>
       </form>
-      <label><%= language === 'ar' ? 'تعيين عامل نظافة' : 'Assign Janitor' %></label>
+      <label><%= language === 'ar' ? 'تعيين موظف' : 'Assign To Employee' %></label>
       <select id="zone-assign-user"></select>
     </article>
     <article class="card">

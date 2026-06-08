@@ -274,7 +274,7 @@ const submitPlanTripRequest = async (form) => {
 		audience,
 		quantity: 1,
 		age: 18,
-		nationality: "Unknown",
+		nationality: String(formData.get("nationality") || "").trim() || "Unknown",
 		phone: "N/A000",
 		timeSlot: "Flexible"
 	};

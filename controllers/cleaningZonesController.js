@@ -49,6 +49,7 @@ const create = asyncHandler(async (req, res) => {
     zoneName: req.body.zoneName,
     description: req.body.description || "",
     floor: req.body.floor || "Ground",
+    roleTarget: req.body.roleTarget || "",
     color: req.body.color || "#b7842a",
     polygon: parsePolygon(req.body.polygon),
     isActive: req.body.isActive !== undefined ? Boolean(req.body.isActive) : true
@@ -62,6 +63,7 @@ const update = asyncHandler(async (req, res) => {
     zoneName: req.body.zoneName,
     description: req.body.description,
     floor: req.body.floor,
+    roleTarget: req.body.roleTarget,
     color: req.body.color,
     isActive: req.body.isActive
   };
