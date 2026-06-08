@@ -879,3 +879,57 @@
 		grid-template-columns: 1fr;
 	}
 }
+
+/* Newsletter subscriptions table */
+.newsletter-table .admin-table-row {
+	grid-template-columns: 48px 1.4fr 2fr 1.2fr 1.1fr;
+}
+
+.newsletter-table .admin-table-row a {
+	color: #7a5a14;
+	word-break: break-all;
+}
+
+@media (max-width: 720px) {
+	.newsletter-table .admin-table-row {
+		grid-template-columns: 1fr;
+		gap: 4px;
+	}
+}
+
+/* Analytics panels */
+.analytics-panels {
+	display: grid;
+	grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+	gap: 18px;
+}
+
+.analytics-panel {
+	background: #fffaf3;
+	border: 1px solid #e6d6bd;
+	border-radius: 14px;
+	padding: 18px 20px;
+}
+
+.analytics-panel h3 {
+	margin: 0 0 14px;
+	font-size: 15px;
+	color: #5b4636;
+	display: flex;
+	align-items: center;
+	gap: 8px;
+}
+
+.analytics-panel h3 i {
+	color: #9a6f1f;
+}
+
+.analytics-panel .admin-chart {
+	margin: 0;
+}
+
+.analytics-panel-empty {
+	margin: 0;
+	color: #8a7a66;
+	font-size: 13px;
+}

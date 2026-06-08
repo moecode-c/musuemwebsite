@@ -21,6 +21,7 @@ document.addEventListener("DOMContentLoaded", () => {
   const navToggle = document.querySelector("#nav-toggle");
   const navLinks = document.querySelector("#nav-links");
   const navBackdrop = document.querySelector("#nav-backdrop");
+  const navClose = document.querySelector("#nav-close");
   const navTitle = document.querySelector(".nav-title");
   const navTopLinks = document.querySelector(".nav-top-links");
   const navTopActions = document.querySelector(".nav-top-actions");
@@ -67,35 +68,42 @@ document.addEventListener("DOMContentLoaded", () => {
   };
 
   if (navToggle && navLinks && navBackdrop) {
-    updateMobileNavPlacement();
-    window.addEventListener("resize", updateMobileNavPlacement);
-
-    const navTriggers = navLinks.querySelectorAll(".nav-trigger");
-    navTriggers.forEach((trigger) => {
-      trigger.addEventListener("click", (event) => {
+    // One delegated handler on the drawer: tapping a parent (.nav-trigger)
+    // expands/collapses its sub-pages (accordion); tapping a real link navigates
+    // and closes the menu. The mobile drawer is now self-contained in the HTML
+    // (.nav-mobile-head) — no runtime DOM re-parenting, which was fragile.
+    navLinks.addEventListener("click", (event) => {
+      const trigger = event.target.closest(".nav-trigger");
+      if (trigger && navLinks.contains(trigger)) {
         if (!window.matchMedia("(max-width: 900px)").matches) return;
         event.preventDefault();
+        event.stopPropagation();
         const navItem = trigger.closest(".nav-item");
         if (!navItem) return;
-        const isOpen = navItem.classList.contains("is-open");
-        document.querySelectorAll(".nav-item.is-open").forEach((item) => item.classList.remove("is-open"));
-        if (!isOpen) {
-          navItem.classList.add("is-open");
-          const dropdown = navItem.querySelector(".dropdown");
-          if (dropdown) {
-            const navRect = navLinks.getBoundingClientRect();
-            const itemRect = navItem.getBoundingClientRect();
-            const dropdownRect = dropdown.getBoundingClientRect();
-            const maxLeft = window.innerWidth - dropdownRect.width - 12;
-            const desiredLeft = navRect.right + 12;
-            const left = Math.max(12, Math.min(desiredLeft, maxLeft));
-            const maxTop = window.innerHeight - dropdownRect.height - 12;
-            const top = Math.max(12, Math.min(itemRect.top, maxTop));
-            dropdown.style.left = `${left}px`;
-            dropdown.style.top = `${top}px`;
-          }
+        const willOpen = !navItem.classList.contains("is-open");
+        navLinks.querySelectorAll(".nav-item.is-open").forEach((item) => {
+          if (item !== navItem) item.classList.remove("is-open");
+        });
+        navItem.classList.toggle("is-open", willOpen);
+        // Drop focus from the trigger so a lingering :focus-within state can
+        // never keep a just-closed sub-menu visible.
+        if (typeof trigger.blur === "function") {
+          trigger.blur();
         }
-      });
+        if (willOpen) {
+          // Bring the freshly opened sub-menu fully into view inside the
+          // scrollable drawer so it can never end up hidden below the fold.
+          window.requestAnimationFrame(() => {
+            const dropdown = navItem.querySelector(".dropdown");
+            (dropdown || navItem).scrollIntoView({ behavior: "smooth", block: "nearest" });
+          });
+        }
+        return;
+      }
+      // A real navigation link closes the menu (and lets the navigation proceed).
+      if (event.target.closest("a")) {
+        setNavOpen(false);
+      }
     });
 
     navToggle.addEventListener("click", () => {
@@ -105,9 +113,9 @@ document.addEventListener("DOMContentLoaded", () => {
 
     navBackdrop.addEventListener("click", () => setNavOpen(false));
 
-    navLinks.querySelectorAll("a").forEach((link) => {
-      link.addEventListener("click", () => setNavOpen(false));
-    });
+    if (navClose) {
+      navClose.addEventListener("click", () => setNavOpen(false));
+    }
 
     window.addEventListener("keydown", (event) => {
       if (event.key === "Escape") {

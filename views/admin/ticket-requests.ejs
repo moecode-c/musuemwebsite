@@ -31,7 +31,13 @@
     <h2><%= language === 'ar' ? 'جميع طلبات التذاكر' : 'All Ticket Requests' %></h2>
   </div>
   <div class="admin-toolbar">
-    <input type="search" class="admin-search-input" id="ticketreq-search" placeholder="<%= language === 'ar' ? 'ابحث بالاسم أو البريد أو الجنسية...' : 'Search name, email, nationality...' %>" data-search-target="#admin-ticketreq-list" data-search-item=".admin-order-card" />
+    <input type="search" class="admin-search-input" id="ticketreq-search" placeholder="<%= language === 'ar' ? 'ابحث بالاسم أو البريد أو الجنسية...' : 'Search name, email, nationality...' %>" />
+    <select class="admin-filter-select" id="ticketreq-status-filter">
+      <option value=""><%= language === 'ar' ? 'كل الحالات' : 'All statuses' %></option>
+      <option value="pending"><%= language === 'ar' ? 'قيد الانتظار' : 'Pending' %></option>
+      <option value="accepted"><%= language === 'ar' ? 'مقبول' : 'Accepted' %></option>
+      <option value="rejected"><%= language === 'ar' ? 'مرفوض' : 'Rejected' %></option>
+    </select>
   </div>
   <p class="form-message" id="admin-ticketreq-message"></p>
   <div class="admin-orders" id="admin-ticketreq-list">
@@ -40,7 +46,7 @@
     <% } %>
     <% requests.forEach((request) => { %>
       <% const st = request.status || 'pending'; %>
-      <article class="admin-order-card" data-id="<%= request._id %>">
+      <article class="admin-order-card" data-id="<%= request._id %>" data-status="<%= st %>">
         <div class="admin-order-head">
           <div>
             <strong><%= request.name %></strong>

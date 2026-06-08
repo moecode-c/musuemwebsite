@@ -1,0 +1,121 @@
+<%- include('../partials/adminLayoutStart') %>
+
+<section class="admin-page-header">
+  <div>
+    <h1><i class="fas fa-envelope-open-text" style="color:#9a6f1f;margin-right:10px;"></i><%= language === 'ar' ? 'اشتراكات النشرة الإخبارية' : 'Newsletter Subscriptions' %></h1>
+    <p><%= language === 'ar' ? 'كل البريد الإلكتروني الذي اشترك في نشرتنا الإخبارية.' : 'Everyone who has subscribed to our newsletter.' %></p>
+  </div>
+</section>
+
+<section class="admin-section">
+  <div class="admin-grid admin-stats">
+    <div class="admin-stat">
+      <span class="admin-stat-icon is-gold"><i class="fas fa-users"></i></span>
+      <div class="admin-stat-meta">
+        <span class="admin-stat-label"><%= language === 'ar' ? 'إجمالي المشتركين' : 'Total subscribers' %></span>
+        <strong class="admin-stat-value"><%= subscribers.length %></strong>
+      </div>
+    </div>
+    <div class="admin-stat">
+      <span class="admin-stat-icon is-green"><i class="fas fa-calendar-plus"></i></span>
+      <div class="admin-stat-meta">
+        <span class="admin-stat-label"><%= language === 'ar' ? 'جديد هذا الشهر' : 'New this month' %></span>
+        <strong class="admin-stat-value"><%= newThisMonth %></strong>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="admin-section">
+  <div class="admin-section-title">
+    <h2><%= language === 'ar' ? 'قائمة المشتركين' : 'Subscriber list' %></h2>
+  </div>
+
+  <div class="admin-toolbar">
+    <input type="search" class="admin-search-input" id="newsletter-search" placeholder="<%= language === 'ar' ? 'ابحث بالاسم أو البريد أو الهاتف...' : 'Search name, email, phone...' %>" />
+    <button type="button" class="btn btn-secondary" id="newsletter-copy"><i class="fas fa-copy"></i> <%= language === 'ar' ? 'نسخ كل البريد' : 'Copy all emails' %></button>
+    <a class="btn" href="/admin/newsletter/export"><i class="fas fa-file-csv"></i> <%= language === 'ar' ? 'تصدير CSV' : 'Export CSV' %></a>
+  </div>
+  <p class="form-message" id="newsletter-message"></p>
+
+  <% if (subscribers.length === 0) { %>
+    <p class="muted"><%= language === 'ar' ? 'لا يوجد مشتركون بعد.' : 'No subscribers yet.' %></p>
+  <% } else { %>
+    <div class="admin-table newsletter-table" id="newsletter-table">
+      <div class="admin-table-row admin-table-head">
+        <span>#</span>
+        <span><%= language === 'ar' ? 'الاسم' : 'Name' %></span>
+        <span><%= language === 'ar' ? 'البريد الإلكتروني' : 'Email' %></span>
+        <span><%= language === 'ar' ? 'الهاتف' : 'Phone' %></span>
+        <span><%= language === 'ar' ? 'تاريخ الاشتراك' : 'Subscribed' %></span>
+      </div>
+      <% subscribers.forEach((sub, index) => { %>
+        <div class="admin-table-row newsletter-row" data-email="<%= sub.email %>" data-search="<%= ((sub.name || '') + ' ' + (sub.email || '') + ' ' + (sub.phone || '')).toLowerCase() %>">
+          <span class="muted"><%= index + 1 %></span>
+          <span><%= sub.name %></span>
+          <span><a href="mailto:<%= sub.email %>"><%= sub.email %></a></span>
+          <span class="muted"><%= sub.phone %></span>
+          <span class="muted"><%= sub.createdAt ? new Date(sub.createdAt).toLocaleDateString('en-GB', { day: '2-digit', month: 'short', year: 'numeric' }) : '—' %></span>
+        </div>
+      <% }) %>
+    </div>
+    <p class="muted newsletter-count" id="newsletter-count" style="margin-top:12px;"></p>
+  <% } %>
+</section>
+
+<script>
+  (function () {
+    var search = document.getElementById("newsletter-search");
+    var table = document.getElementById("newsletter-table");
+    var countEl = document.getElementById("newsletter-count");
+    var copyBtn = document.getElementById("newsletter-copy");
+    var messageEl = document.getElementById("newsletter-message");
+    if (!table) return;
+    var rows = Array.prototype.slice.call(table.querySelectorAll(".newsletter-row"));
+
+    var totalLabel = <%- JSON.stringify(language === 'ar' ? 'مشترك' : 'subscribers shown') %>;
+    var updateCount = function (visible) {
+      if (countEl) countEl.textContent = visible + " " + totalLabel;
+    };
+    updateCount(rows.length);
+
+    if (search) {
+      search.addEventListener("input", function () {
+        var term = search.value.trim().toLowerCase();
+        var visible = 0;
+        rows.forEach(function (row) {
+          var match = !term || (row.dataset.search || "").indexOf(term) !== -1;
+          row.style.display = match ? "" : "none";
+          if (match) visible += 1;
+        });
+        updateCount(visible);
+      });
+    }
+
+    if (copyBtn) {
+      copyBtn.addEventListener("click", function () {
+        var emails = rows
+          .filter(function (row) { return row.style.display !== "none"; })
+          .map(function (row) { return row.dataset.email; })
+          .filter(Boolean);
+        var text = emails.join(", ");
+        var done = function () {
+          if (messageEl) messageEl.textContent = emails.length + (<%- JSON.stringify(language === 'ar' ? ' بريد تم نسخه إلى الحافظة' : ' emails copied to clipboard') %>);
+        };
+        if (navigator.clipboard && navigator.clipboard.writeText) {
+          navigator.clipboard.writeText(text).then(done).catch(function () { done(); });
+        } else {
+          var ta = document.createElement("textarea");
+          ta.value = text;
+          document.body.appendChild(ta);
+          ta.select();
+          try { document.execCommand("copy"); } catch (e) { /* no-op */ }
+          document.body.removeChild(ta);
+          done();
+        }
+      });
+    }
+  })();
+</script>
+
+<%- include('../partials/adminLayoutEnd') %>

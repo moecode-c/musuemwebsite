@@ -5,7 +5,7 @@
         <div class="nav-title"><%= t.siteTitle %></div>
         <div class="nav-top-actions">
           <button class="nav-toggle" id="nav-toggle" type="button" aria-expanded="false" aria-controls="nav-links" aria-label="<%= t.nav.menu %>">
-            <i class="nav-icon fas fa-bars"></i>
+            <span class="nav-burger" aria-hidden="true"><span></span><span></span><span></span></span>
             <span class="nav-toggle-text"><%= t.nav.menu %></span>
           </button>
           <div class="nav-top-links">
@@ -28,6 +28,22 @@
     <div class="nav-bottom">
       <div class="container nav-bottom-inner">
         <nav class="nav-links" id="nav-links">
+          <div class="nav-mobile-head">
+            <div class="nav-mobile-bar">
+              <span class="nav-mobile-title"><%= t.siteTitle %></span>
+              <button class="nav-close" id="nav-close" type="button" aria-label="<%= t.nav.menu %>"><span></span><span></span></button>
+            </div>
+            <%- authSectionHtml %>
+            <div class="nav-mobile-actions">
+              <div class="lang-switch">
+                <a href="/lang/en?returnTo=<%= encodeURIComponent(currentPathWithQuery || '/') %>" class="nav-link">EN</a>
+                <span>|</span>
+                <a href="/lang/ar?returnTo=<%= encodeURIComponent(currentPathWithQuery || '/') %>" class="nav-link">AR</a>
+              </div>
+              <button class="nav-link theme-toggle" type="button" data-theme-label="<%= t.nav.theme %>"><i class="nav-icon fas fa-moon"></i><%= t.nav.theme %></button>
+              <a href="/cart" class="nav-link cart-chip" aria-label="<%= t.nav.shopMenu.cart %>"><i class="nav-icon fas fa-cart-shopping"></i><%= t.nav.shopMenu.cart %> <span class="cart-count"><%= (cart && cart.items) ? cart.items.reduce((s, i) => s + (Number(i.quantity) || 0), 0) : 0 %></span></a>
+            </div>
+          </div>
           <a href="/" class="nav-link"><i class="nav-icon fas fa-home"></i><%= t.nav.home %></a>
 
         <div class="nav-item">

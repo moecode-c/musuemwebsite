@@ -1,0 +1,207 @@
+<%- include('../partials/adminLayoutStart') %>
+
+<%
+  const isAr = language === 'ar';
+  const noData = isAr ? 'لا توجد بيانات بعد.' : 'No data yet.';
+  const esc = (s) => String(s == null ? '' : s).replace(/[&<>"']/g, (c) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]));
+  const fmtNum = (n) => Number(n || 0).toLocaleString('en-US');
+  const fmtMoney = (n) => 'EGP ' + Number(n || 0).toLocaleString('en-US', { maximumFractionDigits: 0 });
+  const maxOf = (arr) => { const m = Math.max.apply(null, (arr && arr.length) ? arr : [0]); return m > 0 ? m : 1; };
+  const barRows = (items, opts) => {
+    opts = opts || {};
+    const max = maxOf(items.map((i) => i.value));
+    return items.map((i) => (
+      '<div class="admin-chart-row">' +
+      '<span>' + esc(i.label != null ? i.label : i.key) + '</span>' +
+      '<div class="admin-chart-bar"><span style="width:' + ((i.value / max) * 100) + '%"></span></div>' +
+      '<strong>' + (opts.money ? fmtMoney(i.value) : fmtNum(i.value)) + '</strong>' +
+      '</div>'
+    )).join('');
+  };
+  const chartOrEmpty = (items, opts) => (items && items.length)
+    ? '<div class="admin-chart">' + barRows(items, opts) + '</div>'
+    : '<p class="analytics-panel-empty">' + esc(noData) + '</p>';
+  const a = analytics;
+  const monthly = a.monthly;
+  const monthItems = (arr) => monthly.labels.map((label, i) => ({ label: label, value: arr[i] || 0 }));
+  const ordersTrend = monthItems(monthly.orders);
+  const usersTrend = monthItems(monthly.users);
+  const subsTrend = monthItems(monthly.subscribers);
+  const revenueTrend = monthItems(monthly.revenue);
+%>
+
+<section class="admin-page-header">
+  <div>
+    <h1><i class="fas fa-chart-line" style="color:#9a6f1f;margin-right:10px;"></i><%= isAr ? 'الإحصائيات والتحليلات' : 'Statistics & Analytics' %></h1>
+    <p><%= isAr ? 'نظرة شاملة على أداء المتحف عبر كل الأقسام.' : 'A full overview of museum performance across every area.' %></p>
+  </div>
+</section>
+
+<!-- Headline KPIs -->
+<section class="admin-section">
+  <div class="admin-grid admin-stats">
+    <div class="admin-stat">
+      <span class="admin-stat-icon is-green"><i class="fas fa-sack-dollar"></i></span>
+      <div class="admin-stat-meta"><span class="admin-stat-label"><%= isAr ? 'إجمالي الإيرادات' : 'Total revenue' %></span><strong class="admin-stat-value"><%= fmtMoney(a.revenue.total) %></strong></div>
+    </div>
+    <div class="admin-stat">
+      <span class="admin-stat-icon is-teal"><i class="fas fa-circle-check"></i></span>
+      <div class="admin-stat-meta"><span class="admin-stat-label"><%= isAr ? 'إيرادات مؤكدة' : 'Confirmed revenue' %></span><strong class="admin-stat-value"><%= fmtMoney(a.revenue.paid) %></strong></div>
+    </div>
+    <div class="admin-stat">
+      <span class="admin-stat-icon is-blue"><i class="fas fa-bag-shopping"></i></span>
+      <div class="admin-stat-meta"><span class="admin-stat-label"><%= isAr ? 'الطلبات' : 'Orders' %></span><strong class="admin-stat-value"><%= fmtNum(a.totals.orders) %></strong></div>
+    </div>
+    <div class="admin-stat">
+      <span class="admin-stat-icon is-orange"><i class="fas fa-receipt"></i></span>
+      <div class="admin-stat-meta"><span class="admin-stat-label"><%= isAr ? 'متوسط قيمة الطلب' : 'Avg order value' %></span><strong class="admin-stat-value"><%= fmtMoney(a.revenue.avgOrderValue) %></strong></div>
+    </div>
+    <div class="admin-stat">
+      <span class="admin-stat-icon is-purple"><i class="fas fa-users"></i></span>
+      <div class="admin-stat-meta"><span class="admin-stat-label"><%= isAr ? 'المستخدمون' : 'Users' %></span><strong class="admin-stat-value"><%= fmtNum(a.totals.users) %></strong></div>
+    </div>
+    <div class="admin-stat">
+      <span class="admin-stat-icon is-gold"><i class="fas fa-envelope-open-text"></i></span>
+      <div class="admin-stat-meta"><span class="admin-stat-label"><%= isAr ? 'مشتركو النشرة' : 'Subscribers' %></span><strong class="admin-stat-value"><%= fmtNum(a.totals.subscribers) %></strong></div>
+    </div>
+    <div class="admin-stat">
+      <span class="admin-stat-icon is-rose"><i class="fas fa-clipboard-list"></i></span>
+      <div class="admin-stat-meta"><span class="admin-stat-label"><%= isAr ? 'طلبات التذاكر' : 'Ticket requests' %></span><strong class="admin-stat-value"><%= fmtNum(a.totals.ticketRequests) %></strong></div>
+    </div>
+    <div class="admin-stat">
+      <span class="admin-stat-icon is-gold"><i class="fas fa-palette"></i></span>
+      <div class="admin-stat-meta"><span class="admin-stat-label"><%= isAr ? 'المعروضات' : 'Exhibits' %></span><strong class="admin-stat-value"><%= fmtNum(a.totals.exhibits) %></strong></div>
+    </div>
+    <div class="admin-stat">
+      <span class="admin-stat-icon is-orange"><i class="fas fa-store"></i></span>
+      <div class="admin-stat-meta"><span class="admin-stat-label"><%= isAr ? 'المنتجات' : 'Products' %></span><strong class="admin-stat-value"><%= fmtNum(a.totals.products) %></strong></div>
+    </div>
+    <div class="admin-stat">
+      <span class="admin-stat-icon is-teal"><i class="fas fa-star"></i></span>
+      <div class="admin-stat-meta"><span class="admin-stat-label"><%= isAr ? 'متوسط التقييم' : 'Avg rating' %></span><strong class="admin-stat-value"><%= a.testimonials.avg ? a.testimonials.avg.toFixed(1) : '0.0' %> / 5</strong></div>
+    </div>
+    <div class="admin-stat">
+      <span class="admin-stat-icon is-rose"><i class="fas fa-wheelchair"></i></span>
+      <div class="admin-stat-meta"><span class="admin-stat-label"><%= isAr ? 'طلبات المساعدة' : 'Assistance' %></span><strong class="admin-stat-value"><%= fmtNum(a.totals.assistance) %></strong></div>
+    </div>
+    <div class="admin-stat">
+      <span class="admin-stat-icon is-blue"><i class="fas fa-list-check"></i></span>
+      <div class="admin-stat-meta"><span class="admin-stat-label"><%= isAr ? 'المهام' : 'Tasks' %></span><strong class="admin-stat-value"><%= fmtNum(a.totals.tasks) %></strong></div>
+    </div>
+  </div>
+</section>
+
+<!-- 6-month trends -->
+<section class="admin-section">
+  <div class="admin-section-title">
+    <h2><i class="fas fa-arrow-trend-up" style="color:#9a6f1f;margin-right:10px;"></i><%= isAr ? 'اتجاهات آخر 6 أشهر' : 'Last 6 months trends' %></h2>
+  </div>
+  <div class="analytics-panels">
+    <div class="analytics-panel">
+      <h3><i class="fas fa-sack-dollar"></i><%= isAr ? 'الإيرادات الشهرية' : 'Monthly revenue' %></h3>
+      <%- chartOrEmpty(revenueTrend, { money: true }) %>
+    </div>
+    <div class="analytics-panel">
+      <h3><i class="fas fa-bag-shopping"></i><%= isAr ? 'الطلبات الشهرية' : 'Monthly orders' %></h3>
+      <%- chartOrEmpty(ordersTrend) %>
+    </div>
+    <div class="analytics-panel">
+      <h3><i class="fas fa-user-plus"></i><%= isAr ? 'مستخدمون جدد' : 'New users' %></h3>
+      <%- chartOrEmpty(usersTrend) %>
+    </div>
+    <div class="analytics-panel">
+      <h3><i class="fas fa-envelope-open-text"></i><%= isAr ? 'مشتركون جدد' : 'New subscribers' %></h3>
+      <%- chartOrEmpty(subsTrend) %>
+    </div>
+  </div>
+</section>
+
+<!-- Commerce -->
+<section class="admin-section">
+  <div class="admin-section-title">
+    <h2><i class="fas fa-cart-shopping" style="color:#9a6f1f;margin-right:10px;"></i><%= isAr ? 'المتجر والطلبات' : 'Shop & orders' %></h2>
+  </div>
+  <div class="analytics-panels">
+    <div class="analytics-panel">
+      <h3><i class="fas fa-layer-group"></i><%= isAr ? 'الطلبات حسب الحالة' : 'Orders by status' %></h3>
+      <% const orderStatusItems = a.ordersByStatus.map((o) => ({ label: o.label, value: o.count })); %>
+      <%- chartOrEmpty(orderStatusItems) %>
+    </div>
+    <div class="analytics-panel">
+      <h3><i class="fas fa-coins"></i><%= isAr ? 'الإيرادات حسب الحالة' : 'Revenue by status' %></h3>
+      <% const orderRevenueItems = a.ordersByStatus.map((o) => ({ label: o.label, value: o.revenue })); %>
+      <%- chartOrEmpty(orderRevenueItems, { money: true }) %>
+    </div>
+    <div class="analytics-panel">
+      <h3><i class="fas fa-trophy"></i><%= isAr ? 'أكثر المنتجات مبيعًا' : 'Top selling products' %></h3>
+      <% const topProductItems = a.topProducts.map((p) => ({ label: p.name, value: p.qty })); %>
+      <%- chartOrEmpty(topProductItems) %>
+    </div>
+    <div class="analytics-panel">
+      <h3><i class="fas fa-boxes-stacked"></i><%= isAr ? 'المخزون' : 'Inventory' %></h3>
+      <div class="admin-chart">
+        <div class="admin-chart-row"><span><%= isAr ? 'إجمالي المخزون' : 'Total stock units' %></span><div class="admin-chart-bar"><span style="width:100%"></span></div><strong><%= fmtNum(a.products.totalStock) %></strong></div>
+        <div class="admin-chart-row"><span><%= isAr ? 'قيمة المخزون' : 'Inventory value' %></span><div class="admin-chart-bar"><span style="width:100%"></span></div><strong><%= fmtMoney(a.products.inventoryValue) %></strong></div>
+        <div class="admin-chart-row"><span><%= isAr ? 'مخزون منخفض (≤5)' : 'Low stock (≤5)' %></span><div class="admin-chart-bar"><span style="width:<%= a.totals.products ? (a.products.lowStock / a.totals.products) * 100 : 0 %>%"></span></div><strong><%= fmtNum(a.products.lowStock) %></strong></div>
+        <div class="admin-chart-row"><span><%= isAr ? 'نفد من المخزون' : 'Out of stock' %></span><div class="admin-chart-bar"><span style="width:<%= a.totals.products ? (a.products.outOfStock / a.totals.products) * 100 : 0 %>%"></span></div><strong><%= fmtNum(a.products.outOfStock) %></strong></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Audience -->
+<section class="admin-section">
+  <div class="admin-section-title">
+    <h2><i class="fas fa-people-group" style="color:#9a6f1f;margin-right:10px;"></i><%= isAr ? 'الجمهور والزوار' : 'Audience & visitors' %></h2>
+  </div>
+  <div class="analytics-panels">
+    <div class="analytics-panel">
+      <h3><i class="fas fa-user-tag"></i><%= isAr ? 'المستخدمون حسب الدور' : 'Users by role' %></h3>
+      <%- chartOrEmpty(a.usersByRole) %>
+    </div>
+    <div class="analytics-panel">
+      <h3><i class="fas fa-flag"></i><%= isAr ? 'أكثر الجنسيات (طلبات التذاكر)' : 'Top nationalities (ticket requests)' %></h3>
+      <%- chartOrEmpty(a.ticketRequests.topNationalities) %>
+    </div>
+    <div class="analytics-panel">
+      <h3><i class="fas fa-receipt"></i><%= isAr ? 'طلبات التذاكر حسب الحالة' : 'Ticket requests by status' %></h3>
+      <%- chartOrEmpty(a.ticketRequests.byStatus) %>
+    </div>
+    <div class="analytics-panel">
+      <h3><i class="fas fa-passport"></i><%= isAr ? 'طلبات التذاكر حسب الفئة' : 'Ticket requests by category' %></h3>
+      <%- chartOrEmpty(a.ticketRequests.byCategory) %>
+    </div>
+    <div class="analytics-panel">
+      <h3><i class="fas fa-users-line"></i><%= isAr ? 'طلبات التذاكر حسب الشريحة' : 'Ticket requests by audience' %></h3>
+      <%- chartOrEmpty(a.ticketRequests.byAudience) %>
+    </div>
+  </div>
+</section>
+
+<!-- Content & engagement -->
+<section class="admin-section">
+  <div class="admin-section-title">
+    <h2><i class="fas fa-shapes" style="color:#9a6f1f;margin-right:10px;"></i><%= isAr ? 'المحتوى والتفاعل' : 'Content & engagement' %></h2>
+  </div>
+  <div class="analytics-panels">
+    <div class="analytics-panel">
+      <h3><i class="fas fa-palette"></i><%= isAr ? 'المعروضات حسب النوع' : 'Exhibits by category' %></h3>
+      <%- chartOrEmpty(a.exhibitsByCategory) %>
+    </div>
+    <div class="analytics-panel">
+      <h3><i class="fas fa-star-half-stroke"></i><%= isAr ? 'توزيع تقييم الشهادات' : 'Testimonial rating split' %></h3>
+      <% const ratingItems = a.testimonials.distribution.map((r) => ({ label: (isAr ? r.rating + ' نجوم' : r.rating + ' ★'), value: r.count })); %>
+      <%- chartOrEmpty(ratingItems) %>
+    </div>
+    <div class="analytics-panel">
+      <h3><i class="fas fa-wheelchair"></i><%= isAr ? 'المساعدة حسب النوع' : 'Assistance by type' %></h3>
+      <%- chartOrEmpty(a.assistance.byType) %>
+    </div>
+    <div class="analytics-panel">
+      <h3><i class="fas fa-clipboard-check"></i><%= isAr ? 'المساعدة حسب الحالة' : 'Assistance by status' %></h3>
+      <%- chartOrEmpty(a.assistance.byStatus) %>
+    </div>
+  </div>
+</section>
+
+<%- include('../partials/adminLayoutEnd') %>

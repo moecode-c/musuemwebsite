@@ -49,71 +49,34 @@ const list = asyncHandler(async (req, res) => {
   res.json(items);
 });
 
+// Creating an exhibit requires BOTH an uploaded image AND an uploaded 3D model
+// file. Image-only (or URL-only) submissions are rejected — both files are
+// mandatory. This is the single create path; the form posts `image` + `model`
+// multipart fields to it.
 const create = asyncHandler(async (req, res) => {
-  const { title, category, description, era, period, location } = req.body;
-  const normalizedCategory = normalizeExhibitCategory(category) || category;
-  let imageUrl = req.body.imageUrl || "";
-  const modelUrl = req.body.modelUrl || "";
-
-  if (req.file && req.file.fieldname === "image") {
-    const imageUpload = await uploadBuffer(req.file.buffer, {
-      folder: "exhibits/images",
-      resource_type: "image",
-      originalFilename: req.file.originalname,
-      requireCloudinary: true
-    });
-    imageUrl = imageUpload.secure_url;
-  }
-
-  if (!imageUrl || !modelUrl) {
-    return res.status(400).json({ message: "Image and 3D model are required." });
-  }
-
-  const x = parseCoordinate(req.body.x);
-  const y = parseCoordinate(req.body.y);
-  const exhibit = await Exhibit.create({
-    title,
-    category: normalizedCategory,
-    description,
-    era,
-    period,
-    location,
-    imageUrl,
-    modelUrl,
-    x,
-    y
-  });
-  res.status(201).json(exhibit);
-});
-
-const createWithFiles = asyncHandler(async (req, res) => {
   const { title, category, description, era, period, location } = req.body;
   const normalizedCategory = normalizeExhibitCategory(category) || category;
   const imageFile = req.files?.image?.[0];
   const modelFile = req.files?.model?.[0];
-  const imageUpload = imageFile
-    ? await uploadBuffer(imageFile.buffer, {
-      folder: "exhibits/images",
-      resource_type: "image",
-      originalFilename: imageFile.originalname,
-      requireCloudinary: true
-    })
-    : null;
-  const modelUpload = modelFile
-    ? await uploadBuffer(modelFile.buffer, {
-      folder: "exhibits/models",
-      resource_type: "raw",
-      originalFilename: modelFile.originalname,
-      requireCloudinary: true
-    })
-    : null;
 
-  const imageUrl = imageUpload?.secure_url || req.body.imageUrl || "";
-  const modelUrl = modelUpload?.secure_url || req.body.modelUrl || "";
-
-  if (!imageUrl || !modelUrl) {
-    return res.status(400).json({ message: "Image and 3D model are required." });
+  if (!imageFile || !modelFile) {
+    return res.status(400).json({
+      message: "Both an image and a 3D model file are required to create an exhibit."
+    });
   }
+
+  const imageUpload = await uploadBuffer(imageFile.buffer, {
+    folder: "exhibits/images",
+    resource_type: "image",
+    originalFilename: imageFile.originalname,
+    requireCloudinary: true
+  });
+  const modelUpload = await uploadBuffer(modelFile.buffer, {
+    folder: "exhibits/models",
+    resource_type: "raw",
+    originalFilename: modelFile.originalname,
+    requireCloudinary: true
+  });
 
   const x = parseCoordinate(req.body.x);
   const y = parseCoordinate(req.body.y);
@@ -124,8 +87,8 @@ const createWithFiles = asyncHandler(async (req, res) => {
     era,
     period,
     location,
-    imageUrl,
-    modelUrl,
+    imageUrl: imageUpload.secure_url,
+    modelUrl: modelUpload.secure_url,
     x,
     y
   });
@@ -178,4 +141,4 @@ const remove = asyncHandler(async (req, res) => {
   res.json({ message: "Deleted" });
 });
 
-module.exports = { list, create, createWithFiles, update, remove };
+module.exports = { list, create, update, remove };

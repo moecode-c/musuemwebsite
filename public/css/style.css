@@ -133,15 +133,21 @@ a {
 
 .nav-links {
   display: flex;
-  flex-wrap: wrap;
-  gap: 16px;
+  flex-wrap: nowrap;
+  gap: 6px;
   align-items: center;
   justify-content: center;
-  padding: 10px 18px;
+  padding: 7px 12px;
   border-radius: 999px;
   border: 1px solid var(--nav-border);
   background: var(--nav-bg);
   backdrop-filter: none;
+  max-width: 100%;
+}
+
+/* Mobile drawer header (account/lang/theme/cart) — hidden on desktop */
+.nav-mobile-head {
+  display: none;
 }
 
 .nav-toggle {
@@ -163,6 +169,55 @@ a {
   display: inline-flex;
 }
 
+/* Hamburger icon (three bars) */
+.nav-burger {
+  display: inline-flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: 4px;
+  width: 22px;
+  height: 16px;
+}
+
+.nav-burger span {
+  display: block;
+  width: 100%;
+  height: 2px;
+  border-radius: 2px;
+  background: var(--accent);
+}
+
+/* Close (X) button inside the mobile menu overlay — hidden on desktop */
+.nav-close {
+  display: none;
+  position: relative;
+  width: 40px;
+  height: 40px;
+  flex: 0 0 auto;
+  border-radius: 10px;
+  border: 1px solid var(--nav-border);
+  background: var(--nav-bg);
+  cursor: pointer;
+}
+
+.nav-close span {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 17px;
+  height: 2px;
+  border-radius: 2px;
+  background: var(--accent);
+}
+
+.nav-close span:nth-child(1) {
+  transform: translate(-50%, -50%) rotate(45deg);
+}
+
+.nav-close span:nth-child(2) {
+  transform: translate(-50%, -50%) rotate(-45deg);
+}
+
 .nav-backdrop {
   position: fixed;
   inset: 0;
@@ -182,7 +237,7 @@ a {
 
 .nav-item {
   position: relative;
-  padding-bottom: 8px;
+  padding-bottom: 6px;
 }
 
 .nav-trigger {
@@ -195,7 +250,7 @@ a {
   position: absolute;
   top: 100%;
   left: 0;
-  min-width: 230px;
+  min-width: 200px;
   background: var(--surface);
   border-radius: 12px;
   padding: 12px;
@@ -207,6 +262,12 @@ a {
 }
 
 @media (max-width: 900px) {
+  /* ============================================================
+     Mobile hamburger menu — full-screen overlay.
+     Built with normal BLOCK flow (not a flex column), so every item
+     keeps its natural height and the whole panel scrolls. This avoids
+     the old bug where a fixed-height flex column collapsed the items.
+     ============================================================ */
   .nav-top-inner {
     flex-wrap: wrap;
   }
@@ -216,114 +277,166 @@ a {
     display: none;
   }
 
-  .nav-top-links {
-    flex-wrap: wrap;
-    justify-content: flex-end;
-  }
-
   .nav-toggle {
     display: inline-flex;
-    width: 44px;
-    height: 44px;
+    width: 46px;
+    height: 46px;
     padding: 0;
     justify-content: center;
-    border-radius: 10px;
+    border-radius: 12px;
   }
 
   .nav-toggle-text {
     display: none;
   }
 
-  .nav-toggle .nav-icon {
-    font-size: 18px;
-  }
-
   .nav-links {
     position: fixed;
     top: 0;
     left: 0;
-    height: 100vh;
-    width: min(260px, 85vw);
-    flex-direction: column;
-    align-items: stretch;
+    right: 0;
+    height: 100dvh;
+    display: block;
+    margin: 0;
+    border: 0;
     border-radius: 0;
-    padding: 90px 18px 24px;
-    display: flex;
-    z-index: 300;
-    box-shadow: none;
+    padding: 16px clamp(18px, 6vw, 34px) calc(40px + env(safe-area-inset-bottom, 0px));
+    background: var(--bg);
+    z-index: 1000;
     overflow-y: auto;
     overflow-x: hidden;
-    transform: translateX(-100%);
+    overscroll-behavior: contain;
+    -webkit-overflow-scrolling: touch;
     opacity: 0;
-    pointer-events: none;
-    transition: transform 0.3s ease, opacity 0.3s ease;
-    background: var(--bg);
-    box-shadow: 6px 0 28px rgba(0, 0, 0, 0.35);
+    visibility: hidden;
+    transform: translateY(-10px);
+    transition: opacity 0.28s ease, transform 0.28s ease, visibility 0.28s ease;
   }
 
   .nav-links.is-open {
-    transform: translateX(0);
     opacity: 1;
-    pointer-events: auto;
+    visibility: visible;
+    transform: translateY(0);
   }
 
-  .nav-links .nav-title {
+  /* Overlay header (title + close button, then the action chips) */
+  .nav-mobile-head {
     display: block;
     width: 100%;
-    text-align: left;
-    font-size: 14px;
-    letter-spacing: 4px;
+    padding-bottom: 14px;
+    margin-bottom: 12px;
+    border-bottom: 1px solid var(--border);
+  }
+
+  .nav-mobile-bar {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
     margin-bottom: 14px;
   }
 
-  .nav-links .nav-top-links {
-    display: flex;
-    flex-direction: column;
-    align-items: flex-start;
-    gap: 10px;
-    width: 100%;
-    padding-bottom: 14px;
-    border-bottom: 1px solid var(--border);
-    margin-bottom: 10px;
+  .nav-mobile-title {
+    font-family: "Cinzel Decorative", "Cinzel", serif;
+    font-size: 15px;
+    letter-spacing: 4px;
+    color: var(--accent);
   }
 
-  .nav-links .lang-switch {
+  .nav-close {
+    display: inline-block;
+  }
+
+  .nav-mobile-actions {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 10px 14px;
+    margin-top: 12px;
+  }
+
+  .nav-mobile-actions .nav-link {
+    padding: 8px 10px;
+  }
+
+  .nav-mobile-head .lang-switch {
     display: flex;
     align-items: center;
     gap: 8px;
   }
 
+  /* Top-level rows: HOME / PLAN TRIP links and the dropdown triggers */
   .nav-item {
+    display: block;
     width: 100%;
+    padding: 0;
   }
 
-  .nav-link {
+  .nav-links > .nav-link,
+  .nav-link.nav-trigger {
+    display: flex;
+    align-items: center;
     justify-content: flex-start;
+    width: 100%;
+    gap: 12px;
+    margin: 0;
+    padding: 14px 6px;
+    font-size: 14px;
+    letter-spacing: 0.6px;
+    border-radius: 8px;
+    border-bottom: 1px solid var(--border);
+    white-space: normal;
   }
 
+  .nav-links > .nav-link:hover,
+  .nav-link.nav-trigger:hover {
+    background: transparent;
+    color: var(--accent);
+  }
+
+  .nav-link.nav-trigger::after {
+    content: "\f078";
+    font-family: "Font Awesome 6 Free";
+    font-weight: 900;
+    margin-inline-start: auto;
+    font-size: 0.7em;
+    opacity: 0.6;
+    transition: transform 0.25s ease;
+  }
+
+  .nav-item.is-open > .nav-trigger {
+    color: var(--accent);
+  }
+
+  .nav-item.is-open > .nav-trigger::after {
+    transform: rotate(180deg);
+  }
+
+  /* Accordion sub-menu */
   .dropdown {
     position: static;
     inset: auto;
+    display: none;
     width: 100%;
     min-width: 0;
     max-width: 100%;
     max-height: none;
     overflow: visible;
-    margin: 4px 0 6px;
-    box-shadow: none;
-    padding: 4px 0 4px 14px;
+    margin: 0;
+    padding: 2px 0 10px 18px;
     background: transparent;
+    box-shadow: none;
+    border-radius: 0;
     z-index: auto;
-    display: none;
   }
 
-  .nav-item:hover .dropdown,
-  .nav-item:focus-within .dropdown {
-    display: none;
+  .nav-item.is-open > .dropdown {
+    display: block;
   }
 
-  .nav-item.is-open .dropdown {
-    display: flex;
+  .dropdown-link {
+    padding: 11px 8px;
+    font-size: 13.5px;
   }
 }
 
@@ -343,26 +456,32 @@ a {
   background: var(--accent);
 }
 
-.nav-item:hover .dropdown,
-.nav-item:focus-within .dropdown {
-  display: flex;
-}
+/* Hover / focus reveal is desktop-only. On mobile (<= 900px) the menu uses an
+   explicit .is-open accordion toggle; leaving these global meant a tapped
+   trigger stayed :focus-within and the sub-menu could never be collapsed. */
+@media (min-width: 901px) {
+  .nav-item:hover .dropdown,
+  .nav-item:focus-within .dropdown {
+    display: flex;
+  }
 
-.dropdown:hover {
-  display: flex;
+  .dropdown:hover {
+    display: flex;
+  }
 }
 
 .nav-link {
   color: var(--text);
-  font-size: 14px;
+  font-size: 12.5px;
   font-weight: 600;
-  letter-spacing: 1.4px;
+  letter-spacing: 0.4px;
   text-transform: uppercase;
-  padding: 6px 12px;
+  padding: 5px 9px;
   border-radius: 999px;
   display: inline-flex;
   align-items: center;
-  gap: 6px;
+  gap: 5px;
+  white-space: nowrap;
   transition: color 0.3s ease, background 0.3s ease;
   text-shadow: none;
   -webkit-text-stroke: 0;
@@ -374,7 +493,7 @@ a {
 }
 
 .nav-icon {
-  font-size: 14px;
+  font-size: 12.5px;
   color: var(--accent);
 }
 
@@ -789,26 +908,8 @@ a {
 }
 
 @media (max-width: 768px) {
-  .nav-links {
-    flex-direction: column;
-    align-items: flex-start;
-  }
-
-  .dropdown {
-    position: static;
-    inset: auto;
-    width: 100%;
-    min-width: 0;
-    max-width: 100%;
-    max-height: none;
-    overflow: visible;
-    margin: 4px 0 6px;
-    box-shadow: none;
-    padding: 4px 0 4px 14px;
-    background: transparent;
-    z-index: auto;
-  }
-
+  /* Navbar drawer + dropdown rules live in the (max-width: 900px) block above;
+     they are intentionally not repeated here to avoid conflicting overrides. */
   .hero-content {
     flex-direction: column;
     align-items: flex-start;

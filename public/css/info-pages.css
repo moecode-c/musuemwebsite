@@ -9,7 +9,7 @@
     linear-gradient(175deg, rgba(4, 23, 52, 0.96), rgba(3, 15, 36, 0.96));
 }
 
-.theme-light.page-info-pages .info-page-shell {
+.theme-light .info-page-shell {
   background:
     radial-gradient(circle at 12% 12%, rgba(95, 142, 217, 0.12), transparent 38%),
     radial-gradient(circle at 88% 20%, rgba(175, 132, 58, 0.12), transparent 42%),

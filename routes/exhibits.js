@@ -16,7 +16,7 @@ router.post(
   ]),
   exhibitValidation,
   handleValidation,
-  exhibitsController.createWithFiles
+  exhibitsController.create
 );
 router.put(
   "/:id",

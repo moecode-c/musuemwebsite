@@ -3,22 +3,36 @@
 
 <style>
   .input-field { position: relative; }
-  .input-field:has(.password-toggle) input { padding-right: 42px; }
+  .input-field:has(.password-toggle) input { padding-right: 44px; }
   .password-toggle {
     position: absolute;
-    inset-inline-end: 10px;
+    inset-inline-end: 8px;
     top: 50%;
     transform: translateY(-50%);
     background: transparent;
     border: none;
     cursor: pointer;
-    color: var(--text-muted, #8a7b9a);
+    color: var(--accent, #b48b2f);
     font-size: 1rem;
-    padding: 4px;
+    line-height: 1;
+    padding: 6px;
     display: inline-flex;
     align-items: center;
+    z-index: 2;
   }
-  .password-toggle:hover { color: var(--accent, #b48b2f); }
+  /* keep the eye icon inside the toggle button (overrides the left-icon rule) */
+  .input-field .password-toggle i {
+    position: static;
+    left: auto;
+    top: auto;
+    transform: none;
+    color: inherit;
+  }
+  .password-toggle:hover { color: var(--accent-strong, #9a6f1f); }
+  @media (max-width: 560px) {
+    .auth-section { padding: 44px 0; min-height: 0; }
+    .auth-card { padding: 22px; }
+  }
 </style>
 
 <section class="auth-section">

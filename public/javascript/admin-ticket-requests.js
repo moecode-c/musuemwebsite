@@ -38,4 +38,19 @@ document.addEventListener("DOMContentLoaded", () => {
       }
     });
   });
+
+  // Search + status filter
+  const reqSearch = document.getElementById("ticketreq-search");
+  const reqStatusFilter = document.getElementById("ticketreq-status-filter");
+  const applyReqFilter = () => {
+    const q = ((reqSearch && reqSearch.value) || "").trim().toLowerCase();
+    const status = (reqStatusFilter && reqStatusFilter.value) || "";
+    document.querySelectorAll("#admin-ticketreq-list .admin-order-card").forEach((card) => {
+      const matchesText = !q || card.textContent.toLowerCase().includes(q);
+      const matchesStatus = !status || card.dataset.status === status;
+      card.style.display = matchesText && matchesStatus ? "" : "none";
+    });
+  };
+  if (reqSearch) reqSearch.addEventListener("input", applyReqFilter);
+  if (reqStatusFilter) reqStatusFilter.addEventListener("change", applyReqFilter);
 });
