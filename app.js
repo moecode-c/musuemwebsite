@@ -232,4 +232,14 @@ const bootstrap = async () => {
   }
 };
 
-bootstrap();
+// Only start the HTTP server when this file is run directly (e.g. `node app.js`).
+// When the app is `require`d by the test suite (Supertest / Playwright helpers)
+// we export the configured Express app instead of binding a port. `dbReady`
+// exposes the DB connection promise so tests can await a live connection before
+// issuing requests. This is the only change made to support automated testing.
+if (require.main === module) {
+  bootstrap();
+}
+
+app.dbReady = dbConnectPromise;
+module.exports = app;

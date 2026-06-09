@@ -7,3 +7,9 @@ yarn-error.log*
 coverage/
 .vscode/
 public/assets/uploads/
+
+# Test artifacts
+playwright-report/
+test-results/
+blob-report/
+playwright/.cache/

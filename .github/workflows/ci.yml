@@ -1,0 +1,163 @@
+# ============================================================================
+#  Continuous Integration (TEST ONLY — no deployment)
+# ============================================================================
+#  What this pipeline does:
+#    On every push to ANY branch, GitHub spins up fresh Linux machines and runs
+#    the automated tests. If anything fails, the commit gets a red ✗ (and the
+#    run shows what broke); if everything passes it gets a green ✓. Test reports
+#    are saved as downloadable "artifacts" on each run.
+#
+#  There are NO build/deploy/publish steps anywhere — it only installs deps and
+#  runs tests.
+# ============================================================================
+
+name: CI
+
+# ---- Trigger -----------------------------------------------------------------
+# Run whenever commits are pushed to any branch ('**' matches every branch name).
+# (There is intentionally no `deploy`/`release` trigger — this is test-only.)
+on:
+  push:
+    branches:
+      - '**'
+
+# ---- Concurrency -------------------------------------------------------------
+# If you push again to the same branch while a run is still going, cancel the
+# older run so you only ever wait on (and pay for) the latest commit.
+concurrency:
+  group: ci-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  # ==========================================================================
+  #  JOB 1 — Jest suites: unit + integration + smoke (with coverage)
+  # --------------------------------------------------------------------------
+  #  The integration and smoke suites start an in-memory MongoDB
+  #  (mongodb-memory-server) inside the test process, so NO external database
+  #  service is required here.
+  # ==========================================================================
+  jest:
+    name: Unit / Integration / Smoke
+    # ubuntu-22.04 is chosen deliberately: the MongoDB binaries that
+    # mongodb-memory-server downloads are well-supported on this image.
+    runs-on: ubuntu-22.04
+    steps:
+      # 1. Pull the repository code onto the runner.
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      # 2. Install Node.js 20 and enable caching of the npm download cache
+      #    (keyed off package-lock.json) so repeat runs install faster.
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: npm
+
+      # 3. Install dependencies exactly as locked in package-lock.json.
+      #    `npm ci` is the clean, reproducible install used in CI.
+      - name: Install dependencies
+        run: npm ci
+
+      # 4. Cache the actual MongoDB binary that mongodb-memory-server downloads.
+      #    Without this, every run would re-download it. The key changes only
+      #    when package-lock.json changes; restore-keys allows a partial match.
+      - name: Cache MongoDB binaries
+        uses: actions/cache@v4
+        with:
+          path: ~/.cache/mongodb-binaries
+          key: mongodb-binaries-${{ runner.os }}-${{ hashFiles('package-lock.json') }}
+          restore-keys: |
+            mongodb-binaries-${{ runner.os }}-
+
+      # 5. Download the MongoDB binary up front (outside Jest). On a cold cache
+      #    this can take a little while, and doing it here means the one-time
+      #    download never races the per-test timeouts inside the suites.
+      - name: Prime in-memory MongoDB binary
+        run: node -e "const {MongoMemoryServer}=require('mongodb-memory-server');(async()=>{const m=await MongoMemoryServer.create();await m.stop();console.log('MongoDB binary ready');})().catch(e=>{console.error(e);process.exit(1);});"
+
+      # 6. Run the Jest suites with coverage. A non-zero exit (any failing test)
+      #    fails the job, which marks the commit/PR red.
+      - name: Run Jest tests with coverage
+        run: npm run test:coverage
+
+      # 7. Save the HTML/lcov coverage report as a downloadable artifact.
+      #    `if: always()` uploads it even when tests failed, so you can inspect it.
+      - name: Upload coverage report
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: coverage-report
+          path: coverage/
+          if-no-files-found: ignore
+
+      # 8. Add a short human-readable note to the run's Summary page.
+      - name: Write summary
+        if: always()
+        run: |
+          echo "### Jest (unit + integration + smoke)" >> "$GITHUB_STEP_SUMMARY"
+          echo "Status: **${{ job.status }}**" >> "$GITHUB_STEP_SUMMARY"
+          echo "" >> "$GITHUB_STEP_SUMMARY"
+          echo "Download the **coverage-report** artifact for the full HTML coverage report." >> "$GITHUB_STEP_SUMMARY"
+
+  # ==========================================================================
+  #  JOB 2 — Playwright end-to-end journeys
+  # --------------------------------------------------------------------------
+  #  Runs in parallel with the Jest job. Playwright's webServer config starts
+  #  tests/e2e/server.js (which itself boots an in-memory MongoDB + seeds data),
+  #  then a headless Chromium drives the real UI.
+  # ==========================================================================
+  e2e:
+    name: End-to-End (Playwright)
+    runs-on: ubuntu-22.04
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: npm
+
+      - name: Install dependencies
+        run: npm ci
+
+      # Same MongoDB binary cache as the Jest job (the E2E server needs it too).
+      - name: Cache MongoDB binaries
+        uses: actions/cache@v4
+        with:
+          path: ~/.cache/mongodb-binaries
+          key: mongodb-binaries-${{ runner.os }}-${{ hashFiles('package-lock.json') }}
+          restore-keys: |
+            mongodb-binaries-${{ runner.os }}-
+
+      - name: Prime in-memory MongoDB binary
+        run: node -e "const {MongoMemoryServer}=require('mongodb-memory-server');(async()=>{const m=await MongoMemoryServer.create();await m.stop();console.log('MongoDB binary ready');})().catch(e=>{console.error(e);process.exit(1);});"
+
+      # Install ONLY the Chromium browser plus the OS libraries it needs
+      # (--with-deps uses the runner's sudo to apt-get the required packages).
+      - name: Install Playwright Chromium
+        run: npx playwright install --with-deps chromium
+
+      # Run the E2E specs. Playwright auto-detects CI (GitHub sets CI=true), which
+      # our playwright.config.js uses to enable retries and forbid `test.only`.
+      - name: Run Playwright E2E tests
+        run: npm run test:e2e
+
+      # Save the Playwright HTML report (includes failure screenshots/traces).
+      - name: Upload Playwright report
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: playwright-report
+          path: playwright-report/
+          if-no-files-found: ignore
+
+      - name: Write summary
+        if: always()
+        run: |
+          echo "### Playwright E2E" >> "$GITHUB_STEP_SUMMARY"
+          echo "Status: **${{ job.status }}**" >> "$GITHUB_STEP_SUMMARY"
+          echo "" >> "$GITHUB_STEP_SUMMARY"
+          echo "Download the **playwright-report** artifact for the HTML report." >> "$GITHUB_STEP_SUMMARY"
