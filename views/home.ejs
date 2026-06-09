@@ -71,9 +71,9 @@
       <div class="eyebrow" id="eyebrow"><%= isArabic ? "المتحف المصري - القاهرة" : "Egyptian Museum - Cairo" %></div>
       <h1 class="title" id="title"><%= isArabic ? "الأهرامات" : "PYRAMIDS" %></h1>
       <p class="desc" id="desc"><%= isArabic ? "جار التحميل..." : "Loading..." %></p>
-      <button class="explore-btn" aria-label="<%= isArabic ? 'استكشف هذا المعروض' : 'Explore this exhibit' %>">
+      <a class="explore-btn" href="/exhibits/pharaoh" aria-label="<%= isArabic ? 'استكشف معروض الفراعنة' : 'Explore the Pharaoh exhibit' %>">
         <%= isArabic ? "استكشف" : "Explore" %> <span class="arrow" aria-hidden="true">→</span>
-      </button>
+      </a>
     </div>
     <div class="cards-wrap" id="cardsWrap"></div>
   </div>
@@ -152,7 +152,7 @@
           : "Curated replicas, artisan jewelry, and modern prints inspired by ancient motifs. Bring a piece of the story home."
         %>
       </p>
-      <button class="shop-btn" aria-label="<%= isArabic ? 'زر متجر المتحف' : 'Visit the museum shop' %>"><%= isArabic ? "زيارة المتجر" : "Visit Shop" %></button>
+      <a class="shop-btn" href="/shop" aria-label="<%= isArabic ? 'زر متجر المتحف' : 'Visit the museum shop' %>"><%= isArabic ? "زيارة المتجر" : "Visit Shop" %></a>
     </div>
   </div>
 </section>
